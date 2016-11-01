@@ -1,2 +1,2 @@
 # DraculaDayByDay
-An app to experiance Bram Stokers work in real time
+An Android app to experiance Bram Stokers work in real time
