@@ -1,4 +1,4 @@
-package com.jensen.draculadaybyday;
+package com.jensen.draculadaybyday.Entries;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,7 +16,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.jensen.draculadaybyday.Fragment.FragmentEntry;
+import com.jensen.draculadaybyday.R;
 import com.jensen.draculadaybyday.SQLite.FragmentEntryDatabaseHandler;
+import com.jensen.draculadaybyday.Settings.DraculaSettings;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -53,12 +55,12 @@ public class EntryListActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "REPLACE!", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Context context = view.getContext();
+                context.startActivity(new Intent(context, DraculaSettings.class));
             }
         });
 
-        FragmentEntry entry = new FragmentEntry((short)1, (short)1, (short)1, "Mikkel", "To day I coded a bit - Yeah!", Calendar.getInstance(), "Hard coded entry");
+        FragmentEntry entry = new FragmentEntry((short)1, (short)1, (short)1, "Mikkel", "Today I coded a bit - Yeah!", Calendar.getInstance(), "Hard coded entry");
 
         fragmentEntryHandler = FragmentEntryDatabaseHandler.getInstance(this);
         fragmentEntryHandler.addEntry(entry);

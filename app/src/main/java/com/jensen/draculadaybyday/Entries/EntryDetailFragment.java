@@ -1,4 +1,4 @@
-package com.jensen.draculadaybyday;
+package com.jensen.draculadaybyday.Entries;
 
 import android.app.Activity;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -7,9 +7,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.jensen.draculadaybyday.Fragment.FragmentEntry;
+import com.jensen.draculadaybyday.Presentation.EntryView;
+import com.jensen.draculadaybyday.Presentation.FontEnum;
+import com.jensen.draculadaybyday.R;
 import com.jensen.draculadaybyday.SQLite.FragmentEntryDatabaseHandler;
 
 /**
@@ -53,7 +55,6 @@ public class EntryDetailFragment extends Fragment {
         }
 
         return entry;
-
     }
 
     @Override
@@ -86,15 +87,19 @@ public class EntryDetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.entry_detail, container, false);
-        TextView view = (TextView)rootView.findViewById(R.id.entry_detail);
+     //   EntryView view = (EntryView) rootView.findViewById(R.id.entry_detail_container);
+        EntryView view = (EntryView) rootView;
 
         FragmentEntry entry = getEntryFromArgument();
 
-            if (entry != null) {
-                view.setText(entry.getFragmentEntry());
-            } else {
-                view.setText(DEFAULT_BODY);
-            }
+        String text;
+        if (entry != null) {
+            text =  entry.getFragmentEntry();
+        } else {
+            text = DEFAULT_BODY;
+        }
+
+        view.SetText(text, FontEnum.GOTHIC_FONT, 20);
 
         return rootView;
     }

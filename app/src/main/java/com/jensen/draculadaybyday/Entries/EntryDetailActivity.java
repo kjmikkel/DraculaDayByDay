@@ -1,9 +1,8 @@
-package com.jensen.draculadaybyday;
+package com.jensen.draculadaybyday.Entries;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +10,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
 
+import com.jensen.draculadaybyday.R;
 import com.jensen.draculadaybyday.SQLite.FragmentEntryDatabaseHandler;
 
 /**
@@ -32,8 +32,9 @@ public class EntryDetailActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "REPLACE!", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+          //      NavUtils.
+//                NavUtils.navigateUpTo(this, new Intent(this, DraculaSettings.class));
+                ///Snackbar.make(view, "REPLACE!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
             }
         });
 
@@ -56,7 +57,7 @@ public class EntryDetailActivity extends AppCompatActivity {
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
             Bundle arguments = new Bundle();
-            arguments.putShort(FragmentEntryDatabaseHandler.ENTRY_SEQ_NUM, getIntent().getShortExtra(FragmentEntryDatabaseHandler.ENTRY_SEQ_NUM, (short)1));
+            arguments.putShort(FragmentEntryDatabaseHandler.ENTRY_SEQ_NUM,  getIntent().getShortExtra(FragmentEntryDatabaseHandler.ENTRY_SEQ_NUM, (short)1));
             EntryDetailFragment fragment = new EntryDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
