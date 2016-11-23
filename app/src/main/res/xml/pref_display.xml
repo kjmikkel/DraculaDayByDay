@@ -1,0 +1,54 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- NOTE: Hide buttons to simplify the UI. Users can touch outside the dialog to
+         dismiss it. -->
+    <!-- The list of fonts -->
+    <ListPreference
+        android:defaultValue="Victorian with Initial"
+        android:entries="@array/pref_title_font_type_titles"
+        android:entryValues="@array/pref_title_font_type_titles"
+        android:key="display_font"
+        android:id="@+id/display_font"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:title="@string/pref_title_font_type"
+        android:summary="@string/pref_summary_font_type"/>
+
+    <!-- The list of sizes -->
+    <ListPreference
+        android:defaultValue="30"
+        android:entries="@array/pref_font_size_titles"
+        android:entryValues="@array/pref_font_size_titles"
+        android:key="display_font_size"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+
+        android:title="@string/pref_title_font_size"
+        android:summary="@string/pref_summary_font_size"/>
+
+    <!-- The list of themes -->
+    <ListPreference
+        android:defaultValue="Default"
+        android:entries="@array/pref_theme_titles"
+        android:entryValues="@array/pref_theme_titles"
+        android:key="display_theme"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:title="@string/pref_title_theme"
+        android:summary="@string/pref_summary_theme"/>
+    <!--
+    <com.jensen.draculadaybyday.Settings.EntryViewPreference
+        android:name="ShowFontExample"
+        android:key=""
+        android:title="Font Example:"
+        android:text="Heldlo"
+        android:layout="@layout/entry_view_preference"
+        />
+        -->
+    <!--
+            android:initial=""
+        android:font="DROID"
+        android:fontSize="14.0"
+    -->
+
+</PreferenceScreen>

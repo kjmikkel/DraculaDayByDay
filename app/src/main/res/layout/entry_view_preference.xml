@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_frame"
+    android:name="com.jensen.draculadaybyday.EntryViewPreference"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@android:id/title"
+        style="@android:style/TextAppearance.DeviceDefault.SearchResult.Title"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Title"
+
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        />
+
+    <com.jensen.draculadaybyday.Presentation.EntryViewPreference
+        android:id="@+id/entry_view"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:text="Text"
+
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        />
+
+    <!-- android:name="entry_view" -->
+
+    </LinearLayout>

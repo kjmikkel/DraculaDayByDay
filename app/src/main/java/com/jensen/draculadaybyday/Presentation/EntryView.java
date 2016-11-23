@@ -1,12 +1,12 @@
 package com.jensen.draculadaybyday.Presentation;
 
 import android.content.Context;
-import android.content.res.AssetManager;
 import android.graphics.Canvas;
 import android.graphics.Typeface;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.widget.TextView;
 
 public class EntryView extends TextView {
@@ -23,21 +23,51 @@ public class EntryView extends TextView {
         super(context, attrs, defStyle);
     }
 
-    public void SetText(String text, FontEnum fontEnum, float fontSize) {
-        if (fontEnum == FontEnum.DEFAULT_FONT) {
-            setTextSize(fontSize);
-            setText(text);
-        } else {
-            AssetManager assetManager = getContext().getAssets();
+    public void setText(String text, FontEnum fontEnum, float fontSize) {
+        setTextSize(TypedValue.COMPLEX_UNIT_DIP ,fontSize);
+        setTypeface(getMainBodyType(fontEnum));
+        setText(text);
+    }
 
-            Typeface font1 = Typeface.createFromAsset(assetManager, "fonts/WieynkFrakturZier.ttf");
-            Typeface font2 = Typeface.createFromAsset(assetManager, "fonts/RedivivaZierbuchstaben.ttf");
+    public void setText(String text, InitialEnum initialFont, FontEnum basicFont, float fontSize) {
+        setTextSize(fontSize);
 
-            SpannableStringBuilder SS = new SpannableStringBuilder(text);
-            SS.setSpan (new CustomTypefaceSpan("", font2), 0, 1, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
-            SS.setSpan (new CustomTypefaceSpan("", font1), 1, text.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+        SpannableStringBuilder SS = new SpannableStringBuilder(text);
+        SS.setSpan(new CustomTypefaceSpan("", getInitialType(initialFont)), 0, 1, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+        SS.setSpan(new CustomTypefaceSpan("", getMainBodyType(basicFont)), 1, text.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
 
-            setText(SS);
+        setText(SS);
+    }
+
+    private Typeface makeFont(String fontName) {
+        return Typeface.createFromAsset(getContext().getAssets(), "fonts/" + fontName);
+    }
+
+    private Typeface getInitialType(InitialEnum font) {
+        switch (font) {
+            case PRECIOSA:
+               return makeFont("Preciosa.ttf");
+            case REDIVIVA_ZIERBUCHSTABEN:
+            default:
+                return makeFont("RedivivaZierbuchstaben.ttf");
+        }
+    }
+
+    private Typeface getMainBodyType(FontEnum font) {
+        switch (font) {
+            case DROID_SANS_MONO:
+                return Typeface.MONOSPACE;
+            case DROID_SERIF:
+                return Typeface.SERIF;
+            case RAVALI:
+                return makeFont("Ravali.ttf");
+            case HARRINGTON:
+                return makeFont("Harrington.ttf");
+            case VICTORIAN:
+                return makeFont("Victorian.ttf");
+            case DROID_SANS:
+            default:
+                return Typeface.SANS_SERIF;
         }
     }
 

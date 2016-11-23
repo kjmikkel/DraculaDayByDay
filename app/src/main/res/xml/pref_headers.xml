@@ -8,6 +8,10 @@
         android:title="@string/pref_header_general" />
 
     <header
+        android:fragment="com.jensen.draculadaybyday.Settings.DraculaSettings$DisplayPreferenceFragment"
+        android:title="@string/pref_header_display" />
+
+    <header
         android:fragment="com.jensen.draculadaybyday.Settings.DraculaSettings$NotificationPreferenceFragment"
         android:icon="@drawable/ic_notifications_black_24dp"
         android:title="@string/pref_header_notifications" />

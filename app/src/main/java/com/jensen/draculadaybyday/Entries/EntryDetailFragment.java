@@ -1,8 +1,8 @@
 package com.jensen.draculadaybyday.Entries;
 
 import android.app.Activity;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import com.jensen.draculadaybyday.Fragment.FragmentEntry;
 import com.jensen.draculadaybyday.Presentation.EntryView;
 import com.jensen.draculadaybyday.Presentation.FontEnum;
+import com.jensen.draculadaybyday.Presentation.InitialEnum;
 import com.jensen.draculadaybyday.R;
 import com.jensen.draculadaybyday.SQLite.FragmentEntryDatabaseHandler;
 
@@ -99,7 +100,8 @@ public class EntryDetailFragment extends Fragment {
             text = DEFAULT_BODY;
         }
 
-        view.SetText(text, FontEnum.GOTHIC_FONT, 20);
+        view.setText(text, InitialEnum.REDIVIVA_ZIERBUCHSTABEN, FontEnum.VICTORIAN, 32);
+//        view.setText(text, InitialEnum.PRECIOSA, FontEnum.VICTORIAN, 32);
 
         return rootView;
     }

@@ -1,4 +1,5 @@
-<com.jensen.draculadaybyday.Presentation.EntryView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/entry_detail"
     style="?android:attr/textAppearanceLarge"
@@ -6,4 +7,19 @@
     android:layout_height="match_parent"
     android:padding="16dp"
     android:textIsSelectable="true"
-    tools:context="com.jensen.draculadaybyday.Entries.EntryDetailFragment" />
+    tools:context="com.jensen.draculadaybyday.Entries.EntryDetailFragment">
+
+    <com.jensen.draculadaybyday.Presentation.EntryView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="20dp"
+        android:ellipsize="marquee"
+        android:fadingEdge="horizontal"
+        android:text="Test connection"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        />
+
+    </RelativeLayout>

@@ -1,5 +1,5 @@
 package com.jensen.draculadaybyday.Presentation;
 
 public enum FontEnum {
-        DEFAULT_FONT, GOTHIC_FONT
+        DROID_SANS, DROID_SERIF, DROID_SANS_MONO, RAVALI, HARRINGTON, VICTORIAN
     }

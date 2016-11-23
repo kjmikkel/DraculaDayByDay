@@ -1,6 +1,5 @@
 package com.jensen.draculadaybyday.Presentation;
 
-import android.content.Context;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Parcel;
