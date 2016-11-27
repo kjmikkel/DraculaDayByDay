@@ -23,6 +23,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.preference.DialogPreference;
 import android.util.AttributeSet;
+import android.util.Log;
 
 /**
  * The {@link YesNoPreference} is a preference to show a dialog with Yes and No
@@ -35,6 +36,9 @@ public class YesNoPreference extends DialogPreference {
 
     public YesNoPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
+        for (int i = 0; i < attrs.getAttributeCount(); i++) {
+            Log.d("pref", "Attribute name: " + attrs.getAttributeName(i));
+        }
     }
 
     public YesNoPreference(Context context, AttributeSet attrs, int defStyleAttr) {

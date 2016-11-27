@@ -100,7 +100,7 @@ public class EntryDetailFragment extends Fragment {
             text = DEFAULT_BODY;
         }
 
-        view.setText(text, InitialEnum.REDIVIVA_ZIERBUCHSTABEN, FontEnum.VICTORIAN, 32);
+      //  view.setText(text, InitialEnum.REDIVIVA_ZIERBUCHSTABEN, FontEnum.VICTORIAN, 32);
 //        view.setText(text, InitialEnum.PRECIOSA, FontEnum.VICTORIAN, 32);
 
         return rootView;

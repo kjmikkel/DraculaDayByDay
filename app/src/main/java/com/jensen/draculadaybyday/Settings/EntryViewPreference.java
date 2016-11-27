@@ -1,9 +1,12 @@
 package com.jensen.draculadaybyday.Settings;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.preference.Preference;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.jensen.draculadaybyday.Presentation.EntryView;
 import com.jensen.draculadaybyday.Presentation.FontEnum;
@@ -13,10 +16,60 @@ import com.jensen.draculadaybyday.R;
 public class EntryViewPreference extends Preference {
     private EntryView entryView;
 
-    public EntryViewPreference(Context context, AttributeSet attrs) {
-        super(context, attrs);
+    private String text = null;
+    private FontEnum fontEnum = FontEnum.NONE;
+    private InitialEnum initialEnum = InitialEnum.NONE;
+    private float fontSize = 14.0f;
 
-     //   this.setWidgetLayoutResource(R.layout.entry_detail);
+    public EntryViewPreference(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+
+        TypedArray array = context.obtainStyledAttributes(
+                attrs,
+                R.styleable.EntryViewPreference,
+                defStyle,
+                0);
+
+        try {
+            // Get the text
+            text = array.getString(R.styleable.EntryViewPreference_text);
+
+            // Get the font
+            String font = fixEnumValue(array.getString(R.styleable.EntryViewPreference_font));
+            if (font != null) {
+                try {
+                    fontEnum = FontEnum.valueOf(font);
+                } catch (Exception e) {
+                    Log.e("Settings", e.getMessage());
+                }
+            }
+
+            String initialFont = fixEnumValue(array.getString(R.styleable.EntryViewPreference_initial));
+            if (initialFont != null) {
+                try {
+                    initialEnum = InitialEnum.valueOf(initialFont);
+                } catch (Exception e) {
+                    Log.e("Settings", e.getMessage());
+                }
+           }
+
+           // Get the font size
+           fontSize = array.getFloat(R.styleable.EntryViewPreference_fontSize, 14.0f);
+
+            // Try to execute
+            setValuesForEntryView();
+
+            //          entryView.setText(text);
+
+//        String text = attrs.getAttributeValue(textId);
+            //      entryView.setText(text);
+
+            //getResources().getResourceEntryName(R.attr.text);
+
+            //attrs.
+
+            //  this.entryView.setText(attrs.getAttributeValue);
+            //   this.setWidgetLayoutResource(R.layout.entry_detail);
         /*
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.EntryViewPreference, 0, 0);
         try {
@@ -34,29 +87,53 @@ public class EntryViewPreference extends Preference {
                 InitialEnum initialEnum = InitialEnum.valueOf(initial);
                 setText(text, initialEnum, fontEnum, fontSize);
             }
-
-        } finally {
-            typedArray.recycle();
-        }
         */
+        } finally {
+            array.recycle();
+        }
+    }
+
+    public EntryViewPreference(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
+
+    private String fixEnumValue(String enumName) {
+        if (enumName != null) {
+            enumName = enumName.toUpperCase().replace(" ", "_");
+        }
+
+        return enumName;
+    }
+
+    private void setValuesForEntryView() {
+        if (entryView != null) {
+            entryView.setText(text, initialEnum, fontEnum, fontSize);
+        }
+    }
+
+    @Override
+    protected View onCreateView(ViewGroup parent) {
+        View view = null;
+        try {
+            view = super.onCreateView(parent);
+            entryView = (EntryView) view.findViewById(R.id.entry_view_widget);
+        } catch (Exception e) {
+            Log.e("Settings", e.getMessage());
+        }
+        setValuesForEntryView();
+
+        return view;
     }
 
     @Override
     protected void onBindView(View view) {
-        super.onBindView(view);
-        entryView = (EntryView) view.findViewById(R.id.entry_view);
+        try {
+            super.onBindView(view);
+            entryView = (EntryView) view.findViewById(R.id.entry_view_widget);
+        } catch(Exception e) {
+            Log.e("Settings", e.getMessage());
+        }
 
-        int i = 0;
-        i++;
+        setValuesForEntryView();
     }
-
-    public void setText(String text, FontEnum fontEnum, float fontSize) {
-        entryView.setText(text, fontEnum, fontSize);
-    }
-
-    public void setText(String text, InitialEnum initialEnum, FontEnum fontEnum, float fontSize) {
-        entryView.setText(text, initialEnum, fontEnum, fontSize);
-    }
-
-
 }

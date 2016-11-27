@@ -14,12 +14,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="20dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="20dp"
         android:ellipsize="marquee"
         android:fadingEdge="horizontal"
-        android:text="Test connection"
+        android:text="@string/entry_view_default"
         android:textAppearance="?android:attr/textAppearanceLarge"
         />
-
     </RelativeLayout>

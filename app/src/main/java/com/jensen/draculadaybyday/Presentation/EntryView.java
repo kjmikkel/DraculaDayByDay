@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 public class EntryView extends TextView {
 
+    private static final int SIZE_UNIT = TypedValue.COMPLEX_UNIT_DIP;
+
     public EntryView(Context context) {
         super(context);
     }
@@ -23,14 +25,22 @@ public class EntryView extends TextView {
         super(context, attrs, defStyle);
     }
 
-    public void setText(String text, FontEnum fontEnum, float fontSize) {
-        setTextSize(TypedValue.COMPLEX_UNIT_DIP ,fontSize);
+    public void setText(String text, InitialEnum initialEnum, FontEnum fontEnum, float fontSize) {
+        if (!fontEnum.withInitial()) {
+            setTextWithoutInitial(text, fontEnum, fontSize);
+        } else {
+            setTextWithInitial(text, initialEnum, fontEnum, fontSize);
+        }
+    }
+
+    private void setTextWithoutInitial(String text, FontEnum fontEnum, float fontSize) {
+        setTextSize(SIZE_UNIT,fontSize);
         setTypeface(getMainBodyType(fontEnum));
         setText(text);
     }
 
-    public void setText(String text, InitialEnum initialFont, FontEnum basicFont, float fontSize) {
-        setTextSize(fontSize);
+    private void setTextWithInitial(String text, InitialEnum initialFont, FontEnum basicFont, float fontSize) {
+        setTextSize(SIZE_UNIT, fontSize);
 
         SpannableStringBuilder SS = new SpannableStringBuilder(text);
         SS.setSpan(new CustomTypefaceSpan("", getInitialType(initialFont)), 0, 1, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);

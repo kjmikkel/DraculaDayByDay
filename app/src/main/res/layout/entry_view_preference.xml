@@ -6,29 +6,31 @@
     android:layout_height="match_parent"
     android:layout_marginLeft="20dp"
     android:layout_marginRight="20dp"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <TextView
         android:id="@android:id/title"
         style="@android:style/TextAppearance.DeviceDefault.SearchResult.Title"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Title"
+        android:text="@string/pref_entryview_title_text"
 
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         />
 
-    <com.jensen.draculadaybyday.Presentation.EntryViewPreference
-        android:id="@+id/entry_view"
-        android:layout_height="match_parent"
+    <com.jensen.draculadaybyday.Presentation.EntryView
+        android:id="@+id/entry_view_widget"
         android:layout_width="match_parent"
-        android:text="Text"
+        android:layout_height="match_parent"
 
+        android:layout_marginStart="20dp"
+        android:ellipsize="marquee"
+        android:fadingEdge="horizontal"
+        android:text="@string/pref_entryview_text"
+        android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         />
-
-    <!-- android:name="entry_view" -->
 
     </LinearLayout>

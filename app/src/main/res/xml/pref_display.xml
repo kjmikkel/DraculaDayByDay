@@ -1,18 +1,32 @@
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    >
 
     <!-- NOTE: Hide buttons to simplify the UI. Users can touch outside the dialog to
          dismiss it. -->
     <!-- The list of fonts -->
     <ListPreference
-        android:defaultValue="Victorian with Initial"
-        android:entries="@array/pref_title_font_type_titles"
-        android:entryValues="@array/pref_title_font_type_titles"
-        android:key="display_font"
-        android:id="@+id/display_font"
+        android:defaultValue="@string/pref_default_value_font_type"
+        android:entries="@array/pref_font_type_titles"
+        android:entryValues="@array/pref_font_type_titles"
+        android:key="display_pref_font"
+        android:id="@+id/display_pref_font"
         android:negativeButtonText="@null"
         android:positiveButtonText="@null"
         android:title="@string/pref_title_font_type"
         android:summary="@string/pref_summary_font_type"/>
+
+    <ListPreference
+        android:defaultValue="@string/pref_default_value_initial_type"
+        android:entries="@array/pref_initial_type_entries"
+        android:entryValues="@array/pref_initial_type_entries"
+        android:key="display_pref_initial"
+        android:id="@+id/display_pref_initial"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:title="@string/pref_title_initial_type"
+        android:summary="@string/pref_summary_initial_type"
+        />
 
     <!-- The list of sizes -->
     <ListPreference
@@ -36,19 +50,15 @@
         android:positiveButtonText="@null"
         android:title="@string/pref_title_theme"
         android:summary="@string/pref_summary_theme"/>
-    <!--
+
     <com.jensen.draculadaybyday.Settings.EntryViewPreference
         android:name="ShowFontExample"
         android:key=""
         android:title="Font Example:"
-        android:text="Heldlo"
         android:layout="@layout/entry_view_preference"
+        custom:text="@string/pref_entryview_sample_text"
+        custom:font="Victorian with Initial"
+        custom:fontSize="14"
         />
-        -->
-    <!--
-            android:initial=""
-        android:font="DROID"
-        android:fontSize="14.0"
-    -->
 
 </PreferenceScreen>
