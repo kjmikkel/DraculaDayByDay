@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="pref_fontsize_min">5</integer>
+    <integer name="pref_fontsize_max">100</integer>
+    <integer name="pref_fontsize_integer">14</integer>
+    <integer name="pref_fontsize_fractional">0</integer>
+</resources>

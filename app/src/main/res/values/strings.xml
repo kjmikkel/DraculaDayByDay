@@ -150,8 +150,9 @@
 
     <string name="pref_entryview_title_text">Title</string>
     <string name="pref_entryview_text">Preference EntryView default value</string>
-
     <string name="entry_view_default">This is the default text for an entry - if you are reading this, something has gone wrong in retrieving the relevant entry</string>
-
     <string name="pref_entryview_sample_text">_3 May. Bistritz._--Left Munich at 8:35 P. M., on 1st May, arriving at Vienna early next morning; should have arrived at 6:46, but train was an hour late.</string>
+
+    <string name="pref_fontsize_title_text">Font size</string>
+    <string name="pref_fontsize_summary">Set the fontsize</string>
 </resources>

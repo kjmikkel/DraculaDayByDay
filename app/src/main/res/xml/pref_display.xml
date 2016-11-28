@@ -29,6 +29,7 @@
         />
 
     <!-- The list of sizes -->
+    <!--
     <ListPreference
         android:defaultValue="30"
         android:entries="@array/pref_font_size_titles"
@@ -39,6 +40,16 @@
 
         android:title="@string/pref_title_font_size"
         android:summary="@string/pref_summary_font_size"/>
+    -->
+
+    <com.jensen.draculadaybyday.Settings.FontSizePickerPreference
+        android:title="@string/pref_fontsize_title_text"
+        android:summary="@string/pref_fontsize_summary"
+        custom:min="@integer/pref_fontsize_min"
+        custom:max="@integer/pref_fontsize_max"
+        custom:integer="@integer/pref_fontsize_integer"
+        custom:fractional="@integer/pref_fontsize_fractional"
+        />
 
     <!-- The list of themes -->
     <ListPreference
@@ -50,7 +61,7 @@
         android:positiveButtonText="@null"
         android:title="@string/pref_title_theme"
         android:summary="@string/pref_summary_theme"/>
-
+<!--
     <com.jensen.draculadaybyday.Settings.EntryViewPreference
         android:name="ShowFontExample"
         android:key=""
@@ -60,5 +71,5 @@
         custom:font="Victorian with Initial"
         custom:fontSize="14"
         />
-
+-->
 </PreferenceScreen>
