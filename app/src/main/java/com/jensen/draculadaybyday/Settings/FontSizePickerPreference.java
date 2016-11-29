@@ -15,13 +15,16 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import com.jensen.draculadaybyday.Primitives.Tuple;
+import com.jensen.draculadaybyday.R;
 
 /**
  * A {@link android.preference.Preference} that displays a number picker as a dialog.
  */
 public class FontSizePickerPreference extends DialogPreference {
 
-    // allowed range
+    // allowed range for the pickerFractional
+    private static final int MINIMAL_FRACTIONAL = 0;
+    private static final int MAXIMUM_FRACTIONAL = 9;
 
     // enable or disable the 'circular behavior'
     public static final boolean WRAP_SELECTOR_WHEEL = false;
@@ -31,12 +34,47 @@ public class FontSizePickerPreference extends DialogPreference {
 
     private Tuple<Integer, Integer> value;
 
+    // Minimum and maximum of the pickerInteger
+    private int minimumInteger;
+    private int maximumInteger;
+
+    // The start value of the pickerInteger and pickerFractional
+    private int integerComponent;
+    private int fractionalComponent;
+
     public FontSizePickerPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
+
+        // Get the attributes
+        getAttributesArguments(context, attrs, 0);
     }
 
     public FontSizePickerPreference(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+
+
+        // Get the attributes
+        getAttributesArguments(context, attrs, defStyleAttr);
+    }
+
+    private void getAttributesArguments(Context context, AttributeSet attrs, int defStyle) {
+        TypedArray array = context.obtainStyledAttributes(
+                attrs,
+                R.styleable.FontSizePickerPreference,
+                defStyle,
+                0);
+
+        minimumInteger = array.getInt(R.styleable.FontSizePickerPreference_min, defStyle);
+        maximumInteger = array.getInt(R.styleable.FontSizePickerPreference_max, defStyle);
+
+        integerComponent = array.getInt(R.styleable.FontSizePickerPreference_integer, defStyle);
+        fractionalComponent = array.getInt(R.styleable.FontSizePickerPreference_fractional, defStyle);
+
+        integerComponent = minimumInteger <= integerComponent ? integerComponent : minimumInteger;
+        integerComponent = integerComponent <= maximumInteger ? integerComponent : maximumInteger;
+
+        fractionalComponent = MINIMAL_FRACTIONAL <= fractionalComponent ? fractionalComponent : MINIMAL_FRACTIONAL;
+        fractionalComponent = fractionalComponent <= MAXIMUM_FRACTIONAL ? fractionalComponent : MAXIMUM_FRACTIONAL;
     }
 
     @Override
@@ -85,8 +123,8 @@ public class FontSizePickerPreference extends DialogPreference {
     protected void onBindDialogView(View view) {
         super.onBindDialogView(view);
 
-        setPicker(pickerInteger, 5, 100, 14);
-        setPicker(pickerFractional, 0, 9, 0);
+        setPicker(pickerInteger, minimumInteger, maximumInteger, integerComponent);
+        setPicker(pickerFractional, MINIMAL_FRACTIONAL, MAXIMUM_FRACTIONAL, fractionalComponent);
     }
 
     @Override
