@@ -10,7 +10,5 @@
     <declare-styleable name="FontSizePickerPreference">
         <attr name="min" format="integer"/>
         <attr name="max" format="integer"/>
-        <attr name="integer" format="integer"/>
-        <attr name="fractional" format="integer"/>
     </declare-styleable>
 </resources>

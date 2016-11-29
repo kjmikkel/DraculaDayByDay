@@ -2,7 +2,9 @@ package com.jensen.draculadaybyday.Entries;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -41,9 +43,19 @@ public class EntryListActivity extends AppCompatActivity {
 
     private static FragmentEntryDatabaseHandler fragmentEntryHandler;
 
+    private void setDefaultPreferences() {
+        // Create the default preferences
+        PreferenceManager.setDefaultValues(this, R.xml.pref_display, false);
+        PreferenceManager.setDefaultValues(this, R.xml.pref_general, false);
+        PreferenceManager.setDefaultValues(this, R.xml.pref_notification, false);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setDefaultPreferences();
+
         setContentView(R.layout.activity_entry_list);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

@@ -155,4 +155,10 @@
 
     <string name="pref_fontsize_title_text">Font size</string>
     <string name="pref_fontsize_summary">Set the fontsize</string>
+
+    <!-- Shared preferences name -->
+    <string name="shared_pref_display">SHARED_PREF_DISPLAY</string>
+    <string name="shared_pref_general">SHARED_PREF_GENERAL</string>
+    <string name="shared_pref_notification">SHARED_PREF_NOTIFICATION</string>
+
 </resources>

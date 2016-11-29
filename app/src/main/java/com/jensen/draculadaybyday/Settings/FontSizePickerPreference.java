@@ -1,11 +1,10 @@
 package com.jensen.draculadaybyday.Settings;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.preference.DialogPreference;
-import android.support.annotation.IntegerRes;
 import android.util.AttributeSet;
-import android.util.LayoutDirection;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,6 @@ import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
-import com.jensen.draculadaybyday.Primitives.Tuple;
 import com.jensen.draculadaybyday.R;
 
 /**
@@ -27,20 +25,19 @@ public class FontSizePickerPreference extends DialogPreference {
     private static final int MAXIMUM_FRACTIONAL = 9;
 
     // enable or disable the 'circular behavior'
-    public static final boolean WRAP_SELECTOR_WHEEL = false;
+    public static final boolean WRAP_SELECTOR_WHEEL = true;
 
     private NumberPicker pickerInteger;
     private NumberPicker pickerFractional;
-
-    private Tuple<Integer, Integer> value;
 
     // Minimum and maximum of the pickerInteger
     private int minimumInteger;
     private int maximumInteger;
 
-    // The start value of the pickerInteger and pickerFractional
-    private int integerComponent;
-    private int fractionalComponent;
+    private int integerFontSize = -1;
+    private int fractionalFontSize = -1;
+
+    private float value;
 
     public FontSizePickerPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -63,18 +60,12 @@ public class FontSizePickerPreference extends DialogPreference {
                 R.styleable.FontSizePickerPreference,
                 defStyle,
                 0);
-
-        minimumInteger = array.getInt(R.styleable.FontSizePickerPreference_min, defStyle);
-        maximumInteger = array.getInt(R.styleable.FontSizePickerPreference_max, defStyle);
-
-        integerComponent = array.getInt(R.styleable.FontSizePickerPreference_integer, defStyle);
-        fractionalComponent = array.getInt(R.styleable.FontSizePickerPreference_fractional, defStyle);
-
-        integerComponent = minimumInteger <= integerComponent ? integerComponent : minimumInteger;
-        integerComponent = integerComponent <= maximumInteger ? integerComponent : maximumInteger;
-
-        fractionalComponent = MINIMAL_FRACTIONAL <= fractionalComponent ? fractionalComponent : MINIMAL_FRACTIONAL;
-        fractionalComponent = fractionalComponent <= MAXIMUM_FRACTIONAL ? fractionalComponent : MAXIMUM_FRACTIONAL;
+        try {
+            minimumInteger = array.getInt(R.styleable.FontSizePickerPreference_min, defStyle);
+            maximumInteger = array.getInt(R.styleable.FontSizePickerPreference_max, defStyle);
+        } finally {
+            array.recycle();
+        }
     }
 
     @Override
@@ -87,6 +78,7 @@ public class FontSizePickerPreference extends DialogPreference {
 
         pickerInteger = new NumberPicker(getContext());
         pickerInteger.setLayoutParams(layoutParams);
+        setPicker(pickerInteger, minimumInteger, maximumInteger, integerFontSize);
 
         TextView separator = new TextView(getContext());
         separator.setText(".");
@@ -94,6 +86,7 @@ public class FontSizePickerPreference extends DialogPreference {
 
         pickerFractional = new NumberPicker(getContext());
         pickerFractional.setLayoutParams(layoutParams);
+        setPicker(pickerFractional, MINIMAL_FRACTIONAL, MAXIMUM_FRACTIONAL, fractionalFontSize);
 
         LinearLayout dialogView = new LinearLayout(getContext());
 
@@ -116,15 +109,11 @@ public class FontSizePickerPreference extends DialogPreference {
         picker.setMaxValue(max);
         picker.setWrapSelectorWheel(WRAP_SELECTOR_WHEEL);
         picker.setValue(startValue);
-
     }
 
     @Override
     protected void onBindDialogView(View view) {
         super.onBindDialogView(view);
-
-        setPicker(pickerInteger, minimumInteger, maximumInteger, integerComponent);
-        setPicker(pickerFractional, MINIMAL_FRACTIONAL, MAXIMUM_FRACTIONAL, fractionalComponent);
     }
 
     @Override
@@ -147,23 +136,41 @@ public class FontSizePickerPreference extends DialogPreference {
 
     @Override
     protected Object onGetDefaultValue(TypedArray a, int index) {
-        return a.getInt(index, 14);
+        return a.getFloat(index, 14.0f);
     }
 
     @Override
     protected void onSetInitialValue(boolean restorePersistedValue, Object defaultValue) {
-     //   Tuple<>
-        setValue(restorePersistedValue ? getPersistedInt(14) : (Integer) defaultValue);
+        Float fDefaultValue = (Float) defaultValue;
+        setValue(restorePersistedValue ? getPersistedFloat(fDefaultValue) : fDefaultValue);
     }
 
     public void setValue(float value) {
-       // this.value = value;
-       // PersistInt()
-    //    persistFloat(this.value);
+        // Set and save the value
+        this.value = value;
+        persistFloat(this.value);
+
+        // Get the values for the number pickers
+        String[] strValue = Float.toString(value).split("\\.");
+
+        integerFontSize = Integer.valueOf(strValue[0]);
+        fractionalFontSize = Integer.valueOf(strValue[1].substring(0, 1));
+
+        integerFontSize = getWithinLimits(integerFontSize, minimumInteger, maximumInteger);
+        fractionalFontSize = getWithinLimits(fractionalFontSize, MINIMAL_FRACTIONAL, MAXIMUM_FRACTIONAL);
+
+        // Save the preference for later
+        SharedPreferences.Editor editor = getSharedPreferences().edit();
+        editor.putFloat("font_size", value);
+        editor.apply();
     }
 
-    public int getValue() {
-        return 0;
-      //  return this.value;
+    private int getWithinLimits(int value, int min, int max) {
+        value = min <= value ? value : min;
+        return value <= max ? value : max;
+    }
+
+    public float getValue() {
+        return this.value;
     }
 }
