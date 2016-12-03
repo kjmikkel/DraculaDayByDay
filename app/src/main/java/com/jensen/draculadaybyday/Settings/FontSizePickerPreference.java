@@ -20,6 +20,8 @@ import com.jensen.draculadaybyday.R;
  */
 public class FontSizePickerPreference extends DialogPreference {
 
+    public static final String PREFERENCE_NAME = "font_size";
+
     // allowed range for the pickerFractional
     private static final int MINIMAL_FRACTIONAL = 0;
     private static final int MAXIMUM_FRACTIONAL = 9;
@@ -142,7 +144,8 @@ public class FontSizePickerPreference extends DialogPreference {
     @Override
     protected void onSetInitialValue(boolean restorePersistedValue, Object defaultValue) {
         Float fDefaultValue = (Float) defaultValue;
-        setValue(restorePersistedValue ? getPersistedFloat(fDefaultValue) : fDefaultValue);
+        SharedPreferences preference = getSharedPreferences();
+        setValue(preference.getFloat(PREFERENCE_NAME, fDefaultValue));
     }
 
     public void setValue(float value) {
@@ -161,7 +164,7 @@ public class FontSizePickerPreference extends DialogPreference {
 
         // Save the preference for later
         SharedPreferences.Editor editor = getSharedPreferences().edit();
-        editor.putFloat("font_size", value);
+        editor.putFloat(PREFERENCE_NAME, value);
         editor.apply();
     }
 

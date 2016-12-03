@@ -48,7 +48,6 @@
         android:defaultValue="@dimen/pref_default_fontsize"
         custom:min="@integer/pref_fontsize_min"
         custom:max="@integer/pref_fontsize_max"
-
         />
 
     <!-- The list of themes -->
