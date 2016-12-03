@@ -57,6 +57,8 @@ public class EntryView extends TextView {
         switch (font) {
             case PRECIOSA:
                return makeFont("Preciosa.ttf");
+            case WIEYNK_FRAKTUR_ZIER:
+                return makeFont("WieynkFrakturZier.ttf");
             case REDIVIVA_ZIERBUCHSTABEN:
             default:
                 return makeFont("RedivivaZierbuchstaben.ttf");

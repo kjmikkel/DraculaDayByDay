@@ -50,12 +50,14 @@
 
     <string name="pref_title_initial_type">Initial</string>
     <string-array name="pref_initial_type_entries">
-        <item>RedivivaZierbuchstaben</item>
-        <item>WieynkFrakturZier</item>
+        <item>Rediviva Zierbuchstaben</item>
+        <item>Wieynk Fraktur Zier</item>
+        <item>Preciosa</item>
     </string-array>
     <string name="pref_summary_initial_type">The font used for the initial (if the choice is supported in the font menu)</string>
-    <string name="pref_default_value_initial_type">RedivivaZierbuchstaben</string>
+    <string name="pref_default_value_initial_type">Rediviva Zierbuchstaben</string>
 
+    <!--
     <string name="pref_title_font_size">Font size</string>
     <string-array name="pref_font_size_titles">
         <item>10</item>
@@ -71,6 +73,7 @@
         <item>30</item>
     </string-array>
     <string name="pref_summary_font_size">The size of the font to be used in the story</string>
+    -->
 
     <string name="pref_title_theme">Theme</string>
     <string-array name="pref_theme_titles">
@@ -78,46 +81,12 @@
     </string-array>
     <string name="pref_summary_theme">The theme of the application</string>
 
-    <!-- Example settings for Data & Sync -->
-    <string name="pref_header_data_sync">Data &amp; sync</string>
-
-    <string name="pref_title_sync_frequency">Sync frequency</string>
-    <string-array name="pref_sync_frequency_titles">
-        <item>15 minutes</item>
-        <item>30 minutes</item>
-        <item>1 hour</item>
-        <item>3 hours</item>
-        <item>6 hours</item>
-        <item>Never</item>
-    </string-array>
-    <string-array name="pref_sync_frequency_values">
-        <item>15</item>
-        <item>30</item>
-        <item>60</item>
-        <item>180</item>
-        <item>360</item>
-        <item>-1</item>
-    </string-array>
-
-    <string-array name="list_preference_entries">
-        <item>Entry 1</item>
-        <item>Entry 2</item>
-        <item>Entry 3</item>
-    </string-array>
-
-    <string-array name="list_preference_entry_values">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-    </string-array>
-
     <string name="pref_time_for_notification_titles">Time for notification</string>
     <string name="pref_time_for_notification_default">At set time</string>
     <string-array name="list_preference_time_for_notification_">
         <item>At set time</item>
         <item>In interval</item>
     </string-array>
-
 
     <string-array name="multi_select_list_preference_default_value" />
 
