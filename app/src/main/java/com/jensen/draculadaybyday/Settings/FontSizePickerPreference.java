@@ -178,6 +178,10 @@ public class FontSizePickerPreference extends DialogPreference {
         SharedPreferences.Editor editor = getSharedPreferences().edit();
         editor.putFloat(PREFERENCE_NAME, value);
         editor.apply();
+
+        // Update the summary
+        String newSummary = getContext().getString(R.string.pref_summary_fontsize).replace("%s", Float.toString(value));
+        setSummary(newSummary);
     }
 
     private int getWithinLimits(int value, int min, int max) {

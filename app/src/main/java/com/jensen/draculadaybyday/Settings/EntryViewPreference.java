@@ -108,7 +108,6 @@ public class EntryViewPreference extends Preference {
     */
 
     private void updateToPreferences() {
-
         // Initialization
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
         Resources res = getContext().getResources();
@@ -149,6 +148,7 @@ public class EntryViewPreference extends Preference {
         try {
             super.onBindView(view);
             entryView = (EntryView) view.findViewById(R.id.entry_view_widget);
+            updateToPreferences();
         } catch(Exception e) {
             Log.e("Settings", e.getMessage());
         }
