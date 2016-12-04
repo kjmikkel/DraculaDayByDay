@@ -1,8 +1,11 @@
 package com.jensen.draculadaybyday.Settings;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.preference.Preference;
+import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -36,60 +39,35 @@ public class EntryViewPreference extends Preference {
 
             // Get the font
             String font = fixEnumValue(array.getString(R.styleable.EntryViewPreference_font));
-            if (font != null) {
-                try {
-                    fontEnum = FontEnum.valueOf(font);
-                } catch (Exception e) {
-                    Log.e("Settings", e.getMessage());
-                }
-            }
+            makeFontFromString(font);
 
             String initialFont = fixEnumValue(array.getString(R.styleable.EntryViewPreference_initial));
-            if (initialFont != null) {
-                try {
-                    initialEnum = InitialEnum.valueOf(initialFont);
-                } catch (Exception e) {
-                    Log.e("Settings", e.getMessage());
-                }
-           }
+            makeInitialFromString(initialFont);
 
            // Get the font size
            fontSize = array.getFloat(R.styleable.EntryViewPreference_fontSize, 14.0f);
-
-            // Try to execute
-            setValuesForEntryView();
-
-            //          entryView.setText(text);
-
-//        String text = attrs.getAttributeValue(textId);
-            //      entryView.setText(text);
-
-            //getResources().getResourceEntryName(R.attr.text);
-
-            //attrs.
-
-            //  this.entryView.setText(attrs.getAttributeValue);
-            //   this.setWidgetLayoutResource(R.layout.entry_detail);
-        /*
-        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.EntryViewPreference, 0, 0);
-        try {
-            String text = typedArray.getString(R.styleable.EntryViewPreference_text);
-            String initial = typedArray.getString(R.styleable.EntryViewPreference_initial);
-            String font = typedArray.getString(R.styleable.EntryViewPreference_font);
-
-            float fontSize = typedArray.getFloat(R.styleable.EntryViewPreference_fontSize, 14.0f);
-
-            FontEnum fontEnum = FontEnum.valueOf(font);
-
-            if (initial == null || initial.isEmpty()) {
-                setText(text, fontEnum, fontSize);
-            } else {
-                InitialEnum initialEnum = InitialEnum.valueOf(initial);
-                setText(text, initialEnum, fontEnum, fontSize);
-            }
-        */
         } finally {
             array.recycle();
+        }
+    }
+
+    private void makeFontFromString(String font) {
+        if (font != null) {
+            try {
+                fontEnum = FontEnum.valueOf(font);
+            } catch (Exception e) {
+                Log.e("Settings", e.getMessage());
+            }
+        }
+    }
+
+    private void makeInitialFromString(String initialFont) {
+        if (initialFont != null) {
+            try {
+                initialEnum = InitialEnum.valueOf(initialFont);
+            } catch (Exception e) {
+                Log.e("Settings", e.getMessage());
+            }
         }
     }
 
@@ -109,6 +87,47 @@ public class EntryViewPreference extends Preference {
         if (entryView != null) {
             entryView.setText(text, initialEnum, fontEnum, fontSize);
         }
+    }
+
+    /*
+    @Override
+    public boolean onPreferenceChange(Preference preference, Object value)
+    {
+        String textValue = value.toString();
+
+        ListPreference listPreference = (ListPreference) preference;
+        int index = listPreference.findIndexOfValue(textValue);
+
+        CharSequence[] entries = listPreference.getEntries();
+
+        if(index >= 0)
+            Toast.makeText(preference.getContext(), entries[index], Toast.LENGTH_LONG);
+
+        return true;
+    }
+    */
+
+    private void updateToPreferences() {
+
+        // Initialization
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
+        Resources res = getContext().getResources();
+
+        // Get the font
+        String fontString = sp.getString(res.getString(R.string.pref_key_font_type), "-1");
+        if (fontString != "-1") {
+            makeFontFromString(fontString);
+        }
+
+        // Get the initial
+        String initialString = sp.getString(res.getString(R.string.pref_key_initial_type), "-1");
+        if (initialString != "-1") {
+            makeInitialFromString(initialString);
+        }
+
+        fontSize = sp.getFloat(res.getString(R.string.pref_key_fontsize), fontSize);
+
+        entryView.setText(text, initialEnum, fontEnum, fontSize);
     }
 
     @Override

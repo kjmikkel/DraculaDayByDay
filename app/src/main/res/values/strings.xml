@@ -35,6 +35,7 @@
     <!-- Font settings for Font -->
     <string name="pref_header_display">Display</string>
 
+    <!-- The font type -->
     <string name="pref_title_font_type">Font</string>
     <string-array name="pref_font_type_titles">
         <item>Droid Sans</item>
@@ -45,36 +46,22 @@
         <item>Victorian</item>
         <item>Victorian with Initial</item>
     </string-array>
+    <string name="pref_key_font_type">display_pref_font</string>
     <string name="pref_summary_font_type">The font to be used for the story</string>
     <string name="pref_default_value_font_type">Victorian with Initial</string>
 
+    <!-- The font initial -->
     <string name="pref_title_initial_type">Initial</string>
     <string-array name="pref_initial_type_entries">
         <item>Rediviva Zierbuchstaben</item>
         <item>Wieynk Fraktur Zier</item>
         <item>Preciosa</item>
     </string-array>
+    <string name="pref_key_initial_type">display_pref_initial</string>
     <string name="pref_summary_initial_type">The font used for the initial (if the choice is supported in the font menu)</string>
     <string name="pref_default_value_initial_type">Rediviva Zierbuchstaben</string>
 
-    <!--
-    <string name="pref_title_font_size">Font size</string>
-    <string-array name="pref_font_size_titles">
-        <item>10</item>
-        <item>12</item>
-        <item>14</item>
-        <item>16</item>
-        <item>18</item>
-        <item>20</item>
-        <item>22</item>
-        <item>24</item>
-        <item>26</item>
-        <item>28</item>
-        <item>30</item>
-    </string-array>
-    <string name="pref_summary_font_size">The size of the font to be used in the story</string>
-    -->
-
+    <!-- The theme of the application -->
     <string name="pref_title_theme">Theme</string>
     <string-array name="pref_theme_titles">
         <item>Default</item>
@@ -122,8 +109,9 @@
     <string name="entry_view_default">This is the default text for an entry - if you are reading this, something has gone wrong in retrieving the relevant entry</string>
     <string name="pref_entryview_sample_text">_3 May. Bistritz._--Left Munich at 8:35 P. M., on 1st May, arriving at Vienna early next morning; should have arrived at 6:46, but train was an hour late.</string>
 
-    <string name="pref_fontsize_title_text">Font size</string>
-    <string name="pref_fontsize_summary">Set the fontsize</string>
+    <string name="pref_title_text_fontsize">Font size</string>
+    <string name="pref_summary_fontsize">Set the size of the font</string>
+    <string name="pref_key_fontsize">display_pref_fontsize</string>
 
     <!-- Shared preferences name -->
     <string name="shared_pref_display">SHARED_PREF_DISPLAY</string>

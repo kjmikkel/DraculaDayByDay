@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.preference.DialogPreference;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -126,9 +127,9 @@ public class FontSizePickerPreference extends DialogPreference {
             pickerFractional.clearFocus();
 
             float valueInt = pickerInteger.getValue();
-            float valueFrac = pickerFractional.getValue();
+            float valueFraction = pickerFractional.getValue();
 
-            float newValue = valueInt + (valueFrac / 10.0F);
+            float newValue = valueInt + (valueFraction / 10.0F);
 
             if (callChangeListener(newValue)) {
                 setValue(newValue);
@@ -144,8 +145,19 @@ public class FontSizePickerPreference extends DialogPreference {
     @Override
     protected void onSetInitialValue(boolean restorePersistedValue, Object defaultValue) {
         Float fDefaultValue = (Float) defaultValue;
+
+        if (fDefaultValue == null) {
+            TypedValue outValue = new TypedValue();
+            getContext().getResources().getValue(R.dimen.pref_default_fontsize, outValue, true);
+            fDefaultValue = outValue.getFloat();
+        }
+
         SharedPreferences preference = getSharedPreferences();
-        setValue(preference.getFloat(PREFERENCE_NAME, fDefaultValue));
+        if (preference != null) {
+            setValue(preference.getFloat(PREFERENCE_NAME, fDefaultValue));
+        } else {
+            setValue(fDefaultValue);
+        }
     }
 
     public void setValue(float value) {

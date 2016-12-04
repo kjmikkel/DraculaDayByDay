@@ -9,18 +9,19 @@
         android:defaultValue="@string/pref_default_value_font_type"
         android:entries="@array/pref_font_type_titles"
         android:entryValues="@array/pref_font_type_titles"
-        android:key="display_pref_font"
+        android:key="@string/pref_key_font_type"
         android:id="@+id/display_pref_font"
         android:negativeButtonText="@null"
         android:positiveButtonText="@null"
         android:title="@string/pref_title_font_type"
         android:summary="@string/pref_summary_font_type"/>
 
+    <!-- The list of initial fonts -->
     <ListPreference
         android:defaultValue="@string/pref_default_value_initial_type"
         android:entries="@array/pref_initial_type_entries"
         android:entryValues="@array/pref_initial_type_entries"
-        android:key="display_pref_initial"
+        android:key="@string/pref_key_initial_type"
         android:id="@+id/display_pref_initial"
         android:negativeButtonText="@null"
         android:positiveButtonText="@null"
@@ -28,9 +29,11 @@
         android:summary="@string/pref_summary_initial_type"
         />
 
+    <!-- The size of the font -->
     <com.jensen.draculadaybyday.Settings.FontSizePickerPreference
-        android:title="@string/pref_fontsize_title_text"
-        android:summary="@string/pref_fontsize_summary"
+        android:title="@string/pref_title_text_fontsize"
+        android:summary="@string/pref_summary_fontsize"
+        android:key="@string/pref_key_fontsize"
         android:defaultValue="@dimen/pref_default_fontsize"
         custom:min="@integer/pref_fontsize_min"
         custom:max="@integer/pref_fontsize_max"
