@@ -9,6 +9,9 @@
 
     <!-- Strings related to Settings -->
 
+    <!-- Example General settings -->
+    <string name="pref_header_general">General</string>
+
     <!-- Font settings for Font -->
     <string name="pref_header_display">Display</string>
 
@@ -49,6 +52,10 @@
         <item>Default</item>
     </string-array>
     <string name="pref_summary_theme">The theme of the application is %s</string>
+
+    <!-- Font example -->
+    <string name="pref_key_font_example">display_pref_font_example</string>
+
 
     <string name="pref_time_for_notification_titles">Time for notification</string>
     <string name="pref_time_for_notification_default">At set time</string>

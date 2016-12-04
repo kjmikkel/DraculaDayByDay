@@ -38,10 +38,10 @@ public class EntryViewPreference extends Preference {
             text = array.getString(R.styleable.EntryViewPreference_text);
 
             // Get the font
-            String font = fixEnumValue(array.getString(R.styleable.EntryViewPreference_font));
+            String font = array.getString(R.styleable.EntryViewPreference_font);
             makeFontFromString(font);
 
-            String initialFont = fixEnumValue(array.getString(R.styleable.EntryViewPreference_initial));
+            String initialFont = array.getString(R.styleable.EntryViewPreference_initial);
             makeInitialFromString(initialFont);
 
            // Get the font size
@@ -52,6 +52,7 @@ public class EntryViewPreference extends Preference {
     }
 
     private void makeFontFromString(String font) {
+        font = fixEnumValue(font);
         if (font != null) {
             try {
                 fontEnum = FontEnum.valueOf(font);
@@ -62,6 +63,7 @@ public class EntryViewPreference extends Preference {
     }
 
     private void makeInitialFromString(String initialFont) {
+        initialFont = fixEnumValue(initialFont);
         if (initialFont != null) {
             try {
                 initialEnum = InitialEnum.valueOf(initialFont);
@@ -89,25 +91,7 @@ public class EntryViewPreference extends Preference {
         }
     }
 
-    /*
-    @Override
-    public boolean onPreferenceChange(Preference preference, Object value)
-    {
-        String textValue = value.toString();
-
-        ListPreference listPreference = (ListPreference) preference;
-        int index = listPreference.findIndexOfValue(textValue);
-
-        CharSequence[] entries = listPreference.getEntries();
-
-        if(index >= 0)
-            Toast.makeText(preference.getContext(), entries[index], Toast.LENGTH_LONG);
-
-        return true;
-    }
-    */
-
-    private void updateToPreferences() {
+    public void updateToPreferences() {
         // Initialization
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
         Resources res = getContext().getResources();

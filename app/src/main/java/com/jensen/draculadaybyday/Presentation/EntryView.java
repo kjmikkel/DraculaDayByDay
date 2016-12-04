@@ -43,8 +43,9 @@ public class EntryView extends TextView {
         setTextSize(SIZE_UNIT, fontSize);
 
         SpannableStringBuilder SS = new SpannableStringBuilder(text);
-        SS.setSpan(new CustomTypefaceSpan("", getInitialType(initialFont)), 0, 1, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
-        SS.setSpan(new CustomTypefaceSpan("", getMainBodyType(basicFont)), 1, text.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+
+        // SS.setSpan(new CustomTypefaceSpan("", getInitialType(initialFont)), 0, 10, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+        SS.setSpan(new CustomTypefaceSpan("", getMainBodyType(basicFont)), 1, text.length() - 1, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
 
         setText(SS);
     }
@@ -76,6 +77,7 @@ public class EntryView extends TextView {
             case HARRINGTON:
                 return makeFont("Harrington.ttf");
             case VICTORIAN:
+            case VICTORIAN_WITH_INITIAL:
                 return makeFont("Victorian.ttf");
             case DROID_SANS:
             default:

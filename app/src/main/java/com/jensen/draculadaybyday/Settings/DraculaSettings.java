@@ -44,8 +44,6 @@ public class DraculaSettings extends AppCompatPreferenceActivity {
         public boolean onPreferenceChange(Preference preference, Object value) {
             String stringValue = value.toString();
 
-
-
             if (preference instanceof ListPreference) {
                 // For list preferences, look up the correct display value in
                 // the preference's 'entries' list.
@@ -85,6 +83,9 @@ public class DraculaSettings extends AppCompatPreferenceActivity {
                 // simple string representation.
                 preference.setSummary(stringValue);
             }
+
+
+
             return true;
         }
     };
@@ -200,11 +201,23 @@ public class DraculaSettings extends AppCompatPreferenceActivity {
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class DisplayPreferenceFragment extends PreferenceFragment {
+
+        private static EntryViewPreference fontExample = null;
+
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.pref_display);
             setHasOptionsMenu(true);
+
+            fontExample = (EntryViewPreference) findPreference(getString(R.string.pref_key_font_example));
+            setUpdatePref(R.string.pref_key_font_type);
+            setUpdatePref(R.string.pref_key_fontsize);
+            setUpdatePref(R.string.pref_key_initial_type);
+        }
+
+        private void setUpdatePref(int prefId) {
+            findPreference(getString(prefId)).setOnPreferenceChangeListener(sPreferenceUpdate);
         }
 
         @Override
@@ -216,6 +229,14 @@ public class DraculaSettings extends AppCompatPreferenceActivity {
             }
             return super.onOptionsItemSelected(item);
         }
+
+        private static Preference.OnPreferenceChangeListener sPreferenceUpdate = new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object value) {
+                fontExample.updateToPreferences();
+                return true;
+            }
+        };
     }
 
     /**
@@ -248,36 +269,4 @@ public class DraculaSettings extends AppCompatPreferenceActivity {
             return super.onOptionsItemSelected(item);
         }
     }
-
-    /**
-     * This fragment shows data and sync preferences only. It is used when the
-     * activity is showing a two-pane settings UI.
-     */
-    /*
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public static class DataSyncPreferenceFragment extends PreferenceFragment {
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.pref_data_sync);
-            setHasOptionsMenu(true);
-
-            // Bind the summaries of EditText/List/Dialog/Ringtone preferences
-            // to their values. When their values change, their summaries are
-            // updated to reflect the new value, per the Android Design
-            // guidelines.
-         //   bindPreferenceSummaryToValue(findPreference("sync_frequency"));
-        }
-
-        @Override
-        public boolean onOptionsItemSelected(MenuItem item) {
-            int id = item.getItemId();
-            if (id == android.R.id.home) {
-                startActivity(new Intent(getActivity(), DraculaSettings.class));
-                return true;
-            }
-            return super.onOptionsItemSelected(item);
-        }
-    }
-    */
 }

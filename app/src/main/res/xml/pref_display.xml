@@ -52,7 +52,7 @@
 
     <com.jensen.draculadaybyday.Settings.EntryViewPreference
         android:name="ShowFontExample"
-        android:key=""
+        android:key="@string/pref_key_font_example"
         android:title="Font Example:"
         android:layout="@layout/entry_view_preference"
         custom:text="@string/pref_entryview_sample_text"
