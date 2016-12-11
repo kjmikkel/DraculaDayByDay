@@ -205,21 +205,17 @@ public class NotificationTime extends DialogPreference {
     private void setupButton(final Button button, int hour, int minute) {
         button.setText(String.format(TIME_FORMAT, hour, minute));
 
-        final boolean isToButton = button == toButton;
-
         final TimePickerDialog.OnTimeSetListener listener = new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 button.setText(String.format(TIME_FORMAT, hourOfDay, minute));
 
                 // We have to store the values in the correct data structure
-                if (isToButton) {
-                    if (setTimeRadioButton.isChecked()) {
-                        setTime = new Tuple<>(hourOfDay, minute);
-                    } else {
-                        toTime = new Tuple<>(hourOfDay, minute);
-                    }
-                } else {
+                if (button == setButton) {
+                    setTime = new Tuple<>(hourOfDay, minute);
+                } else if (button == toButton) {
+                    toTime = new Tuple<>(hourOfDay, minute);
+                } else if (button == fromButton) {
                     fromTime = new Tuple<>(hourOfDay, minute);
                 }
             }
