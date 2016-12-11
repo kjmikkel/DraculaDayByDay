@@ -6,22 +6,34 @@
          when checked/unchecked. -->
     <CheckBoxPreference
         android:defaultValue="true"
-        android:key="notifications_new_message"
+        android:key="@string/pref_key_new_message_notifications"
         android:title="@string/pref_title_new_message_notifications"
+        />
+
+    <SwitchPreference
+        android:id="@+id/notification_light_pref_id"
+        android:defaultValue="false"
+        android:dependency="@string/pref_key_new_message_notifications"
+        android:key="@string/pref_key_light"
+        android:title="@string/pref_title_light"
+        android:summary="@string/pref_summary_light"
         />
 
     <!-- Whether or not phone/tablet should vibrate when there is a notification -->
     <SwitchPreference
-        android:id="@+id/notification_pref_id"
+        android:id="@+id/notification_vibrate_pref_id"
         android:defaultValue="false"
-        android:dependency="notifications_new_message"
+        android:dependency="@string/pref_key_new_message_notifications"
         android:key="@string/pref_key_vibrate"
         android:title="@string/pref_title_vibrate"
+        android:summary="@string/pref_summary_vibrate"
         />
 
+    <!-- When the user is going to be notified of new unlocked entries -->
     <com.jensen.draculadaybyday.Settings.NotificationTimePreference
         android:title="@string/pref_title_notification"
         android:summary="@string/pref_summary_notification"
+        android:dependency="@string/pref_key_new_message_notifications"
         android:key="@string/pref_key_notification"
         android:defaultValue="@array/pref_default_notification_time"
         custom:setTime="@bool/pref_notification_setTime"

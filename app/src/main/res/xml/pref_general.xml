@@ -1,15 +1,17 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!-- When to show -->
     <ListPreference
         android:defaultValue="@string/pref_experience_default_value"
         android:entries="@array/list_preference_how_to_experience"
         android:entryValues="@array/list_preference_how_to_experience"
-        android:key="experiance_preference"
+        android:key="@string/pref_key_how_to_experience"
         android:negativeButtonText="@null"
         android:positiveButtonText="@null"
         android:summary="@string/pref_summary_how_to_experience"
         android:title="@string/pref_how_to_experience_title" />
-    
+
+    <!-- Reset the book experience -->
     <com.jensen.draculadaybyday.Settings.YesNoPreference
         android:dialogMessage="@string/pref_reset_book_dialog_message"
         android:key="@string/pref_reset_book_key"

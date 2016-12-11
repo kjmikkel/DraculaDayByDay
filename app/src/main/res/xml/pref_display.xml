@@ -51,6 +51,7 @@
         custom:max="@integer/pref_fontsize_max"
         />
 
+    <!-- An example of how the text is going to look like -->
     <com.jensen.draculadaybyday.Settings.EntryViewPreference
         android:name="@string/pref_name_font_example"
         android:key="@string/pref_key_font_example"

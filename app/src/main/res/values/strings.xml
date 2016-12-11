@@ -60,14 +60,24 @@
     <string name="pref_title_font_example">Font Example:</string>
     <string name="pref_name_font_example">ShowFontExample</string>
 
+    <!-- Example of EntryView Preference -->
+    <string name="pref_entryview_sample_text">_3 May. Bistritz._--Left Munich at 8:35 P. M., on 1st May, arriving at Vienna early next morning; should have arrived at 6:46, but train was an hour late.</string>
+
     <!-- Example settings for Notifications -->
     <string name="pref_header_notifications">Notifications</string>
 
     <string name="pref_title_new_message_notifications">Notify when new entries are unlocked</string>
+    <string name="pref_key_new_message_notifications">notifications_new_message</string>
+
+    <!-- Light -->
+    <string name="pref_key_light">notifications_new_entry_light</string>
+    <string name="pref_title_light">Light</string>
+    <string name="pref_summary_light">Show a flashing light when a new entry has been unlocked</string>
 
     <!-- Vibrate -->
-    <string name="pref_title_vibrate">Vibrate</string>
     <string name="pref_key_vibrate">notifications_new_entry_vibrate</string>
+    <string name="pref_title_vibrate">Vibrate</string>
+    <string name="pref_summary_vibrate" >Vibrate when a new entry has been unlocked</string>
 
     <!-- Notification times  -->
     <string name="pref_time_for_notification_titles">Time for notification</string>
@@ -97,18 +107,20 @@
         <item>On the actual day</item>
         <item>In the same tempo</item>
     </string-array>
+    <string name="pref_key_how_to_experience">experience_preference</string>
 
+    <!-- Reset Book  -->
     <string name="pref_reset_book_dialog_message">Do you really want to reset the book to the beginning? This action cannot be undone</string>
     <string name="pref_reset_book_key">reset_book</string>
     <string name="pref_reset_book_summary">Click here to reset the book to the beginning</string>
     <string name="pref_reset_book_title">Reset the book</string>
 
+    <!-- EntryView -->
+    <string name="entry_view_default">This is the default text for an entry - if you are reading this, something has gone wrong in retrieving the relevant entry</string>
+
+    <!-- Entry View Preference -->
     <string name="pref_entryview_title_text">Title</string>
     <string name="pref_entryview_text">Preference EntryView default value</string>
-    <string name="entry_view_default">This is the default text for an entry - if you are reading this, something has gone wrong in retrieving the relevant entry</string>
-    <string name="pref_entryview_sample_text">_3 May. Bistritz._--Left Munich at 8:35 P. M., on 1st May, arriving at Vienna early next morning; should have arrived at 6:46, but train was an hour late.</string>
-
-
 
     <!-- Shared preferences name -->
     <string name="shared_pref_display">SHARED_PREF_DISPLAY</string>
