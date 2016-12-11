@@ -7,10 +7,10 @@
 
     <!-- The list of themes -->
     <ListPreference
-        android:defaultValue="Default"
+        android:defaultValue="@string/pref_default_value_theme"
         android:entries="@array/pref_theme_titles"
         android:entryValues="@array/pref_theme_titles"
-        android:key="display_theme"
+        android:key="@string/pref_key_theme"
         android:negativeButtonText="@null"
         android:positiveButtonText="@null"
         android:title="@string/pref_title_theme"
@@ -52,9 +52,9 @@
         />
 
     <com.jensen.draculadaybyday.Settings.EntryViewPreference
-        android:name="ShowFontExample"
+        android:name="@string/pref_name_font_example"
         android:key="@string/pref_key_font_example"
-        android:title="Font Example:"
+        android:title="@string/pref_title_font_example"
         android:layout="@layout/entry_view_preference"
         custom:text="@string/pref_entryview_sample_text"
         custom:font="@string/pref_default_value_font_type"

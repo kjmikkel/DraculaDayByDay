@@ -51,17 +51,14 @@
     <string-array name="pref_theme_titles">
         <item>Default</item>
     </string-array>
+    <string name="pref_default_value_theme">Default</string>
     <string name="pref_summary_theme">The theme of the application is %s</string>
+    <string name="pref_key_theme">display_theme</string>
 
     <!-- Font example -->
     <string name="pref_key_font_example">display_pref_font_example</string>
-
-
-
-
-    <string-array name="multi_select_list_preference_default_value" />
-
-    <string name="pref_title_system_sync_settings">System sync settings</string>
+    <string name="pref_title_font_example">Font Example:</string>
+    <string name="pref_name_font_example">ShowFontExample</string>
 
     <!-- Example settings for Notifications -->
     <string name="pref_header_notifications">Notifications</string>
@@ -72,7 +69,7 @@
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="pref_key_vibrate">notifications_new_entry_vibrate</string>
 
-    <!--  -->
+    <!-- Notification times  -->
     <string name="pref_time_for_notification_titles">Time for notification</string>
 
     <string name="pref_notification_set">Set</string>
@@ -85,13 +82,14 @@
     <string name="pref_notification_interval_to">To:</string>
     <string name="pref_notification_interval_at_time">At Time:</string>
 
-    <string name="pref_notification_when_to_notify">Notify type</string>
-    <string name="pref_notification_specific_time">Specific time</string>
-    <string name="pref_notification_interval">Random in interval</string>
-
     <string name="pref_notification_summary_setat">Notifications of new messages will happen at %s</string>
     <string name="pref_notification_summary_interval">Notifications will happen randomly between %% and %%</string>
 
+    <string name="pref_title_notification">Set Time</string>
+    <string name="pref_key_notification">notifications_when_to_notify</string>
+    <string name="pref_summary_notification">Basic summary</string>
+
+    <!-- When to show -->
     <string name="pref_how_to_experience_title">How to experience the book</string>
     <string name="pref_experience_default_value">On the actual day</string>
     <string name="pref_summary_how_to_experience">You can either experience the book on calendar days it happened, or in the same tempo (with today being the first day)</string>

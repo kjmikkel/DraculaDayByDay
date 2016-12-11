@@ -21,6 +21,7 @@ import com.jensen.draculadaybyday.R;
 
 public class NotificationTime extends DialogPreference {
 
+    // Preference IDs
     public static final String PREFERENCE_TYPE_NAME = "notification_type";
     public static final String PREFERENCE_FROM_NAME = "notification_from";
     public static final String PREFERENCE_TO_NAME = "notification_to";
@@ -49,9 +50,8 @@ public class NotificationTime extends DialogPreference {
 
     private static final String TIME_FORMAT = "%02d:%02d";
 
-    public static Tuple<Integer, Integer> getTimeTuple(CharSequence time) {
+    private static Tuple<Integer, Integer> getTimeTuple(CharSequence time) {
         String[] pieces = ((String)time).split(":");
-
         return new Tuple<>(Integer.parseInt(pieces[0]), Integer.parseInt(pieces[1]));
     }
 
@@ -67,10 +67,6 @@ public class NotificationTime extends DialogPreference {
                 0);
 
         try {
-            fromTime = getTime(R.styleable.NotificationTime_fromHour, R.styleable.NotificationTime_fromMinute, array, defStyle);
-            toTime = getTime(R.styleable.NotificationTime_toHour, R.styleable.NotificationTime_toMinute, array, defStyle);
-            setTime = getTime(R.styleable.NotificationTime_setHour, R.styleable.NotificationTime_setMinute, array, defStyle);
-
             setAt = array.getBoolean(R.styleable.NotificationTime_setTime, true);
         } finally {
             array.recycle();
@@ -87,10 +83,23 @@ public class NotificationTime extends DialogPreference {
     public NotificationTime(Context context, AttributeSet attrs) {
         super(context, attrs);
 
+        // Get the attributes
         getAttributesArguments(context, attrs, 0);
 
-        setPositiveButtonText(getContext().getString(R.string.pref_notification_set));
+        // Set the "Cancel" and "Set" buttons
         setNegativeButtonText(getContext().getString(R.string.pref_notification_cancel));
+        setPositiveButtonText(getContext().getString(R.string.pref_notification_set));
+    }
+
+    public NotificationTime(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+
+        // Get the attributes
+        getAttributesArguments(context, attrs, defStyleAttr);
+
+        // Set the "Cancel" and "Set" buttons
+        setNegativeButtonText(getContext().getString(R.string.pref_notification_cancel));
+        setPositiveButtonText(getContext().getString(R.string.pref_notification_set));
     }
 
     @Override
@@ -169,7 +178,7 @@ public class NotificationTime extends DialogPreference {
         intervalViewParams.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
         //endregion
 
-        //region Begin setup
+        //region Layout setup
         layout.addView(notificationView, notificationViewParams);
         if (setAt) {
             setTimeRadioButton.setChecked(true);
@@ -184,6 +193,7 @@ public class NotificationTime extends DialogPreference {
         intervalRadioButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setAt = false;
                 layout.removeView(setAtView);
                 layout.addView(intervalView, intervalViewParams);
             }
@@ -192,6 +202,7 @@ public class NotificationTime extends DialogPreference {
         setTimeRadioButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setAt = true;
                 layout.removeView(intervalView);
                 layout.addView(setAtView, setAtViewParams);
             }
@@ -246,15 +257,17 @@ public class NotificationTime extends DialogPreference {
         if (positiveResult) {
             // Save the preferences for later
             SharedPreferences.Editor editor = getSharedPreferences().edit();
-            editor.putString(PREFERENCE_FROM_NAME, fromTime.fst + "," + fromTime.snd);
-            editor.putString(PREFERENCE_TO_NAME, toTime.fst + "," + toTime.snd);
-            editor.putString(PREFERENCE_SET_TIME, setTime.fst + "," + setTime.snd);
-            editor.putBoolean(PREFERENCE_TYPE_NAME, setTimeRadioButton.isChecked());
+            editor.putString(PREFERENCE_FROM_NAME, fromTime.fst + ":" + fromTime.snd);
+            editor.putString(PREFERENCE_TO_NAME, toTime.fst + ":" + toTime.snd);
+            editor.putString(PREFERENCE_SET_TIME, setTime.fst + ":" + setTime.snd);
+            editor.putBoolean(PREFERENCE_TYPE_NAME, setAt);
             editor.apply();
+
+            persistBoolean(setAt);
 
             // Set the summary
             String newSummary;
-            if (setTimeRadioButton.isChecked()) {
+            if (setAt) {
                 newSummary = getContext().getString(R.string.pref_notification_summary_setat).replace("%s", getTimeStringRep(setTime));
             } else {
                 newSummary = getContext().getString(R.string.pref_notification_summary_interval).replaceFirst("%%", getTimeStringRep(fromTime));
@@ -264,35 +277,40 @@ public class NotificationTime extends DialogPreference {
             setSummary(newSummary);
         }
     }
+    @Override
+    protected Object onGetDefaultValue(TypedArray a, int index) { return a.getTextArray(index);}
 
     @Override
     protected void onSetInitialValue(boolean restorePersistedValue, Object defaultValue) {
-        if (restorePersistedValue) {
+        super.onSetInitialValue(restorePersistedValue, defaultValue);
 
-            /*
+        CharSequence[] defaultValueArray = (CharSequence[])defaultValue;
+
+        if (restorePersistedValue) {
             SharedPreferences preference = getSharedPreferences();
             if (preference != null) {
+                setAt = preference.getBoolean(PREFERENCE_TYPE_NAME, true);
 
+                String setTimeStr = preference.getString(PREFERENCE_SET_TIME, "");
+                if (!setTimeStr.isEmpty()) {
+                    setTime = getTimeTuple(setTimeStr);
+                }
+
+                String fromTimeStr = preference.getString(PREFERENCE_FROM_NAME, "");
+                if (!fromTimeStr.isEmpty()) {
+                    fromTime = getTimeTuple(fromTimeStr);
+                }
+
+                String toTimeStr = preference.getString(PREFERENCE_TO_NAME, "");
+                if (!toTimeStr.isEmpty()) {
+                    toTime = getTimeTuple(toTimeStr);
+                }
             }
-            */
-
-        }
-
-        /*
-        Float fDefaultValue = (Float) defaultValue;
-
-        if (fDefaultValue == null) {
-            TypedValue outValue = new TypedValue();
-            getContext().getResources().getValue(R.dimen.pref_default_fontsize, outValue, true);
-            fDefaultValue = outValue.getFloat();
-        }
-
-        SharedPreferences preference = getSharedPreferences();
-        if (preference != null) {
-            setValue(preference.getFloat(PREFERENCE_NAME, fDefaultValue));
         } else {
-            setValue(fDefaultValue);
+            setAt = true;
+            setTime = getTimeTuple(defaultValueArray[0]);
+            fromTime = getTimeTuple(defaultValueArray[1]);
+            toTime = getTimeTuple(defaultValueArray[2]);
         }
-        */
     }
 }

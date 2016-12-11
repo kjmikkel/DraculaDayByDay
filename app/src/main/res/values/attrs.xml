@@ -13,12 +13,14 @@
     </declare-styleable>
 
     <declare-styleable name="NotificationTime">
-        <attr name="fromHour" format="integer" />
+        <!--
+        <attr name="from" format="integer" />
         <attr name="fromMinute" format="integer" />
         <attr name="toHour" format="integer" />
         <attr name="toMinute" format="integer"/>
         <attr name="setHour" format="integer"/>
         <attr name="setMinute" format="integer"/>
+        -->
         <attr name="setTime" format="boolean"/>
     </declare-styleable>
 

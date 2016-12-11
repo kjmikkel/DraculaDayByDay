@@ -144,6 +144,8 @@ public class FontSizePickerPreference extends DialogPreference {
 
     @Override
     protected void onSetInitialValue(boolean restorePersistedValue, Object defaultValue) {
+        super.onSetInitialValue(restorePersistedValue, defaultValue);
+
         Float fDefaultValue = (Float) defaultValue;
 
         if (fDefaultValue == null) {
@@ -152,9 +154,13 @@ public class FontSizePickerPreference extends DialogPreference {
             fDefaultValue = outValue.getFloat();
         }
 
-        SharedPreferences preference = getSharedPreferences();
-        if (preference != null) {
-            setValue(preference.getFloat(PREFERENCE_NAME, fDefaultValue));
+        if (restorePersistedValue) {
+            SharedPreferences preference = getSharedPreferences();
+            if (preference != null) {
+                setValue(preference.getFloat(PREFERENCE_NAME, fDefaultValue));
+            } else {
+                setValue(fDefaultValue);
+            }
         } else {
             setValue(fDefaultValue);
         }
