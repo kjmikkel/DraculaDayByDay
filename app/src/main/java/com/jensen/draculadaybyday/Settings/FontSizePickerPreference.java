@@ -21,6 +21,7 @@ import com.jensen.draculadaybyday.R;
  */
 public class FontSizePickerPreference extends DialogPreference {
 
+    // Preference ID
     public static final String PREFERENCE_NAME = "font_size";
 
     // allowed range for the pickerFractional
@@ -51,7 +52,6 @@ public class FontSizePickerPreference extends DialogPreference {
 
     public FontSizePickerPreference(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-
 
         // Get the attributes
         getAttributesArguments(context, attrs, defStyleAttr);

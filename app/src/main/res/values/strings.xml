@@ -57,12 +57,7 @@
     <string name="pref_key_font_example">display_pref_font_example</string>
 
 
-    <string name="pref_time_for_notification_titles">Time for notification</string>
-    <string name="pref_time_for_notification_default">At set time</string>
-    <string-array name="list_preference_time_for_notification_">
-        <item>At set time</item>
-        <item>In interval</item>
-    </string-array>
+
 
     <string-array name="multi_select_list_preference_default_value" />
 
@@ -71,14 +66,31 @@
     <!-- Example settings for Notifications -->
     <string name="pref_header_notifications">Notifications</string>
 
-    <string name="pref_title_new_message_notifications">New unlocked entry notifications</string>
+    <string name="pref_title_new_message_notifications">Notify when new entries are unlocked</string>
 
-    <string name="pref_ringtone_silent">Silent</string>
+    <!-- Vibrate -->
     <string name="pref_title_vibrate">Vibrate</string>
+    <string name="pref_key_vibrate">notifications_new_entry_vibrate</string>
 
-    <string name="pref_when_to_notify">When to notify</string>
-    <string name="pref_specific_time">Specific time</string>
-    <string name="pref_interval">Random in interval</string>
+    <!--  -->
+    <string name="pref_time_for_notification_titles">Time for notification</string>
+
+    <string name="pref_notification_set">Set</string>
+    <string name="pref_notification_cancel">Cancel</string>
+
+    <string name="pref_notification_interval_notification">In interval</string>
+    <string name="pref_notification_set_time_notification">At set time</string>
+
+    <string name="pref_notification_interval_from">From:</string>
+    <string name="pref_notification_interval_to">To:</string>
+    <string name="pref_notification_interval_at_time">At Time:</string>
+
+    <string name="pref_notification_when_to_notify">Notify type</string>
+    <string name="pref_notification_specific_time">Specific time</string>
+    <string name="pref_notification_interval">Random in interval</string>
+
+    <string name="pref_notification_summary_setat">Notifications of new messages will happen at %s</string>
+    <string name="pref_notification_summary_interval">Notifications will happen randomly between %% and %%</string>
 
     <string name="pref_how_to_experience_title">How to experience the book</string>
     <string name="pref_experience_default_value">On the actual day</string>

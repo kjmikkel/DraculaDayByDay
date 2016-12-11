@@ -1,60 +1,54 @@
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto">
 
     <!-- A 'parent' preference, which enables/disables child preferences (below)
          when checked/unchecked. -->
-    <SwitchPreference
+    <CheckBoxPreference
         android:defaultValue="true"
         android:key="notifications_new_message"
         android:title="@string/pref_title_new_message_notifications" />
 
     <!-- NOTE: This preference will be enabled only when the checkbox above is checked. -->
     <SwitchPreference
+        android:id="@+id/notification_pref_id"
         android:defaultValue="false"
         android:dependency="notifications_new_message"
-        android:key="notifications_new_message_vibrate"
+        android:key="@string/pref_key_vibrate"
         android:title="@string/pref_title_vibrate" />
 
+    <com.jensen.draculadaybyday.Settings.NotificationTime
+        android:title="Set Time"
+        custom:fromHour="@integer/pref_notification_fromHour"
+        custom:fromMinute="@integer/pref_notification_fromMinute"
+        custom:toHour="@integer/pref_notification_toHour"
+        custom:toMinute="@integer/pref_notification_toMinute"
+        custom:setHour="@integer/pref_notification_setHour"
+        custom:setMinute="@integer/pref_notification_setMinute"
+        custom:setTime="@bool/pref_notification_setTime"
+        />
+
+    <!--
     <PreferenceCategory
         android:dependency="notifications_new_message"
         android:key="notifications_time"
         android:title="@string/pref_when_to_notify" >
 
-        <ListPreference
-            android:defaultValue="@string/pref_time_for_notification_default"
-            android:entries="@array/list_preference_time_for_notification_"
-            android:entryValues="@array/list_preference_time_for_notification_"
-            android:dependency="notifications_new_message"
-            android:key="when_to_notify"
-            android:negativeButtonText="@null"
-            android:positiveButtonText="@null"
-            android:title="@string/pref_time_for_notification_titles"
-            />
+    <ListPreference
+        android:defaultValue="@string/pref_time_for_notification_default"
+        android:entries="@array/list_preference_time_for_notification_"
+        android:entryValues="@array/list_preference_time_for_notification_"
+        android:dependency="notifications_new_message"
+        android:key="when_to_notify"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:title="@string/pref_time_for_notification_titles" />
 
 
-
-    </PreferenceCategory>
-
-<!--
     <com.jensen.draculadaybyday.Settings.TimePreference
-        android:key="bb"
-        />
--->
+        android:title="Set the time" />
 
-
-    <!--
-    <RadioGroup
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
-        <RadioButton
-            android:id="@+id/specific_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/pref_specific_time"
-            android:onClick="onRadioButtonClicked"
-            />
-        <RadioButton />
-    </RadioGroup>
+    <com.jensen.draculadaybyday.Settings.TimePreference
+        android:title="End time for the interval"/>
+    </PreferenceCategory>
     -->
 </PreferenceScreen>

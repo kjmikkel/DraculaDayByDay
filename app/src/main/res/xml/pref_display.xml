@@ -4,6 +4,18 @@
 
     <!-- NOTE: Hide buttons to simplify the UI. Users can touch outside the dialog to
          dismiss it. -->
+
+    <!-- The list of themes -->
+    <ListPreference
+        android:defaultValue="Default"
+        android:entries="@array/pref_theme_titles"
+        android:entryValues="@array/pref_theme_titles"
+        android:key="display_theme"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:title="@string/pref_title_theme"
+        android:summary="@string/pref_summary_theme"/>
+
     <!-- The list of fonts -->
     <ListPreference
         android:defaultValue="@string/pref_default_value_font_type"
@@ -38,17 +50,6 @@
         custom:min="@integer/pref_fontsize_min"
         custom:max="@integer/pref_fontsize_max"
         />
-
-    <!-- The list of themes -->
-    <ListPreference
-        android:defaultValue="Default"
-        android:entries="@array/pref_theme_titles"
-        android:entryValues="@array/pref_theme_titles"
-        android:key="display_theme"
-        android:negativeButtonText="@null"
-        android:positiveButtonText="@null"
-        android:title="@string/pref_title_theme"
-        android:summary="@string/pref_summary_theme"/>
 
     <com.jensen.draculadaybyday.Settings.EntryViewPreference
         android:name="ShowFontExample"

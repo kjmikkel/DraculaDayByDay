@@ -1,10 +1,17 @@
 package com.jensen.draculadaybyday.Settings;
 
-public class TimePreference { // extends DialogPreference {
+import android.content.Context;
+import android.content.res.TypedArray;
+import android.preference.DialogPreference;
+import android.util.AttributeSet;
+import android.view.View;
+import android.widget.TimePicker;
 
-  /*  private int lastHour=0;
-    private int lastMinute=0;
-    private TimePicker picker=null;
+public class TimePreference extends DialogPreference {
+
+    private int lastHour = 0;
+    private int lastMinute = 0;
+    private TimePicker picker = null;
 
     public static int getHour(String time) {
         String[] pieces=time.split(":");
@@ -27,17 +34,18 @@ public class TimePreference { // extends DialogPreference {
 
     @Override
     protected View onCreateDialogView() {
-        picker=new TimePicker(getContext());
+        picker = new TimePicker(getContext());
+        picker.setIs24HourView(true);
 
-        return(picker);
+        return picker;
     }
 
     @Override
     protected void onBindDialogView(View v) {
         super.onBindDialogView(v);
 
-        picker.setCurrentHour(lastHour);
-        picker.setCurrentMinute(lastMinute);
+        picker.setHour(lastHour);
+        picker.setMinute(lastMinute);
     }
 
     @Override
@@ -45,8 +53,8 @@ public class TimePreference { // extends DialogPreference {
         super.onDialogClosed(positiveResult);
 
         if (positiveResult) {
-            lastHour=picker.getCurrentHour();
-            lastMinute=picker.getCurrentMinute();
+            lastHour = picker.getHour();
+            lastMinute = picker.getMinute();
 
             String time=String.valueOf(lastHour)+":"+String.valueOf(lastMinute);
 
@@ -63,22 +71,19 @@ public class TimePreference { // extends DialogPreference {
 
     @Override
     protected void onSetInitialValue(boolean restoreValue, Object defaultValue) {
-        String time=null;
+        String time = null;
 
         if (restoreValue) {
-            if (defaultValue==null) {
-                time=getPersistedString("00:00");
+            if (defaultValue == null) {
+                time = getPersistedString("00:00");
+            } else {
+                time = getPersistedString(defaultValue.toString());
             }
-            else {
-                time=getPersistedString(defaultValue.toString());
-            }
-        }
-        else {
-            time=defaultValue.toString();
+        } else {
+            time = defaultValue.toString();
         }
 
-        lastHour=getHour(time);
-        lastMinute=getMinute(time);
+        lastHour = getHour(time);
+        lastMinute = getMinute(time);
     }
-    */
 }
