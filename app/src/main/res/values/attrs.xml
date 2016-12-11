@@ -12,7 +12,7 @@
         <attr name="max" format="integer"/>
     </declare-styleable>
 
-    <declare-styleable name="NotificationTime">
+    <declare-styleable name="NotificationTimePreference">
         <!--
         <attr name="from" format="integer" />
         <attr name="fromMinute" format="integer" />

@@ -19,7 +19,7 @@ import android.widget.TimePicker;
 import com.jensen.draculadaybyday.Primitives.Tuple;
 import com.jensen.draculadaybyday.R;
 
-public class NotificationTime extends DialogPreference {
+public class NotificationTimePreference extends DialogPreference {
 
     // Preference IDs
     public static final String PREFERENCE_TYPE_NAME = "notification_type";
@@ -50,6 +50,28 @@ public class NotificationTime extends DialogPreference {
 
     private static final String TIME_FORMAT = "%02d:%02d";
 
+    public NotificationTimePreference(Context context, AttributeSet attrs) {
+        super(context, attrs);
+
+        // Get the attributes
+        getAttributesArguments(context, attrs, 0);
+
+        // Set the "Cancel" and "Set" buttons
+        setNegativeButtonText(getContext().getString(R.string.pref_notification_cancel));
+        setPositiveButtonText(getContext().getString(R.string.pref_notification_set));
+    }
+
+    public NotificationTimePreference(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+
+        // Get the attributes
+        getAttributesArguments(context, attrs, defStyleAttr);
+
+        // Set the "Cancel" and "Set" buttons
+        setNegativeButtonText(getContext().getString(R.string.pref_notification_cancel));
+        setPositiveButtonText(getContext().getString(R.string.pref_notification_set));
+    }
+
     private static Tuple<Integer, Integer> getTimeTuple(CharSequence time) {
         String[] pieces = ((String)time).split(":");
         return new Tuple<>(Integer.parseInt(pieces[0]), Integer.parseInt(pieces[1]));
@@ -62,44 +84,15 @@ public class NotificationTime extends DialogPreference {
     private void getAttributesArguments(Context context, AttributeSet attrs, int defStyle) {
         TypedArray array = context.obtainStyledAttributes(
                 attrs,
-                R.styleable.NotificationTime,
+                R.styleable.NotificationTimePreference,
                 defStyle,
                 0);
 
         try {
-            setAt = array.getBoolean(R.styleable.NotificationTime_setTime, true);
+            setAt = array.getBoolean(R.styleable.NotificationTimePreference_setTime, true);
         } finally {
             array.recycle();
         }
-    }
-
-    private static Tuple<Integer, Integer> getTime(int hour, int minute, TypedArray array, int defStyle) {
-        int fromHour =  array.getInt(hour, defStyle);
-        int fromMinute = array.getInt(minute, defStyle);
-
-        return new Tuple<>(fromHour, fromMinute);
-    }
-
-    public NotificationTime(Context context, AttributeSet attrs) {
-        super(context, attrs);
-
-        // Get the attributes
-        getAttributesArguments(context, attrs, 0);
-
-        // Set the "Cancel" and "Set" buttons
-        setNegativeButtonText(getContext().getString(R.string.pref_notification_cancel));
-        setPositiveButtonText(getContext().getString(R.string.pref_notification_set));
-    }
-
-    public NotificationTime(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-
-        // Get the attributes
-        getAttributesArguments(context, attrs, defStyleAttr);
-
-        // Set the "Cancel" and "Set" buttons
-        setNegativeButtonText(getContext().getString(R.string.pref_notification_cancel));
-        setPositiveButtonText(getContext().getString(R.string.pref_notification_set));
     }
 
     @Override

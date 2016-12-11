@@ -17,7 +17,7 @@
         android:key="@string/pref_key_vibrate"
         android:title="@string/pref_title_vibrate" />
 
-    <com.jensen.draculadaybyday.Settings.NotificationTime
+    <com.jensen.draculadaybyday.Settings.NotificationTimePreference
         android:title="@string/pref_title_notification"
         android:summary="@string/pref_summary_notification"
         android:key="@string/pref_key_notification"
