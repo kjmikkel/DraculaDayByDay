@@ -4,10 +4,12 @@
 
     <!-- A 'parent' preference, which enables/disables child preferences (below)
          when checked/unchecked. -->
-    <CheckBoxPreference
+    <SwitchPreference
+        android:id="@+id/notifications"
         android:defaultValue="true"
         android:key="@string/pref_key_new_message_notifications"
         android:title="@string/pref_title_new_message_notifications"
+        android:summary="@string/pref_summary_new_message_notifications"
         />
 
     <SwitchPreference

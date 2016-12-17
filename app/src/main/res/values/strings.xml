@@ -66,8 +66,9 @@
     <!-- Example settings for Notifications -->
     <string name="pref_header_notifications">Notifications</string>
 
-    <string name="pref_title_new_message_notifications">Notify when new entries are unlocked</string>
     <string name="pref_key_new_message_notifications">notifications_new_message</string>
+    <string name="pref_title_new_message_notifications">Notifications</string>
+    <string name="pref_summary_new_message_notifications">Notify when new entries are unlocked</string>
 
     <!-- Light -->
     <string name="pref_key_light">notifications_new_entry_light</string>
