@@ -3,7 +3,6 @@ package com.jensen.draculadaybyday.Entries;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.ListPreference;
 import android.preference.PreferenceManager;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
@@ -29,18 +28,10 @@ public class EntryDetailFragment extends Fragment {
     /**
      * The fragment argument representing the sequence number for entry represents.
      */
-    /*
-    public static final String STORY_ENTRY_NUM = "sequenceNumber";
-    public static final String ENTRY_PERSON_NUM = "entryPersonNumber";
-    public static final String CHAPTER = "chapter";
-    public static final String PERSON = "person";
-    public static final String TEXT = "text";
-    public static final String DATE = "date";
-    public static final String TYPE = "type";
-    */
-
-    private static final String DEFUALT_TITLE = "Default title";
+    private static final String DEFAULT_TITLE = "Default title";
     private static final String DEFAULT_BODY = "Default body";
+
+    private EntryView entryView;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -82,10 +73,10 @@ public class EntryDetailFragment extends Fragment {
                     appBarLayout.setTitle(entry.toString());
                 } else {
                     // Could not get a value from the database
-                    appBarLayout.setTitle(DEFUALT_TITLE);
+                    appBarLayout.setTitle(DEFAULT_TITLE);
                 }
             } else {
-                appBarLayout.setTitle(DEFUALT_TITLE);
+                appBarLayout.setTitle(DEFAULT_TITLE);
             }
         }
     }
@@ -94,29 +85,34 @@ public class EntryDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.entry_detail, null);
 
-        EntryView entryView = (EntryView) rootView.findViewById(R.id.entry_view_detail);
-
-        FragmentEntry entry = getEntryFromArgument();
-
-        String text;
-        if (entry != null) {
-            text =  entry.getFragmentEntry();
-        } else {
-            text = DEFAULT_BODY;
-        }
-
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-
-        String strInitial = preferences.getString("display_pref_initial", getString(R.string.pref_default_value_initial_type));
-        InitialEnum initialEnum = InitialEnum.valueOf(strInitial.toUpperCase().replace(" ", "_"));
-
-        String strFont = preferences.getString("display_pref_font", getString(R.string.pref_default_value_font_type));
-        FontEnum fontEnum = FontEnum.valueOf(strFont.toUpperCase().replace(" ", "_"));
-
-        float textSize = preferences.getFloat(FontSizePickerPreference.PREFERENCE_NAME, 14.0f);
-
-        entryView.setText(text, initialEnum, fontEnum, textSize);
+        entryView = (EntryView) rootView.findViewById(R.id.entry_view_detail);
+        setText();
 
         return rootView;
+    }
+
+    private void setText() {
+        if (entryView != null) {
+            FragmentEntry entry = getEntryFromArgument();
+
+            String text;
+            if (entry != null) {
+                text = entry.getFragmentEntry();
+            } else {
+                text = DEFAULT_BODY;
+            }
+
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+
+            String strInitial = preferences.getString("display_pref_initial", getString(R.string.pref_default_value_initial_type));
+            InitialEnum initialEnum = InitialEnum.valueOf(strInitial.toUpperCase().replace(" ", "_"));
+
+            String strFont = preferences.getString("display_pref_font", getString(R.string.pref_default_value_font_type));
+            FontEnum fontEnum = FontEnum.valueOf(strFont.toUpperCase().replace(" ", "_"));
+
+            float textSize = preferences.getFloat(FontSizePickerPreference.PREFERENCE_NAME, 14.0f);
+
+            entryView.setText(text, initialEnum, fontEnum, textSize);
+        }
     }
 }
