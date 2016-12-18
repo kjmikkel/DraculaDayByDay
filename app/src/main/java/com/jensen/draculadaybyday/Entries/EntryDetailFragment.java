@@ -89,6 +89,7 @@ public class EntryDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.entry_detail, container, false);
      //   EntryView view = (EntryView) rootView.findViewById(R.id.entry_detail_container);
+        /*
         EntryView view = (EntryView) rootView;
 
         FragmentEntry entry = getEntryFromArgument();
@@ -102,7 +103,7 @@ public class EntryDetailFragment extends Fragment {
 
       //  view.setText(text, InitialEnum.REDIVIVA_ZIERBUCHSTABEN, FontEnum.VICTORIAN, 32);
 //        view.setText(text, InitialEnum.PRECIOSA, FontEnum.VICTORIAN, 32);
-
+        */
         return rootView;
     }
 }

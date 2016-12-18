@@ -59,8 +59,6 @@ public class EntryListActivity extends AppCompatActivity {
             case R.id.entry_list_general_settings:
                 Intent settings = new Intent(EntryListActivity.this, DraculaSettings.class);
                 startActivity(settings);
-                //  Context context = getBaseContext();
-                //context.startActivity(new Intent(context, DraculaSettings.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -85,16 +83,6 @@ public class EntryListActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
-/*
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Context context = view.getContext();
-                context.startActivity(new Intent(context, DraculaSettings.class));
-            }
-        });
-        */
 
         FragmentEntry entry = new FragmentEntry((short)1, (short)1, (short)1, "Mikkel", "Today I coded a bit - Yeah!", Calendar.getInstance(), "Hard coded entry");
 
