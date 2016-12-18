@@ -91,6 +91,14 @@ public class EntryDetailFragment extends Fragment {
         return rootView;
     }
 
+    @Override
+    public void onResume() {
+        // Set the text again
+        setText();
+
+        super.onResume();
+    }
+
     private void setText() {
         if (entryView != null) {
             FragmentEntry entry = getEntryFromArgument();
