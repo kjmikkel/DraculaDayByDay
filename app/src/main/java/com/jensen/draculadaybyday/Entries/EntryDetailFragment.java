@@ -1,7 +1,10 @@
 package com.jensen.draculadaybyday.Entries;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.ListPreference;
+import android.preference.PreferenceManager;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,6 +17,7 @@ import com.jensen.draculadaybyday.Presentation.FontEnum;
 import com.jensen.draculadaybyday.Presentation.InitialEnum;
 import com.jensen.draculadaybyday.R;
 import com.jensen.draculadaybyday.SQLite.FragmentEntryDatabaseHandler;
+import com.jensen.draculadaybyday.Settings.FontSizePickerPreference;
 
 /**
  * A fragment representing a single Entry detail screen.
@@ -68,7 +72,8 @@ public class EntryDetailFragment extends Fragment {
             // to load content from a content provider.
 
             Activity activity = this.getActivity();
-            CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
+            CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout)
+                    activity.findViewById(R.id.toolbar_layout);
             if (appBarLayout != null) {
                 FragmentEntry entry = getEntryFromArgument();
 
@@ -87,10 +92,9 @@ public class EntryDetailFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.entry_detail, container, false);
-     //   EntryView view = (EntryView) rootView.findViewById(R.id.entry_detail_container);
-        /*
-        EntryView view = (EntryView) rootView;
+        final View rootView = inflater.inflate(R.layout.entry_detail, null);
+
+        EntryView entryView = (EntryView) rootView.findViewById(R.id.entry_view_detail);
 
         FragmentEntry entry = getEntryFromArgument();
 
@@ -101,9 +105,18 @@ public class EntryDetailFragment extends Fragment {
             text = DEFAULT_BODY;
         }
 
-      //  view.setText(text, InitialEnum.REDIVIVA_ZIERBUCHSTABEN, FontEnum.VICTORIAN, 32);
-//        view.setText(text, InitialEnum.PRECIOSA, FontEnum.VICTORIAN, 32);
-        */
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+
+        String strInitial = preferences.getString("display_pref_initial", getString(R.string.pref_default_value_initial_type));
+        InitialEnum initialEnum = InitialEnum.valueOf(strInitial.toUpperCase().replace(" ", "_"));
+
+        String strFont = preferences.getString("display_pref_font", getString(R.string.pref_default_value_font_type));
+        FontEnum fontEnum = FontEnum.valueOf(strFont.toUpperCase().replace(" ", "_"));
+
+        float textSize = preferences.getFloat(FontSizePickerPreference.PREFERENCE_NAME, 14.0f);
+
+        entryView.setText(text, initialEnum, fontEnum, textSize);
+
         return rootView;
     }
 }
