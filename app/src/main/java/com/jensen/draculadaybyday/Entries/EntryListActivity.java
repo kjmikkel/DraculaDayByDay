@@ -12,6 +12,9 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -43,6 +46,27 @@ public class EntryListActivity extends AppCompatActivity {
 
     private static FragmentEntryDatabaseHandler fragmentEntryHandler;
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.entry_list_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.entry_list_general_settings:
+                Intent settings = new Intent(EntryListActivity.this, DraculaSettings.class);
+                startActivity(settings);
+                //  Context context = getBaseContext();
+                //context.startActivity(new Intent(context, DraculaSettings.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     private void setDefaultPreferences() {
         // Create the default preferences
         PreferenceManager.setDefaultValues(this, R.xml.pref_display, false);
@@ -61,7 +85,7 @@ public class EntryListActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
-
+/*
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,6 +94,7 @@ public class EntryListActivity extends AppCompatActivity {
                 context.startActivity(new Intent(context, DraculaSettings.class));
             }
         });
+        */
 
         FragmentEntry entry = new FragmentEntry((short)1, (short)1, (short)1, "Mikkel", "Today I coded a bit - Yeah!", Calendar.getInstance(), "Hard coded entry");
 
