@@ -204,15 +204,6 @@ public class DraculaSettings extends AppCompatPreferenceActivity {
 
         @Override
         public boolean onOptionsItemSelected(MenuItem item) {
-            int id = item.getItemId();
-            if (id == android.R.id.home) {
-            /*
-                startActivity(new Intent(getActivity(), DraculaSettings.class));
-                return true;
-                */
-        //        NavUtils.navigateUpFromSameTask(this);
-                return true;
-            }
             return super.onOptionsItemSelected(item);
         }
     }
@@ -220,7 +211,15 @@ public class DraculaSettings extends AppCompatPreferenceActivity {
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class DisplayPreferenceFragment extends PreferenceFragment {
 
+        // The Font example
         private static EntryViewPreference fontExample = null;
+
+        // The List preferences
+        private static ListPreference fontPreference = null;
+        private static ListPreference initialPreference = null;
+
+        // The font key
+        private static String fontKey = null;
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
@@ -229,9 +228,17 @@ public class DraculaSettings extends AppCompatPreferenceActivity {
             setHasOptionsMenu(true);
 
             fontExample = (EntryViewPreference) findPreference(getString(R.string.pref_key_font_example));
+
+            fontPreference = (ListPreference) findPreference((getString(R.string.pref_key_font_type)));
+            initialPreference = (ListPreference) findPreference(getString(R.string.pref_key_initial_type));
+
+            fontKey = getString(R.string.pref_key_font_type);
+
             setUpdatePref(R.string.pref_key_font_type);
             setUpdatePref(R.string.pref_key_fontsize);
             setUpdatePref(R.string.pref_key_initial_type);
+
+            setEnabledStateOfInitial(fontPreference.getValue());
         }
 
         private void setUpdatePref(int prefId) {
@@ -252,9 +259,20 @@ public class DraculaSettings extends AppCompatPreferenceActivity {
             @Override
             public boolean onPreferenceChange(Preference preference, Object value) {
                 fontExample.updateToPreferences();
+
+                if (preference.getKey().equals(fontKey)) {
+                    setEnabledStateOfInitial(value.toString());
+                }
                 return true;
             }
         };
+
+        private static void setEnabledStateOfInitial(String value) {
+            if (fontPreference != null && initialPreference != null) {
+                String fontPreferenceValue = value.toLowerCase();
+                initialPreference.setEnabled(fontPreferenceValue.contains("initial"));
+            }
+        }
     }
 
     /**
