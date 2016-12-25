@@ -67,11 +67,11 @@ public class EntryView extends TextView {
 
         int currentIndex = 0;
         SpannableStringBuilder SS = new SpannableStringBuilder(finalText);
-        if (dateInterval != null) {
+        if (dateStr != null) {
             SS.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER), currentIndex, currentIndex + dateStr.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
             currentIndex += dateStr.length();
         }
-        if (locationInterval != null) {
+        if (locationStr != null) {
             SS.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER), currentIndex, currentIndex + locationStr.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
         }
         SS.setSpan(new CustomTypefaceSpan("", getMainBodyType(fontEnum)), 0, finalText.length() - 1, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
@@ -105,12 +105,12 @@ public class EntryView extends TextView {
 
         int currentIndex = 0;
         SpannableStringBuilder SS = new SpannableStringBuilder(finalText);
-        if (dateInterval != null) {
+        if (dateStr != null) {
             SS.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER), currentIndex, currentIndex + dateStr.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
             SS.setSpan(new CustomTypefaceSpan("", getMainBodyType(basicFont)),    currentIndex, currentIndex + dateStr.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
             currentIndex += dateStr.length();
         }
-        if (locationInterval != null) {
+        if (locationStr != null) {
             SS.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER), currentIndex, currentIndex + locationStr.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
             SS.setSpan(new CustomTypefaceSpan("", getMainBodyType(basicFont)),    currentIndex, currentIndex + locationStr.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
             currentIndex += locationStr.length();

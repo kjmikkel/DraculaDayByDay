@@ -84,7 +84,7 @@ public class EntryListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
 
-        FragmentEntry entry = new FragmentEntry((short)1, (short)1, (short)1, "Mikkel", "Today I coded a bit - Yeah!", Calendar.getInstance(), "Hard coded entry");
+        FragmentEntry entry = new FragmentEntry((short)1, (short)1, (short)1, "Mikkel", "[e]Today I coded a bit - Yeah![/e]", Calendar.getInstance(), "Hard coded entry");
 
         fragmentEntryHandler = FragmentEntryDatabaseHandler.getInstance(this);
         fragmentEntryHandler.addEntry(entry);
