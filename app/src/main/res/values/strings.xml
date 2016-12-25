@@ -61,7 +61,7 @@
     <string name="pref_name_font_example">ShowFontExample</string>
 
     <!-- Example of EntryView Preference -->
-    <string name="pref_entryview_sample_text">_3 May. Bistritz._--Left Munich at 8:35 P. M., on 1st May, arriving at Vienna early next morning; should have arrived at 6:46, but train was an hour late.</string>
+    <string name="pref_entryview_sample_text">[d]3 May[/d] [l]Bistritz[/l] [e]Left Munich at 8:35 P. M., on 1st May, arriving at Vienna early next morning; should have arrived at 6:46, but train was an hour late.[/e]</string>
 
     <!-- Example settings for Notifications -->
     <string name="pref_header_notifications">Notifications</string>
