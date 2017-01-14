@@ -12,6 +12,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.jensen.draculadaybyday.AboutPage;
 import com.jensen.draculadaybyday.R;
 import com.jensen.draculadaybyday.SQLite.FragmentEntryDatabaseHandler;
 import com.jensen.draculadaybyday.Settings.DraculaSettings;
@@ -27,8 +28,23 @@ public class EntryDetailActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.entry_detail_menu, menu);
+        inflater.inflate(R.menu.entry_list_menu, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.entry_list_general_settings:
+                Intent settings = new Intent(EntryDetailActivity.this, DraculaSettings.class);
+                startActivity(settings);
+                return true;
+            case R.id.entry_list_about_app:
+                Intent about = new Intent(EntryDetailActivity.this, AboutPage.class);
+                startActivity(about);
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
@@ -63,18 +79,6 @@ public class EntryDetailActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.entry_detail_container, fragment)
                     .commit();
-        }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.entry_detail_general_settings:
-                Intent settings = new Intent(EntryDetailActivity.this, DraculaSettings.class);
-                startActivity(settings);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
         }
     }
 }

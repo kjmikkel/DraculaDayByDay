@@ -6,6 +6,7 @@
     <string name="title_diaryentry_list">DiaryEntries</string>
     <string name="title_diaryentry_detail">DiaryEntry Detail</string>
     <string name="title_activity_dracula_settings">Settings</string>
+    <string name="title_activity_dracula_about">About</string>
 
     <!-- Strings related to Settings -->
 
@@ -78,7 +79,7 @@
     <!-- Vibrate -->
     <string name="pref_key_vibrate">notifications_new_entry_vibrate</string>
     <string name="pref_title_vibrate">Vibrate</string>
-    <string name="pref_summary_vibrate" >Vibrate when a new entry has been unlocked</string>
+    <string name="pref_summary_vibrate">Vibrate when a new entry has been unlocked</string>
 
     <!-- Notification times  -->
     <string name="pref_time_for_notification_titles">Time for notification</string>
@@ -127,5 +128,9 @@
     <string name="shared_pref_display">SHARED_PREF_DISPLAY</string>
     <string name="shared_pref_general">SHARED_PREF_GENERAL</string>
     <string name="shared_pref_notification">SHARED_PREF_NOTIFICATION</string>
+    <string name="title_activity_about">About</string>
+
+
+    <!-- Descriptions -->
 
 </resources>

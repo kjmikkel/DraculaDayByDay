@@ -1,12 +1,11 @@
 package com.jensen.draculadaybyday.Entries;
 
+import android.app.job.JobScheduler;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -19,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.jensen.draculadaybyday.AboutPage;
 import com.jensen.draculadaybyday.Fragment.FragmentEntry;
 import com.jensen.draculadaybyday.R;
 import com.jensen.draculadaybyday.SQLite.FragmentEntryDatabaseHandler;
@@ -60,6 +60,9 @@ public class EntryListActivity extends AppCompatActivity {
                 Intent settings = new Intent(EntryListActivity.this, DraculaSettings.class);
                 startActivity(settings);
                 return true;
+            case R.id.entry_list_about_app:
+                Intent about = new Intent(EntryListActivity.this, AboutPage.class);
+                startActivity(about);
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -84,14 +87,20 @@ public class EntryListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
 
-        FragmentEntry entry = new FragmentEntry((short)1, (short)1, (short)1, "Mikkel", "[e]Today I coded a bit - Yeah![/e]", Calendar.getInstance(), "Hard coded entry");
+        Calendar calendar = Calendar.getInstance();
+        FragmentEntry entryOne = new FragmentEntry((short)1, (short)1, (short)1, "Mikkel", "[e]First entry![/e]", calendar, "Hard coded entry");
+        FragmentEntry entryTwo = new FragmentEntry((short)1, (short)1, (short)1, "Mikkel", "[e]Second entry - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean posuere orci vel nisi accumsan fermentum.[/e]", calendar, "Hard coded entry");
 
         fragmentEntryHandler = FragmentEntryDatabaseHandler.getInstance(this);
-        fragmentEntryHandler.addEntry(entry);
+        fragmentEntryHandler.addEntry(entryOne);
+        fragmentEntryHandler.addEntry(entryTwo);
 
         View recyclerView = findViewById(R.id.entry_list);
         assert recyclerView != null;
         setupRecyclerView((RecyclerView) recyclerView);
+
+        Context context = getApplicationContext();
+      //  JobScheduler jobScheduler =  context.getSystemService(context.JOB_SCHEDULER_SERVICE);
 
         if (findViewById(R.id.entry_detail_container) != null) {
             // The detail container view will be present only in the
@@ -156,7 +165,6 @@ public class EntryListActivity extends AppCompatActivity {
                         Calendar date = holder.mItem.getDate();
 
                         FragmentEntry fragmentEntry = fragmentEntryHandler.getSpecificDiaryEntry(seqEntry, date);
-
 
                         if (fragmentEntry != null) {
                             // insert the values

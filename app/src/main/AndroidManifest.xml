@@ -29,8 +29,11 @@
         </activity>
         <activity
             android:name=".Settings.DraculaSettings"
-            android:label="@string/title_activity_dracula_settings">
-        </activity>
+            android:label="@string/title_activity_dracula_settings"></activity>
+        <activity
+            android:name=".AboutPage"
+            android:label="@string/title_activity_about"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
