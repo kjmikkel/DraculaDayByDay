@@ -1,6 +1,5 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:custom="http://schemas.android.com/apk/res-auto"
-    >
+    xmlns:custom="http://schemas.android.com/apk/res-auto">
 
     <!-- A 'parent' preference, which enables/disables child preferences (below)
          when checked/unchecked. -->
@@ -8,18 +7,16 @@
         android:id="@+id/notifications"
         android:defaultValue="true"
         android:key="@string/pref_key_new_message_notifications"
-        android:title="@string/pref_title_new_message_notifications"
         android:summary="@string/pref_summary_new_message_notifications"
-        />
+        android:title="@string/pref_title_new_message_notifications" />
 
     <SwitchPreference
         android:id="@+id/notification_light_pref_id"
         android:defaultValue="false"
         android:dependency="@string/pref_key_new_message_notifications"
         android:key="@string/pref_key_light"
-        android:title="@string/pref_title_light"
         android:summary="@string/pref_summary_light"
-        />
+        android:title="@string/pref_title_light" />
 
     <!-- Whether or not phone/tablet should vibrate when there is a notification -->
     <SwitchPreference
@@ -27,17 +24,15 @@
         android:defaultValue="false"
         android:dependency="@string/pref_key_new_message_notifications"
         android:key="@string/pref_key_vibrate"
-        android:title="@string/pref_title_vibrate"
         android:summary="@string/pref_summary_vibrate"
-        />
+        android:title="@string/pref_title_vibrate" />
 
     <!-- When the user is going to be notified of new unlocked entries -->
     <com.jensen.draculadaybyday.Settings.NotificationTimePreference
-        android:title="@string/pref_title_notification"
-        android:summary="@string/pref_summary_notification"
+        android:defaultValue="@array/pref_default_notification_time"
         android:dependency="@string/pref_key_new_message_notifications"
         android:key="@string/pref_key_notification"
-        android:defaultValue="@array/pref_default_notification_time"
-        custom:setTime="@bool/pref_notification_setTime"
-        />
+        android:summary="@string/pref_summary_notification"
+        android:title="@string/pref_title_notification"
+        custom:setTime="@bool/pref_notification_setTime" />
 </PreferenceScreen>

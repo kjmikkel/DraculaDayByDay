@@ -56,7 +56,7 @@ public class EntryDetailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
+
         if (getArguments().containsKey(FragmentEntryDatabaseHandler.ENTRY_SEQ_NUM)) {
             // Load the dummy content specified by the fragment
             // arguments. In a real-world scenario, use a Loader

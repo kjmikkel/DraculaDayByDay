@@ -44,11 +44,15 @@ public class EntryViewPreference extends Preference {
             String initialFont = array.getString(R.styleable.EntryViewPreference_initial);
             makeInitialFromString(initialFont);
 
-           // Get the font size
-           fontSize = array.getFloat(R.styleable.EntryViewPreference_fontSize, 14.0f);
+            // Get the font size
+            fontSize = array.getFloat(R.styleable.EntryViewPreference_fontSize, 14.0f);
         } finally {
             array.recycle();
         }
+    }
+
+    public EntryViewPreference(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
     }
 
     private void makeFontFromString(String font) {
@@ -71,10 +75,6 @@ public class EntryViewPreference extends Preference {
                 Log.e("Settings", e.getMessage());
             }
         }
-    }
-
-    public EntryViewPreference(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
     }
 
     private String fixEnumValue(String enumName) {
@@ -133,7 +133,7 @@ public class EntryViewPreference extends Preference {
             super.onBindView(view);
             entryView = (EntryView) view.findViewById(R.id.entry_view_widget);
             updateToPreferences();
-        } catch(Exception e) {
+        } catch (Exception e) {
             Log.e("Settings", e.getMessage());
         }
 

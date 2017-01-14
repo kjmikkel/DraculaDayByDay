@@ -2,15 +2,12 @@ package com.jensen.draculadaybyday.Entries;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.jensen.draculadaybyday.AboutPage;
 import com.jensen.draculadaybyday.R;
@@ -73,7 +70,7 @@ public class EntryDetailActivity extends AppCompatActivity {
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
             Bundle arguments = new Bundle();
-            arguments.putShort(FragmentEntryDatabaseHandler.ENTRY_SEQ_NUM,  getIntent().getShortExtra(FragmentEntryDatabaseHandler.ENTRY_SEQ_NUM, (short)1));
+            arguments.putShort(FragmentEntryDatabaseHandler.ENTRY_SEQ_NUM, getIntent().getShortExtra(FragmentEntryDatabaseHandler.ENTRY_SEQ_NUM, (short) 1));
             EntryDetailFragment fragment = new EntryDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()

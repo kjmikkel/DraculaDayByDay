@@ -26,29 +26,23 @@ public class NotificationTimePreference extends DialogPreference {
     public static final String PREFERENCE_FROM_NAME = "notification_from";
     public static final String PREFERENCE_TO_NAME = "notification_to";
     public static final String PREFERENCE_SET_TIME = "notification_set_time";
-
+    private static final String TIME_FORMAT = "%02d:%02d";
     // Time
     private Tuple<Integer, Integer> setTime;
     private Tuple<Integer, Integer> fromTime;
     private Tuple<Integer, Integer> toTime;
-
     // Radio buttons
     private RadioButton setTimeRadioButton;
     private RadioButton intervalRadioButton;
-
     // Buttons
     private Button setButton;
     private Button fromButton;
     private Button toButton;
-
     // Text view
     private TextView setTextView;
     private TextView toTextView;
     private TextView fromTextView;
-
     private boolean setAt;
-
-    private static final String TIME_FORMAT = "%02d:%02d";
 
     public NotificationTimePreference(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -73,7 +67,7 @@ public class NotificationTimePreference extends DialogPreference {
     }
 
     private static Tuple<Integer, Integer> getTimeTuple(CharSequence time) {
-        String[] pieces = ((String)time).split(":");
+        String[] pieces = ((String) time).split(":");
         return new Tuple<>(Integer.parseInt(pieces[0]), Integer.parseInt(pieces[1]));
     }
 
@@ -243,10 +237,12 @@ public class NotificationTimePreference extends DialogPreference {
     }
 
     @Override
-    protected void onBindDialogView(View v) { super.onBindDialogView(v); }
+    protected void onBindDialogView(View v) {
+        super.onBindDialogView(v);
+    }
 
     @Override
-    protected  void onDialogClosed(boolean positiveResult) {
+    protected void onDialogClosed(boolean positiveResult) {
         if (positiveResult) {
             // Save the preferences for later
             SharedPreferences.Editor editor = getSharedPreferences().edit();
@@ -270,14 +266,17 @@ public class NotificationTimePreference extends DialogPreference {
             setSummary(newSummary);
         }
     }
+
     @Override
-    protected Object onGetDefaultValue(TypedArray a, int index) { return a.getTextArray(index);}
+    protected Object onGetDefaultValue(TypedArray a, int index) {
+        return a.getTextArray(index);
+    }
 
     @Override
     protected void onSetInitialValue(boolean restorePersistedValue, Object defaultValue) {
         super.onSetInitialValue(restorePersistedValue, defaultValue);
 
-        CharSequence[] defaultValueArray = (CharSequence[])defaultValue;
+        CharSequence[] defaultValueArray = (CharSequence[]) defaultValue;
 
         if (restorePersistedValue) {
             SharedPreferences preference = getSharedPreferences();

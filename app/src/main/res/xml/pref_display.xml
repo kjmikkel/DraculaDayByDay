@@ -1,6 +1,5 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:custom="http://schemas.android.com/apk/res-auto"
-    >
+    xmlns:custom="http://schemas.android.com/apk/res-auto">
 
     <!-- NOTE: Hide buttons to simplify the UI. Users can touch outside the dialog to
          dismiss it. -->
@@ -13,53 +12,50 @@
         android:key="@string/pref_key_theme"
         android:negativeButtonText="@null"
         android:positiveButtonText="@null"
-        android:title="@string/pref_title_theme"
-        android:summary="@string/pref_summary_theme"/>
+        android:summary="@string/pref_summary_theme"
+        android:title="@string/pref_title_theme" />
 
     <!-- The list of fonts -->
     <ListPreference
+        android:id="@+id/display_pref_font"
         android:defaultValue="@string/pref_default_value_font_type"
         android:entries="@array/pref_font_type_titles"
         android:entryValues="@array/pref_font_type_titles"
         android:key="@string/pref_key_font_type"
-        android:id="@+id/display_pref_font"
         android:negativeButtonText="@null"
         android:positiveButtonText="@null"
-        android:title="@string/pref_title_font_type"
-        android:summary="@string/pref_summary_font_type"/>
+        android:summary="@string/pref_summary_font_type"
+        android:title="@string/pref_title_font_type" />
 
     <!-- The list of initial fonts -->
     <ListPreference
+        android:id="@+id/display_pref_initial"
         android:defaultValue="@string/pref_default_value_initial_type"
         android:entries="@array/pref_initial_type_entries"
         android:entryValues="@array/pref_initial_type_entries"
         android:key="@string/pref_key_initial_type"
-        android:id="@+id/display_pref_initial"
         android:negativeButtonText="@null"
         android:positiveButtonText="@null"
-        android:title="@string/pref_title_initial_type"
         android:summary="@string/pref_summary_initial_type"
-        />
+        android:title="@string/pref_title_initial_type" />
 
     <!-- The size of the font -->
     <com.jensen.draculadaybyday.Settings.FontSizePickerPreference
-        android:title="@string/pref_title_text_fontsize"
-        android:summary="@string/pref_summary_fontsize"
-        android:key="@string/pref_key_fontsize"
         android:defaultValue="@dimen/pref_default_fontsize"
-        custom:min="@integer/pref_fontsize_min"
+        android:key="@string/pref_key_fontsize"
+        android:summary="@string/pref_summary_fontsize"
+        android:title="@string/pref_title_text_fontsize"
         custom:max="@integer/pref_fontsize_max"
-        />
+        custom:min="@integer/pref_fontsize_min" />
 
     <!-- An example of how the text is going to look like -->
     <com.jensen.draculadaybyday.Settings.EntryViewPreference
         android:name="@string/pref_name_font_example"
         android:key="@string/pref_key_font_example"
-        android:title="@string/pref_title_font_example"
         android:layout="@layout/entry_view_preference"
-        custom:text="@string/pref_entryview_sample_text"
+        android:title="@string/pref_title_font_example"
         custom:font="@string/pref_default_value_font_type"
-        custom:initial="@string/pref_default_value_initial_type"
         custom:fontSize="@dimen/pref_default_fontsize"
-        />
+        custom:initial="@string/pref_default_value_initial_type"
+        custom:text="@string/pref_entryview_sample_text" />
 </PreferenceScreen>

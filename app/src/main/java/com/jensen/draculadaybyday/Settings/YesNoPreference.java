@@ -64,6 +64,15 @@ public class YesNoPreference extends DialogPreference {
     }
 
     /**
+     * Gets the value of this preference.
+     *
+     * @return The value of the preference.
+     */
+    public boolean getValue() {
+        return mWasPositiveResult;
+    }
+
+    /**
      * Sets the value of this preference, and saves it to the persistent store
      * if required.
      *
@@ -75,15 +84,6 @@ public class YesNoPreference extends DialogPreference {
         persistBoolean(value);
 
         notifyDependencyChange(!value);
-    }
-
-    /**
-     * Gets the value of this preference.
-     *
-     * @return The value of the preference.
-     */
-    public boolean getValue() {
-        return mWasPositiveResult;
     }
 
     @Override
@@ -129,23 +129,6 @@ public class YesNoPreference extends DialogPreference {
     }
 
     private static class SavedState extends BaseSavedState {
-        boolean wasPositiveResult;
-
-        public SavedState(Parcel source) {
-            super(source);
-            wasPositiveResult = source.readInt() == 1;
-        }
-
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
-            super.writeToParcel(dest, flags);
-            dest.writeInt(wasPositiveResult ? 1 : 0);
-        }
-
-        public SavedState(Parcelable superState) {
-            super(superState);
-        }
-
         public static final Parcelable.Creator<SavedState> CREATOR =
                 new Parcelable.Creator<SavedState>() {
                     public SavedState createFromParcel(Parcel in) {
@@ -156,6 +139,22 @@ public class YesNoPreference extends DialogPreference {
                         return new SavedState[size];
                     }
                 };
+        boolean wasPositiveResult;
+
+        public SavedState(Parcel source) {
+            super(source);
+            wasPositiveResult = source.readInt() == 1;
+        }
+
+        public SavedState(Parcelable superState) {
+            super(superState);
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            super.writeToParcel(dest, flags);
+            dest.writeInt(wasPositiveResult ? 1 : 0);
+        }
     }
 
 }

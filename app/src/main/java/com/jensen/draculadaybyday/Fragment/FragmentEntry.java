@@ -42,13 +42,21 @@ public class FragmentEntry {
         this.type = type;
     }
 
-    public short getStoryEntryNum() { return storyEntryNum; }
+    public short getStoryEntryNum() {
+        return storyEntryNum;
+    }
 
-    public short getDateEntryNum() { return dateEntryNum; }
+    public short getDateEntryNum() {
+        return dateEntryNum;
+    }
 
-    public short getChapter() { return chapter; }
+    public short getChapter() {
+        return chapter;
+    }
 
-    public String getPerson() { return person; }
+    public String getPerson() {
+        return person;
+    }
 
     public String getFragmentEntry() {
         return diaryEntry;
@@ -58,14 +66,20 @@ public class FragmentEntry {
         return date;
     }
 
-    public String getType() { return type; }
+    public String getType() {
+        return type;
+    }
 
     private String getDayOfMonthSuffix(final int n) {
         switch (n % 10) {
-            case 1:  return "st";
-            case 2:  return "nd";
-            case 3:  return "rd";
-            default: return "th";
+            case 1:
+                return "st";
+            case 2:
+                return "nd";
+            case 3:
+                return "rd";
+            default:
+                return "th";
         }
     }
 

@@ -8,6 +8,16 @@ import android.text.TextPaint;
 import android.text.style.TypefaceSpan;
 
 public class CustomTypefaceSpan extends TypefaceSpan {
+    public static final Parcelable.Creator<CustomTypefaceSpan> CREATOR = new Parcelable.Creator<CustomTypefaceSpan>() {
+
+        public CustomTypefaceSpan createFromParcel(Parcel in) {
+            return new CustomTypefaceSpan(in);
+        }
+
+        public CustomTypefaceSpan[] newArray(int size) {
+            return new CustomTypefaceSpan[size];
+        }
+    };
     private final Typeface newType;
 
     public CustomTypefaceSpan(String family, Typeface type) {
@@ -18,16 +28,6 @@ public class CustomTypefaceSpan extends TypefaceSpan {
     public CustomTypefaceSpan(Parcel in) {
         super(in.readString());
         newType = Typeface.createFromFile(in.readString());
-    }
-
-    @Override
-    public void updateDrawState(TextPaint ds) {
-        applyCustomTypeFace(ds, newType);
-    }
-
-    @Override
-    public void updateMeasureState(TextPaint paint) {
-        applyCustomTypeFace(paint, newType);
     }
 
     private static void applyCustomTypeFace(Paint paint, Typeface tf) {
@@ -50,6 +50,11 @@ public class CustomTypefaceSpan extends TypefaceSpan {
 
         paint.setTypeface(tf);
     }
+
+    @Override
+    public void updateDrawState(TextPaint ds) {
+        applyCustomTypeFace(ds, newType);
+    }
     /*
     public void writeToParcel(Parcel out) {
         out.writeString(getFamily());
@@ -57,14 +62,8 @@ public class CustomTypefaceSpan extends TypefaceSpan {
     }
     */
 
-    public static final Parcelable.Creator<CustomTypefaceSpan> CREATOR = new Parcelable.Creator<CustomTypefaceSpan>() {
-
-        public CustomTypefaceSpan createFromParcel(Parcel in) {
-            return new CustomTypefaceSpan(in);
-        }
-
-        public CustomTypefaceSpan[] newArray(int size) {
-            return new CustomTypefaceSpan[size];
-        }
-    };
+    @Override
+    public void updateMeasureState(TextPaint paint) {
+        applyCustomTypeFace(paint, newType);
+    }
 }

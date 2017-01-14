@@ -19,16 +19,6 @@ import java.util.List;
  */
 public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLiteOpenHelper {
 
-    // All Static variables
-    // Database Version
-    private static final int DATABASE_VERSION = 1;
-
-    // Database Name
-    private static final String DATABASE_NAME = "fragmentEntryManager";
-
-    // Contacts table name
-    private static final String TABLE_ENTRY = "entry";
-
     // Contacts Table Columns names
     public static final String ENTRY_SEQ_NUM = "entrySeqNum";
     public static final String ENTRY_DATE_NUM = "entryDateNum";
@@ -37,15 +27,19 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
     public static final String TEXT = "text";
     public static final String DATE = "date";
     public static final String TYPE = "type";
-
-    private static final String[] allEntries = new String[]         { ENTRY_SEQ_NUM, ENTRY_DATE_NUM, CHAPTER, PERSON, TEXT, DATE, TYPE};
-    private static final String[] allEntriesButText = new String[]  { ENTRY_SEQ_NUM, ENTRY_DATE_NUM, CHAPTER, PERSON, DATE, TYPE};
-
-    // The database
-    private SQLiteDatabase db;
-
+    // All Static variables
+    // Database Version
+    private static final int DATABASE_VERSION = 1;
+    // Database Name
+    private static final String DATABASE_NAME = "fragmentEntryManager";
+    // Contacts table name
+    private static final String TABLE_ENTRY = "entry";
+    private static final String[] allEntries = new String[]{ENTRY_SEQ_NUM, ENTRY_DATE_NUM, CHAPTER, PERSON, TEXT, DATE, TYPE};
+    private static final String[] allEntriesButText = new String[]{ENTRY_SEQ_NUM, ENTRY_DATE_NUM, CHAPTER, PERSON, DATE, TYPE};
     // The instance of the class
     private static FragmentEntryDatabaseHandler databaseHandler = null;
+    // The database
+    private SQLiteDatabase db;
 
     private FragmentEntryDatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -132,9 +126,9 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
 
         Cursor cursor = db.query(
                 TABLE_ENTRY,
-                new String[] { ENTRY_SEQ_NUM },
+                new String[]{ENTRY_SEQ_NUM},
                 ENTRY_SEQ_NUM + " = ?",
-                new String[] { String.valueOf(sequenceNumber) },
+                new String[]{String.valueOf(sequenceNumber)},
                 null,
                 null,
                 null);
@@ -179,7 +173,7 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
         return new FragmentEntry(
                 getShort(cursor, ENTRY_SEQ_NUM),
                 getShort(cursor, ENTRY_DATE_NUM),
-                getShort(cursor,  CHAPTER),
+                getShort(cursor, CHAPTER),
                 getString(cursor, PERSON),
                 null,
                 makeDate(getString(cursor, DATE)),
@@ -256,7 +250,7 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
     }
 
     private FragmentEntry getSingleEntry(String query, String[] value, String groupBy, String orderBy) {
-        LinkedList<FragmentEntry>  entryList = getCompleteEntryFromDatabase(query, value, groupBy, orderBy);
+        LinkedList<FragmentEntry> entryList = getCompleteEntryFromDatabase(query, value, groupBy, orderBy);
 
         /*
         if (1 < entryList.size()) {
@@ -278,46 +272,46 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
 
     // Get the diary entry for the specific sequence number and calendar date
     public FragmentEntry getSpecificDiaryEntry(int entrySequenceNumber, Calendar date) {
-        return getSingleEntry(ENTRY_SEQ_NUM + "=? AND " + DATE + "<= ?"  , new String[] { String.valueOf(entrySequenceNumber), formatDate(date) }, null, null);
+        return getSingleEntry(ENTRY_SEQ_NUM + "=? AND " + DATE + "<= ?", new String[]{String.valueOf(entrySequenceNumber), formatDate(date)}, null, null);
     }
 
     // Get the diary entry based on a sequence number
     public FragmentEntry getSpecificDiaryEntry(int entrySequenceNumber) {
-        return getSingleEntry(ENTRY_SEQ_NUM + "=?", new String[] { String.valueOf(entrySequenceNumber)}, null, null);
+        return getSingleEntry(ENTRY_SEQ_NUM + "=?", new String[]{String.valueOf(entrySequenceNumber)}, null, null);
     }
 
     // Get a specific entry from a specific person
     public FragmentEntry getSpecificDiaryEntryByPerson(String person, int entryPersonNum, Calendar date) {
-        return getSingleEntry(PERSON + "=? AND " + ENTRY_DATE_NUM + "=? AND " + DATE + "<=?", new String[] {person, String.valueOf(entryPersonNum), formatDate(date)}, null, null);
+        return getSingleEntry(PERSON + "=? AND " + ENTRY_DATE_NUM + "=? AND " + DATE + "<=?", new String[]{person, String.valueOf(entryPersonNum), formatDate(date)}, null, null);
     }
 
     // Get a specific entry from a specific Chapter
     public LinkedList<FragmentEntry> getChapter(int chapter, Calendar date) {
-      //  return get
-    return null;
+        //  return get
+        return null;
     }
 
     public List<FragmentEntry> getDiaryEntries(Calendar date) {
         return null;
-    //    return getCompleteEntryFromDatabase(DATE + "=?", new String[] { dateValue }, DATE, ENTRY_SEQ_NUM);
+        //    return getCompleteEntryFromDatabase(DATE + "=?", new String[] { dateValue }, DATE, ENTRY_SEQ_NUM);
     }
 
     public List<FragmentEntry> getDiaryEntriesBeforeDate(Calendar date) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String dateValue = dateFormat.format(date.getTime());
 
-        return  getCheapEntryFromDatabase("1=1", null, DATE, ENTRY_SEQ_NUM);
+        return getCheapEntryFromDatabase("1=1", null, DATE, ENTRY_SEQ_NUM);
     }
 
     public List<FragmentEntry> getDiaryEntryByChapter(int chapter) {
-        return getCheapEntryFromDatabase(CHAPTER +" = ?", new String[] { String.valueOf(chapter) }, DATE, ENTRY_SEQ_NUM);
+        return getCheapEntryFromDatabase(CHAPTER + " = ?", new String[]{String.valueOf(chapter)}, DATE, ENTRY_SEQ_NUM);
     }
 
     public List<FragmentEntry> getDiaryEntryByPerson(String person) {
-        return getCheapEntryFromDatabase(PERSON + " = ?", new String[] {person}, DATE, ENTRY_DATE_NUM);
+        return getCheapEntryFromDatabase(PERSON + " = ?", new String[]{person}, DATE, ENTRY_DATE_NUM);
     }
 
     public List<FragmentEntry> getDiaryEntryByType(String type) {
-        return getCheapEntryFromDatabase(TYPE + "= ?", new String[] {type}, DATE, ENTRY_SEQ_NUM);
+        return getCheapEntryFromDatabase(TYPE + "= ?", new String[]{type}, DATE, ENTRY_SEQ_NUM);
     }
 }

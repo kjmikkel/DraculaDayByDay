@@ -1,6 +1,5 @@
 package com.jensen.draculadaybyday.Entries;
 
-import android.app.job.JobScheduler;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -38,13 +37,12 @@ import java.util.List;
  */
 public class EntryListActivity extends AppCompatActivity {
 
+    private static FragmentEntryDatabaseHandler fragmentEntryHandler;
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
      * device.
      */
     private boolean mTwoPane;
-
-    private static FragmentEntryDatabaseHandler fragmentEntryHandler;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -88,8 +86,8 @@ public class EntryListActivity extends AppCompatActivity {
         toolbar.setTitle(getTitle());
 
         Calendar calendar = Calendar.getInstance();
-        FragmentEntry entryOne = new FragmentEntry((short)1, (short)1, (short)1, "Mikkel", "[e]First entry![/e]", calendar, "Hard coded entry");
-        FragmentEntry entryTwo = new FragmentEntry((short)1, (short)1, (short)1, "Mikkel", "[e]Second entry - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean posuere orci vel nisi accumsan fermentum.[/e]", calendar, "Hard coded entry");
+        FragmentEntry entryOne = new FragmentEntry((short) 1, (short) 1, (short) 1, "Mikkel", "[e]First entry![/e]", calendar, "Hard coded entry");
+        FragmentEntry entryTwo = new FragmentEntry((short) 1, (short) 1, (short) 1, "Mikkel", "[e]Second entry - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean posuere orci vel nisi accumsan fermentum.[/e]", calendar, "Hard coded entry");
 
         fragmentEntryHandler = FragmentEntryDatabaseHandler.getInstance(this);
         fragmentEntryHandler.addEntry(entryOne);
@@ -100,7 +98,7 @@ public class EntryListActivity extends AppCompatActivity {
         setupRecyclerView((RecyclerView) recyclerView);
 
         Context context = getApplicationContext();
-      //  JobScheduler jobScheduler =  context.getSystemService(context.JOB_SCHEDULER_SERVICE);
+        //  JobScheduler jobScheduler =  context.getSystemService(context.JOB_SCHEDULER_SERVICE);
 
         if (findViewById(R.id.entry_detail_container) != null) {
             // The detail container view will be present only in the

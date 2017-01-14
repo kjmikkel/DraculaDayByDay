@@ -3,13 +3,13 @@
     <declare-styleable name="EntryViewPreference">
         <attr name="text" format="string" />
         <attr name="font" format="string" />
-        <attr name="initial" format="string"/>
+        <attr name="initial" format="string" />
         <attr name="fontSize" format="float" />
     </declare-styleable>
 
     <declare-styleable name="FontSizePickerPreference">
-        <attr name="min" format="integer"/>
-        <attr name="max" format="integer"/>
+        <attr name="min" format="integer" />
+        <attr name="max" format="integer" />
     </declare-styleable>
 
     <declare-styleable name="NotificationTimePreference">
@@ -21,7 +21,7 @@
         <attr name="setHour" format="integer"/>
         <attr name="setMinute" format="integer"/>
         -->
-        <attr name="setTime" format="boolean"/>
+        <attr name="setTime" format="boolean" />
     </declare-styleable>
 
 </resources>

@@ -23,14 +23,11 @@ public class FontSizePickerPreference extends DialogPreference {
 
     // Preference ID
     public static final String PREFERENCE_NAME = "font_size";
-
+    // enable or disable the 'circular behavior'
+    public static final boolean WRAP_SELECTOR_WHEEL = true;
     // allowed range for the pickerFractional
     private static final int MINIMAL_FRACTIONAL = 0;
     private static final int MAXIMUM_FRACTIONAL = 9;
-
-    // enable or disable the 'circular behavior'
-    public static final boolean WRAP_SELECTOR_WHEEL = true;
-
     private NumberPicker pickerInteger;
     private NumberPicker pickerFractional;
 
@@ -74,7 +71,7 @@ public class FontSizePickerPreference extends DialogPreference {
     @Override
     protected View onCreateDialogView() {
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-        ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
         layoutParams.gravity = Gravity.CENTER;
         layoutParams.weight = 1;
@@ -166,6 +163,15 @@ public class FontSizePickerPreference extends DialogPreference {
         }
     }
 
+    private int getWithinLimits(int value, int min, int max) {
+        value = min <= value ? value : min;
+        return value <= max ? value : max;
+    }
+
+    public float getValue() {
+        return this.value;
+    }
+
     public void setValue(float value) {
         // Set and save the value
         this.value = value;
@@ -188,14 +194,5 @@ public class FontSizePickerPreference extends DialogPreference {
         // Update the summary
         String newSummary = getContext().getString(R.string.pref_summary_fontsize).replace("%s", Float.toString(value));
         setSummary(newSummary);
-    }
-
-    private int getWithinLimits(int value, int min, int max) {
-        value = min <= value ? value : min;
-        return value <= max ? value : max;
-    }
-
-    public float getValue() {
-        return this.value;
     }
 }

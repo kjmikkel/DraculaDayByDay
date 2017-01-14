@@ -15,7 +15,6 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
 import android.view.MenuItem;
@@ -62,7 +61,7 @@ public class DraculaSettings extends AppCompatPreferenceActivity {
                 // using RingtoneManager.
                 if (TextUtils.isEmpty(stringValue)) {
                     // Empty values correspond to 'silent' (no ringtone).
-                 //   preference.setSummary(R.string.pref_ringtone_silent);
+                    //   preference.setSummary(R.string.pref_ringtone_silent);
 
                 } else {
                     Ringtone ringtone = RingtoneManager.getRingtone(
@@ -84,7 +83,6 @@ public class DraculaSettings extends AppCompatPreferenceActivity {
                 // simple string representation.
                 preference.setSummary(stringValue);
             }
-
 
 
             return true;
@@ -220,6 +218,24 @@ public class DraculaSettings extends AppCompatPreferenceActivity {
 
         // The font key
         private static String fontKey = null;
+        private static Preference.OnPreferenceChangeListener sPreferenceUpdate = new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object value) {
+                fontExample.updateToPreferences();
+
+                if (preference.getKey().equals(fontKey)) {
+                    setEnabledStateOfInitial(value.toString());
+                }
+                return true;
+            }
+        };
+
+        private static void setEnabledStateOfInitial(String value) {
+            if (fontPreference != null && initialPreference != null) {
+                String fontPreferenceValue = value.toLowerCase();
+                initialPreference.setEnabled(fontPreferenceValue.contains("initial"));
+            }
+        }
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
@@ -254,25 +270,6 @@ public class DraculaSettings extends AppCompatPreferenceActivity {
             }
             return super.onOptionsItemSelected(item);
         }
-
-        private static Preference.OnPreferenceChangeListener sPreferenceUpdate = new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object value) {
-                fontExample.updateToPreferences();
-
-                if (preference.getKey().equals(fontKey)) {
-                    setEnabledStateOfInitial(value.toString());
-                }
-                return true;
-            }
-        };
-
-        private static void setEnabledStateOfInitial(String value) {
-            if (fontPreference != null && initialPreference != null) {
-                String fontPreferenceValue = value.toLowerCase();
-                initialPreference.setEnabled(fontPreferenceValue.contains("initial"));
-            }
-        }
     }
 
     /**
@@ -291,7 +288,7 @@ public class DraculaSettings extends AppCompatPreferenceActivity {
             // to their values. When their values change, their summaries are
             // updated to reflect the new value, per the Android Design
             // guidelines.
-           // bindPreferenceSummaryToValue(findPreference("notifications_new_message_ringtone"));
+            // bindPreferenceSummaryToValue(findPreference("notifications_new_message_ringtone"));
         }
 
         @Override
@@ -299,7 +296,7 @@ public class DraculaSettings extends AppCompatPreferenceActivity {
             int id = item.getItemId();
             if (id == android.R.id.home) {
                 startActivity(new Intent(getActivity(), DraculaSettings.class));
-             //   NavUtils.navigateUpTo(this, new Intent(this, EntryListActivity.class));
+                //   NavUtils.navigateUpTo(this, new Intent(this, EntryListActivity.class));
                 return true;
             }
             return super.onOptionsItemSelected(item);

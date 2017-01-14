@@ -43,7 +43,7 @@ public class EntryView extends TextView {
     }
 
     private void setTextWithoutInitial(String text, FontEnum fontEnum, float fontSize) {
-        setTextSize(SIZE_UNIT,fontSize);
+        setTextSize(SIZE_UNIT, fontSize);
 
         String finalText = "";
 
@@ -63,7 +63,7 @@ public class EntryView extends TextView {
 
         Tuple<Integer, Integer> entryInterval = findEntry(text);
         if (entryInterval.fst != -1 && entryInterval.snd != -1) {
-            finalText  += text.substring(entryInterval.fst, entryInterval.snd);
+            finalText += text.substring(entryInterval.fst, entryInterval.snd);
         }
 
         int currentIndex = 0;
@@ -101,19 +101,19 @@ public class EntryView extends TextView {
 
         Tuple<Integer, Integer> entryInterval = findEntry(text);
         if (entryInterval.fst != -1 && entryInterval.snd != -1) {
-            finalText  += text.substring(entryInterval.fst, entryInterval.snd);
+            finalText += text.substring(entryInterval.fst, entryInterval.snd);
         }
 
         int currentIndex = 0;
         SpannableStringBuilder SS = new SpannableStringBuilder(finalText);
         if (dateStr != null) {
             SS.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER), currentIndex, currentIndex + dateStr.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
-            SS.setSpan(new CustomTypefaceSpan("", getMainBodyType(basicFont)),    currentIndex, currentIndex + dateStr.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+            SS.setSpan(new CustomTypefaceSpan("", getMainBodyType(basicFont)), currentIndex, currentIndex + dateStr.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
             currentIndex += dateStr.length();
         }
         if (locationStr != null) {
             SS.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER), currentIndex, currentIndex + locationStr.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
-            SS.setSpan(new CustomTypefaceSpan("", getMainBodyType(basicFont)),    currentIndex, currentIndex + locationStr.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+            SS.setSpan(new CustomTypefaceSpan("", getMainBodyType(basicFont)), currentIndex, currentIndex + locationStr.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
             currentIndex += locationStr.length();
         }
 
@@ -154,7 +154,7 @@ public class EntryView extends TextView {
     private Typeface getInitialType(InitialEnum font) {
         switch (font) {
             case PRECIOSA:
-               return makeFont("Preciosa.ttf");
+                return makeFont("Preciosa.ttf");
             case WIEYNK_FRAKTUR_ZIER:
                 return makeFont("WieynkFrakturZier.ttf");
             case REDIVIVA_ZIERBUCHSTABEN:
