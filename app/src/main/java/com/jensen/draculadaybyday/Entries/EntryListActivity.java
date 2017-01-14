@@ -68,7 +68,7 @@ public class EntryListActivity extends AppCompatActivity {
 
     private void setDefaultPreferences() {
         // Create the default preferences
-        PreferenceManager.setDefaultValues(this, R.xml.pref_display, false);
+        PreferenceManager.setDefaultValues(this, R.xml.pref_user_interface, false);
         PreferenceManager.setDefaultValues(this, R.xml.pref_general, false);
         PreferenceManager.setDefaultValues(this, R.xml.pref_notification, false);
     }

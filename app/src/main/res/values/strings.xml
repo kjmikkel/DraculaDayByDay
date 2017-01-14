@@ -14,7 +14,7 @@
     <string name="pref_header_general">General</string>
 
     <!-- Font preferences -->
-    <string name="pref_header_display">Display</string>
+    <string name="pref_header_user_interface">User Interface</string>
 
     <!-- The font type -->
     <string name="pref_title_font_type">Font</string>
@@ -27,7 +27,7 @@
         <item>Victorian</item>
         <item>Victorian with Initial</item>
     </string-array>
-    <string name="pref_key_font_type">display_pref_font</string>
+    <string name="pref_key_font_type">user_interface_pref_font</string>
     <string name="pref_summary_font_type">The font for the story is %s</string>
     <string name="pref_default_value_font_type">Victorian with Initial</string>
 
@@ -38,14 +38,14 @@
         <item>Wieynk Fraktur Zier</item>
         <item>Preciosa</item>
     </string-array>
-    <string name="pref_key_initial_type">display_pref_initial</string>
+    <string name="pref_key_initial_type">user_interface_pref_initial</string>
     <string name="pref_summary_initial_type">The font initial is %s</string>
     <string name="pref_default_value_initial_type">Rediviva Zierbuchstaben</string>
 
     <!-- Font size -->
     <string name="pref_title_text_fontsize">Font size</string>
     <string name="pref_summary_fontsize">The font size is %s</string>
-    <string name="pref_key_fontsize">display_pref_fontsize</string>
+    <string name="pref_key_fontsize">user_interface_pref_fontsize</string>
 
     <!-- The theme of the application -->
     <string name="pref_title_theme">Theme</string>
@@ -54,10 +54,10 @@
     </string-array>
     <string name="pref_default_value_theme">Default</string>
     <string name="pref_summary_theme">The theme of the application is %s</string>
-    <string name="pref_key_theme">display_theme</string>
+    <string name="pref_key_theme">user_interface_theme</string>
 
     <!-- Font example -->
-    <string name="pref_key_font_example">display_pref_font_example</string>
+    <string name="pref_key_font_example">user_interface_pref_font_example</string>
     <string name="pref_title_font_example">Font Example:</string>
     <string name="pref_name_font_example">ShowFontExample</string>
 
@@ -125,7 +125,7 @@
     <string name="pref_entryview_text">Preference EntryView default value</string>
 
     <!-- Shared preferences name -->
-    <string name="shared_pref_display">SHARED_PREF_DISPLAY</string>
+    <string name="shared_pref_user_interface">SHARED_PREF_USER_INTERFACE</string>
     <string name="shared_pref_general">SHARED_PREF_GENERAL</string>
     <string name="shared_pref_notification">SHARED_PREF_NOTIFICATION</string>
     <string name="title_activity_about">About</string>

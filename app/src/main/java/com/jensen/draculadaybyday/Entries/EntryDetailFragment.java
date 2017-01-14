@@ -112,10 +112,10 @@ public class EntryDetailFragment extends Fragment {
 
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
 
-            String strInitial = preferences.getString("display_pref_initial", getString(R.string.pref_default_value_initial_type));
+            String strInitial = preferences.getString("user_interface_pref_initial", getString(R.string.pref_default_value_initial_type));
             InitialEnum initialEnum = InitialEnum.valueOf(strInitial.toUpperCase().replace(" ", "_"));
 
-            String strFont = preferences.getString("display_pref_font", getString(R.string.pref_default_value_font_type));
+            String strFont = preferences.getString("user_interface_pref_font", getString(R.string.pref_default_value_font_type));
             FontEnum fontEnum = FontEnum.valueOf(strFont.toUpperCase().replace(" ", "_"));
 
             float textSize = preferences.getFloat(FontSizePickerPreference.PREFERENCE_NAME, 14.0f);

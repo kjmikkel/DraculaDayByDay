@@ -4,12 +4,13 @@
 
     <header
         android:fragment="com.jensen.draculadaybyday.Preferences.DraculaPreferences$GeneralPreferenceFragment"
-        android:icon="@drawable/ic_info_black_24dp"
+        android:icon="@drawable/ic_general_black_24dp"
         android:title="@string/pref_header_general" />
 
     <header
-        android:fragment="com.jensen.draculadaybyday.Preferences.DraculaPreferences$DisplayPreferenceFragment"
-        android:title="@string/pref_header_display" />
+        android:fragment="com.jensen.draculadaybyday.Preferences.DraculaPreferences$UserInterfacePreferenceFragment"
+        android:icon="@drawable/ic_user_interface_black_24dp"
+        android:title="@string/pref_header_user_interface" />
 
     <header
         android:fragment="com.jensen.draculadaybyday.Preferences.DraculaPreferences$NotificationPreferenceFragment"

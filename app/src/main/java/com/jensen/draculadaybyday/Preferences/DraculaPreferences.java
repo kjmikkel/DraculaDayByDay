@@ -176,7 +176,7 @@ public class DraculaPreferences extends AppCompatPreferenceActivity {
     protected boolean isValidFragment(String fragmentName) {
         return PreferenceFragment.class.getName().equals(fragmentName)
                 || GeneralPreferenceFragment.class.getName().equals(fragmentName)
-                || DisplayPreferenceFragment.class.getName().equals(fragmentName)
+                || UserInterfacePreferenceFragment.class.getName().equals(fragmentName)
                 || NotificationPreferenceFragment.class.getName().equals(fragmentName);
     }
 
@@ -207,7 +207,7 @@ public class DraculaPreferences extends AppCompatPreferenceActivity {
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public static class DisplayPreferenceFragment extends PreferenceFragment {
+    public static class UserInterfacePreferenceFragment extends PreferenceFragment {
 
         // The Font example
         private static EntryViewPreference fontExample = null;
@@ -240,7 +240,7 @@ public class DraculaPreferences extends AppCompatPreferenceActivity {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.pref_display);
+            addPreferencesFromResource(R.xml.pref_user_interface);
             setHasOptionsMenu(true);
 
             fontExample = (EntryViewPreference) findPreference(getString(R.string.pref_key_font_example));
