@@ -1,4 +1,4 @@
-package com.jensen.draculadaybyday.Settings;
+package com.jensen.draculadaybyday.Preferences;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -61,7 +61,7 @@ public class EntryViewPreference extends Preference {
             try {
                 fontEnum = FontEnum.valueOf(font);
             } catch (Exception e) {
-                Log.e("Settings", e.getMessage());
+                Log.e("Preferences", e.getMessage());
             }
         }
     }
@@ -72,7 +72,7 @@ public class EntryViewPreference extends Preference {
             try {
                 initialEnum = InitialEnum.valueOf(initialFont);
             } catch (Exception e) {
-                Log.e("Settings", e.getMessage());
+                Log.e("Preferences", e.getMessage());
             }
         }
     }
@@ -120,7 +120,7 @@ public class EntryViewPreference extends Preference {
             view = super.onCreateView(parent);
             entryView = (EntryView) view.findViewById(R.id.entry_view_widget);
         } catch (Exception e) {
-            Log.e("Settings", e.getMessage());
+            Log.e("Preferences", e.getMessage());
         }
         setValuesForEntryView();
 
@@ -134,7 +134,7 @@ public class EntryViewPreference extends Preference {
             entryView = (EntryView) view.findViewById(R.id.entry_view_widget);
             updateToPreferences();
         } catch (Exception e) {
-            Log.e("Settings", e.getMessage());
+            Log.e("Preferences", e.getMessage());
         }
 
         setValuesForEntryView();

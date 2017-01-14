@@ -21,7 +21,7 @@ import com.jensen.draculadaybyday.AboutPage;
 import com.jensen.draculadaybyday.Fragment.FragmentEntry;
 import com.jensen.draculadaybyday.R;
 import com.jensen.draculadaybyday.SQLite.FragmentEntryDatabaseHandler;
-import com.jensen.draculadaybyday.Settings.DraculaSettings;
+import com.jensen.draculadaybyday.Preferences.DraculaPreferences;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -54,9 +54,9 @@ public class EntryListActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.entry_list_general_settings:
-                Intent settings = new Intent(EntryListActivity.this, DraculaSettings.class);
-                startActivity(settings);
+            case R.id.entry_list_general_preferences:
+                Intent preferences = new Intent(EntryListActivity.this, DraculaPreferences.class);
+                startActivity(preferences);
                 return true;
             case R.id.entry_list_about_app:
                 Intent about = new Intent(EntryListActivity.this, AboutPage.class);

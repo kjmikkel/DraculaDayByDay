@@ -12,7 +12,7 @@ import android.view.MenuItem;
 import com.jensen.draculadaybyday.AboutPage;
 import com.jensen.draculadaybyday.R;
 import com.jensen.draculadaybyday.SQLite.FragmentEntryDatabaseHandler;
-import com.jensen.draculadaybyday.Settings.DraculaSettings;
+import com.jensen.draculadaybyday.Preferences.DraculaPreferences;
 
 /**
  * An activity representing a single Entry detail screen. This
@@ -32,9 +32,9 @@ public class EntryDetailActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.entry_list_general_settings:
-                Intent settings = new Intent(EntryDetailActivity.this, DraculaSettings.class);
-                startActivity(settings);
+            case R.id.entry_list_general_preferences:
+                Intent preferences = new Intent(EntryDetailActivity.this, DraculaPreferences.class);
+                startActivity(preferences);
                 return true;
             case R.id.entry_list_about_app:
                 Intent about = new Intent(EntryDetailActivity.this, AboutPage.class);

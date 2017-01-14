@@ -5,10 +5,10 @@
     tools:context="com.jensen.draculadaybyday.EntryListActivity">
 
     <item
-        android:id="@+id/entry_list_general_settings"
+        android:id="@+id/entry_list_general_preferences"
         android:icon="@drawable/ic_preferences_black_24dp"
         android:orderInCategory="1"
-        android:title="@string/title_activity_dracula_settings"
+        android:title="@string/title_activity_dracula_preferences"
         yourapp:showAsAction="ifRoom" />
     <item
         android:id="@+id/entry_list_about_app"

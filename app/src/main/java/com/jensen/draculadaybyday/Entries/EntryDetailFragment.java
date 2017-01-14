@@ -16,7 +16,7 @@ import com.jensen.draculadaybyday.Presentation.FontEnum;
 import com.jensen.draculadaybyday.Presentation.InitialEnum;
 import com.jensen.draculadaybyday.R;
 import com.jensen.draculadaybyday.SQLite.FragmentEntryDatabaseHandler;
-import com.jensen.draculadaybyday.Settings.FontSizePickerPreference;
+import com.jensen.draculadaybyday.Preferences.FontSizePickerPreference;
 
 /**
  * A fragment representing a single Entry detail screen.

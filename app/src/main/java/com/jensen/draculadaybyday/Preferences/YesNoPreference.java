@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.jensen.draculadaybyday.Settings;
+package com.jensen.draculadaybyday.Preferences;
 
 import android.content.Context;
 import android.content.res.Resources;

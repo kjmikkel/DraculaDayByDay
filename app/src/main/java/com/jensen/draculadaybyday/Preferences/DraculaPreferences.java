@@ -1,4 +1,4 @@
-package com.jensen.draculadaybyday.Settings;
+package com.jensen.draculadaybyday.Preferences;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -34,7 +34,7 @@ import java.util.List;
  * href="http://developer.android.com/guide/topics/ui/settings.html">Settings
  * API Guide</a> for more information on developing a Settings UI.
  */
-public class DraculaSettings extends AppCompatPreferenceActivity {
+public class DraculaPreferences extends AppCompatPreferenceActivity {
     /**
      * A preference value change listener that updates the preference's summary
      * to reflect its new value.
@@ -265,7 +265,7 @@ public class DraculaSettings extends AppCompatPreferenceActivity {
         public boolean onOptionsItemSelected(MenuItem item) {
             int id = item.getItemId();
             if (id == android.R.id.home) {
-                startActivity(new Intent(getActivity(), DraculaSettings.class));
+                startActivity(new Intent(getActivity(), DraculaPreferences.class));
                 return true;
             }
             return super.onOptionsItemSelected(item);
@@ -295,7 +295,7 @@ public class DraculaSettings extends AppCompatPreferenceActivity {
         public boolean onOptionsItemSelected(MenuItem item) {
             int id = item.getItemId();
             if (id == android.R.id.home) {
-                startActivity(new Intent(getActivity(), DraculaSettings.class));
+                startActivity(new Intent(getActivity(), DraculaPreferences.class));
                 //   NavUtils.navigateUpTo(this, new Intent(this, EntryListActivity.class));
                 return true;
             }

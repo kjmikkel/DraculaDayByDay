@@ -1,24 +1,18 @@
 <preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- These settings headers are only used on tablets. -->
+    <!-- These preferences headers are only used on tablets. -->
 
     <header
-        android:fragment="com.jensen.draculadaybyday.Settings.DraculaSettings$GeneralPreferenceFragment"
+        android:fragment="com.jensen.draculadaybyday.Preferences.DraculaPreferences$GeneralPreferenceFragment"
         android:icon="@drawable/ic_info_black_24dp"
         android:title="@string/pref_header_general" />
 
     <header
-        android:fragment="com.jensen.draculadaybyday.Settings.DraculaSettings$DisplayPreferenceFragment"
+        android:fragment="com.jensen.draculadaybyday.Preferences.DraculaPreferences$DisplayPreferenceFragment"
         android:title="@string/pref_header_display" />
 
     <header
-        android:fragment="com.jensen.draculadaybyday.Settings.DraculaSettings$NotificationPreferenceFragment"
+        android:fragment="com.jensen.draculadaybyday.Preferences.DraculaPreferences$NotificationPreferenceFragment"
         android:icon="@drawable/ic_notifications_black_24dp"
         android:title="@string/pref_header_notifications" />
-    <!--
-    <header
-        android:fragment="com.jensen.draculadaybyday.Settings.DraculaSettings$DataSyncPreferenceFragment"
-        android:icon="@drawable/ic_sync_black_24dp"
-        android:title="@string/pref_header_data_sync" />
-     -->
 </preference-headers>

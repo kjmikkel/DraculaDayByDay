@@ -28,8 +28,8 @@
                 android:value="com.jensen.draculadaybyday.Entries.EntryListActivity" />
         </activity>
         <activity
-            android:name=".Settings.DraculaSettings"
-            android:label="@string/title_activity_dracula_settings"></activity>
+            android:name=".Preferences.DraculaPreferences"
+            android:label="@string/title_activity_dracula_preferences"></activity>
         <activity
             android:name=".AboutPage"
             android:label="@string/title_activity_about"

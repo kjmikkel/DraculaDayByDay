@@ -1,4 +1,4 @@
-package com.jensen.draculadaybyday.Settings;
+package com.jensen.draculadaybyday.Preferences;
 
 import android.app.TimePickerDialog;
 import android.content.Context;
