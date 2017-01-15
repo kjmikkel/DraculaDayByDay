@@ -61,6 +61,13 @@ public class EntryView extends TextView {
             finalText += locationStr;
         }
 
+        String commentStr = null;
+        Tuple<Integer, Integer> commentInterval = findComment(text);
+        if (commentInterval.fst != -1 && commentInterval.snd != -1) {
+            commentStr = text.substring(commentInterval.fst, commentInterval.snd) + "\n\n";
+            finalText += commentStr;
+        }
+
         Tuple<Integer, Integer> entryInterval = findEntry(text);
         if (entryInterval.fst != -1 && entryInterval.snd != -1) {
             finalText += text.substring(entryInterval.fst, entryInterval.snd);
@@ -74,7 +81,13 @@ public class EntryView extends TextView {
         }
         if (locationStr != null) {
             SS.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER), currentIndex, currentIndex + locationStr.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+            currentIndex += locationStr.length();
         }
+
+        if (commentStr != null) {
+            SS.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER), currentIndex, currentIndex + commentStr.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+        }
+
         SS.setSpan(new CustomTypefaceSpan("", getMainBodyType(fontEnum)), 0, finalText.length() - 1, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
 
         setText(SS);
@@ -99,6 +112,13 @@ public class EntryView extends TextView {
             finalText += locationStr;
         }
 
+        String commentStr = null;
+        Tuple<Integer, Integer> commentInterval = findComment(text);
+        if (commentInterval.fst != -1 && commentInterval.snd != -1) {
+            commentStr = text.substring(commentInterval.fst, commentInterval.snd) + "\n\n";
+            finalText += commentStr;
+        }
+
         Tuple<Integer, Integer> entryInterval = findEntry(text);
         if (entryInterval.fst != -1 && entryInterval.snd != -1) {
             finalText += text.substring(entryInterval.fst, entryInterval.snd);
@@ -116,6 +136,11 @@ public class EntryView extends TextView {
             SS.setSpan(new CustomTypefaceSpan("", getMainBodyType(basicFont)), currentIndex, currentIndex + locationStr.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
             currentIndex += locationStr.length();
         }
+        if (commentStr != null) {
+            SS.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER), currentIndex, currentIndex + commentStr.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+            SS.setSpan(new CustomTypefaceSpan("", getMainBodyType(basicFont)), currentIndex, currentIndex + commentStr.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+            currentIndex += commentStr.length();
+        }
 
         SS.setSpan(new CustomTypefaceSpan("", getInitialType(initialFont)), currentIndex, currentIndex + 1, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
         SS.setSpan(new RelativeSizeSpan(2.5f), currentIndex, currentIndex + 1, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
@@ -131,6 +156,10 @@ public class EntryView extends TextView {
 
     private Tuple<Integer, Integer> findLocation(String text) {
         return parseText("l", text);
+    }
+
+    private Tuple<Integer, Integer> findComment(String text) {
+        return parseText("c", text);
     }
 
     private Tuple<Integer, Integer> findEntry(String text) {

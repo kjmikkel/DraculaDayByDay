@@ -23,6 +23,9 @@ import com.jensen.draculadaybyday.R;
 import com.jensen.draculadaybyday.SQLite.FragmentEntryDatabaseHandler;
 import com.jensen.draculadaybyday.Preferences.DraculaPreferences;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -73,6 +76,25 @@ public class EntryListActivity extends AppCompatActivity {
         PreferenceManager.setDefaultValues(this, R.xml.pref_notification, false);
     }
 
+    private String getStringFromId(int id) {
+        InputStream stream = getResources().openRawResource((id));
+        BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+        StringBuilder sb = new StringBuilder();
+
+        try {
+            String line;
+            do {
+                line = reader.readLine();
+                sb.append(line + "\n");
+            }
+            while (line != null);
+        } catch (Exception e) {
+
+        }
+
+        return sb.toString();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,10 +110,12 @@ public class EntryListActivity extends AppCompatActivity {
         Calendar calendar = Calendar.getInstance();
         FragmentEntry entryOne = new FragmentEntry((short) 1, (short) 1, (short) 1, "Mikkel", "[e]First entry![/e]", calendar, "Hard coded entry");
         FragmentEntry entryTwo = new FragmentEntry((short) 1, (short) 1, (short) 1, "Mikkel", "[e]Second entry - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean posuere orci vel nisi accumsan fermentum.[/e]", calendar, "Hard coded entry");
+        FragmentEntry entryThree = new FragmentEntry((short) 1, (short) 1, (short) 1, "Jonathan Harker", getStringFromId(R.raw.may03_harker), calendar, "Hard coded entry");
 
         fragmentEntryHandler = FragmentEntryDatabaseHandler.getInstance(this);
         fragmentEntryHandler.addEntry(entryOne);
         fragmentEntryHandler.addEntry(entryTwo);
+        fragmentEntryHandler.addEntry(entryThree);
 
         View recyclerView = findViewById(R.id.entry_list);
         assert recyclerView != null;

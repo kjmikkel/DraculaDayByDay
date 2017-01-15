@@ -232,6 +232,8 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
 
         LinkedList<FragmentEntry> entries = new LinkedList<>();
 
+        int val = cursor.getCount();
+
         if (cursor != null && 0 < cursor.getCount()) {
             cursor.moveToFirst();
 
