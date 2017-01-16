@@ -14,13 +14,9 @@ import android.widget.TextView;
 
 import com.jensen.draculadaybyday.Primitives.Tuple;
 
-import java.util.regex.Pattern;
-
 public class EntryView extends TextView {
 
     private static final int SIZE_UNIT = TypedValue.COMPLEX_UNIT_DIP;
-
-    private static final Pattern date = Pattern.compile("[0-9]+");
 
     public EntryView(Context context) {
         super(context);
