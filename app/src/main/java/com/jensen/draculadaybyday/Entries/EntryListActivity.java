@@ -40,6 +40,23 @@ import java.util.List;
  */
 public class EntryListActivity extends AppCompatActivity {
 
+    // Dramatis personæ
+    private static final String JONATHAN_HARKER = "Jonathan Harker";
+    private static final String MINA_MURRY = "Mina Murry";
+    private static final String LUCY_WESTENRA = "Lucy Westenra";
+    private static final String QUINCEY_MORRIS = "Quiencey Morris";
+    private static final String ARTHUR_HOLMWOOD = "Arthur Holmwood";
+    private static final String SEWARD = "Dr. Seward";
+
+    // Types
+    private static final String DIARY_ENTRY = "Diary Entry";
+    private static final String LETTER = "Letter";
+    private static final String TELEGRAM = "Telegram";
+    private static final String PHONOGRAPH = "Phonograph";
+
+
+    private static int storyEntryNumber = 1;
+
     private static FragmentEntryDatabaseHandler fragmentEntryHandler;
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -76,25 +93,6 @@ public class EntryListActivity extends AppCompatActivity {
         PreferenceManager.setDefaultValues(this, R.xml.pref_notification, false);
     }
 
-    private String getStringFromId(int id) {
-        InputStream stream = getResources().openRawResource((id));
-        BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-        StringBuilder sb = new StringBuilder();
-
-        try {
-            String line;
-            do {
-                line = reader.readLine();
-                sb.append(line + "\n");
-            }
-            while (line != null);
-        } catch (Exception e) {
-
-        }
-
-        return sb.toString();
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,15 +105,48 @@ public class EntryListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
 
-        Calendar calendar = Calendar.getInstance();
-        FragmentEntry entryOne = new FragmentEntry((short) 1, (short) 1, (short) 1, "Mikkel", "[e]First entry![/e]", calendar, "Hard coded entry");
-        FragmentEntry entryTwo = new FragmentEntry((short) 1, (short) 1, (short) 1, "Mikkel", "[e]Second entry - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean posuere orci vel nisi accumsan fermentum.[/e]", calendar, "Hard coded entry");
-        FragmentEntry entryThree = new FragmentEntry((short) 1, (short) 1, (short) 1, "Jonathan Harker", getStringFromId(R.raw.may03_harker), calendar, "Hard coded entry");
-
         fragmentEntryHandler = FragmentEntryDatabaseHandler.getInstance(this);
-        fragmentEntryHandler.addEntry(entryOne);
-        fragmentEntryHandler.addEntry(entryTwo);
-        fragmentEntryHandler.addEntry(entryThree);
+
+        // Chapter 1
+        addEntryToDatabase(1, JONATHAN_HARKER, R.raw.may_03_harker, Calendar.MAY, 3, DIARY_ENTRY);
+        addEntryToDatabase(1, JONATHAN_HARKER, R.raw.may_04_harker, Calendar.MAY, 4, DIARY_ENTRY);
+        addEntryToDatabase(1, JONATHAN_HARKER, R.raw.may_05_01_harker, Calendar.MAY, 5, DIARY_ENTRY);
+
+        // Chapter 2
+        addEntryToDatabase(2, JONATHAN_HARKER, R.raw.may_05_02_harker, Calendar.MAY, 5, DIARY_ENTRY);
+        addEntryToDatabase(2, JONATHAN_HARKER, R.raw.may_07_harker, Calendar.MAY, 7, DIARY_ENTRY);
+        addEntryToDatabase(2, JONATHAN_HARKER, R.raw.may_08_01_harker, Calendar.MAY, 8, DIARY_ENTRY);
+
+        // Chapter 3
+        addEntryToDatabase(3, JONATHAN_HARKER, R.raw.may_08_02_harker, Calendar.MAY, 8, DIARY_ENTRY);
+        addEntryToDatabase(3, JONATHAN_HARKER, R.raw.may_08_03_harker, Calendar.MAY, 8, DIARY_ENTRY);
+        addEntryToDatabase(3, JONATHAN_HARKER, R.raw.may_12_01_harker, Calendar.MAY, 12, DIARY_ENTRY);
+        addEntryToDatabase(3, JONATHAN_HARKER, R.raw.may_15_harker, Calendar.MAY, 15, DIARY_ENTRY);
+        addEntryToDatabase(3, JONATHAN_HARKER, R.raw.may_16_01_harker, Calendar.MAY, 16, DIARY_ENTRY);
+
+        // Chapter 4
+        addEntryToDatabase(4, JONATHAN_HARKER, R.raw.may_16_02_harker, Calendar.MAY, 16, DIARY_ENTRY);
+        addEntryToDatabase(4, JONATHAN_HARKER, R.raw.may_18_harker, Calendar.MAY, 18, DIARY_ENTRY);
+        addEntryToDatabase(4, JONATHAN_HARKER, R.raw.may_19_harker, Calendar.MAY, 19, DIARY_ENTRY);
+        addEntryToDatabase(4, JONATHAN_HARKER, R.raw.may_28_01_harker, Calendar.MAY, 28, DIARY_ENTRY);
+        addEntryToDatabase(4, JONATHAN_HARKER, R.raw.may_28_02_harker, Calendar.MAY, 28, DIARY_ENTRY);
+        addEntryToDatabase(4, JONATHAN_HARKER, R.raw.may_28_03_harker, Calendar.MAY, 28, DIARY_ENTRY);
+        addEntryToDatabase(4, JONATHAN_HARKER, R.raw.may_28_04_harker, Calendar.MAY, 28, DIARY_ENTRY);
+        addEntryToDatabase(4, JONATHAN_HARKER, R.raw.june_17_harker, Calendar.JUNE, 17, DIARY_ENTRY);
+        addEntryToDatabase(4, JONATHAN_HARKER, R.raw.june_24_harker, Calendar.JUNE, 24, DIARY_ENTRY);
+        addEntryToDatabase(4, JONATHAN_HARKER, R.raw.june_25_01_harker, Calendar.JUNE, 25, DIARY_ENTRY);
+        addEntryToDatabase(4, JONATHAN_HARKER, R.raw.june_25_02_harker, Calendar.JUNE, 25, DIARY_ENTRY);
+        addEntryToDatabase(4, JONATHAN_HARKER, R.raw.june_29_harker, Calendar.JUNE, 29, DIARY_ENTRY);
+        addEntryToDatabase(4, JONATHAN_HARKER, R.raw.june_30_harker, Calendar.JUNE, 30, DIARY_ENTRY);
+
+        // Chapter 5
+        addEntryToDatabase(5, MINA_MURRY, R.raw.may_09_murry, Calendar.MAY, 9, LETTER);
+        addEntryToDatabase(5, LUCY_WESTENRA, R.raw.may_10_westenra, Calendar.MAY, 10, LETTER);
+        addEntryToDatabase(5, LUCY_WESTENRA, R.raw.may_24_01_westenra, Calendar.MAY, 24, LETTER);
+        addEntryToDatabase(5, LUCY_WESTENRA, R.raw.may_24_02_westenra, Calendar.MAY, 24, LETTER);
+        addEntryToDatabase(5, SEWARD, R.raw.may_25_seward, Calendar.MAY, 25, PHONOGRAPH);
+        addEntryToDatabase(5, QUINCEY_MORRIS, R.raw.may_25_morris, Calendar.MAY, 25, LETTER);
+        addEntryToDatabase(5, ARTHUR_HOLMWOOD, R.raw.may_26_holmwood, Calendar.MAY, 26, TELEGRAM);
 
         View recyclerView = findViewById(R.id.entry_list);
         assert recyclerView != null;
@@ -133,6 +164,17 @@ public class EntryListActivity extends AppCompatActivity {
         }
     }
 
+    private void addEntryToDatabase(int chapterNum, String personName, int diaryResource, int month, int date, String type) {
+        if (fragmentEntryHandler != null) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(1893, month - 1, date);
+
+            fragmentEntryHandler.addEntry(new FragmentEntry(storyEntryNumber, -1, chapterNum, personName, getStringFromId(diaryResource), calendar, type));
+
+            storyEntryNumber++;
+        }
+    }
+
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
         Calendar currentDate = Calendar.getInstance();
 
@@ -143,6 +185,25 @@ public class EntryListActivity extends AppCompatActivity {
         calendar.set(1897, month, dateOfMonth);
         Log.d("Database", "Test");
         recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(fragmentEntryHandler.getDiaryEntriesBeforeDate(calendar)));
+    }
+
+    private String getStringFromId(int id) {
+        InputStream stream = getResources().openRawResource((id));
+        BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+        StringBuilder sb = new StringBuilder();
+
+        try {
+            String line;
+            do {
+                line = reader.readLine();
+                sb.append(line + "\n");
+            }
+            while (line != null);
+        } catch (Exception e) {
+
+        }
+
+        return sb.toString();
     }
 
     public class SimpleItemRecyclerViewAdapter

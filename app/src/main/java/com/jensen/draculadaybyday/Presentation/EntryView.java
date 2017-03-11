@@ -3,6 +3,7 @@ package com.jensen.draculadaybyday.Presentation;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Typeface;
+import android.support.v7.widget.AppCompatTextView;
 import android.text.Layout;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -10,11 +11,10 @@ import android.text.style.AlignmentSpan;
 import android.text.style.RelativeSizeSpan;
 import android.util.AttributeSet;
 import android.util.TypedValue;
-import android.widget.TextView;
 
 import com.jensen.draculadaybyday.Primitives.Tuple;
 
-public class EntryView extends TextView {
+public class EntryView extends AppCompatTextView {
 
     private static final int SIZE_UNIT = TypedValue.COMPLEX_UNIT_DIP;
 

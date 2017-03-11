@@ -1,5 +1,10 @@
 package com.jensen.draculadaybyday.Fragment;
 
+import android.app.Fragment;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -25,13 +30,13 @@ public class FragmentEntry {
     // The type of the entry
     private String type;
 
-    public FragmentEntry(short storyEntryNum, short dateEntryNum, short chapter, String personName, String diaryText, Calendar date, String type) {
+    public FragmentEntry(int storyEntryNum, int dateEntryNum, int chapter, String personName, String diaryText, Calendar date, String type) {
 
-        this.storyEntryNum = storyEntryNum;
+        this.storyEntryNum = (short) storyEntryNum;
 
-        this.dateEntryNum = dateEntryNum;
+        this.dateEntryNum = (short) dateEntryNum;
 
-        this.chapter = chapter;
+        this.chapter = (short) chapter;
 
         this.person = personName;
 
