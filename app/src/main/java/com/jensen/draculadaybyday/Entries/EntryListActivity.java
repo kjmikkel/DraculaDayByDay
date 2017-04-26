@@ -1,10 +1,12 @@
 package com.jensen.draculadaybyday.Entries;
 
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -42,7 +44,7 @@ public class EntryListActivity extends AppCompatActivity {
 
     // Dramatis personæ
     private static final String JONATHAN_HARKER = "Jonathan Harker";
-    private static final String MINA_MURRY = "Mina Murry";
+    private static final String MINA_MURRAY = "Mina Murray";
     private static final String LUCY_WESTENRA = "Lucy Westenra";
     private static final String QUINCEY_MORRIS = "Quiencey Morris";
     private static final String ARTHUR_HOLMWOOD = "Arthur Holmwood";
@@ -97,6 +99,21 @@ public class EntryListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // Notifications
+        /*
+        //build notification
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
+                .setSmallIcon(R.drawable.ic_fangs)
+                .setContentTitle("Simple notification")
+                .setContentText("This is test of simple notification.");
+
+        // Gets an instance of the NotificationManager service
+        NotificationManager notificationManager =(NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        // To post your notification to the notification bar
+        notificationManager.notify(0 , mBuilder.build());
+        */
+
         setDefaultPreferences();
 
         setContentView(R.layout.activity_entry_list);
@@ -132,6 +149,7 @@ public class EntryListActivity extends AppCompatActivity {
         addEntryToDatabase(4, JONATHAN_HARKER, R.raw.may_28_02_harker, Calendar.MAY, 28, DIARY_ENTRY);
         addEntryToDatabase(4, JONATHAN_HARKER, R.raw.may_28_03_harker, Calendar.MAY, 28, DIARY_ENTRY);
         addEntryToDatabase(4, JONATHAN_HARKER, R.raw.may_28_04_harker, Calendar.MAY, 28, DIARY_ENTRY);
+        addEntryToDatabase(4, JONATHAN_HARKER, R.raw.may_31_harker, Calendar.MAY, 31, DIARY_ENTRY);
         addEntryToDatabase(4, JONATHAN_HARKER, R.raw.june_17_harker, Calendar.JUNE, 17, DIARY_ENTRY);
         addEntryToDatabase(4, JONATHAN_HARKER, R.raw.june_24_harker, Calendar.JUNE, 24, DIARY_ENTRY);
         addEntryToDatabase(4, JONATHAN_HARKER, R.raw.june_25_01_harker, Calendar.JUNE, 25, DIARY_ENTRY);
@@ -140,13 +158,31 @@ public class EntryListActivity extends AppCompatActivity {
         addEntryToDatabase(4, JONATHAN_HARKER, R.raw.june_30_harker, Calendar.JUNE, 30, DIARY_ENTRY);
 
         // Chapter 5
-        addEntryToDatabase(5, MINA_MURRY, R.raw.may_09_murry, Calendar.MAY, 9, LETTER);
+        addEntryToDatabase(5, MINA_MURRAY, R.raw.may_09_murray, Calendar.MAY, 9, LETTER);
         addEntryToDatabase(5, LUCY_WESTENRA, R.raw.may_10_westenra, Calendar.MAY, 10, LETTER);
         addEntryToDatabase(5, LUCY_WESTENRA, R.raw.may_24_01_westenra, Calendar.MAY, 24, LETTER);
         addEntryToDatabase(5, LUCY_WESTENRA, R.raw.may_24_02_westenra, Calendar.MAY, 24, LETTER);
         addEntryToDatabase(5, SEWARD, R.raw.may_25_seward, Calendar.MAY, 25, PHONOGRAPH);
         addEntryToDatabase(5, QUINCEY_MORRIS, R.raw.may_25_morris, Calendar.MAY, 25, LETTER);
         addEntryToDatabase(5, ARTHUR_HOLMWOOD, R.raw.may_26_holmwood, Calendar.MAY, 26, TELEGRAM);
+
+        // Chapter 6
+        addEntryToDatabase(6, MINA_MURRAY, R.raw.july_24_murray, Calendar.JULY, 24, DIARY_ENTRY);
+        addEntryToDatabase(6, MINA_MURRAY, R.raw.august_01_01_murray, Calendar.AUGUST, 1, DIARY_ENTRY);
+        addEntryToDatabase(6, MINA_MURRAY, R.raw.august_01_02_murray, Calendar.AUGUST, 1, DIARY_ENTRY);
+        addEntryToDatabase(6, SEWARD, R.raw.june_05_seward, Calendar.JUNE, 5, DIARY_ENTRY);
+        addEntryToDatabase(6, SEWARD, R.raw.june_18_seward, Calendar.JUNE, 18, DIARY_ENTRY);
+        addEntryToDatabase(6, SEWARD, R.raw.july_01_seward, Calendar.JULY, 1, DIARY_ENTRY);
+        addEntryToDatabase(6, SEWARD, R.raw.july_08_seward, Calendar.JULY, 8, DIARY_ENTRY);
+        addEntryToDatabase(6, SEWARD, R.raw.july_19_01_seward, Calendar.JULY, 19, DIARY_ENTRY);
+        addEntryToDatabase(6, SEWARD, R.raw.july_19_02_seward, Calendar.JULY, 19, DIARY_ENTRY);
+        addEntryToDatabase(6, SEWARD, R.raw.july_20_01_seward, Calendar.JULY, 20, DIARY_ENTRY);
+        addEntryToDatabase(6, SEWARD, R.raw.july_20_02_seward, Calendar.JULY, 20, DIARY_ENTRY);
+        addEntryToDatabase(6, SEWARD, R.raw.july_20_03_seward, Calendar.JULY, 20, DIARY_ENTRY);
+        addEntryToDatabase(6, SEWARD, R.raw.july_26_murray, Calendar.JULY, 26, DIARY_ENTRY);
+        addEntryToDatabase(6, SEWARD, R.raw.july_27_murray, Calendar.JULY, 27, DIARY_ENTRY);
+        addEntryToDatabase(6, SEWARD, R.raw.august_03_murray, Calendar.AUGUST, 3, DIARY_ENTRY);
+        addEntryToDatabase(6, SEWARD, R.raw.august_06_murray, Calendar.AUGUST, 6, DIARY_ENTRY);
 
         View recyclerView = findViewById(R.id.entry_list);
         assert recyclerView != null;
