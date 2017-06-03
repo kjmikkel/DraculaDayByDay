@@ -1,12 +1,10 @@
 package com.jensen.draculadaybyday.Entries;
 
-import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -49,6 +47,9 @@ public class EntryListActivity extends AppCompatActivity {
     private static final String QUINCEY_MORRIS = "Quiencey Morris";
     private static final String ARTHUR_HOLMWOOD = "Arthur Holmwood";
     private static final String SEWARD = "Dr. Seward";
+    private static final String SAMUEL_F_BILLINGTON = "Samuel F. Billington & Son";
+    private static final String MESSRS = "Messrs. Carter, Paterson & Co.";
+    private static final String SISTER_AGATHA = "Sister Agatha";
 
     // Types
     private static final String DIARY_ENTRY = "Diary Entry";
@@ -183,6 +184,26 @@ public class EntryListActivity extends AppCompatActivity {
         addEntryToDatabase(6, SEWARD, R.raw.july_27_murray, Calendar.JULY, 27, DIARY_ENTRY);
         addEntryToDatabase(6, SEWARD, R.raw.august_03_murray, Calendar.AUGUST, 3, DIARY_ENTRY);
         addEntryToDatabase(6, SEWARD, R.raw.august_06_murray, Calendar.AUGUST, 6, DIARY_ENTRY);
+
+        addEntryToDatabase(7, MINA_MURRAY, R.raw.august_08_01_murray, Calendar.AUGUST, 8, DIARY_ENTRY);
+        addEntryToDatabase(7, MINA_MURRAY, R.raw.august_09_murray, Calendar.AUGUST, 9, DIARY_ENTRY);
+        addEntryToDatabase(7, MINA_MURRAY, R.raw.august_08_02_murray, Calendar.AUGUST, 8, DIARY_ENTRY);
+        addEntryToDatabase(7, MINA_MURRAY, R.raw.august_10_01_murray, Calendar.AUGUST, 10, DIARY_ENTRY);
+
+        addEntryToDatabase(8, MINA_MURRAY, R.raw.august_10_02_murray, Calendar.AUGUST, 10, DIARY_ENTRY);
+        addEntryToDatabase(8, MINA_MURRAY, R.raw.august_11_murray, Calendar.AUGUST, 11, DIARY_ENTRY);
+        addEntryToDatabase(8, MINA_MURRAY, R.raw.august_12_murray, Calendar.AUGUST, 12, DIARY_ENTRY);
+        addEntryToDatabase(8, MINA_MURRAY, R.raw.august_13_murray, Calendar.AUGUST, 13, DIARY_ENTRY);
+        addEntryToDatabase(8, MINA_MURRAY, R.raw.august_14_murray, Calendar.AUGUST, 14, DIARY_ENTRY);
+        addEntryToDatabase(8, MINA_MURRAY, R.raw.august_15_murray, Calendar.AUGUST, 15, DIARY_ENTRY);
+        addEntryToDatabase(8, MINA_MURRAY, R.raw.august_17_murray, Calendar.AUGUST, 17, DIARY_ENTRY);
+        addEntryToDatabase(8, SAMUEL_F_BILLINGTON, R.raw.august_17_samuel, Calendar.AUGUST, 17, LETTER);
+        addEntryToDatabase(8, MESSRS, R.raw.august_21_messrs, Calendar.AUGUST, 21, LETTER);
+        addEntryToDatabase(8, MINA_MURRAY, R.raw.august_18_murray, Calendar.AUGUST, 18, DIARY_ENTRY);
+        addEntryToDatabase(8, MINA_MURRAY, R.raw.august_19_murray, Calendar.AUGUST, 19, DIARY_ENTRY);
+        addEntryToDatabase(8, SISTER_AGATHA, R.raw.august_12_harker, Calendar.AUGUST, 12, LETTER);
+        addEntryToDatabase(8, SEWARD, R.raw.august_19_seward, Calendar.AUGUST, 19, DIARY_ENTRY);
+
 
         View recyclerView = findViewById(R.id.entry_list);
         assert recyclerView != null;
