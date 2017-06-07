@@ -50,6 +50,7 @@ public class EntryListActivity extends AppCompatActivity {
     private static final String SAMUEL_F_BILLINGTON = "Samuel F. Billington & Son";
     private static final String MESSRS = "Messrs. Carter, Paterson & Co.";
     private static final String SISTER_AGATHA = "Sister Agatha";
+    private static final String ABRAHAM_VAN_HELSING = "Abraham Van Helsing";
 
     // Types
     private static final String DIARY_ENTRY = "Diary Entry";
@@ -185,11 +186,13 @@ public class EntryListActivity extends AppCompatActivity {
         addEntryToDatabase(6, SEWARD, R.raw.august_03_murray, Calendar.AUGUST, 3, DIARY_ENTRY);
         addEntryToDatabase(6, SEWARD, R.raw.august_06_murray, Calendar.AUGUST, 6, DIARY_ENTRY);
 
+        // Chapter 7
         addEntryToDatabase(7, MINA_MURRAY, R.raw.august_08_01_murray, Calendar.AUGUST, 8, DIARY_ENTRY);
         addEntryToDatabase(7, MINA_MURRAY, R.raw.august_09_murray, Calendar.AUGUST, 9, DIARY_ENTRY);
         addEntryToDatabase(7, MINA_MURRAY, R.raw.august_08_02_murray, Calendar.AUGUST, 8, DIARY_ENTRY);
         addEntryToDatabase(7, MINA_MURRAY, R.raw.august_10_01_murray, Calendar.AUGUST, 10, DIARY_ENTRY);
 
+        // Chapter 8
         addEntryToDatabase(8, MINA_MURRAY, R.raw.august_10_02_murray, Calendar.AUGUST, 10, DIARY_ENTRY);
         addEntryToDatabase(8, MINA_MURRAY, R.raw.august_11_murray, Calendar.AUGUST, 11, DIARY_ENTRY);
         addEntryToDatabase(8, MINA_MURRAY, R.raw.august_12_murray, Calendar.AUGUST, 12, DIARY_ENTRY);
@@ -204,6 +207,22 @@ public class EntryListActivity extends AppCompatActivity {
         addEntryToDatabase(8, SISTER_AGATHA, R.raw.august_12_harker, Calendar.AUGUST, 12, LETTER);
         addEntryToDatabase(8, SEWARD, R.raw.august_19_seward, Calendar.AUGUST, 19, DIARY_ENTRY);
 
+        // Chapter 9
+        addEntryToDatabase(9, MINA_MURRAY, R.raw.august_24_murray, Calendar.AUGUST, 24, LETTER);
+        addEntryToDatabase(9, LUCY_WESTENRA, R.raw.august_30_murray, Calendar.AUGUST, 30, LETTER);
+        addEntryToDatabase(9, SEWARD, R.raw.august_20_seward, Calendar.AUGUST, 20, DIARY_ENTRY);
+        addEntryToDatabase(9, SEWARD, R.raw.august_23_seward, Calendar.AUGUST, 23, DIARY_ENTRY);
+        addEntryToDatabase(9, LUCY_WESTENRA, R.raw.august_24_westenra, Calendar.AUGUST, 24, DIARY_ENTRY);
+        addEntryToDatabase(9, LUCY_WESTENRA, R.raw.august_25_westenra, Calendar.AUGUST, 25, DIARY_ENTRY);
+        addEntryToDatabase(9, ARTHUR_HOLMWOOD, R.raw.august_31_holmwood, Calendar.AUGUST, 31, LETTER);
+        addEntryToDatabase(9, ARTHUR_HOLMWOOD, R.raw.september_01_holmwood, Calendar.SEPTEMBER, 1, TELEGRAM);
+        addEntryToDatabase(9, SEWARD, R.raw.september_02_seward, Calendar.SEPTEMBER, 2, LETTER);
+        addEntryToDatabase(9, ABRAHAM_VAN_HELSING, R.raw.september_02_helsing, Calendar.SEPTEMBER, 2, LETTER);
+        addEntryToDatabase(9, SEWARD, R.raw.september_03_seward, Calendar.SEPTEMBER, 3, LETTER);
+        addEntryToDatabase(9, SEWARD, R.raw.september_04_01_seward, Calendar.SEPTEMBER, 4, DIARY_ENTRY);
+        addEntryToDatabase(9, SEWARD, R.raw.september_04_02_seward, Calendar.SEPTEMBER, 4, TELEGRAM);
+        addEntryToDatabase(9, SEWARD, R.raw.september_05_seward, Calendar.SEPTEMBER, 5, TELEGRAM);
+        addEntryToDatabase(9, SEWARD, R.raw.september_06_seward, Calendar.SEPTEMBER, 6, TELEGRAM);
 
         View recyclerView = findViewById(R.id.entry_list);
         assert recyclerView != null;
