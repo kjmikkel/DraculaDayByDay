@@ -222,7 +222,18 @@ public class EntryListActivity extends AppCompatActivity {
         addEntryToDatabase(9, SEWARD, R.raw.september_04_01_seward, Calendar.SEPTEMBER, 4, DIARY_ENTRY);
         addEntryToDatabase(9, SEWARD, R.raw.september_04_02_seward, Calendar.SEPTEMBER, 4, TELEGRAM);
         addEntryToDatabase(9, SEWARD, R.raw.september_05_seward, Calendar.SEPTEMBER, 5, TELEGRAM);
-        addEntryToDatabase(9, SEWARD, R.raw.september_06_seward, Calendar.SEPTEMBER, 6, TELEGRAM);
+        addEntryToDatabase(9, SEWARD, R.raw.september_06_01_seward, Calendar.SEPTEMBER, 6, TELEGRAM);
+
+        // Chapter 10
+        addEntryToDatabase(10, SEWARD, R.raw.september_06_02_seward, Calendar.SEPTEMBER, 6, LETTER);
+        addEntryToDatabase(10, SEWARD, R.raw.september_07_seward, Calendar.SEPTEMBER, 7, DIARY_ENTRY);
+        addEntryToDatabase(10, SEWARD, R.raw.september_08_seward, Calendar.SEPTEMBER, 8, DIARY_ENTRY);
+        addEntryToDatabase(10, SEWARD, R.raw.september_09_seward, Calendar.SEPTEMBER, 9, DIARY_ENTRY);
+        addEntryToDatabase(10, LUCY_WESTENRA, R.raw.september_09_westenra, Calendar.SEPTEMBER, 9, DIARY_ENTRY);
+        addEntryToDatabase(10, SEWARD, R.raw.september_10_seward, Calendar.SEPTEMBER, 10, DIARY_ENTRY);
+        addEntryToDatabase(10, SEWARD, R.raw.september_11_seward, Calendar.SEPTEMBER, 11, DIARY_ENTRY);
+
+        // Chapter 11
 
         View recyclerView = findViewById(R.id.entry_list);
         assert recyclerView != null;
