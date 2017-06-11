@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.CalendarContract;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -61,6 +62,7 @@ public class EntryListActivity extends AppCompatActivity {
     private static final String TELEGRAM = "Telegram";
     private static final String PHONOGRAPH = "Phonograph";
     private static final String NEWSPAPER = "Newspaper";
+    private static final String NOTE = "Note";
 
     private static FragmentEntryDatabaseHandler fragmentEntryHandler;
     /**
@@ -268,7 +270,16 @@ public class EntryListActivity extends AppCompatActivity {
         addEntryToDatabase(14, ABRAHAM_VAN_HELSING, R.raw.september_25_helsing, Calendar.SEPTEMBER, 25, LETTER);
         addEntryToDatabase(14, MINA_MURRAY, R.raw.september_25_murray_03, Calendar.SEPTEMBER, 25, LETTER);
         addEntryToDatabase(14, JONATHAN_HARKER, R.raw.september_26_harker, Calendar.SEPTEMBER, 26, DIARY_ENTRY);
-        addEntryToDatabase(14, SEWARD, R.raw.september_26_seward, Calendar.SEPTEMBER, 26, DIARY_ENTRY);
+        addEntryToDatabase(14, SEWARD, R.raw.september_26_seward_01, Calendar.SEPTEMBER, 26, DIARY_ENTRY);
+
+        // Chapter 15
+        addEntryToDatabase(15, SEWARD, R.raw.september_26_seward_02, Calendar.SEPTEMBER, 26, DIARY_ENTRY);
+        addEntryToDatabase(15, SEWARD, R.raw.september_27_seward, Calendar.SEPTEMBER, 27, DIARY_ENTRY);
+        addEntryToDatabase(15, ABRAHAM_VAN_HELSING, R.raw.september_27_helsing, Calendar.SEPTEMBER, 27, NOTE);
+        addEntryToDatabase(15, SEWARD, R.raw.september_28_seward, Calendar.SEPTEMBER, 28, DIARY_ENTRY);
+        addEntryToDatabase(15, SEWARD, R.raw.september_29_seward, Calendar.SEPTEMBER, 29, DIARY_ENTRY);
+
+
 
         View recyclerView = findViewById(R.id.entry_list);
         assert recyclerView != null;
