@@ -62,9 +62,6 @@ public class EntryListActivity extends AppCompatActivity {
     private static final String PHONOGRAPH = "Phonograph";
     private static final String NEWSPAPER = "Newspaper";
 
-
-    private static int storyEntryNumber = 1;
-
     private static FragmentEntryDatabaseHandler fragmentEntryHandler;
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -294,9 +291,7 @@ public class EntryListActivity extends AppCompatActivity {
             Calendar calendar = Calendar.getInstance();
             calendar.set(1893, month - 1, date);
 
-            fragmentEntryHandler.addEntry(new FragmentEntry(storyEntryNumber, -1, chapterNum, personName, getStringFromId(diaryResource), calendar, type));
-
-            storyEntryNumber++;
+            fragmentEntryHandler.addEntry(new FragmentEntry(chapterNum, personName, getStringFromId(diaryResource), calendar, type));
         }
     }
 

@@ -14,9 +14,6 @@ import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- * Created by Spil_2 on 12-09-2016.
- */
 public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLiteOpenHelper {
 
     // Contacts Table Columns names
@@ -99,7 +96,9 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
         if (!EntryAlreadyInDB(entry.getStoryEntryNum())) {
 
             ContentValues values = new ContentValues();
-            values.put(ENTRY_SEQ_NUM, entry.getStoryEntryNum());
+
+            // auto-generate the ENTRY_SEQ_NUM (primary key)
+
             values.put(ENTRY_DATE_NUM, entry.getDateEntryNum());
             values.put(CHAPTER, entry.getChapter());
             values.put(PERSON, entry.getPerson());
@@ -196,7 +195,6 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
                 orderBy);
 
         LinkedList<FragmentEntry> entries = new LinkedList<>();
-
         if (cursor != null && 0 < cursor.getCount()) {
             cursor.moveToFirst();
 
@@ -232,8 +230,6 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
 
         LinkedList<FragmentEntry> entries = new LinkedList<>();
 
-        int val = cursor.getCount();
-
         if (cursor != null && 0 < cursor.getCount()) {
             cursor.moveToFirst();
 
@@ -241,7 +237,6 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
                 entries.add(getCheapDiaryEntry(cursor));
             } while (cursor.moveToNext());
         }
-
 
         // Close cursor and the database
         cursor.close();
@@ -302,7 +297,7 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String dateValue = dateFormat.format(date.getTime());
 
-        return getCheapEntryFromDatabase("1=1", null, DATE, ENTRY_SEQ_NUM);
+        return getCheapEntryFromDatabase("1=1", null, null, DATE + ", " + ENTRY_SEQ_NUM);
     }
 
     public List<FragmentEntry> getDiaryEntryByChapter(int chapter) {
