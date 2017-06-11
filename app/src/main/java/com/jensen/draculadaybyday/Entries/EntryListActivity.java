@@ -262,6 +262,17 @@ public class EntryListActivity extends AppCompatActivity {
         addEntryToDatabase(13, WESTMINISTER_GAZETTE, R.raw.september_25_westminster_01, Calendar.SEPTEMBER, 25, NEWSPAPER);
         addEntryToDatabase(13, WESTMINISTER_GAZETTE, R.raw.september_25_westminster_02, Calendar.SEPTEMBER, 25, NEWSPAPER);
 
+        // Chapter 14
+        addEntryToDatabase(14, MINA_MURRAY, R.raw.september_23_murray, Calendar.SEPTEMBER, 23, DIARY_ENTRY);
+        addEntryToDatabase(14, MINA_MURRAY, R.raw.september_24_murray, Calendar.SEPTEMBER, 24, DIARY_ENTRY);
+        addEntryToDatabase(14, ABRAHAM_VAN_HELSING, R.raw.september_24_helsing, Calendar.SEPTEMBER, 24, LETTER);
+        addEntryToDatabase(14, MINA_MURRAY, R.raw.september_25_murray_01, Calendar.SEPTEMBER, 25, TELEGRAM);
+        addEntryToDatabase(14, MINA_MURRAY, R.raw.september_25_murray_02, Calendar.SEPTEMBER, 25, DIARY_ENTRY);
+        addEntryToDatabase(14, ABRAHAM_VAN_HELSING, R.raw.september_25_helsing, Calendar.SEPTEMBER, 25, LETTER);
+        addEntryToDatabase(14, MINA_MURRAY, R.raw.september_25_murray_03, Calendar.SEPTEMBER, 25, LETTER);
+        addEntryToDatabase(14, JONATHAN_HARKER, R.raw.september_26_harker, Calendar.SEPTEMBER, 26, DIARY_ENTRY);
+        addEntryToDatabase(14, SEWARD, R.raw.september_26_seward, Calendar.SEPTEMBER, 26, DIARY_ENTRY);
+
         View recyclerView = findViewById(R.id.entry_list);
         assert recyclerView != null;
         setupRecyclerView((RecyclerView) recyclerView);
