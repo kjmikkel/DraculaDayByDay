@@ -53,6 +53,7 @@ public class EntryListActivity extends AppCompatActivity {
     private static final String ABRAHAM_VAN_HELSING = "Abraham Van Helsing";
     private static final String PALL_MALL_GAZETTE = "The Pall Mall Gazette";
     private static final String PATRICK_HENNESSEY = "Patrick Hennessey";
+    private static final String WESTMINISTER_GAZETTE = "The Westminster Gazette";
 
     // Types
     private static final String DIARY_ENTRY = "Diary Entry";
@@ -252,7 +253,14 @@ public class EntryListActivity extends AppCompatActivity {
         addEntryToDatabase(12, MINA_MURRAY, R.raw.september_17_murray, Calendar.SEPTEMBER, 17, LETTER );
         addEntryToDatabase(12, PATRICK_HENNESSEY, R.raw.september_20_hennessey, Calendar.SEPTEMBER, 20, LETTER);
         addEntryToDatabase(12, MINA_MURRAY, R.raw.september_18_murray, Calendar.SEPTEMBER, 18, LETTER);
-        addEntryToDatabase(12, SEWARD, R.raw.september_20_seward, Calendar.SEPTEMBER, 20, DIARY_ENTRY);
+        addEntryToDatabase(12, SEWARD, R.raw.september_20_01_seward, Calendar.SEPTEMBER, 20, DIARY_ENTRY);
+
+        // Chapter 13
+        addEntryToDatabase(13, SEWARD, R.raw.september_20_02_seward, Calendar.SEPTEMBER, 20, DIARY_ENTRY);
+        addEntryToDatabase(13, MINA_MURRAY, R.raw.september_22_murray, Calendar.SEPTEMBER, 22, DIARY_ENTRY);
+        addEntryToDatabase(13, SEWARD, R.raw.september_22_seward, Calendar.SEPTEMBER, 22, DIARY_ENTRY);
+        addEntryToDatabase(13, WESTMINISTER_GAZETTE, R.raw.september_25_01_westminster, Calendar.SEPTEMBER, 25, NEWSPAPER);
+        addEntryToDatabase(13, WESTMINISTER_GAZETTE, R.raw.september_25_02_westminster, Calendar.SEPTEMBER, 25, NEWSPAPER);
 
         View recyclerView = findViewById(R.id.entry_list);
         assert recyclerView != null;
