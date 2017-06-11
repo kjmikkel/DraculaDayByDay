@@ -133,71 +133,71 @@ public class EntryListActivity extends AppCompatActivity {
         // Chapter 1
         addEntryToDatabase(1, JONATHAN_HARKER, R.raw.may_03_harker, Calendar.MAY, 3, DIARY_ENTRY);
         addEntryToDatabase(1, JONATHAN_HARKER, R.raw.may_04_harker, Calendar.MAY, 4, DIARY_ENTRY);
-        addEntryToDatabase(1, JONATHAN_HARKER, R.raw.may_05_01_harker, Calendar.MAY, 5, DIARY_ENTRY);
+        addEntryToDatabase(1, JONATHAN_HARKER, R.raw.may_05_harker_01, Calendar.MAY, 5, DIARY_ENTRY);
 
         // Chapter 2
-        addEntryToDatabase(2, JONATHAN_HARKER, R.raw.may_05_02_harker, Calendar.MAY, 5, DIARY_ENTRY);
+        addEntryToDatabase(2, JONATHAN_HARKER, R.raw.may_05_harker_02, Calendar.MAY, 5, DIARY_ENTRY);
         addEntryToDatabase(2, JONATHAN_HARKER, R.raw.may_07_harker, Calendar.MAY, 7, DIARY_ENTRY);
-        addEntryToDatabase(2, JONATHAN_HARKER, R.raw.may_08_01_harker, Calendar.MAY, 8, DIARY_ENTRY);
+        addEntryToDatabase(2, JONATHAN_HARKER, R.raw.may_08_harker_01, Calendar.MAY, 8, DIARY_ENTRY);
 
         // Chapter 3
-        addEntryToDatabase(3, JONATHAN_HARKER, R.raw.may_08_02_harker, Calendar.MAY, 8, DIARY_ENTRY);
-        addEntryToDatabase(3, JONATHAN_HARKER, R.raw.may_08_03_harker, Calendar.MAY, 8, DIARY_ENTRY);
-        addEntryToDatabase(3, JONATHAN_HARKER, R.raw.may_12_01_harker, Calendar.MAY, 12, DIARY_ENTRY);
+        addEntryToDatabase(3, JONATHAN_HARKER, R.raw.may_08_harker_02, Calendar.MAY, 8, DIARY_ENTRY);
+        addEntryToDatabase(3, JONATHAN_HARKER, R.raw.may_08_harker_03, Calendar.MAY, 8, DIARY_ENTRY);
+        addEntryToDatabase(3, JONATHAN_HARKER, R.raw.may_12_harker_01, Calendar.MAY, 12, DIARY_ENTRY);
         addEntryToDatabase(3, JONATHAN_HARKER, R.raw.may_15_harker, Calendar.MAY, 15, DIARY_ENTRY);
-        addEntryToDatabase(3, JONATHAN_HARKER, R.raw.may_16_01_harker, Calendar.MAY, 16, DIARY_ENTRY);
+        addEntryToDatabase(3, JONATHAN_HARKER, R.raw.may_16_harker_01, Calendar.MAY, 16, DIARY_ENTRY);
 
         // Chapter 4
-        addEntryToDatabase(4, JONATHAN_HARKER, R.raw.may_16_02_harker, Calendar.MAY, 16, DIARY_ENTRY);
+        addEntryToDatabase(4, JONATHAN_HARKER, R.raw.may_16_harker_02, Calendar.MAY, 16, DIARY_ENTRY);
         addEntryToDatabase(4, JONATHAN_HARKER, R.raw.may_18_harker, Calendar.MAY, 18, DIARY_ENTRY);
         addEntryToDatabase(4, JONATHAN_HARKER, R.raw.may_19_harker, Calendar.MAY, 19, DIARY_ENTRY);
-        addEntryToDatabase(4, JONATHAN_HARKER, R.raw.may_28_01_harker, Calendar.MAY, 28, DIARY_ENTRY);
-        addEntryToDatabase(4, JONATHAN_HARKER, R.raw.may_28_02_harker, Calendar.MAY, 28, DIARY_ENTRY);
-        addEntryToDatabase(4, JONATHAN_HARKER, R.raw.may_28_03_harker, Calendar.MAY, 28, DIARY_ENTRY);
-        addEntryToDatabase(4, JONATHAN_HARKER, R.raw.may_28_04_harker, Calendar.MAY, 28, DIARY_ENTRY);
+        addEntryToDatabase(4, JONATHAN_HARKER, R.raw.may_28_harker_01, Calendar.MAY, 28, DIARY_ENTRY);
+        addEntryToDatabase(4, JONATHAN_HARKER, R.raw.may_28_harker_02, Calendar.MAY, 28, DIARY_ENTRY);
+        addEntryToDatabase(4, JONATHAN_HARKER, R.raw.may_28_harker_03, Calendar.MAY, 28, DIARY_ENTRY);
+        addEntryToDatabase(4, JONATHAN_HARKER, R.raw.may_28_harker_04, Calendar.MAY, 28, DIARY_ENTRY);
         addEntryToDatabase(4, JONATHAN_HARKER, R.raw.may_31_harker, Calendar.MAY, 31, DIARY_ENTRY);
         addEntryToDatabase(4, JONATHAN_HARKER, R.raw.june_17_harker, Calendar.JUNE, 17, DIARY_ENTRY);
         addEntryToDatabase(4, JONATHAN_HARKER, R.raw.june_24_harker, Calendar.JUNE, 24, DIARY_ENTRY);
-        addEntryToDatabase(4, JONATHAN_HARKER, R.raw.june_25_01_harker, Calendar.JUNE, 25, DIARY_ENTRY);
-        addEntryToDatabase(4, JONATHAN_HARKER, R.raw.june_25_02_harker, Calendar.JUNE, 25, DIARY_ENTRY);
+        addEntryToDatabase(4, JONATHAN_HARKER, R.raw.june_25_harker_01, Calendar.JUNE, 25, DIARY_ENTRY);
+        addEntryToDatabase(4, JONATHAN_HARKER, R.raw.june_25_harker_02, Calendar.JUNE, 25, DIARY_ENTRY);
         addEntryToDatabase(4, JONATHAN_HARKER, R.raw.june_29_harker, Calendar.JUNE, 29, DIARY_ENTRY);
         addEntryToDatabase(4, JONATHAN_HARKER, R.raw.june_30_harker, Calendar.JUNE, 30, DIARY_ENTRY);
 
         // Chapter 5
         addEntryToDatabase(5, MINA_MURRAY, R.raw.may_09_murray, Calendar.MAY, 9, LETTER);
         addEntryToDatabase(5, LUCY_WESTENRA, R.raw.may_10_westenra, Calendar.MAY, 10, LETTER);
-        addEntryToDatabase(5, LUCY_WESTENRA, R.raw.may_24_01_westenra, Calendar.MAY, 24, LETTER);
-        addEntryToDatabase(5, LUCY_WESTENRA, R.raw.may_24_02_westenra, Calendar.MAY, 24, LETTER);
+        addEntryToDatabase(5, LUCY_WESTENRA, R.raw.may_24_westenra_01, Calendar.MAY, 24, LETTER);
+        addEntryToDatabase(5, LUCY_WESTENRA, R.raw.may_24_westenra_02, Calendar.MAY, 24, LETTER);
         addEntryToDatabase(5, SEWARD, R.raw.may_25_seward, Calendar.MAY, 25, PHONOGRAPH);
         addEntryToDatabase(5, QUINCEY_MORRIS, R.raw.may_25_morris, Calendar.MAY, 25, LETTER);
         addEntryToDatabase(5, ARTHUR_HOLMWOOD, R.raw.may_26_holmwood, Calendar.MAY, 26, TELEGRAM);
 
         // Chapter 6
         addEntryToDatabase(6, MINA_MURRAY, R.raw.july_24_murray, Calendar.JULY, 24, DIARY_ENTRY);
-        addEntryToDatabase(6, MINA_MURRAY, R.raw.august_01_01_murray, Calendar.AUGUST, 1, DIARY_ENTRY);
-        addEntryToDatabase(6, MINA_MURRAY, R.raw.august_01_02_murray, Calendar.AUGUST, 1, DIARY_ENTRY);
+        addEntryToDatabase(6, MINA_MURRAY, R.raw.august_01_murray_01, Calendar.AUGUST, 1, DIARY_ENTRY);
+        addEntryToDatabase(6, MINA_MURRAY, R.raw.august_01_murray_02, Calendar.AUGUST, 1, DIARY_ENTRY);
         addEntryToDatabase(6, SEWARD, R.raw.june_05_seward, Calendar.JUNE, 5, DIARY_ENTRY);
         addEntryToDatabase(6, SEWARD, R.raw.june_18_seward, Calendar.JUNE, 18, DIARY_ENTRY);
         addEntryToDatabase(6, SEWARD, R.raw.july_01_seward, Calendar.JULY, 1, DIARY_ENTRY);
         addEntryToDatabase(6, SEWARD, R.raw.july_08_seward, Calendar.JULY, 8, DIARY_ENTRY);
-        addEntryToDatabase(6, SEWARD, R.raw.july_19_01_seward, Calendar.JULY, 19, DIARY_ENTRY);
-        addEntryToDatabase(6, SEWARD, R.raw.july_19_02_seward, Calendar.JULY, 19, DIARY_ENTRY);
-        addEntryToDatabase(6, SEWARD, R.raw.july_20_01_seward, Calendar.JULY, 20, DIARY_ENTRY);
-        addEntryToDatabase(6, SEWARD, R.raw.july_20_02_seward, Calendar.JULY, 20, DIARY_ENTRY);
-        addEntryToDatabase(6, SEWARD, R.raw.july_20_03_seward, Calendar.JULY, 20, DIARY_ENTRY);
+        addEntryToDatabase(6, SEWARD, R.raw.july_19_seward_01, Calendar.JULY, 19, DIARY_ENTRY);
+        addEntryToDatabase(6, SEWARD, R.raw.july_19_seward_02, Calendar.JULY, 19, DIARY_ENTRY);
+        addEntryToDatabase(6, SEWARD, R.raw.july_20_seward_01, Calendar.JULY, 20, DIARY_ENTRY);
+        addEntryToDatabase(6, SEWARD, R.raw.july_20_seward_02, Calendar.JULY, 20, DIARY_ENTRY);
+        addEntryToDatabase(6, SEWARD, R.raw.july_20_seward_03, Calendar.JULY, 20, DIARY_ENTRY);
         addEntryToDatabase(6, SEWARD, R.raw.july_26_murray, Calendar.JULY, 26, DIARY_ENTRY);
         addEntryToDatabase(6, SEWARD, R.raw.july_27_murray, Calendar.JULY, 27, DIARY_ENTRY);
         addEntryToDatabase(6, SEWARD, R.raw.august_03_murray, Calendar.AUGUST, 3, DIARY_ENTRY);
         addEntryToDatabase(6, SEWARD, R.raw.august_06_murray, Calendar.AUGUST, 6, DIARY_ENTRY);
 
         // Chapter 7
-        addEntryToDatabase(7, MINA_MURRAY, R.raw.august_08_01_murray, Calendar.AUGUST, 8, DIARY_ENTRY);
+        addEntryToDatabase(7, MINA_MURRAY, R.raw.august_08_murray_01, Calendar.AUGUST, 8, DIARY_ENTRY);
         addEntryToDatabase(7, MINA_MURRAY, R.raw.august_09_murray, Calendar.AUGUST, 9, DIARY_ENTRY);
-        addEntryToDatabase(7, MINA_MURRAY, R.raw.august_08_02_murray, Calendar.AUGUST, 8, DIARY_ENTRY);
-        addEntryToDatabase(7, MINA_MURRAY, R.raw.august_10_01_murray, Calendar.AUGUST, 10, DIARY_ENTRY);
+        addEntryToDatabase(7, MINA_MURRAY, R.raw.august_08_murray_02, Calendar.AUGUST, 8, DIARY_ENTRY);
+        addEntryToDatabase(7, MINA_MURRAY, R.raw.august_10_murray_01, Calendar.AUGUST, 10, DIARY_ENTRY);
 
         // Chapter 8
-        addEntryToDatabase(8, MINA_MURRAY, R.raw.august_10_02_murray, Calendar.AUGUST, 10, DIARY_ENTRY);
+        addEntryToDatabase(8, MINA_MURRAY, R.raw.august_10_murray_02, Calendar.AUGUST, 10, DIARY_ENTRY);
         addEntryToDatabase(8, MINA_MURRAY, R.raw.august_11_murray, Calendar.AUGUST, 11, DIARY_ENTRY);
         addEntryToDatabase(8, MINA_MURRAY, R.raw.august_12_murray, Calendar.AUGUST, 12, DIARY_ENTRY);
         addEntryToDatabase(8, MINA_MURRAY, R.raw.august_13_murray, Calendar.AUGUST, 13, DIARY_ENTRY);
@@ -223,13 +223,13 @@ public class EntryListActivity extends AppCompatActivity {
         addEntryToDatabase(9, SEWARD, R.raw.september_02_seward, Calendar.SEPTEMBER, 2, LETTER);
         addEntryToDatabase(9, ABRAHAM_VAN_HELSING, R.raw.september_02_helsing, Calendar.SEPTEMBER, 2, LETTER);
         addEntryToDatabase(9, SEWARD, R.raw.september_03_seward, Calendar.SEPTEMBER, 3, LETTER);
-        addEntryToDatabase(9, SEWARD, R.raw.september_04_01_seward, Calendar.SEPTEMBER, 4, DIARY_ENTRY);
-        addEntryToDatabase(9, SEWARD, R.raw.september_04_02_seward, Calendar.SEPTEMBER, 4, TELEGRAM);
+        addEntryToDatabase(9, SEWARD, R.raw.september_04_seward_01, Calendar.SEPTEMBER, 4, DIARY_ENTRY);
+        addEntryToDatabase(9, SEWARD, R.raw.september_04_seward_02, Calendar.SEPTEMBER, 4, TELEGRAM);
         addEntryToDatabase(9, SEWARD, R.raw.september_05_seward, Calendar.SEPTEMBER, 5, TELEGRAM);
-        addEntryToDatabase(9, SEWARD, R.raw.september_06_01_seward, Calendar.SEPTEMBER, 6, TELEGRAM);
+        addEntryToDatabase(9, SEWARD, R.raw.september_06_seward_01, Calendar.SEPTEMBER, 6, TELEGRAM);
 
         // Chapter 10
-        addEntryToDatabase(10, SEWARD, R.raw.september_06_02_seward, Calendar.SEPTEMBER, 6, LETTER);
+        addEntryToDatabase(10, SEWARD, R.raw.september_06_seward_02, Calendar.SEPTEMBER, 6, LETTER);
         addEntryToDatabase(10, SEWARD, R.raw.september_07_seward, Calendar.SEPTEMBER, 7, DIARY_ENTRY);
         addEntryToDatabase(10, SEWARD, R.raw.september_08_seward, Calendar.SEPTEMBER, 8, DIARY_ENTRY);
         addEntryToDatabase(10, SEWARD, R.raw.september_09_seward, Calendar.SEPTEMBER, 9, DIARY_ENTRY);
@@ -240,27 +240,27 @@ public class EntryListActivity extends AppCompatActivity {
         // Chapter 11
         addEntryToDatabase(11, LUCY_WESTENRA, R.raw.september_13_seward, Calendar.SEPTEMBER, 12, DIARY_ENTRY);
         addEntryToDatabase(11, SEWARD, R.raw.september_13_seward, Calendar.SEPTEMBER, 13, DIARY_ENTRY);
-        addEntryToDatabase(11, LUCY_WESTENRA, R.raw.september_17_01_westenra, Calendar.SEPTEMBER, 17, DIARY_ENTRY);
+        addEntryToDatabase(11, LUCY_WESTENRA, R.raw.september_17_westenra_01, Calendar.SEPTEMBER, 17, DIARY_ENTRY);
         addEntryToDatabase(11, PALL_MALL_GAZETTE, R.raw.september_18_pallmall, Calendar.SEPTEMBER, 18, NEWSPAPER);
         addEntryToDatabase(11, SEWARD, R.raw.september_17_seward, Calendar.SEPTEMBER, 17, DIARY_ENTRY);
         addEntryToDatabase(11, ABRAHAM_VAN_HELSING, R.raw.september_17_helsing, Calendar.SEPTEMBER, 17, TELEGRAM);
-        addEntryToDatabase(11, SEWARD, R.raw.september_18_01_seward, Calendar.SEPTEMBER, 18, DIARY_ENTRY);
-        addEntryToDatabase(11, LUCY_WESTENRA, R.raw.september_17_02_westenra, Calendar.SEPTEMBER, 17, DIARY_ENTRY);
+        addEntryToDatabase(11, SEWARD, R.raw.september_18_seward_01, Calendar.SEPTEMBER, 18, DIARY_ENTRY);
+        addEntryToDatabase(11, LUCY_WESTENRA, R.raw.september_17_westenra_02, Calendar.SEPTEMBER, 17, DIARY_ENTRY);
 
         // Chapter 12
-        addEntryToDatabase(12, SEWARD, R.raw.september_18_02_seward, Calendar.SEPTEMBER, 18, DIARY_ENTRY);
+        addEntryToDatabase(12, SEWARD, R.raw.september_18_seward_02, Calendar.SEPTEMBER, 18, DIARY_ENTRY);
         addEntryToDatabase(12, SEWARD, R.raw.september_19_seward, Calendar.SEPTEMBER, 19, DIARY_ENTRY);
         addEntryToDatabase(12, MINA_MURRAY, R.raw.september_17_murray, Calendar.SEPTEMBER, 17, LETTER );
         addEntryToDatabase(12, PATRICK_HENNESSEY, R.raw.september_20_hennessey, Calendar.SEPTEMBER, 20, LETTER);
         addEntryToDatabase(12, MINA_MURRAY, R.raw.september_18_murray, Calendar.SEPTEMBER, 18, LETTER);
-        addEntryToDatabase(12, SEWARD, R.raw.september_20_01_seward, Calendar.SEPTEMBER, 20, DIARY_ENTRY);
+        addEntryToDatabase(12, SEWARD, R.raw.september_20_seward_01, Calendar.SEPTEMBER, 20, DIARY_ENTRY);
 
         // Chapter 13
-        addEntryToDatabase(13, SEWARD, R.raw.september_20_02_seward, Calendar.SEPTEMBER, 20, DIARY_ENTRY);
+        addEntryToDatabase(13, SEWARD, R.raw.september_20_seward_02, Calendar.SEPTEMBER, 20, DIARY_ENTRY);
         addEntryToDatabase(13, MINA_MURRAY, R.raw.september_22_murray, Calendar.SEPTEMBER, 22, DIARY_ENTRY);
         addEntryToDatabase(13, SEWARD, R.raw.september_22_seward, Calendar.SEPTEMBER, 22, DIARY_ENTRY);
-        addEntryToDatabase(13, WESTMINISTER_GAZETTE, R.raw.september_25_01_westminster, Calendar.SEPTEMBER, 25, NEWSPAPER);
-        addEntryToDatabase(13, WESTMINISTER_GAZETTE, R.raw.september_25_02_westminster, Calendar.SEPTEMBER, 25, NEWSPAPER);
+        addEntryToDatabase(13, WESTMINISTER_GAZETTE, R.raw.september_25_westminster_01, Calendar.SEPTEMBER, 25, NEWSPAPER);
+        addEntryToDatabase(13, WESTMINISTER_GAZETTE, R.raw.september_25_westminster_02, Calendar.SEPTEMBER, 25, NEWSPAPER);
 
         View recyclerView = findViewById(R.id.entry_list);
         assert recyclerView != null;
