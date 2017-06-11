@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.provider.CalendarContract;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -277,9 +276,11 @@ public class EntryListActivity extends AppCompatActivity {
         addEntryToDatabase(15, SEWARD, R.raw.september_27_seward, Calendar.SEPTEMBER, 27, DIARY_ENTRY);
         addEntryToDatabase(15, ABRAHAM_VAN_HELSING, R.raw.september_27_helsing, Calendar.SEPTEMBER, 27, NOTE);
         addEntryToDatabase(15, SEWARD, R.raw.september_28_seward, Calendar.SEPTEMBER, 28, DIARY_ENTRY);
-        addEntryToDatabase(15, SEWARD, R.raw.september_29_seward, Calendar.SEPTEMBER, 29, DIARY_ENTRY);
+        addEntryToDatabase(15, SEWARD, R.raw.september_29_seward_01, Calendar.SEPTEMBER, 29, DIARY_ENTRY);
 
-
+        // Chapter 16
+        addEntryToDatabase(16, SEWARD, R.raw.september_29_seward_02, Calendar.SEPTEMBER, 29, DIARY_ENTRY);
+        addEntryToDatabase(16, SEWARD, R.raw.september_29_seward_03, Calendar.SEPTEMBER, 29, DIARY_ENTRY);
 
         View recyclerView = findViewById(R.id.entry_list);
         assert recyclerView != null;
