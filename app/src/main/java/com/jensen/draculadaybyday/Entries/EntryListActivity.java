@@ -51,12 +51,14 @@ public class EntryListActivity extends AppCompatActivity {
     private static final String MESSRS = "Messrs. Carter, Paterson & Co.";
     private static final String SISTER_AGATHA = "Sister Agatha";
     private static final String ABRAHAM_VAN_HELSING = "Abraham Van Helsing";
+    private static final String PALL_MALL_GAZETTE = "The Pall Mall Gazette";
 
     // Types
     private static final String DIARY_ENTRY = "Diary Entry";
     private static final String LETTER = "Letter";
     private static final String TELEGRAM = "Telegram";
     private static final String PHONOGRAPH = "Phonograph";
+    private static final String NEWSPAPER = "Newspaper";
 
 
     private static int storyEntryNumber = 1;
@@ -234,6 +236,16 @@ public class EntryListActivity extends AppCompatActivity {
         addEntryToDatabase(10, SEWARD, R.raw.september_11_seward, Calendar.SEPTEMBER, 11, DIARY_ENTRY);
 
         // Chapter 11
+        addEntryToDatabase(11, LUCY_WESTENRA, R.raw.september_13_seward, Calendar.SEPTEMBER, 12, DIARY_ENTRY);
+        addEntryToDatabase(11, SEWARD, R.raw.september_13_seward, Calendar.SEPTEMBER, 13, DIARY_ENTRY);
+        addEntryToDatabase(11, LUCY_WESTENRA, R.raw.september_17_01_westenra, Calendar.SEPTEMBER, 17, DIARY_ENTRY);
+        addEntryToDatabase(11, PALL_MALL_GAZETTE, R.raw.september_18_pallmall, Calendar.SEPTEMBER, 18, NEWSPAPER);
+        addEntryToDatabase(11, SEWARD, R.raw.september_17_seward, Calendar.SEPTEMBER, 17, DIARY_ENTRY);
+        addEntryToDatabase(11, ABRAHAM_VAN_HELSING, R.raw.september_17_helsing, Calendar.SEPTEMBER, 17, TELEGRAM);
+        addEntryToDatabase(11, SEWARD, R.raw.september_18_seward, Calendar.SEPTEMBER, 18, DIARY_ENTRY);
+        addEntryToDatabase(11, LUCY_WESTENRA, R.raw.september_17_02_westenra, Calendar.SEPTEMBER, 17, DIARY_ENTRY);
+
+        // Chapter 12
 
         View recyclerView = findViewById(R.id.entry_list);
         assert recyclerView != null;
