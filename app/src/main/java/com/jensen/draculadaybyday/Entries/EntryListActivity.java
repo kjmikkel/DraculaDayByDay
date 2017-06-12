@@ -26,7 +26,6 @@ import com.jensen.draculadaybyday.Preferences.DraculaPreferences;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.SequenceInputStream;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -56,6 +55,7 @@ public class EntryListActivity extends AppCompatActivity {
     private static final String PALL_MALL_GAZETTE = "The Pall Mall Gazette";
     private static final String PATRICK_HENNESSEY = "Patrick Hennessey";
     private static final String WESTMINISTER_GAZETTE = "The Westminster Gazette";
+    private static final String MITCHELL_AND_SONS = "Mitchell, Sons and Candy to Lord Godalming";
 
     // Types
     private static final String DIARY_ENTRY = "Diary Entry";
@@ -300,11 +300,18 @@ public class EntryListActivity extends AppCompatActivity {
         addEntryToDatabase(18, SEWARD, R.raw.october_01_seward_01, Calendar.OCTOBER, 1, DIARY_ENTRY);
 
         // Chapter 19
-        addEntryToDatabase(19, JONATHAN_HARKER, R.raw.october_01_harker, Calendar.OCTOBER, 1, DIARY_ENTRY);
+        addEntryToDatabase(19, JONATHAN_HARKER, R.raw.october_01_harker_01, Calendar.OCTOBER, 1, DIARY_ENTRY);
         addEntryToDatabase(19, SEWARD, R.raw.october_01_seward_02, Calendar.OCTOBER, 1, DIARY_ENTRY);
         addEntryToDatabase(19, MINA_HARKER, R.raw.october_01_mina_harker, Calendar.OCTOBER, 1, DIARY_ENTRY);
         addEntryToDatabase(19, MINA_HARKER, R.raw.october_02_mina_harker, Calendar.OCTOBER, 2, DIARY_ENTRY);
-        
+
+        // Chapter 20
+        addEntryToDatabase(20,JONATHAN_HARKER, R.raw.october_01_harker_02, Calendar.OCTOBER, 1, DIARY_ENTRY);
+        addEntryToDatabase(20, JONATHAN_HARKER, R.raw.october_02_harker, Calendar.OCTOBER, 2, DIARY_ENTRY);
+        addEntryToDatabase(20, SEWARD, R.raw.october_01_seward_03, Calendar.OCTOBER, 1, DIARY_ENTRY);
+        addEntryToDatabase(20, MITCHELL_AND_SONS, R.raw.october_01_mitchell, Calendar.OCTOBER, 1, LETTER);
+        addEntryToDatabase(20, SEWARD, R.raw.october_02_seward, Calendar.OCTOBER, 2, DIARY_ENTRY);
+
         View recyclerView = findViewById(R.id.entry_list);
         assert recyclerView != null;
         setupRecyclerView((RecyclerView) recyclerView);
