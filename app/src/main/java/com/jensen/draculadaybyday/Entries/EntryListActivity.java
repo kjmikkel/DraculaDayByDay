@@ -26,6 +26,7 @@ import com.jensen.draculadaybyday.Preferences.DraculaPreferences;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.SequenceInputStream;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -296,9 +297,14 @@ public class EntryListActivity extends AppCompatActivity {
         // Chapter 18
         addEntryToDatabase(18, SEWARD, R.raw.september_30_seward_02, Calendar.SEPTEMBER, 30, DIARY_ENTRY);
         addEntryToDatabase(18, MINA_HARKER, R.raw.september_30_mina_harker_02, Calendar.SEPTEMBER, 30, DIARY_ENTRY);
-        addEntryToDatabase(18, SEWARD, R.raw.october_01_seward, Calendar.OCTOBER, 1, DIARY_ENTRY);
+        addEntryToDatabase(18, SEWARD, R.raw.october_01_seward_01, Calendar.OCTOBER, 1, DIARY_ENTRY);
 
-
+        // Chapter 19
+        addEntryToDatabase(19, JONATHAN_HARKER, R.raw.october_01_harker, Calendar.OCTOBER, 1, DIARY_ENTRY);
+        addEntryToDatabase(19, SEWARD, R.raw.october_01_seward_02, Calendar.OCTOBER, 1, DIARY_ENTRY);
+        addEntryToDatabase(19, MINA_HARKER, R.raw.october_01_mina_harker, Calendar.OCTOBER, 1, DIARY_ENTRY);
+        addEntryToDatabase(19, MINA_HARKER, R.raw.october_02_mina_harker, Calendar.OCTOBER, 2, DIARY_ENTRY);
+        
         View recyclerView = findViewById(R.id.entry_list);
         assert recyclerView != null;
         setupRecyclerView((RecyclerView) recyclerView);
