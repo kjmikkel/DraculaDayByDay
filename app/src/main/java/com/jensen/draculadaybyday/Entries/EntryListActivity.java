@@ -43,6 +43,7 @@ public class EntryListActivity extends AppCompatActivity {
     // Dramatis personæ
     private static final String JONATHAN_HARKER = "Jonathan Harker";
     private static final String MINA_MURRAY = "Mina Murray";
+    private static final String MINA_HARKER = "Mina Harker";
     private static final String LUCY_WESTENRA = "Lucy Westenra";
     private static final String QUINCEY_MORRIS = "Quiencey Morris";
     private static final String ARTHUR_HOLMWOOD = "Arthur Holmwood";
@@ -281,6 +282,16 @@ public class EntryListActivity extends AppCompatActivity {
         // Chapter 16
         addEntryToDatabase(16, SEWARD, R.raw.september_29_seward_02, Calendar.SEPTEMBER, 29, DIARY_ENTRY);
         addEntryToDatabase(16, SEWARD, R.raw.september_29_seward_03, Calendar.SEPTEMBER, 29, DIARY_ENTRY);
+
+        // Chapter 17
+        addEntryToDatabase(17, SEWARD, R.raw.september_29_seward_04, Calendar.SEPTEMBER, 29, DIARY_ENTRY);
+        addEntryToDatabase(17, MINA_HARKER, R.raw.september_29_mina_harker_01, Calendar.SEPTEMBER, 29, DIARY_ENTRY);
+        addEntryToDatabase(17, SEWARD, R.raw.september_29_seward_05, Calendar.SEPTEMBER, 29, DIARY_ENTRY);
+        addEntryToDatabase(17, MINA_HARKER, R.raw.september_29_mina_harker_02, Calendar.SEPTEMBER, 29, DIARY_ENTRY);
+        addEntryToDatabase(17, SEWARD, R.raw.september_30_seward, Calendar.SEPTEMBER, 30, DIARY_ENTRY);
+        addEntryToDatabase(17, JONATHAN_HARKER, R.raw.september_29_harker, Calendar.SEPTEMBER, 29, DIARY_ENTRY);
+        addEntryToDatabase(17, JONATHAN_HARKER, R.raw.september_30_harker, Calendar.SEPTEMBER, 30, DIARY_ENTRY);
+        addEntryToDatabase(17, MINA_HARKER, R.raw.september_30_mina_harker, Calendar.SEPTEMBER, 30, DIARY_ENTRY);
 
         View recyclerView = findViewById(R.id.entry_list);
         assert recyclerView != null;
