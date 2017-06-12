@@ -306,11 +306,14 @@ public class EntryListActivity extends AppCompatActivity {
         addEntryToDatabase(19, MINA_HARKER, R.raw.october_02_mina_harker, Calendar.OCTOBER, 2, DIARY_ENTRY);
 
         // Chapter 20
-        addEntryToDatabase(20,JONATHAN_HARKER, R.raw.october_01_harker_02, Calendar.OCTOBER, 1, DIARY_ENTRY);
+        addEntryToDatabase(20, JONATHAN_HARKER, R.raw.october_01_harker_02, Calendar.OCTOBER, 1, DIARY_ENTRY);
         addEntryToDatabase(20, JONATHAN_HARKER, R.raw.october_02_harker, Calendar.OCTOBER, 2, DIARY_ENTRY);
         addEntryToDatabase(20, SEWARD, R.raw.october_01_seward_03, Calendar.OCTOBER, 1, DIARY_ENTRY);
         addEntryToDatabase(20, MITCHELL_AND_SONS, R.raw.october_01_mitchell, Calendar.OCTOBER, 1, LETTER);
         addEntryToDatabase(20, SEWARD, R.raw.october_02_seward, Calendar.OCTOBER, 2, DIARY_ENTRY);
+
+        // Chapter 21
+        addEntryToDatabase(21, SEWARD, R.raw.october_03_seward, Calendar.OCTOBER, 3, DIARY_ENTRY);
 
         View recyclerView = findViewById(R.id.entry_list);
         assert recyclerView != null;
