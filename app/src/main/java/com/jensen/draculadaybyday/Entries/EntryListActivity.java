@@ -344,6 +344,23 @@ public class EntryListActivity extends AppCompatActivity {
         addEntryToDatabase(25, SEWARD, R.raw.october_27_seward, Calendar.OCTOBER, 27, DIARY_ENTRY);
         addEntryToDatabase(25, SEWARD, R.raw.october_28_seward, Calendar.OCTOBER, 28, DIARY_ENTRY);
 
+        // Chapter 26
+        addEntryToDatabase(26, SEWARD, R.raw.october_29_seward, Calendar.OCTOBER, 29, DIARY_ENTRY);
+        addEntryToDatabase(26, SEWARD, R.raw.october_30_seward, Calendar.OCTOBER, 30, DIARY_ENTRY);
+        addEntryToDatabase(26, MINA_HARKER, R.raw.october_30_mina_harker_01, Calendar.OCTOBER, 30, DIARY_ENTRY);
+        addEntryToDatabase(26, JONATHAN_HARKER, R.raw.october_30_harker_01, Calendar.OCTOBER, 30, DIARY_ENTRY);
+        addEntryToDatabase(26, MINA_HARKER, R.raw.october_30_mina_harker_02, Calendar.OCTOBER, 30, DIARY_ENTRY);
+        addEntryToDatabase(26, MINA_HARKER, R.raw.october_30_mina_harker_03, Calendar.OCTOBER, 30, DIARY_ENTRY);
+        addEntryToDatabase(26, MINA_HARKER, R.raw.october_30_mina_harker_04, Calendar.OCTOBER, 30, DIARY_ENTRY);
+        addEntryToDatabase(26, JONATHAN_HARKER, R.raw.october_30_harker_02, Calendar.OCTOBER, 30, DIARY_ENTRY);
+        addEntryToDatabase(26, JONATHAN_HARKER, R.raw.october_31_harker, Calendar.OCTOBER, 31, DIARY_ENTRY);
+        addEntryToDatabase(26, JONATHAN_HARKER, R.raw.november_01_harker, Calendar.NOVEMBER, 1, DIARY_ENTRY);
+        addEntryToDatabase(26, JONATHAN_HARKER, R.raw.november_02_harker, Calendar.NOVEMBER, 2, DIARY_ENTRY);
+        addEntryToDatabase(26, SEWARD, R.raw.november_02_seward, Calendar.NOVEMBER, 2, DIARY_ENTRY);
+        addEntryToDatabase(26, SEWARD, R.raw.november_03_seward, Calendar.NOVEMBER, 3, DIARY_ENTRY);
+        addEntryToDatabase(26, SEWARD, R.raw.november_04_seward, Calendar.NOVEMBER, 4, DIARY_ENTRY);
+        addEntryToDatabase(26, MINA_HARKER, R.raw.october_31_mina_harker, Calendar.OCTOBER, 31, DIARY_ENTRY);
+
         View recyclerView = findViewById(R.id.entry_list);
         assert recyclerView != null;
         setupRecyclerView((RecyclerView) recyclerView);
