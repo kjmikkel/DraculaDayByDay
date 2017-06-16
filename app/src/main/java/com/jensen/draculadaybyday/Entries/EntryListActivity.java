@@ -332,6 +332,18 @@ public class EntryListActivity extends AppCompatActivity {
         addEntryToDatabase(24, JONATHAN_HARKER, R.raw.october_05_harker, Calendar.OCTOBER, 5, DIARY_ENTRY);
         addEntryToDatabase(24, JONATHAN_HARKER, R.raw.october_06_harker, Calendar.OCTOBER, 6, DIARY_ENTRY);
 
+        // Chapter 25
+        addEntryToDatabase(25, SEWARD, R.raw.october_11_seward, Calendar.OCTOBER, 11, DIARY_ENTRY);
+        addEntryToDatabase(25, JONATHAN_HARKER, R.raw.october_15_harker, Calendar.OCTOBER, 15, DIARY_ENTRY);
+        addEntryToDatabase(25, JONATHAN_HARKER, R.raw.october_16_harker, Calendar.OCTOBER, 16, DIARY_ENTRY);
+        addEntryToDatabase(25, JONATHAN_HARKER, R.raw.october_17_harker, Calendar.OCTOBER, 17, DIARY_ENTRY);
+        addEntryToDatabase(25, JONATHAN_HARKER, R.raw.october_24_harker, Calendar.OCTOBER, 24, DIARY_ENTRY);
+        addEntryToDatabase(25, SEWARD, R.raw.october_25_seward_01, Calendar.OCTOBER, 25, DIARY_ENTRY);
+        addEntryToDatabase(25, SEWARD, R.raw.october_25_seward_02, Calendar.OCTOBER, 25, DIARY_ENTRY);
+        addEntryToDatabase(25, SEWARD, R.raw.october_26_seward, Calendar.OCTOBER, 26, DIARY_ENTRY);
+        addEntryToDatabase(25, SEWARD, R.raw.october_27_seward, Calendar.OCTOBER, 27, DIARY_ENTRY);
+        addEntryToDatabase(25, SEWARD, R.raw.october_28_seward, Calendar.OCTOBER, 28, DIARY_ENTRY);
+
         View recyclerView = findViewById(R.id.entry_list);
         assert recyclerView != null;
         setupRecyclerView((RecyclerView) recyclerView);
