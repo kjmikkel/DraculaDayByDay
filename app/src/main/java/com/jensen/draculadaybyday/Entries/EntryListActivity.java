@@ -212,8 +212,8 @@ public class EntryListActivity extends AppCompatActivity {
         addEntryToDatabase(8, DR_SEWARD, R.raw.august_19_dr_seward, Calendar.AUGUST, 19, DIARY_ENTRY);
 
         // Chapter 9
-        addEntryToDatabase(9, MINA_HARKER, R.raw.august_24_murray, Calendar.AUGUST, 24, LETTER);
-        addEntryToDatabase(9, LUCY_WESTENRA, R.raw.august_30_murray, Calendar.AUGUST, 30, LETTER);
+        addEntryToDatabase(9, MINA_HARKER, R.raw.august_24_mina_murray, Calendar.AUGUST, 24, LETTER);
+        addEntryToDatabase(9, LUCY_WESTENRA, R.raw.august_30_mina_murray, Calendar.AUGUST, 30, LETTER);
         addEntryToDatabase(9, DR_SEWARD, R.raw.august_20_dr_seward, Calendar.AUGUST, 20, DIARY_ENTRY);
         addEntryToDatabase(9, DR_SEWARD, R.raw.august_23_dr_seward, Calendar.AUGUST, 23, DIARY_ENTRY);
         addEntryToDatabase(9, LUCY_WESTENRA, R.raw.august_24_westenra, Calendar.AUGUST, 24, DIARY_ENTRY);
