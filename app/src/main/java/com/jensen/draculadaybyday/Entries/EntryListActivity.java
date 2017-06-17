@@ -221,7 +221,7 @@ public class EntryListActivity extends AppCompatActivity {
         addEntryToDatabase(9, ARTHUR_HOLMWOOD, R.raw.august_31_arthur_holmwood, Calendar.AUGUST, 31, LETTER);
         addEntryToDatabase(9, ARTHUR_HOLMWOOD, R.raw.september_01_arthur_holmwood, Calendar.SEPTEMBER, 1, TELEGRAM);
         addEntryToDatabase(9, DR_SEWARD, R.raw.september_02_dr_seward, Calendar.SEPTEMBER, 2, LETTER);
-        addEntryToDatabase(9, ABRAHAM_VAN_HELSING, R.raw.september_02_helsing, Calendar.SEPTEMBER, 2, LETTER);
+        addEntryToDatabase(9, ABRAHAM_VAN_HELSING, R.raw.september_02_van_helsing, Calendar.SEPTEMBER, 2, LETTER);
         addEntryToDatabase(9, DR_SEWARD, R.raw.september_03_dr_seward, Calendar.SEPTEMBER, 3, LETTER);
         addEntryToDatabase(9, DR_SEWARD, R.raw.september_04_dr_seward_01, Calendar.SEPTEMBER, 4, DIARY_ENTRY);
         addEntryToDatabase(9, DR_SEWARD, R.raw.september_04_dr_seward_02, Calendar.SEPTEMBER, 4, TELEGRAM);
@@ -243,7 +243,7 @@ public class EntryListActivity extends AppCompatActivity {
         addEntryToDatabase(11, LUCY_WESTENRA, R.raw.september_17_westenra_01, Calendar.SEPTEMBER, 17, DIARY_ENTRY);
         addEntryToDatabase(11, PALL_MALL_GAZETTE, R.raw.september_18_pallmall, Calendar.SEPTEMBER, 18, NEWSPAPER);
         addEntryToDatabase(11, DR_SEWARD, R.raw.september_17_dr_seward, Calendar.SEPTEMBER, 17, DIARY_ENTRY);
-        addEntryToDatabase(11, ABRAHAM_VAN_HELSING, R.raw.september_17_helsing, Calendar.SEPTEMBER, 17, TELEGRAM);
+        addEntryToDatabase(11, ABRAHAM_VAN_HELSING, R.raw.september_17_van_helsing, Calendar.SEPTEMBER, 17, TELEGRAM);
         addEntryToDatabase(11, DR_SEWARD, R.raw.september_18_dr_seward_01, Calendar.SEPTEMBER, 18, DIARY_ENTRY);
         addEntryToDatabase(11, LUCY_WESTENRA, R.raw.september_17_westenra_02, Calendar.SEPTEMBER, 17, DIARY_ENTRY);
 
@@ -265,10 +265,10 @@ public class EntryListActivity extends AppCompatActivity {
         // Chapter 14
         addEntryToDatabase(14, MINA_HARKER, R.raw.september_23_mina_harker, Calendar.SEPTEMBER, 23, DIARY_ENTRY);
         addEntryToDatabase(14, MINA_HARKER, R.raw.september_24_mina_harker, Calendar.SEPTEMBER, 24, DIARY_ENTRY);
-        addEntryToDatabase(14, ABRAHAM_VAN_HELSING, R.raw.september_24_helsing, Calendar.SEPTEMBER, 24, LETTER);
+        addEntryToDatabase(14, ABRAHAM_VAN_HELSING, R.raw.september_24_van_helsing, Calendar.SEPTEMBER, 24, LETTER);
         addEntryToDatabase(14, MINA_HARKER, R.raw.september_25_mina_harker_01, Calendar.SEPTEMBER, 25, TELEGRAM);
         addEntryToDatabase(14, MINA_HARKER, R.raw.september_25_mina_harker_02, Calendar.SEPTEMBER, 25, DIARY_ENTRY);
-        addEntryToDatabase(14, ABRAHAM_VAN_HELSING, R.raw.september_25_helsing, Calendar.SEPTEMBER, 25, LETTER);
+        addEntryToDatabase(14, ABRAHAM_VAN_HELSING, R.raw.september_25_van_helsing, Calendar.SEPTEMBER, 25, LETTER);
         addEntryToDatabase(14, MINA_HARKER, R.raw.september_25_mina_harker_03, Calendar.SEPTEMBER, 25, LETTER);
         addEntryToDatabase(14, JONATHAN_HARKER, R.raw.september_26_jonathan_harker, Calendar.SEPTEMBER, 26, DIARY_ENTRY);
         addEntryToDatabase(14, DR_SEWARD, R.raw.september_26_dr_seward_01, Calendar.SEPTEMBER, 26, DIARY_ENTRY);
@@ -276,7 +276,7 @@ public class EntryListActivity extends AppCompatActivity {
         // Chapter 15
         addEntryToDatabase(15, DR_SEWARD, R.raw.september_26_dr_seward_02, Calendar.SEPTEMBER, 26, DIARY_ENTRY);
         addEntryToDatabase(15, DR_SEWARD, R.raw.september_27_dr_seward, Calendar.SEPTEMBER, 27, DIARY_ENTRY);
-        addEntryToDatabase(15, ABRAHAM_VAN_HELSING, R.raw.september_27_helsing, Calendar.SEPTEMBER, 27, NOTE);
+        addEntryToDatabase(15, ABRAHAM_VAN_HELSING, R.raw.september_27_van_helsing, Calendar.SEPTEMBER, 27, NOTE);
         addEntryToDatabase(15, DR_SEWARD, R.raw.september_28_dr_seward, Calendar.SEPTEMBER, 28, DIARY_ENTRY);
         addEntryToDatabase(15, DR_SEWARD, R.raw.september_29_dr_seward_01, Calendar.SEPTEMBER, 29, DIARY_ENTRY);
 
@@ -325,7 +325,7 @@ public class EntryListActivity extends AppCompatActivity {
         addEntryToDatabase(23, JONATHAN_HARKER, R.raw.october_04_jonathan_harker_02, Calendar.OCTOBER, 4, DIARY_ENTRY);
 
         // Chapter 24
-        addEntryToDatabase(24, ABRAHAM_VAN_HELSING, R.raw.october_04_helsing, Calendar.OCTOBER, 4, PHONOGRAPH);
+        addEntryToDatabase(24, ABRAHAM_VAN_HELSING, R.raw.october_04_van_helsing, Calendar.OCTOBER, 4, PHONOGRAPH);
         addEntryToDatabase(24, JONATHAN_HARKER, R.raw.october_04_jonathan_harker_03, Calendar.OCTOBER, 4, DIARY_ENTRY);
         addEntryToDatabase(24, MINA_HARKER, R.raw.october_05_mina_harker, Calendar.OCTOBER, 5, DIARY_ENTRY);
         addEntryToDatabase(24, DR_SEWARD, R.raw.october_05_dr_seward, Calendar.OCTOBER, 5, DIARY_ENTRY);
@@ -365,11 +365,11 @@ public class EntryListActivity extends AppCompatActivity {
         addEntryToDatabase(27, MINA_HARKER, R.raw.november_01_mina_harker, Calendar.NOVEMBER, 1, DIARY_ENTRY);
         addEntryToDatabase(27, MINA_HARKER, R.raw.november_02_mina_harker_01, Calendar.NOVEMBER, 2, DIARY_ENTRY);
         addEntryToDatabase(27, MINA_HARKER, R.raw.november_02_mina_harker_02, Calendar.NOVEMBER, 2, DIARY_ENTRY);
-        addEntryToDatabase(27, ABRAHAM_VAN_HELSING, R.raw.november_04_helsing, Calendar.NOVEMBER, 4, DIARY_ENTRY);
-        addEntryToDatabase(27, ABRAHAM_VAN_HELSING, R.raw.november_05_helsing_01, Calendar.NOVEMBER, 5, DIARY_ENTRY);
+        addEntryToDatabase(27, ABRAHAM_VAN_HELSING, R.raw.november_04_van_helsing, Calendar.NOVEMBER, 4, DIARY_ENTRY);
+        addEntryToDatabase(27, ABRAHAM_VAN_HELSING, R.raw.november_05_van_helsing_01, Calendar.NOVEMBER, 5, DIARY_ENTRY);
         addEntryToDatabase(27, JONATHAN_HARKER, R.raw.november_04_jonathan_harker, Calendar.NOVEMBER, 4, DIARY_ENTRY);
         addEntryToDatabase(27, DR_SEWARD, R.raw.november_05_dr_seward, Calendar.NOVEMBER, 5, DIARY_ENTRY);
-        addEntryToDatabase(27, ABRAHAM_VAN_HELSING, R.raw.november_05_helsing_02, Calendar.NOVEMBER, 5, DIARY_ENTRY);
+        addEntryToDatabase(27, ABRAHAM_VAN_HELSING, R.raw.november_05_van_helsing_02, Calendar.NOVEMBER, 5, DIARY_ENTRY);
         addEntryToDatabase(27, MINA_HARKER, R.raw.november_06_mina_harker, Calendar.NOVEMBER, 6, DIARY_ENTRY);
 
         // Epilogue
