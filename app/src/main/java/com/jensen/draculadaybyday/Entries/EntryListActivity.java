@@ -8,14 +8,12 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.jensen.draculadaybyday.AboutPage;
 import com.jensen.draculadaybyday.Fragment.FragmentEntry;
@@ -29,6 +27,13 @@ import java.io.InputStreamReader;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+
+import static com.jensen.draculadaybyday.Entries.EntryType.DIARY_ENTRY;
+import static com.jensen.draculadaybyday.Entries.EntryType.LETTER;
+import static com.jensen.draculadaybyday.Entries.EntryType.NEWSPAPER;
+import static com.jensen.draculadaybyday.Entries.EntryType.NOTE;
+import static com.jensen.draculadaybyday.Entries.EntryType.PHONOGRAPH;
+import static com.jensen.draculadaybyday.Entries.EntryType.TELEGRAM;
 
 /**
  * An activity representing a list of Entries. This activity
@@ -56,14 +61,6 @@ public class EntryListActivity extends AppCompatActivity {
     private static final String PATRICK_HENNESSEY = "Patrick Hennessey";
     private static final String WESTMINISTER_GAZETTE = "The Westminster Gazette";
     private static final String MITCHELL_AND_SONS = "Mitchell, Sons and Candy to Lord Godalming";
-
-    // Types
-    private static final String DIARY_ENTRY = "Diary Entry";
-    private static final String LETTER = "Letter";
-    private static final String TELEGRAM = "Telegram";
-    private static final String PHONOGRAPH = "Phonograph";
-    private static final String NEWSPAPER = "Newspaper";
-    private static final String NOTE = "Note";
 
     private static FragmentEntryDatabaseHandler fragmentEntryHandler;
     /**
@@ -390,7 +387,7 @@ public class EntryListActivity extends AppCompatActivity {
         }
     }
 
-    private void addEntryToDatabase(int chapterNum, String personName, int diaryResource, int month, int date, String type) {
+    private void addEntryToDatabase(int chapterNum, String personName, int diaryResource, int month, int date, EntryType type) {
         if (fragmentEntryHandler != null) {
             Calendar calendar = Calendar.getInstance();
             calendar.set(1893, month - 1, date);
@@ -449,7 +446,7 @@ public class EntryListActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(final EntryViewHolder holder, int position) {
             // Set the views
-            holder.mItem = mValues.get(position);
+            holder.fragmentEntry = mValues.get(position);
             holder.setViews();
 
             holder.mView.setOnClickListener(new View.OnClickListener() {
@@ -457,7 +454,7 @@ public class EntryListActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     if (mTwoPane) {
                         Bundle arguments = new Bundle();
-                        arguments.putShort(FragmentEntryDatabaseHandler.ENTRY_SEQ_NUM, holder.mItem.getStoryEntryNum());
+                        arguments.putShort(FragmentEntryDatabaseHandler.ENTRY_SEQ_NUM, holder.fragmentEntry.getStoryEntryNum());
                         EntryDetailFragment fragment = new EntryDetailFragment();
                         fragment.setArguments(arguments);
                         getSupportFragmentManager().beginTransaction()
@@ -468,8 +465,8 @@ public class EntryListActivity extends AppCompatActivity {
 
                         Intent intent = new Intent(context, EntryDetailActivity.class);
 
-                        short seqEntry = holder.mItem.getStoryEntryNum();
-                        Calendar date = holder.mItem.getDate();
+                        short seqEntry = holder.fragmentEntry.getStoryEntryNum();
+                        Calendar date = holder.fragmentEntry.getDate();
 
                         FragmentEntry fragmentEntry = fragmentEntryHandler.getSpecificDiaryEntry(seqEntry, date);
 

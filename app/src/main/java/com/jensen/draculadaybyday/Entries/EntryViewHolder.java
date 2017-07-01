@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,7 +23,7 @@ public class EntryViewHolder extends RecyclerView.ViewHolder {
     // The content pange
 //    public final TextView mContentView;
 
-    public FragmentEntry mItem;
+    public FragmentEntry fragmentEntry;
 
     public EntryViewHolder(View view, Context context) {
         super(view);
@@ -43,10 +42,31 @@ public class EntryViewHolder extends RecyclerView.ViewHolder {
 
     public void setViews() {
         // Header
-        mDate.setText(mItem.getDateString());
-        mName.setText(mItem.getPerson());
+        mDate.setText(fragmentEntry.getDateString());
+        mName.setText(fragmentEntry.getPerson());
 
-        Drawable drawable = context.getDrawable(R.mipmap.ic_newspaper_icon);
+        Drawable drawable;
+        switch (fragmentEntry.getType()) {
+            case DIARY_ENTRY:
+                drawable = context.getDrawable(R.mipmap.ic_diary_icon);
+                break;
+            case LETTER:
+                drawable = context.getDrawable(R.mipmap.ic_letter_icon);
+                        break;
+            case NEWSPAPER:
+                drawable = context.getDrawable(R.mipmap.ic_newspaper_icon);
+                break;
+            case NOTE:
+                drawable = context.getDrawable(R.mipmap.ic_note_icon);
+                break;
+            case PHONOGRAPH:
+                drawable = context.getDrawable(R.mipmap.ic_phonograph_icon);
+                break;
+            case TELEGRAM:
+            default:
+                drawable = context.getDrawable(R.mipmap.ic_telegram_icon);
+                break;
+        }
         mNewsType.setScaleType(ImageView.ScaleType.FIT_XY);
         mNewsType.setBackground(drawable);
 
@@ -54,7 +74,7 @@ public class EntryViewHolder extends RecyclerView.ViewHolder {
         // Set image
 
         // Content
-     //   mContentView.setText(mItem.getFragmentEntry());
+     //   mContentView.setText(fragmentEntry.getFragmentEntry());
     }
 
     @Override

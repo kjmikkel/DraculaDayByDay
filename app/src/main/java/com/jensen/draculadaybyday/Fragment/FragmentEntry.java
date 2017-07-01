@@ -1,7 +1,10 @@
 package com.jensen.draculadaybyday.Fragment;
 
+import com.jensen.draculadaybyday.Entries.EntryType;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Map;
 
 public class FragmentEntry {
     // The number the entry is in the sequence
@@ -23,9 +26,9 @@ public class FragmentEntry {
     private Calendar date;
 
     // The type of the entry
-    private String type;
+    private EntryType type;
 
-    public FragmentEntry(int storyEntryNum, int dateEntryNum, int chapter, String personName, String diaryText, Calendar date, String type) {
+    public FragmentEntry(int storyEntryNum, int dateEntryNum, int chapter, String personName, String diaryText, Calendar date, EntryType type) {
 
         this.storyEntryNum = (short) storyEntryNum;
 
@@ -42,8 +45,23 @@ public class FragmentEntry {
         this.type = type;
     }
 
-    public FragmentEntry(int chapter, String personName, String diaryText, Calendar date, String type) {
+    public FragmentEntry(int chapter, String personName, String diaryText, Calendar date, EntryType type) {
         this(-1, -1, chapter, personName, diaryText, date, type);
+    }
+
+    public FragmentEntry(int storyEntryNum, int dateEntryNum, int chapter, String personName, String diaryText, Calendar date, String type) {
+        this(storyEntryNum, dateEntryNum, chapter, personName, diaryText, date, getEntryType(type));
+    }
+
+    private static EntryType getEntryType(String type) {
+        EntryType out = EntryType.DIARY_ENTRY;
+        for(EntryType et : EntryType.values()) {
+            if (et.description.equals(type)) {
+                out = et;
+                break;
+            }
+        }
+        return out;
     }
 
     public short getStoryEntryNum() {
@@ -70,7 +88,7 @@ public class FragmentEntry {
         return date;
     }
 
-    public String getType() {
+    public EntryType getType() {
         return type;
     }
 

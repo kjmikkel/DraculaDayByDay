@@ -5,9 +5,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
+import android.util.Log;
 
+import com.jensen.draculadaybyday.Entries.EntryType;
 import com.jensen.draculadaybyday.Fragment.FragmentEntry;
 
+import java.io.Console;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -106,8 +109,7 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
 
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             values.put(DATE, dateFormat.format(entry.getDate().getTime()));
-
-            values.put(TYPE, entry.getType());
+            values.put(TYPE, entry.getType().description);
 
 
             // Inserting row
