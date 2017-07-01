@@ -407,7 +407,6 @@ public class EntryListActivity extends AppCompatActivity {
 
         Calendar calendar = GregorianCalendar.getInstance();
         calendar.set(1897, month, dateOfMonth);
-        Log.d("Database", "Test");
         recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(fragmentEntryHandler.getDiaryEntriesBeforeDate(calendar)));
     }
 
@@ -431,7 +430,7 @@ public class EntryListActivity extends AppCompatActivity {
     }
 
     public class SimpleItemRecyclerViewAdapter
-            extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
+            extends RecyclerView.Adapter<EntryViewHolder> {
 
         private final List<FragmentEntry> mValues;
 
@@ -440,17 +439,18 @@ public class EntryListActivity extends AppCompatActivity {
         }
 
         @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public EntryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.entry_list_content, parent, false);
-            return new ViewHolder(view);
+
+            return new EntryViewHolder(view, parent.getContext());
         }
 
         @Override
-        public void onBindViewHolder(final ViewHolder holder, int position) {
+        public void onBindViewHolder(final EntryViewHolder holder, int position) {
+            // Set the views
             holder.mItem = mValues.get(position);
-            holder.mIdView.setText(mValues.get(position).toString());
-            holder.mContentView.setText(mValues.get(position).getFragmentEntry());
+            holder.setViews();
 
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -487,25 +487,6 @@ public class EntryListActivity extends AppCompatActivity {
         @Override
         public int getItemCount() {
             return mValues.size();
-        }
-
-        public class ViewHolder extends RecyclerView.ViewHolder {
-            public final View mView;
-            public final TextView mIdView;
-            public final TextView mContentView;
-            public FragmentEntry mItem;
-
-            public ViewHolder(View view) {
-                super(view);
-                mView = view;
-                mIdView = (TextView) view.findViewById(R.id.id);
-                mContentView = (TextView) view.findViewById(R.id.content);
-            }
-
-            @Override
-            public String toString() {
-                return super.toString() + " '" + mContentView.getText() + "'";
-            }
         }
     }
 }

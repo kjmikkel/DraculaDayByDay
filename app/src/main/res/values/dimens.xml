@@ -4,6 +4,7 @@
     <dimen name="app_bar_height">200dp</dimen>
     <dimen name="item_width">200dp</dimen>
     <dimen name="text_margin">16dp</dimen>
+    <dimen name="text_small_margin">2dp</dimen>
 
     <item name="pref_default_fontsize" format="float" type="dimen">14.0</item>
     <!-- Default screen margins, per the Android Design guidelines. -->

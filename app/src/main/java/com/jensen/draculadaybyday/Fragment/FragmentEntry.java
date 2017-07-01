@@ -87,17 +87,17 @@ public class FragmentEntry {
         }
     }
 
-    @Override
-    public String toString() {
+    public String getDateString() {
         SimpleDateFormat format = new SimpleDateFormat();
-        format.applyPattern("MMM yyyy");
+        format.applyPattern("MMMM yyyy");
         String noDateStr = format.format(date.getTime());
 
         int val = date.get(Calendar.DAY_OF_MONTH);
-        String date = String.format("%2d", val) + getDayOfMonthSuffix(val) + " ";
+        return String.format("%2d", val) + getDayOfMonthSuffix(val) + "\n" + noDateStr;
+    }
 
-        return date + noDateStr
-                + "_" +
-                person;
+    @Override
+    public String toString() {
+        return getDateString() + "_" + person;
     }
 }

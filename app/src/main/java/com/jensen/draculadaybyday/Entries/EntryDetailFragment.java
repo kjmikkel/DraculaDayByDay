@@ -65,6 +65,7 @@ public class EntryDetailFragment extends Fragment {
             Activity activity = this.getActivity();
             CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout)
                     activity.findViewById(R.id.toolbar_layout);
+
             if (appBarLayout != null) {
                 FragmentEntry entry = getEntryFromArgument();
 
