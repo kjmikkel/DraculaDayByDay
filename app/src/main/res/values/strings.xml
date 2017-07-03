@@ -133,4 +133,11 @@
 
     <!-- Descriptions -->
 
+    <!-- About page -->
+    <string name="about_app_label">About the Dracula Day-by-Day:</string>
+    <string name="about_app">Dracula Day-by-Day is an app that</string>
+    <string name="about_resources_used_label">Resources used:</string>
+    <string name="about_open_source_libraries_label">Open Source libraries used:</string>
+    <string name="about_open_source_licences_label">Licenses used:</string>
+    <string name="about_error">Error occurred while opening the credits file</string>
 </resources>

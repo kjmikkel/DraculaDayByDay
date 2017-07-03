@@ -14,7 +14,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="20dp"
-
         android:layout_marginRight="20dp"
         android:text="@string/pref_entryview_title_text" />
 
@@ -22,7 +21,6 @@
         android:id="@+id/entry_view_widget"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginStart="20dp"

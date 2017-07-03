@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -11,6 +12,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.LinkedList;
 
 public class AboutPage extends AppCompatActivity {
 
@@ -32,16 +34,17 @@ public class AboutPage extends AppCompatActivity {
             BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
             StringBuilder sb = new StringBuilder();
 
-            String line;
-            do {
+            String line = reader.readLine();
+            LinkedList<String> lineList = new LinkedList<>();
+            while(line != null) {
+                lineList.add(line);
                 line = reader.readLine();
-                sb.append(line + "\n");
             }
-            while (line != null);
 
-            textView.setText(sb.toString());
+            textView.setText(TextUtils.join("\n", lineList));
         } catch (IOException ioe) {
-            textView.setText("Error happend while opening the credits file");
+            textView.setText(R.string.about_error);
+
         }
     }
 
