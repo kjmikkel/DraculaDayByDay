@@ -63,6 +63,7 @@ public class EntryDetailFragment extends Fragment {
             // to load content from a content provider.
 
             Activity activity = this.getActivity();
+
             CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout)
                     activity.findViewById(R.id.toolbar_layout);
 
@@ -79,6 +80,25 @@ public class EntryDetailFragment extends Fragment {
             } else {
                 appBarLayout.setTitle(DEFAULT_TITLE);
             }
+
+            /*
+            CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout)
+                    activity.findViewById(R.id.toolbar_layout);
+
+            if (appBarLayout != null) {
+                FragmentEntry entry = getEntryFromArgument();
+
+                if (entry != null) {
+                    // Set the values
+                    appBarLayout.setTitle(entry.toString());
+                } else {
+                    // Could not get a value from the database
+                    appBarLayout.setTitle(DEFAULT_TITLE);
+                }
+            } else {
+                appBarLayout.setTitle(DEFAULT_TITLE);
+            }
+            */
         }
     }
 

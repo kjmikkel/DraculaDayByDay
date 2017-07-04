@@ -392,7 +392,7 @@ public class EntryListActivity extends AppCompatActivity {
             Calendar calendar = Calendar.getInstance();
             calendar.set(1893, month - 1, date);
 
-            fragmentEntryHandler.addEntry(new FragmentEntry(chapterNum, personName, getStringFromId(diaryResource), calendar, type));
+            fragmentEntryHandler.addEntry(new FragmentEntry(chapterNum, personName, getStringFromId(diaryResource), calendar, type, false, true));
         }
     }
 

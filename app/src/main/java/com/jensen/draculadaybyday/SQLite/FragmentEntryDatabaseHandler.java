@@ -27,6 +27,9 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
     public static final String TEXT = "text";
     public static final String DATE = "date";
     public static final String TYPE = "type";
+    public static final String UNLOCKED = "unlocked";
+    public static final String UNREAD = "unread";
+
     // All Static variables
     // Database Version
     private static final int DATABASE_VERSION = 1;
@@ -34,8 +37,8 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
     private static final String DATABASE_NAME = "fragmentEntryManager";
     // Contacts table name
     private static final String TABLE_ENTRY = "entry";
-    private static final String[] allEntries = new String[]{ENTRY_SEQ_NUM, ENTRY_DATE_NUM, CHAPTER, PERSON, TEXT, DATE, TYPE};
-    private static final String[] allEntriesButText = new String[]{ENTRY_SEQ_NUM, ENTRY_DATE_NUM, CHAPTER, PERSON, DATE, TYPE};
+    private static final String[] allEntries = new String[]{ENTRY_SEQ_NUM, ENTRY_DATE_NUM, CHAPTER, PERSON, TEXT, DATE, TYPE, UNLOCKED, UNREAD};
+    private static final String[] allEntriesButText = new String[]{ENTRY_SEQ_NUM, ENTRY_DATE_NUM, CHAPTER, PERSON, DATE, TYPE, UNLOCKED, UNREAD};
     // The instance of the class
     private static FragmentEntryDatabaseHandler databaseHandler = null;
     // The database
@@ -71,6 +74,8 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
                 + TEXT + " TEXT,"
                 + DATE + " TEXT,"
                 + TYPE + " TEXT"
+                + UNLOCKED + " INTEGER"
+                + UNREAD + " INTEGER"
                 + ")";
         db.execSQL(CREATE_ENTRY_TABLE);
     }
@@ -110,7 +115,8 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             values.put(DATE, dateFormat.format(entry.getDate().getTime()));
             values.put(TYPE, entry.getType().description);
-
+            values.put(UNLOCKED, entry.getUnlocked());
+            values.put(UNREAD, entry.getUnread());
 
             // Inserting row
             db.insertOrThrow(TABLE_ENTRY, null, values);
@@ -158,6 +164,10 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
         return cursor.getString(cursor.getColumnIndex(column));
     }
 
+    private boolean getBoolean(Cursor cursor, String column) {
+        return cursor.getInt(cursor.getColumnIndex(column)) == 1;
+    }
+
     private FragmentEntry getEntryCompleteEntry(Cursor cursor) {
         return new FragmentEntry(
                 getShort(cursor, ENTRY_SEQ_NUM),
@@ -166,7 +176,9 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
                 getString(cursor, PERSON),
                 getString(cursor, TEXT),
                 makeDate(getString(cursor, DATE)),
-                getString(cursor, TYPE)
+                getString(cursor, TYPE),
+                getBoolean(cursor, UNLOCKED),
+                getBoolean(cursor, UNREAD)
         );
     }
 
@@ -178,7 +190,9 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
                 getString(cursor, PERSON),
                 null,
                 makeDate(getString(cursor, DATE)),
-                getString(cursor, TYPE)
+                getString(cursor, TYPE),
+                getBoolean(cursor, UNLOCKED),
+                getBoolean(cursor, UNREAD)
         );
     }
 

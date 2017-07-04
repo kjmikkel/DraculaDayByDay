@@ -28,7 +28,13 @@ public class FragmentEntry {
     // The type of the entry
     private EntryType type;
 
-    public FragmentEntry(int storyEntryNum, int dateEntryNum, int chapter, String personName, String diaryText, Calendar date, EntryType type) {
+    // Whether or not the entry is unlocked
+    private boolean unlocked;
+
+    // Whether or not the entry is unread
+    private boolean unread;
+
+    public FragmentEntry(int storyEntryNum, int dateEntryNum, int chapter, String personName, String diaryText, Calendar date, EntryType type, boolean unlocked, boolean unread) {
 
         this.storyEntryNum = (short) storyEntryNum;
 
@@ -43,14 +49,18 @@ public class FragmentEntry {
         this.date = date;
 
         this.type = type;
+
+        this.unlocked = unlocked;
+
+        this.unread = unread;
     }
 
-    public FragmentEntry(int chapter, String personName, String diaryText, Calendar date, EntryType type) {
-        this(-1, -1, chapter, personName, diaryText, date, type);
+    public FragmentEntry(int chapter, String personName, String diaryText, Calendar date, EntryType type, boolean unlocked, boolean unread) {
+        this(-1, -1, chapter, personName, diaryText, date, type, unlocked, unread);
     }
 
-    public FragmentEntry(int storyEntryNum, int dateEntryNum, int chapter, String personName, String diaryText, Calendar date, String type) {
-        this(storyEntryNum, dateEntryNum, chapter, personName, diaryText, date, getEntryType(type));
+    public FragmentEntry(int storyEntryNum, int dateEntryNum, int chapter, String personName, String diaryText, Calendar date, String type, boolean unlocked, boolean unread) {
+        this(storyEntryNum, dateEntryNum, chapter, personName, diaryText, date, getEntryType(type), unlocked, unread);
     }
 
     private static EntryType getEntryType(String type) {
@@ -91,6 +101,10 @@ public class FragmentEntry {
     public EntryType getType() {
         return type;
     }
+
+    public boolean getUnlocked() { return unlocked; }
+
+    public boolean getUnread() { return unread; }
 
     private String getDayOfMonthSuffix(final int n) {
         switch (n % 10) {
