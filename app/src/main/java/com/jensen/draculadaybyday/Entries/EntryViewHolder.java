@@ -20,16 +20,16 @@ public class EntryViewHolder extends RecyclerView.ViewHolder {
     public final TextView mName;
     public final ImageView mNewsType;
 
-    // The content pange
+    // The content pane
 //    public final TextView mContentView;
 
     public FragmentEntry fragmentEntry;
 
-    public EntryViewHolder(View view, Context context) {
+    public EntryViewHolder(View view) {
         super(view);
         mView = view;
 
-        this.context = context;
+        this.context = view.getContext();
 
         // Header
         mDate = (TextView) view.findViewById(R.id.date);
@@ -42,17 +42,20 @@ public class EntryViewHolder extends RecyclerView.ViewHolder {
 
     public void setViews() {
         // Header
-        mDate.setText(fragmentEntry.getDateString());
-        mName.setText(fragmentEntry.getPerson());
+        mDate.setText("\n\n" + fragmentEntry.getDateString());
+        mName.setText("\n\n" + fragmentEntry.getPerson());
 
-        Drawable drawable;
+        mNewsType.getLayoutParams().height = mNewsType.getWidth();
+        mNewsType.requestLayout();
+
+        Drawable drawable = null;
         switch (fragmentEntry.getType()) {
             case DIARY_ENTRY:
-                drawable = context.getDrawable(R.mipmap.ic_diary_icon);
+                drawable = context.getDrawable(R.drawable.ic_diary);
                 break;
             case LETTER:
-                drawable = context.getDrawable(R.mipmap.ic_letter_icon);
-                        break;
+                drawable = context.getDrawable(R.drawable.ic_envelope);
+                break;
             case NEWSPAPER:
                 drawable = context.getDrawable(R.mipmap.ic_newspaper_icon);
                 break;
@@ -67,10 +70,11 @@ public class EntryViewHolder extends RecyclerView.ViewHolder {
                 drawable = context.getDrawable(R.mipmap.ic_telegram_icon);
                 break;
         }
-        mNewsType.setScaleType(ImageView.ScaleType.FIT_XY);
-        mNewsType.setBackground(drawable);
 
-
+        if (drawable != null) {
+            mNewsType.setScaleType(ImageView.ScaleType.FIT_XY);
+            mNewsType.setBackground(drawable);
+        }
         // Set image
 
         // Content

@@ -439,8 +439,7 @@ public class EntryListActivity extends AppCompatActivity {
         public EntryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.entry_list_content, parent, false);
-
-            return new EntryViewHolder(view, parent.getContext());
+            return new EntryViewHolder(view);
         }
 
         @Override
