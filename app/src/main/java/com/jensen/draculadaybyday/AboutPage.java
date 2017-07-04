@@ -5,6 +5,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -26,26 +27,12 @@ public class AboutPage extends AppCompatActivity {
 
         setupActionBar();
 
+        TextView test = (TextView) findViewById(R.id.about_app);
+        test.setMovementMethod(LinkMovementMethod.getInstance());
+
         // Insert the file in the about page
-        TextView textView = (TextView) findViewById(R.id.content_about_text);
-
-        try {
-            InputStream stream = getResources().openRawResource((R.raw.about));
-            BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-            StringBuilder sb = new StringBuilder();
-
-            String line = reader.readLine();
-            LinkedList<String> lineList = new LinkedList<>();
-            while(line != null) {
-                lineList.add(line);
-                line = reader.readLine();
-            }
-
-            textView.setText(TextUtils.join("\n", lineList));
-        } catch (IOException ioe) {
-            textView.setText(R.string.about_error);
-
-        }
+        TextView resourceTextView = (TextView) findViewById(R.id.content_about_text);
+        resourceTextView.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     /**
