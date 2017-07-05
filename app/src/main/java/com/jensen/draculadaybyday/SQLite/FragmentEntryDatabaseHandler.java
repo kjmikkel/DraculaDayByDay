@@ -73,8 +73,8 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
                 + PERSON + " TEXT,"
                 + TEXT + " TEXT,"
                 + DATE + " TEXT,"
-                + TYPE + " TEXT"
-                + UNLOCKED + " INTEGER"
+                + TYPE + " TEXT,"
+                + UNLOCKED + " INTEGER,"
                 + UNREAD + " INTEGER"
                 + ")";
         db.execSQL(CREATE_ENTRY_TABLE);
@@ -94,36 +94,45 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
         db = this.getWritableDatabase();
     }
 
+    public synchronized void close() {
+        if (db.isOpen()) {
+            db.close();
+        }
+    }
+
     // Inserting an entry
     public void addEntry(FragmentEntry entry) {
         if (!db.isOpen()) {
             open();
         }
 
-        // Check if the entry is already in the database
-        if (!EntryAlreadyInDB(entry.getStoryEntryNum())) {
+        try {
+            // Check if the entry is already in the database
+            if (!EntryAlreadyInDB(entry.getStoryEntryNum())) {
 
-            ContentValues values = new ContentValues();
+                ContentValues values = new ContentValues();
 
-            // auto-generate the ENTRY_SEQ_NUM (primary key)
+                // auto-generate the ENTRY_SEQ_NUM (primary key)
 
-            values.put(ENTRY_DATE_NUM, entry.getDateEntryNum());
-            values.put(CHAPTER, entry.getChapter());
-            values.put(PERSON, entry.getPerson());
-            values.put(TEXT, entry.getFragmentEntry());
+                values.put(ENTRY_DATE_NUM, entry.getDateEntryNum());
+                values.put(CHAPTER, entry.getChapter());
+                values.put(PERSON, entry.getPerson());
+                values.put(TEXT, entry.getFragmentEntry());
 
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            values.put(DATE, dateFormat.format(entry.getDate().getTime()));
-            values.put(TYPE, entry.getType().description);
-            values.put(UNLOCKED, entry.getUnlocked());
-            values.put(UNREAD, entry.getUnread());
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                values.put(DATE, dateFormat.format(entry.getDate().getTime()));
+                values.put(TYPE, entry.getType().description);
+                values.put(UNLOCKED, entry.getUnlocked());
+                values.put(UNREAD, entry.getUnread());
 
-            // Inserting row
-            db.insertOrThrow(TABLE_ENTRY, null, values);
+                // Inserting row
+                db.insertOrThrow(TABLE_ENTRY, null, values);
+
+            }
+        } catch (Exception e) {
+            Log.d("Database error", e.getMessage());
+            throw e;
         }
-
-        // Closing database connection
-        db.close();
     }
 
     private boolean EntryAlreadyInDB(short sequenceNumber) {
