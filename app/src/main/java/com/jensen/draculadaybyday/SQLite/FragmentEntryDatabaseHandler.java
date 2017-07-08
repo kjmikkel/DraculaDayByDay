@@ -7,10 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.util.Log;
 
-import com.jensen.draculadaybyday.Entries.EntryType;
-import com.jensen.draculadaybyday.Fragment.FragmentEntry;
+import com.jensen.draculadaybyday.Entry.Entry;
 
-import java.io.Console;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -101,7 +99,7 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
     }
 
     // Inserting an entry
-    public void addEntry(FragmentEntry entry) {
+    public void addEntry(Entry entry) {
         if (!db.isOpen()) {
             open();
         }
@@ -117,7 +115,7 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
                 values.put(ENTRY_DATE_NUM, entry.getDateEntryNum());
                 values.put(CHAPTER, entry.getChapter());
                 values.put(PERSON, entry.getPerson());
-                values.put(TEXT, entry.getFragmentEntry());
+                values.put(TEXT, entry.getTextEntry());
 
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 values.put(DATE, dateFormat.format(entry.getDate().getTime()));
@@ -153,8 +151,22 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
             cursor.moveToFirst();
             return sequenceNumber == getShort(cursor, ENTRY_SEQ_NUM);
         }
-
+        cursor.close();
         return false;
+    }
+
+    private int entryCount(String where) {
+        if (!db.isOpen()) {
+            this.open();
+        }
+
+        Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM " + TABLE_ENTRY + " WHERE " + where, null);
+        cursor.moveToFirst();
+        int count = cursor.getInt(0);
+        cursor.close();
+        db.close();
+
+        return count;
     }
 
     private Calendar makeDate(String date_rep) {
@@ -177,8 +189,8 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
         return cursor.getInt(cursor.getColumnIndex(column)) == 1;
     }
 
-    private FragmentEntry getEntryCompleteEntry(Cursor cursor) {
-        return new FragmentEntry(
+    private Entry getEntryCompleteEntry(Cursor cursor) {
+        return new Entry(
                 getShort(cursor, ENTRY_SEQ_NUM),
                 getShort(cursor, ENTRY_DATE_NUM),
                 getShort(cursor, CHAPTER),
@@ -191,8 +203,8 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
         );
     }
 
-    private FragmentEntry getCheapDiaryEntry(Cursor cursor) {
-        return new FragmentEntry(
+    private Entry getCheapDiaryEntry(Cursor cursor) {
+        return new Entry(
                 getShort(cursor, ENTRY_SEQ_NUM),
                 getShort(cursor, ENTRY_DATE_NUM),
                 getShort(cursor, CHAPTER),
@@ -205,7 +217,7 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
         );
     }
 
-    private LinkedList<FragmentEntry> getCompleteEntryFromDatabase(String query, String[] value, String groupBy, String orderBy) {
+    private LinkedList<Entry> getCompleteEntryFromDatabase(String query, String[] value, String groupBy, String orderBy) {
         if (!db.isOpen()) {
             this.open();
         }
@@ -219,7 +231,7 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
                 null,
                 orderBy);
 
-        LinkedList<FragmentEntry> entries = new LinkedList<>();
+        LinkedList<Entry> entries = new LinkedList<>();
         if (cursor != null && 0 < cursor.getCount()) {
             cursor.moveToFirst();
 
@@ -239,7 +251,7 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
         return entries;
     }
 
-    private LinkedList<FragmentEntry> getCheapEntryFromDatabase(String query, String[] value, String groupBy, String orderBy) {
+    private LinkedList<Entry> getCheapEntryFromDatabase(String query, String[] value, String groupBy, String orderBy) {
         if (!db.isOpen()) {
             this.open();
         }
@@ -253,7 +265,7 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
                 null,
                 orderBy);
 
-        LinkedList<FragmentEntry> entries = new LinkedList<>();
+        LinkedList<Entry> entries = new LinkedList<>();
 
         if (cursor != null && 0 < cursor.getCount()) {
             cursor.moveToFirst();
@@ -271,8 +283,8 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
         return entries;
     }
 
-    private FragmentEntry getSingleEntry(String query, String[] value, String groupBy, String orderBy) {
-        LinkedList<FragmentEntry> entryList = getCompleteEntryFromDatabase(query, value, groupBy, orderBy);
+    private Entry getSingleEntry(String query, String[] value, String groupBy, String orderBy) {
+        LinkedList<Entry> entryList = getCompleteEntryFromDatabase(query, value, groupBy, orderBy);
 
         /*
         if (1 < entryList.size()) {
@@ -293,47 +305,51 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
     }
 
     // Get the diary entry for the specific sequence number and calendar date
-    public FragmentEntry getSpecificDiaryEntry(int entrySequenceNumber, Calendar date) {
+    public Entry getSpecificDiaryEntry(int entrySequenceNumber, Calendar date) {
         return getSingleEntry(ENTRY_SEQ_NUM + "=? AND " + DATE + "<= ?", new String[]{String.valueOf(entrySequenceNumber), formatDate(date)}, null, null);
     }
 
     // Get the diary entry based on a sequence number
-    public FragmentEntry getSpecificDiaryEntry(int entrySequenceNumber) {
+    public Entry getSpecificDiaryEntry(int entrySequenceNumber) {
         return getSingleEntry(ENTRY_SEQ_NUM + "=?", new String[]{String.valueOf(entrySequenceNumber)}, null, null);
     }
 
     // Get a specific entry from a specific person
-    public FragmentEntry getSpecificDiaryEntryByPerson(String person, int entryPersonNum, Calendar date) {
+    public Entry getSpecificDiaryEntryByPerson(String person, int entryPersonNum, Calendar date) {
         return getSingleEntry(PERSON + "=? AND " + ENTRY_DATE_NUM + "=? AND " + DATE + "<=?", new String[]{person, String.valueOf(entryPersonNum), formatDate(date)}, null, null);
     }
 
     // Get a specific entry from a specific Chapter
-    public LinkedList<FragmentEntry> getChapter(int chapter, Calendar date) {
+    public LinkedList<Entry> getChapter(int chapter, Calendar date) {
         //  return get
         return null;
     }
 
-    public List<FragmentEntry> getDiaryEntries(Calendar date) {
+    public List<Entry> getDiaryEntries(Calendar date) {
         return null;
         //    return getCompleteEntryFromDatabase(DATE + "=?", new String[] { dateValue }, DATE, ENTRY_SEQ_NUM);
     }
 
-    public List<FragmentEntry> getDiaryEntriesBeforeDate(Calendar date) {
+    public List<Entry> getDiaryEntriesBeforeDate(Calendar date) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String dateValue = dateFormat.format(date.getTime());
 
         return getCheapEntryFromDatabase("1=1", null, null, DATE + ", " + ENTRY_SEQ_NUM);
     }
 
-    public List<FragmentEntry> getDiaryEntryByChapter(int chapter) {
+    public int getNumUnlcokedDiaries(Calendar date) {
+        return entryCount("1=1");
+    }
+
+    public List<Entry> getDiaryEntryByChapter(int chapter) {
         return getCheapEntryFromDatabase(CHAPTER + " = ?", new String[]{String.valueOf(chapter)}, DATE, ENTRY_SEQ_NUM);
     }
 
-    public List<FragmentEntry> getDiaryEntryByPerson(String person) {
+    public List<Entry> getDiaryEntryByPerson(String person) {
         return getCheapEntryFromDatabase(PERSON + " = ?", new String[]{person}, DATE, ENTRY_DATE_NUM);
     }
 
-    public List<FragmentEntry> getDiaryEntryByType(String type) {
+    public List<Entry> getDiaryEntryByType(String type) {
         return getCheapEntryFromDatabase(TYPE + "= ?", new String[]{type}, DATE, ENTRY_SEQ_NUM);
     }
 }

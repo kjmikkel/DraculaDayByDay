@@ -17,7 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.jensen.draculadaybyday.AboutPage;
-import com.jensen.draculadaybyday.Fragment.FragmentEntry;
+import com.jensen.draculadaybyday.Entry.Entry;
 import com.jensen.draculadaybyday.R;
 import com.jensen.draculadaybyday.SQLite.FragmentEntryDatabaseHandler;
 import com.jensen.draculadaybyday.Preferences.DraculaPreferences;
@@ -40,7 +40,7 @@ import static com.jensen.draculadaybyday.Entries.EntryType.TELEGRAM;
  * An activity representing a list of Entries. This activity
  * has different presentations for handset and tablet-size devices. On
  * handsets, the activity presents a list of items, which when touched,
- * lead to a {@link EntryDetailActivity} representing
+ * lead to a {@link EntryActivity} representing
  * item details. On tablets, the activity presents the list of items and
  * item details side-by-side using two vertical panes.
  */
@@ -387,7 +387,7 @@ public class EntryListActivity extends AppCompatActivity {
         Context context = getApplicationContext();
         //  JobScheduler jobScheduler =  context.getSystemService(context.JOB_SCHEDULER_SERVICE);
 
-        if (findViewById(R.id.entry_detail_container) != null) {
+        if (findViewById(R.id.entry_container) != null) {
             // The detail container view will be present only in the
             // large-screen layouts (res/values-w900dp).
             // If this view is present, then the
@@ -401,7 +401,7 @@ public class EntryListActivity extends AppCompatActivity {
             Calendar calendar = Calendar.getInstance();
             calendar.set(1893, month - 1, date);
 
-            fragmentEntryHandler.addEntry(new FragmentEntry(chapterNum, personName, getStringFromId(diaryResource), calendar, type, false, true));
+            fragmentEntryHandler.addEntry(new Entry(chapterNum, personName, getStringFromId(diaryResource), calendar, type, false, true));
         }
     }
 
@@ -438,9 +438,9 @@ public class EntryListActivity extends AppCompatActivity {
     public class SimpleItemRecyclerViewAdapter
             extends RecyclerView.Adapter<EntryViewHolder> {
 
-        private final List<FragmentEntry> mValues;
+        private final List<Entry> mValues;
 
-        public SimpleItemRecyclerViewAdapter(List<FragmentEntry> items) {
+        public SimpleItemRecyclerViewAdapter(List<Entry> items) {
             mValues = items;
         }
 
@@ -454,7 +454,7 @@ public class EntryListActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(final EntryViewHolder holder, int position) {
             // Set the views
-            holder.fragmentEntry = mValues.get(position);
+            holder.entry = mValues.get(position);
             holder.setViews();
 
             holder.mView.setOnClickListener(new View.OnClickListener() {
@@ -462,28 +462,20 @@ public class EntryListActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     if (mTwoPane) {
                         Bundle arguments = new Bundle();
-                        arguments.putShort(FragmentEntryDatabaseHandler.ENTRY_SEQ_NUM, holder.fragmentEntry.getStoryEntryNum());
-                        EntryDetailFragment fragment = new EntryDetailFragment();
+                        arguments.putShort(FragmentEntryDatabaseHandler.ENTRY_SEQ_NUM, holder.entry.getStoryEntryNum());
+                        EntryFragment fragment = new EntryFragment();
                         fragment.setArguments(arguments);
                         getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.entry_detail_container, fragment)
+                                .replace(R.id.entry_container, fragment)
                                 .commit();
                     } else {
                         Context context = v.getContext();
 
-                        Intent intent = new Intent(context, EntryDetailActivity.class);
+                        Intent intent = new Intent(context, EntryActivity.class);
 
-                        short seqEntry = holder.fragmentEntry.getStoryEntryNum();
-                        Calendar date = holder.fragmentEntry.getDate();
-
-                        FragmentEntry fragmentEntry = fragmentEntryHandler.getSpecificDiaryEntry(seqEntry, date);
-
-                        if (fragmentEntry != null) {
-                            // insert the values
-                            intent.putExtra(FragmentEntryDatabaseHandler.ENTRY_SEQ_NUM, fragmentEntry.getStoryEntryNum());
-
-                            context.startActivity(intent);
-                        }
+                        // insert the values
+                        intent.putExtra(FragmentEntryDatabaseHandler.ENTRY_SEQ_NUM, holder.entry.getStoryEntryNum());
+                        context.startActivity(intent);
                     }
                 }
             });

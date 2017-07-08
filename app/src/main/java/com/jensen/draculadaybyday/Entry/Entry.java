@@ -1,12 +1,11 @@
-package com.jensen.draculadaybyday.Fragment;
+package com.jensen.draculadaybyday.Entry;
 
 import com.jensen.draculadaybyday.Entries.EntryType;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Map;
 
-public class FragmentEntry {
+public class Entry {
     // The number the entry is in the sequence
     private short storyEntryNum;
 
@@ -20,7 +19,7 @@ public class FragmentEntry {
     private String person;
 
     // The diary entry itself
-    private String diaryEntry;
+    private String textEntry;
 
     // The date the fragment was written
     private Calendar date;
@@ -34,7 +33,7 @@ public class FragmentEntry {
     // Whether or not the entry is unread
     private boolean unread;
 
-    public FragmentEntry(int storyEntryNum, int dateEntryNum, int chapter, String personName, String diaryText, Calendar date, EntryType type, boolean unlocked, boolean unread) {
+    public Entry(int storyEntryNum, int dateEntryNum, int chapter, String personName, String diaryText, Calendar date, EntryType type, boolean unlocked, boolean unread) {
 
         this.storyEntryNum = (short) storyEntryNum;
 
@@ -44,7 +43,7 @@ public class FragmentEntry {
 
         this.person = personName;
 
-        this.diaryEntry = diaryText;
+        this.textEntry = diaryText;
 
         this.date = date;
 
@@ -55,11 +54,11 @@ public class FragmentEntry {
         this.unread = unread;
     }
 
-    public FragmentEntry(int chapter, String personName, String diaryText, Calendar date, EntryType type, boolean unlocked, boolean unread) {
+    public Entry(int chapter, String personName, String diaryText, Calendar date, EntryType type, boolean unlocked, boolean unread) {
         this(-1, -1, chapter, personName, diaryText, date, type, unlocked, unread);
     }
 
-    public FragmentEntry(int storyEntryNum, int dateEntryNum, int chapter, String personName, String diaryText, Calendar date, String type, boolean unlocked, boolean unread) {
+    public Entry(int storyEntryNum, int dateEntryNum, int chapter, String personName, String diaryText, Calendar date, String type, boolean unlocked, boolean unread) {
         this(storyEntryNum, dateEntryNum, chapter, personName, diaryText, date, getEntryType(type), unlocked, unread);
     }
 
@@ -90,8 +89,8 @@ public class FragmentEntry {
         return person;
     }
 
-    public String getFragmentEntry() {
-        return diaryEntry;
+    public String getTextEntry() {
+        return textEntry;
     }
 
     public Calendar getDate() {

@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Entries.EntryDetailActivity"
+            android:name=".Entries.EntryActivity"
             android:label="@string/title_entry_detail"
             android:parentActivityName=".Entries.EntryListActivity"
             android:theme="@style/AppTheme.NoActionBar">

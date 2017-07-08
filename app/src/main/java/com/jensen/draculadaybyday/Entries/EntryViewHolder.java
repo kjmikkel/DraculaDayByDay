@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.jensen.draculadaybyday.Fragment.FragmentEntry;
+import com.jensen.draculadaybyday.Entry.Entry;
 import com.jensen.draculadaybyday.R;
 
 public class EntryViewHolder extends RecyclerView.ViewHolder {
@@ -23,7 +23,7 @@ public class EntryViewHolder extends RecyclerView.ViewHolder {
     // The content pane
 //    public final TextView mContentView;
 
-    public FragmentEntry fragmentEntry;
+    public Entry entry;
 
     public EntryViewHolder(View view) {
         super(view);
@@ -42,14 +42,14 @@ public class EntryViewHolder extends RecyclerView.ViewHolder {
 
     public void setViews() {
         // Header
-        mDate.setText("\n\n" + fragmentEntry.getDateString());
-        mName.setText("\n\n" + fragmentEntry.getPerson());
+        mDate.setText("\n\n" + entry.getDateString());
+        mName.setText("\n\n" + entry.getPerson());
 
         mNewsType.getLayoutParams().height = mNewsType.getWidth();
         mNewsType.requestLayout();
 
         Drawable drawable = null;
-        switch (fragmentEntry.getType()) {
+        switch (entry.getType()) {
             case DIARY_ENTRY:
                 drawable = context.getDrawable(R.drawable.ic_diary);
                 break;
@@ -78,7 +78,7 @@ public class EntryViewHolder extends RecyclerView.ViewHolder {
         // Set image
 
         // Content
-     //   mContentView.setText(fragmentEntry.getFragmentEntry());
+     //   mContentView.setText(entry.getTextEntry());
     }
 
     @Override

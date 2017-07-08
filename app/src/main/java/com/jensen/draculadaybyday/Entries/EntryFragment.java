@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.jensen.draculadaybyday.Fragment.FragmentEntry;
+import com.jensen.draculadaybyday.Entry.Entry;
 import com.jensen.draculadaybyday.Presentation.EntryView;
 import com.jensen.draculadaybyday.Presentation.FontEnum;
 import com.jensen.draculadaybyday.Presentation.InitialEnum;
@@ -21,92 +21,42 @@ import com.jensen.draculadaybyday.Preferences.FontSizePickerPreference;
 /**
  * A fragment representing a single Entry detail screen.
  * This fragment is either contained in a {@link EntryListActivity}
- * in two-pane mode (on tablets) or a {@link EntryDetailActivity}
+ * in two-pane mode (on tablets) or a {@link EntryActivity}
  * on handsets.
  */
-public class EntryDetailFragment extends Fragment {
+public class EntryFragment extends Fragment {
     /**
      * The fragment argument representing the sequence number for entry represents.
      */
     private static final String DEFAULT_TITLE = "Default title";
     private static final String DEFAULT_BODY = "Default body";
 
+    private Entry entry;
     private EntryView entryView;
 
+    private static FragmentEntryDatabaseHandler dbHandler = FragmentEntryDatabaseHandler.getInstance();
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public EntryDetailFragment() {
+    public EntryFragment() {
         // Left empty on purpose
-    }
-
-    private FragmentEntry getEntryFromArgument() {
-        FragmentEntry entry = null;
-        FragmentEntryDatabaseHandler dbHandler = FragmentEntryDatabaseHandler.getInstance();
-
-        if (dbHandler != null) {
-            short entrySeqNum = getArguments().getShort(FragmentEntryDatabaseHandler.ENTRY_SEQ_NUM);
-            entry = dbHandler.getSpecificDiaryEntry(entrySeqNum);
-        }
-
-        return entry;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (getArguments().containsKey(FragmentEntryDatabaseHandler.ENTRY_SEQ_NUM)) {
-            // Load the dummy content specified by the fragment
-            // arguments. In a real-world scenario, use a Loader
-            // to load content from a content provider.
-
-            Activity activity = this.getActivity();
-
-            CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout)
-                    activity.findViewById(R.id.toolbar_layout);
-
-            if (appBarLayout != null) {
-                FragmentEntry entry = getEntryFromArgument();
-
-                if (entry != null) {
-                    // Set the values
-                    appBarLayout.setTitle(entry.toString());
-                } else {
-                    // Could not get a value from the database
-                    appBarLayout.setTitle(DEFAULT_TITLE);
-                }
-            } else {
-                appBarLayout.setTitle(DEFAULT_TITLE);
-            }
-
-            /*
-            CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout)
-                    activity.findViewById(R.id.toolbar_layout);
-
-            if (appBarLayout != null) {
-                FragmentEntry entry = getEntryFromArgument();
-
-                if (entry != null) {
-                    // Set the values
-                    appBarLayout.setTitle(entry.toString());
-                } else {
-                    // Could not get a value from the database
-                    appBarLayout.setTitle(DEFAULT_TITLE);
-                }
-            } else {
-                appBarLayout.setTitle(DEFAULT_TITLE);
-            }
-            */
+        if (dbHandler != null) {
+            short entrySeqNum = getArguments().getShort(FragmentEntryDatabaseHandler.ENTRY_SEQ_NUM);
+            entry = dbHandler.getSpecificDiaryEntry(entrySeqNum);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.entry_detail, null);
-
         entryView = (EntryView) rootView.findViewById(R.id.entry_view_detail);
+
         setText();
 
         return rootView;
@@ -116,17 +66,34 @@ public class EntryDetailFragment extends Fragment {
     public void onResume() {
         // Set the text again
         setText();
-
+        setToolbar(0);
         super.onResume();
+    }
+
+    public void setToolbar(int position) {
+        Activity activity = this.getActivity();
+        if (activity != null) {
+        CollapsingToolbarLayout appBarLayout =
+                (CollapsingToolbarLayout)activity.findViewById(R.id.toolbar_layout);
+
+        if (appBarLayout != null ) {
+            if (entry != null) {
+                // Set the values
+                appBarLayout.setTitle(entry.toString());
+            } else {
+                // Could not get a value from the database
+                appBarLayout.setTitle(DEFAULT_TITLE);
+            }
+        }
+        }
     }
 
     private void setText() {
         if (entryView != null) {
-            FragmentEntry entry = getEntryFromArgument();
 
             String text;
             if (entry != null) {
-                text = entry.getFragmentEntry();
+                text = entry.getTextEntry();
             } else {
                 text = DEFAULT_BODY;
             }
@@ -141,7 +108,10 @@ public class EntryDetailFragment extends Fragment {
 
             float textSize = preferences.getFloat(FontSizePickerPreference.PREFERENCE_NAME, 14.0f);
 
-            entryView.setText(text, initialEnum, fontEnum, textSize);
+           entryView.setText(text, initialEnum, fontEnum, textSize);
         }
     }
 }
+
+
+
