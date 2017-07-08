@@ -31,7 +31,7 @@
             android:name=".Preferences.DraculaPreferences"
             android:label="@string/title_activity_dracula_preferences"/>
         <activity
-            android:name=".AboutPage"
+            android:name=".Presentation.AboutPage"
             android:label="@string/title_activity_about"
             android:theme="@style/AppTheme.NoActionBar"/>
     </application>

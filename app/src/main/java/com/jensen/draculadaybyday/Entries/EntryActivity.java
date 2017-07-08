@@ -13,7 +13,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import com.jensen.draculadaybyday.AboutPage;
+import com.jensen.draculadaybyday.Presentation.AboutPage;
 import com.jensen.draculadaybyday.Entry.EntryCollectionPagerAdapter;
 import com.jensen.draculadaybyday.R;
 import com.jensen.draculadaybyday.SQLite.FragmentEntryDatabaseHandler;

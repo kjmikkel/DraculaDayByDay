@@ -1,4 +1,4 @@
-package com.jensen.draculadaybyday;
+package com.jensen.draculadaybyday.Presentation;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -7,6 +7,8 @@ import android.support.v7.widget.Toolbar;
 import android.text.method.LinkMovementMethod;
 import android.view.MenuItem;
 import android.widget.TextView;
+
+import com.jensen.draculadaybyday.R;
 
 public class AboutPage extends AppCompatActivity {
 

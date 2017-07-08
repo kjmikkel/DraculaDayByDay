@@ -17,7 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.jensen.draculadaybyday.AboutPage;
+import com.jensen.draculadaybyday.Presentation.AboutPage;
 import com.jensen.draculadaybyday.Entry.Entry;
 import com.jensen.draculadaybyday.R;
 import com.jensen.draculadaybyday.SQLite.FragmentEntryDatabaseHandler;
