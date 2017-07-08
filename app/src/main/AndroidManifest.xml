@@ -29,11 +29,11 @@
         </activity>
         <activity
             android:name=".Preferences.DraculaPreferences"
-            android:label="@string/title_activity_dracula_preferences"></activity>
+            android:label="@string/title_activity_dracula_preferences"/>
         <activity
             android:name=".AboutPage"
             android:label="@string/title_activity_about"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

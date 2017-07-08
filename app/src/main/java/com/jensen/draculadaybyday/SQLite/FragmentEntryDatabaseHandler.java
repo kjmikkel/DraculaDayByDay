@@ -19,14 +19,14 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
 
     // Contacts Table Columns names
     public static final String ENTRY_SEQ_NUM = "entrySeqNum";
-    public static final String ENTRY_DATE_NUM = "entryDateNum";
-    public static final String CHAPTER = "chapter";
-    public static final String PERSON = "person";
-    public static final String TEXT = "text";
-    public static final String DATE = "date";
-    public static final String TYPE = "type";
-    public static final String UNLOCKED = "unlocked";
-    public static final String UNREAD = "unread";
+    private static final String ENTRY_DATE_NUM = "entryDateNum";
+    private static final String CHAPTER = "chapter";
+    private static final String PERSON = "person";
+    private static final String TEXT = "text";
+    private static final String DATE = "date";
+    private static final String TYPE = "type";
+    private static final String UNLOCKED = "unlocked";
+    private static final String UNREAD = "unread";
 
     // All Static variables
     // Database Version
@@ -151,6 +151,7 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
             cursor.moveToFirst();
             return sequenceNumber == getShort(cursor, ENTRY_SEQ_NUM);
         }
+        assert cursor != null;
         cursor.close();
         return false;
     }
@@ -241,6 +242,7 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
         }
 
         // Close curosor
+        assert cursor != null;
         cursor.close();
 
         // Close the cursor and the database
@@ -276,6 +278,7 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
         }
 
         // Close cursor and the database
+        assert cursor != null;
         cursor.close();
         db.close();
 

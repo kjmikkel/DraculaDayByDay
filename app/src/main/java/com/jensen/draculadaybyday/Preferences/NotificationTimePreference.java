@@ -22,26 +22,19 @@ import com.jensen.draculadaybyday.R;
 public class NotificationTimePreference extends DialogPreference {
 
     // Preference IDs
-    public static final String PREFERENCE_TYPE_NAME = "notification_type";
-    public static final String PREFERENCE_FROM_NAME = "notification_from";
-    public static final String PREFERENCE_TO_NAME = "notification_to";
-    public static final String PREFERENCE_SET_TIME = "notification_set_time";
+    private static final String PREFERENCE_TYPE_NAME = "notification_type";
+    private static final String PREFERENCE_FROM_NAME = "notification_from";
+    private static final String PREFERENCE_TO_NAME = "notification_to";
+    private static final String PREFERENCE_SET_TIME = "notification_set_time";
     private static final String TIME_FORMAT = "%02d:%02d";
     // Time
     private Tuple<Integer, Integer> setTime;
     private Tuple<Integer, Integer> fromTime;
     private Tuple<Integer, Integer> toTime;
-    // Radio buttons
-    private RadioButton setTimeRadioButton;
-    private RadioButton intervalRadioButton;
     // Buttons
     private Button setButton;
     private Button fromButton;
     private Button toButton;
-    // Text view
-    private TextView setTextView;
-    private TextView toTextView;
-    private TextView fromTextView;
     private boolean setAt;
 
     public NotificationTimePreference(Context context, AttributeSet attrs) {
@@ -108,8 +101,8 @@ public class NotificationTimePreference extends DialogPreference {
         notificationView.setId(View.generateViewId());
         notificationView.setOrientation(LinearLayout.HORIZONTAL);
 
-        setTimeRadioButton = makeRadioButton(context, R.string.pref_notification_set_time_notification);
-        intervalRadioButton = makeRadioButton(context, R.string.pref_notification_interval_notification);
+        RadioButton setTimeRadioButton = makeRadioButton(context, R.string.pref_notification_set_time_notification);
+        RadioButton intervalRadioButton = makeRadioButton(context, R.string.pref_notification_interval_notification);
 
         notificationView.setOrientation(LinearLayout.HORIZONTAL);
         notificationView.addView(setTimeRadioButton);
@@ -123,7 +116,7 @@ public class NotificationTimePreference extends DialogPreference {
         final LinearLayout setAtView = new LinearLayout(context);
         setAtView.setId(View.generateViewId());
 
-        setTextView = new TextView(context);
+        TextView setTextView = new TextView(context);
         setTextView.setText(context.getString(R.string.pref_notification_interval_at_time));
 
         setButton = new Button(context);
@@ -142,14 +135,14 @@ public class NotificationTimePreference extends DialogPreference {
         intervalView.setId(View.generateViewId());
 
         // From
-        fromTextView = new TextView(context);
+        TextView fromTextView = new TextView(context);
         fromTextView.setText(context.getString(R.string.pref_notification_interval_from));
 
         fromButton = new Button(context);
         setupButton(fromButton, fromTime.fst, fromTime.snd);
 
         // To
-        toTextView = new TextView(context);
+        TextView toTextView = new TextView(context);
         toTextView.setText(context.getString(R.string.pref_notification_interval_to));
 
         toButton = new Button(context);

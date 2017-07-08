@@ -27,7 +27,6 @@ import com.jensen.draculadaybyday.Preferences.DraculaPreferences;
  */
 public class EntryActivity extends AppCompatActivity {
 
-    private EntryCollectionPagerAdapter mEntryCollectionPagerAdapter;
     private ViewPager mViewPager;
 
     @Override
@@ -86,8 +85,9 @@ public class EntryActivity extends AppCompatActivity {
                 short startSeqNumber = getIntent().getShortExtra(FragmentEntryDatabaseHandler.ENTRY_SEQ_NUM, (short) 1);
                 bundleArguments.putShort(FragmentEntryDatabaseHandler.ENTRY_SEQ_NUM, startSeqNumber);
 
-                mEntryCollectionPagerAdapter = new EntryCollectionPagerAdapter(getSupportFragmentManager());
+                EntryCollectionPagerAdapter mEntryCollectionPagerAdapter = new EntryCollectionPagerAdapter(getSupportFragmentManager());
                 mViewPager = (ViewPager) findViewById(R.id.pager);
+                assert mViewPager != null;
                 mViewPager.setAdapter(mEntryCollectionPagerAdapter);
 
                 mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -95,8 +95,10 @@ public class EntryActivity extends AppCompatActivity {
                     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                        EntryFragment nextEntryFragment = (EntryFragment) mViewPager.getAdapter().instantiateItem(mViewPager, position);
                         if (nextEntryFragment != null) {
+                            assert appBarLayout != null;
                             appBarLayout.setTitle(nextEntryFragment.getTitle());
                         } else {
+                            assert appBarLayout != null;
                             appBarLayout.setTitle("Default");
                         }
                     }

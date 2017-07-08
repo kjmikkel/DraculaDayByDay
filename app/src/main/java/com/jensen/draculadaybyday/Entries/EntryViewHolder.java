@@ -16,9 +16,9 @@ public class EntryViewHolder extends RecyclerView.ViewHolder {
     private final Context context;
 
     // The header
-    public final TextView mDate;
-    public final TextView mName;
-    public final ImageView mNewsType;
+    private final TextView mDate;
+    private final TextView mName;
+    private final ImageView mNewsType;
 
     // The content pane
 //    public final TextView mContentView;
@@ -42,38 +42,47 @@ public class EntryViewHolder extends RecyclerView.ViewHolder {
 
     public void setViews() {
         // Header
-        mDate.setText("\n\n" + entry.getDateString());
-        mName.setText("\n\n" + entry.getPerson());
+        mDate.setText(entry.getDateString());
+        mName.setText(entry.getPerson());
 
         mNewsType.getLayoutParams().height = mNewsType.getWidth();
         mNewsType.requestLayout();
 
-        Drawable drawable = null;
+        Drawable drawable;
+        String imageDescription;
+
         switch (entry.getType()) {
             case DIARY_ENTRY:
                 drawable = context.getDrawable(R.drawable.ic_diary);
+                imageDescription = context.getString(R.string.news_type_diary);
                 break;
             case LETTER:
                 drawable = context.getDrawable(R.drawable.ic_envelope);
+                imageDescription = context.getString(R.string.news_type_letter);
                 break;
             case NEWSPAPER:
                 drawable = context.getDrawable(R.mipmap.ic_newspaper_icon);
+                imageDescription = context.getString(R.string.news_type_newspaper);
                 break;
             case NOTE:
                 drawable = context.getDrawable(R.mipmap.ic_note_icon);
+                imageDescription = context.getString(R.string.news_type_note);
                 break;
             case PHONOGRAPH:
                 drawable = context.getDrawable(R.mipmap.ic_phonograph_icon);
+                imageDescription = context.getString(R.string.news_type_phonograph);
                 break;
             case TELEGRAM:
             default:
                 drawable = context.getDrawable(R.mipmap.ic_telegram_icon);
+                imageDescription = context.getString(R.string.news_type_telegram);
                 break;
         }
 
         if (drawable != null) {
             mNewsType.setScaleType(ImageView.ScaleType.FIT_XY);
             mNewsType.setBackground(drawable);
+            mNewsType.setContentDescription(imageDescription);
         }
         // Set image
 

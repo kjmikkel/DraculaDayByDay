@@ -98,13 +98,13 @@ public class EntryViewPreference extends Preference {
 
         // Get the font
         String fontString = sp.getString(res.getString(R.string.pref_key_font_type), "-1");
-        if (fontString != "-1") {
+        if (!"-1".equals(fontString)) {
             makeFontFromString(fontString);
         }
 
         // Get the initial
         String initialString = sp.getString(res.getString(R.string.pref_key_initial_type), "-1");
-        if (initialString != "-1") {
+        if (!"-1".equals(initialString)) {
             makeInitialFromString(initialString);
         }
 

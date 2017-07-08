@@ -130,8 +130,16 @@
     <string name="shared_pref_notification">SHARED_PREF_NOTIFICATION</string>
     <string name="title_activity_about">About</string>
 
-
     <!-- Descriptions -->
+
+    <!-- Image descriptions -->
+    <string name="news_type_default">The type of the entry</string>
+    <string name="news_type_diary">Diary entry</string>
+    <string name="news_type_letter">Letter</string>
+    <string name="news_type_telegram">Telegram</string>
+    <string name="news_type_phonograph">Phonograph</string>
+    <string name="news_type_newspaper">Newspaper</string>
+    <string name="news_type_note">Note</string>
 
     <!-- About page -->
     <string name="about_app_label">About the Dracula Day-by-Day:</string>

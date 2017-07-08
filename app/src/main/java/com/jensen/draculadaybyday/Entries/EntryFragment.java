@@ -30,7 +30,7 @@ public class EntryFragment extends Fragment {
     private static final String DEFAULT_TITLE = "Default title";
     private static final String DEFAULT_BODY = "Default body";
 
-    public Entry mEntry;
+    private Entry mEntry;
     private EntryView mEntryView;
 
     private static FragmentEntryDatabaseHandler dbHandler = FragmentEntryDatabaseHandler.getInstance();

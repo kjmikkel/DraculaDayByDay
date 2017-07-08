@@ -24,7 +24,7 @@ public class FontSizePickerPreference extends DialogPreference {
     // Preference ID
     public static final String PREFERENCE_NAME = "font_size";
     // enable or disable the 'circular behavior'
-    public static final boolean WRAP_SELECTOR_WHEEL = true;
+    private static final boolean WRAP_SELECTOR_WHEEL = true;
     // allowed range for the pickerFractional
     private static final int MINIMAL_FRACTIONAL = 0;
     private static final int MAXIMUM_FRACTIONAL = 9;
@@ -172,7 +172,7 @@ public class FontSizePickerPreference extends DialogPreference {
         return this.value;
     }
 
-    public void setValue(float value) {
+    private void setValue(float value) {
         // Set and save the value
         this.value = value;
         persistFloat(this.value);

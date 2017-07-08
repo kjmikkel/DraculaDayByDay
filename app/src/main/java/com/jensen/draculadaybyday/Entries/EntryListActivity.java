@@ -125,6 +125,7 @@ public class EntryListActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        assert toolbar != null;
         toolbar.setTitle(getTitle());
 
         mFragmentEntryHandler = FragmentEntryDatabaseHandler.getInstance(this);
@@ -426,7 +427,7 @@ public class EntryListActivity extends AppCompatActivity {
             String line;
             do {
                 line = reader.readLine();
-                sb.append(line + "\n");
+                sb.append(line).append("\n");
             }
             while (line != null);
         } catch (Exception e) {

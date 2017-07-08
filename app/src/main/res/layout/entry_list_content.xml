@@ -27,7 +27,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="3"
             android:layout_margin="@dimen/text_small_margin"
-            android:textAppearance="?attr/textAppearanceListItem" />
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:contentDescription="@string/news_type_default"/>
 
     <!--
     <TextView

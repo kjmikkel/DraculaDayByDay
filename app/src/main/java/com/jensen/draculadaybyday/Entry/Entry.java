@@ -33,7 +33,7 @@ public class Entry {
     // Whether or not the mEntry is unread
     private boolean unread;
 
-    public Entry(int storyEntryNum, int dateEntryNum, int chapter, String personName, String diaryText, Calendar date, EntryType type, boolean unlocked, boolean unread) {
+    private Entry(int storyEntryNum, int dateEntryNum, int chapter, String personName, String diaryText, Calendar date, EntryType type, boolean unlocked, boolean unread) {
 
         this.storyEntryNum = (short) storyEntryNum;
 
