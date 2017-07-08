@@ -78,7 +78,7 @@ public class EntryViewHolder extends RecyclerView.ViewHolder {
         // Set image
 
         // Content
-     //   mContentView.setText(entry.getTextEntry());
+     //   mContentView.setText(mEntry.getTextEntry());
     }
 
     @Override

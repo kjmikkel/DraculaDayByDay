@@ -6,31 +6,31 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class Entry {
-    // The number the entry is in the sequence
+    // The number the mEntry is in the sequence
     private short storyEntryNum;
 
-    // The number the entry is in the sequence for that person
+    // The number the mEntry is in the sequence for that person
     private short dateEntryNum;
 
     // The chapter
     private short chapter;
 
-    // The person who has written the entry
+    // The person who has written the mEntry
     private String person;
 
-    // The diary entry itself
+    // The diary mEntry itself
     private String textEntry;
 
     // The date the fragment was written
     private Calendar date;
 
-    // The type of the entry
+    // The type of the mEntry
     private EntryType type;
 
-    // Whether or not the entry is unlocked
+    // Whether or not the mEntry is unlocked
     private boolean unlocked;
 
-    // Whether or not the entry is unread
+    // Whether or not the mEntry is unread
     private boolean unread;
 
     public Entry(int storyEntryNum, int dateEntryNum, int chapter, String personName, String diaryText, Calendar date, EntryType type, boolean unlocked, boolean unread) {

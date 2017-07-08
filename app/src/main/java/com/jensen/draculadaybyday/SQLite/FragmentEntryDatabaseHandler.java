@@ -34,7 +34,7 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
     // Database Name
     private static final String DATABASE_NAME = "fragmentEntryManager";
     // Contacts table name
-    private static final String TABLE_ENTRY = "entry";
+    private static final String TABLE_ENTRY = "mEntry";
     private static final String[] allEntries = new String[]{ENTRY_SEQ_NUM, ENTRY_DATE_NUM, CHAPTER, PERSON, TEXT, DATE, TYPE, UNLOCKED, UNREAD};
     private static final String[] allEntriesButText = new String[]{ENTRY_SEQ_NUM, ENTRY_DATE_NUM, CHAPTER, PERSON, DATE, TYPE, UNLOCKED, UNREAD};
     // The instance of the class
@@ -98,14 +98,14 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
         }
     }
 
-    // Inserting an entry
+    // Inserting an mEntry
     public void addEntry(Entry entry) {
         if (!db.isOpen()) {
             open();
         }
 
         try {
-            // Check if the entry is already in the database
+            // Check if the mEntry is already in the database
             if (!EntryAlreadyInDB(entry.getStoryEntryNum())) {
 
                 ContentValues values = new ContentValues();
@@ -288,7 +288,7 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
 
         /*
         if (1 < entryList.size()) {
-            throw new Exception("More than one entry for the same sequence number");
+            throw new Exception("More than one mEntry for the same sequence number");
         }
         */
 
@@ -304,22 +304,22 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
         return dateFormat.format(date.getTime());
     }
 
-    // Get the diary entry for the specific sequence number and calendar date
+    // Get the diary mEntry for the specific sequence number and calendar date
     public Entry getSpecificDiaryEntry(int entrySequenceNumber, Calendar date) {
         return getSingleEntry(ENTRY_SEQ_NUM + "=? AND " + DATE + "<= ?", new String[]{String.valueOf(entrySequenceNumber), formatDate(date)}, null, null);
     }
 
-    // Get the diary entry based on a sequence number
+    // Get the diary mEntry based on a sequence number
     public Entry getSpecificDiaryEntry(int entrySequenceNumber) {
         return getSingleEntry(ENTRY_SEQ_NUM + "=?", new String[]{String.valueOf(entrySequenceNumber)}, null, null);
     }
 
-    // Get a specific entry from a specific person
+    // Get a specific mEntry from a specific person
     public Entry getSpecificDiaryEntryByPerson(String person, int entryPersonNum, Calendar date) {
         return getSingleEntry(PERSON + "=? AND " + ENTRY_DATE_NUM + "=? AND " + DATE + "<=?", new String[]{person, String.valueOf(entryPersonNum), formatDate(date)}, null, null);
     }
 
-    // Get a specific entry from a specific Chapter
+    // Get a specific mEntry from a specific Chapter
     public LinkedList<Entry> getChapter(int chapter, Calendar date) {
         //  return get
         return null;

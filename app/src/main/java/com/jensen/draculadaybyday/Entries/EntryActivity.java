@@ -2,9 +2,9 @@ package com.jensen.draculadaybyday.Entries;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.annotation.NonNull;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -27,8 +27,8 @@ import com.jensen.draculadaybyday.Preferences.DraculaPreferences;
  */
 public class EntryActivity extends AppCompatActivity {
 
-    private EntryCollectionPagerAdapter entryCollectionPagerAdapter;
-    private ViewPager viewPager;
+    private EntryCollectionPagerAdapter mEntryCollectionPagerAdapter;
+    private ViewPager mViewPager;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -38,7 +38,7 @@ public class EntryActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.entry_list_general_preferences:
                 Intent preferences = new Intent(EntryActivity.this, DraculaPreferences.class);
@@ -57,14 +57,17 @@ public class EntryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         try {
             setContentView(R.layout.activity_entry);
+            final CollapsingToolbarLayout appBarLayout =
+                    (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
+
             Toolbar toolbar = (Toolbar) findViewById(R.id.entry_toolbar);
             setSupportActionBar(toolbar);
 
             // Show the Up button in the action bar.
-            ActionBar actionBar = getSupportActionBar();
-            if (actionBar != null) {
-                actionBar.setDisplayHomeAsUpEnabled(true);
-                actionBar.setDisplayShowHomeEnabled(true);
+            ActionBar mActionBar = getSupportActionBar();
+            if (mActionBar != null) {
+                mActionBar.setDisplayHomeAsUpEnabled(true);
+                mActionBar.setDisplayShowHomeEnabled(true);
             }
 
             // savedInstanceState is non-null when there is fragment state
@@ -79,40 +82,37 @@ public class EntryActivity extends AppCompatActivity {
             if (savedInstanceState == null) {
                 // Create the detail fragment and add it to the activity
                 // using a fragment transaction.
-                Bundle arguments = new Bundle();
+                Bundle bundleArguments = new Bundle();
                 short startSeqNumber = getIntent().getShortExtra(FragmentEntryDatabaseHandler.ENTRY_SEQ_NUM, (short) 1);
-                arguments.putShort(FragmentEntryDatabaseHandler.ENTRY_SEQ_NUM, startSeqNumber);
+                bundleArguments.putShort(FragmentEntryDatabaseHandler.ENTRY_SEQ_NUM, startSeqNumber);
 
-                entryCollectionPagerAdapter = new EntryCollectionPagerAdapter(getSupportFragmentManager());
-                // NestedScrollView scrollView = (NestedScrollView)findViewById(R.id.entry_container);
-                // scrollView.setFillViewport(true);
-                viewPager = (ViewPager) findViewById(R.id.pager);
-                viewPager.setAdapter(entryCollectionPagerAdapter);
-                /*
-                viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                mEntryCollectionPagerAdapter = new EntryCollectionPagerAdapter(getSupportFragmentManager());
+                mViewPager = (ViewPager) findViewById(R.id.pager);
+                mViewPager.setAdapter(mEntryCollectionPagerAdapter);
+
+                mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                     @Override
                     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
+                       EntryFragment nextEntryFragment = (EntryFragment) mViewPager.getAdapter().instantiateItem(mViewPager, position);
+                        if (nextEntryFragment != null) {
+                            appBarLayout.setTitle(nextEntryFragment.getTitle());
+                        } else {
+                            appBarLayout.setTitle("Default");
+                        }
                     }
 
                     @Override
                     public void onPageSelected(int position) {
-
-                        Fragment fragment = entryCollectionPagerAdapter.getItem(position);
-                        if (fragment instanceof  EntryFragment) {
-                            EntryFragment entryFragment = (EntryFragment)fragment;
-                            entryFragment.setToolbar(position);
-                        }
-
+                        // Left empty on purpose
                     }
 
                     @Override
                     public void onPageScrollStateChanged(int state) {
-
+                        // Left empty on purpose
                     }
                 });
-                */
-                viewPager.setCurrentItem(startSeqNumber - 1);
+
+                mViewPager.setCurrentItem(startSeqNumber - 1);
             }
         } catch (Exception e) {
             Log.d("Exception", e.getMessage());

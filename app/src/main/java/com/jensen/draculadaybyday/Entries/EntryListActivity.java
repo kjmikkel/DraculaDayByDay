@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -63,7 +64,7 @@ public class EntryListActivity extends AppCompatActivity {
     private static final String WESTMINISTER_GAZETTE = "The Westminster Gazette";
     private static final String MITCHELL_AND_SONS = "Mitchell, Sons and Candy to Lord Godalming";
 
-    private static FragmentEntryDatabaseHandler fragmentEntryHandler;
+    private static FragmentEntryDatabaseHandler mFragmentEntryHandler;
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
      * device.
@@ -126,10 +127,10 @@ public class EntryListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
 
-        fragmentEntryHandler = FragmentEntryDatabaseHandler.getInstance(this);
+        mFragmentEntryHandler = FragmentEntryDatabaseHandler.getInstance(this);
 
         try {
-            fragmentEntryHandler.open();
+            mFragmentEntryHandler.open();
 
             // Chapter 1
             addEntryToDatabase(1, JONATHAN_HARKER, R.raw.may_03_jonathan_harker, Calendar.MAY, 3, DIARY_ENTRY);
@@ -377,7 +378,7 @@ public class EntryListActivity extends AppCompatActivity {
         } catch (Exception e) {
             Log.d("Database", e.getMessage());
         } finally {
-            fragmentEntryHandler.close();
+            mFragmentEntryHandler.close();
         }
 
         View recyclerView = findViewById(R.id.entry_list);
@@ -396,12 +397,12 @@ public class EntryListActivity extends AppCompatActivity {
         }
     }
 
-    private void addEntryToDatabase(int chapterNum, String personName, int diaryResource, int month, int date, EntryType type) {
-        if (fragmentEntryHandler != null) {
+    private void addEntryToDatabase(int chapterNum, String personName, int diaryResource, @IntRange(from=1, to=12) int month, @IntRange(from=1, to=31) int date, EntryType type) {
+        if (mFragmentEntryHandler != null) {
             Calendar calendar = Calendar.getInstance();
             calendar.set(1893, month - 1, date);
 
-            fragmentEntryHandler.addEntry(new Entry(chapterNum, personName, getStringFromId(diaryResource), calendar, type, false, true));
+            mFragmentEntryHandler.addEntry(new Entry(chapterNum, personName, getStringFromId(diaryResource), calendar, type, false, true));
         }
     }
 
@@ -413,7 +414,7 @@ public class EntryListActivity extends AppCompatActivity {
 
         Calendar calendar = GregorianCalendar.getInstance();
         calendar.set(1897, month, dateOfMonth);
-        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(fragmentEntryHandler.getDiaryEntriesBeforeDate(calendar)));
+        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(mFragmentEntryHandler.getDiaryEntriesBeforeDate(calendar)));
     }
 
     private String getStringFromId(int id) {
@@ -445,14 +446,14 @@ public class EntryListActivity extends AppCompatActivity {
         }
 
         @Override
-        public EntryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public EntryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.entry_list_content, parent, false);
             return new EntryViewHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(final EntryViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull final EntryViewHolder holder, int position) {
             // Set the views
             holder.entry = mValues.get(position);
             holder.setViews();

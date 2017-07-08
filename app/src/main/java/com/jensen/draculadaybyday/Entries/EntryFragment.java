@@ -1,10 +1,9 @@
 package com.jensen.draculadaybyday.Entries;
 
-import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,13 +25,13 @@ import com.jensen.draculadaybyday.Preferences.FontSizePickerPreference;
  */
 public class EntryFragment extends Fragment {
     /**
-     * The fragment argument representing the sequence number for entry represents.
+     * The fragment argument representing the sequence number for mEntry represents.
      */
     private static final String DEFAULT_TITLE = "Default title";
     private static final String DEFAULT_BODY = "Default body";
 
-    private Entry entry;
-    private EntryView entryView;
+    public Entry mEntry;
+    private EntryView mEntryView;
 
     private static FragmentEntryDatabaseHandler dbHandler = FragmentEntryDatabaseHandler.getInstance();
     /**
@@ -46,16 +45,16 @@ public class EntryFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (dbHandler != null) {
+        if (mEntry == null) {
             short entrySeqNum = getArguments().getShort(FragmentEntryDatabaseHandler.ENTRY_SEQ_NUM);
-            entry = dbHandler.getSpecificDiaryEntry(entrySeqNum);
+            mEntry = dbHandler.getSpecificDiaryEntry(entrySeqNum);
         }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.entry_detail, null);
-        entryView = (EntryView) rootView.findViewById(R.id.entry_view_detail);
+        mEntryView = (EntryView) rootView.findViewById(R.id.entry_view_detail);
 
         setText();
 
@@ -66,36 +65,26 @@ public class EntryFragment extends Fragment {
     public void onResume() {
         // Set the text again
         setText();
-        setToolbar(0);
+
         super.onResume();
     }
 
-    public void setToolbar(int position) {
-        Activity activity = this.getActivity();
-        if (activity != null) {
-        CollapsingToolbarLayout appBarLayout =
-                (CollapsingToolbarLayout)activity.findViewById(R.id.toolbar_layout);
+    public String getTitle() {
+        String title = DEFAULT_TITLE;
 
-        if (appBarLayout != null ) {
-            if (entry != null) {
-                // Set the values
-                appBarLayout.setTitle(entry.toString());
-            } else {
-                // Could not get a value from the database
-                appBarLayout.setTitle(DEFAULT_TITLE);
-            }
+        if (mEntry != null) {
+            title = mEntry.toString();
         }
-        }
+
+        return title;
     }
 
     private void setText() {
-        if (entryView != null) {
+        if (mEntryView != null) {
 
-            String text;
-            if (entry != null) {
-                text = entry.getTextEntry();
-            } else {
-                text = DEFAULT_BODY;
+            String text = DEFAULT_BODY;
+            if (mEntry != null) {
+                text = mEntry.getTextEntry();
             }
 
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
@@ -108,7 +97,7 @@ public class EntryFragment extends Fragment {
 
             float textSize = preferences.getFloat(FontSizePickerPreference.PREFERENCE_NAME, 14.0f);
 
-           entryView.setText(text, initialEnum, fontEnum, textSize);
+           mEntryView.setText(text, initialEnum, fontEnum, textSize);
         }
     }
 }
