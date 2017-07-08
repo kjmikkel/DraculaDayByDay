@@ -431,7 +431,7 @@ public class EntryListActivity extends AppCompatActivity {
             }
             while (line != null);
         } catch (Exception e) {
-
+            Log.d("Reading problems", e.getMessage());
         }
 
         return sb.toString();
