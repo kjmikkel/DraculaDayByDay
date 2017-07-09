@@ -19,6 +19,8 @@ import android.widget.TimePicker;
 import com.jensen.draculadaybyday.primitives.Tuple;
 import com.jensen.draculadaybyday.R;
 
+import java.util.Locale;
+
 public class NotificationTimePreference extends DialogPreference {
 
     // Preference IDs
@@ -65,7 +67,7 @@ public class NotificationTimePreference extends DialogPreference {
     }
 
     private static String getTimeStringRep(Tuple<Integer, Integer> time) {
-        return String.format(TIME_FORMAT, time.fst, time.snd);
+        return String.format(Locale.getDefault(), TIME_FORMAT, time.fst, time.snd);
     }
 
     private void getAttributesArguments(Context context, AttributeSet attrs, int defStyle) {
@@ -194,12 +196,12 @@ public class NotificationTimePreference extends DialogPreference {
 
     // Setup the buttons so that they can be use for setting the time
     private void setupButton(final Button button, int hour, int minute) {
-        button.setText(String.format(TIME_FORMAT, hour, minute));
+        button.setText(String.format(Locale.getDefault(), TIME_FORMAT, hour, minute));
 
         final TimePickerDialog.OnTimeSetListener listener = new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                button.setText(String.format(TIME_FORMAT, hourOfDay, minute));
+                button.setText(String.format(Locale.getDefault(), TIME_FORMAT, hourOfDay, minute));
 
                 // We have to store the values in the correct data structure
                 if (button == setButton) {

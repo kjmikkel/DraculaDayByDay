@@ -1,9 +1,9 @@
 package com.jensen.draculadaybyday.entry;
 
 import com.jensen.draculadaybyday.entries.EntryType;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 public class Entry {
     // The number the mEntry is in the sequence
@@ -124,7 +124,7 @@ public class Entry {
         String noDateStr = format.format(date.getTime());
 
         int val = date.get(Calendar.DAY_OF_MONTH);
-        return String.format("%2d", val) + getDayOfMonthSuffix(val) + "\n" + noDateStr;
+        return String.format(Locale.getDefault(), "%2d", val) + getDayOfMonthSuffix(val) + "\n" + noDateStr;
     }
 
     @Override
