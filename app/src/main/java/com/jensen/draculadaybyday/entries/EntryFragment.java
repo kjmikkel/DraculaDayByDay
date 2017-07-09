@@ -1,5 +1,6 @@
 package com.jensen.draculadaybyday.entries;
 
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -53,7 +54,7 @@ public class EntryFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.entry_detail, null);
+        @SuppressLint("InflateParams") final View rootView = inflater.inflate(R.layout.entry_detail, null);
         mEntryView = (EntryView) rootView.findViewById(R.id.entry_view_detail);
 
         setText();
