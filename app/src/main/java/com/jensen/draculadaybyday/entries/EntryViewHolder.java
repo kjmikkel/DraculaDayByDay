@@ -53,28 +53,28 @@ public class EntryViewHolder extends RecyclerView.ViewHolder {
 
         switch (entry.getType()) {
             case DIARY_ENTRY:
-                drawable = context.getDrawable(R.drawable.ic_diary);
+                drawable = context.getDrawable(R.drawable.ic_diary_icon);
                 imageDescription = context.getString(R.string.news_type_diary);
                 break;
             case LETTER:
-                drawable = context.getDrawable(R.drawable.ic_envelope);
+                drawable = context.getDrawable(R.drawable.ic_envelope_icon);
                 imageDescription = context.getString(R.string.news_type_letter);
                 break;
             case NEWSPAPER:
-                drawable = context.getDrawable(R.mipmap.ic_newspaper_icon);
+                drawable = context.getDrawable(R.drawable.ic_newspaper_icon);
                 imageDescription = context.getString(R.string.news_type_newspaper);
                 break;
             case NOTE:
-                drawable = context.getDrawable(R.mipmap.ic_note_icon);
+                drawable = context.getDrawable(R.drawable.ic_note_icon);
                 imageDescription = context.getString(R.string.news_type_note);
                 break;
             case PHONOGRAPH:
-                drawable = context.getDrawable(R.mipmap.ic_phonograph_icon);
+                drawable = context.getDrawable(R.drawable.ic_phonograph_icon);
                 imageDescription = context.getString(R.string.news_type_phonograph);
                 break;
             case TELEGRAM:
             default:
-                drawable = context.getDrawable(R.mipmap.ic_telegram_icon);
+                drawable = context.getDrawable(R.drawable.ic_telegram_icon);
                 imageDescription = context.getString(R.string.news_type_telegram);
                 break;
         }
