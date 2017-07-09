@@ -53,7 +53,6 @@ public class EntryFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // final View rootView = inflater.inflate(R.layout.entry_detail, container);
         final View rootView = inflater.inflate(R.layout.entry_detail, null);
         mEntryView = (EntryView) rootView.findViewById(R.id.entry_view_detail);
 
