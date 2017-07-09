@@ -1,4 +1,4 @@
-package com.jensen.draculadaybyday.Presentation;
+package com.jensen.draculadaybyday.presentation;
 
 public enum FontEnum {
     DROID_SANS, DROID_SERIF, DROID_SANS_MONO, RAVALI, HARRINGTON, VICTORIAN, VICTORIAN_WITH_INITIAL, NONE;

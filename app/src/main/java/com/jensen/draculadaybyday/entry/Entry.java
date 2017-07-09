@@ -1,37 +1,37 @@
-package com.jensen.draculadaybyday.Entry;
+package com.jensen.draculadaybyday.entry;
 
-import com.jensen.draculadaybyday.Entries.EntryType;
+import com.jensen.draculadaybyday.entries.EntryType;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class Entry {
     // The number the mEntry is in the sequence
-    private short storyEntryNum;
+    private final short storyEntryNum;
 
     // The number the mEntry is in the sequence for that person
-    private short dateEntryNum;
+    private final short dateEntryNum;
 
     // The chapter
-    private short chapter;
+    private final short chapter;
 
     // The person who has written the mEntry
-    private String person;
+    private final String person;
 
     // The diary mEntry itself
-    private String textEntry;
+    private final String textEntry;
 
     // The date the fragment was written
-    private Calendar date;
+    private final Calendar date;
 
     // The type of the mEntry
-    private EntryType type;
+    private final EntryType type;
 
     // Whether or not the mEntry is unlocked
-    private boolean unlocked;
+    private final boolean unlocked;
 
     // Whether or not the mEntry is unread
-    private boolean unread;
+    private final boolean unread;
 
     private Entry(int storyEntryNum, int dateEntryNum, int chapter, String personName, String diaryText, Calendar date, EntryType type, boolean unlocked, boolean unread) {
 

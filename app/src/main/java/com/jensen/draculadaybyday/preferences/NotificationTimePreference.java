@@ -1,4 +1,4 @@
-package com.jensen.draculadaybyday.Preferences;
+package com.jensen.draculadaybyday.preferences;
 
 import android.app.TimePickerDialog;
 import android.content.Context;
@@ -16,7 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import com.jensen.draculadaybyday.Primitives.Tuple;
+import com.jensen.draculadaybyday.primitives.Tuple;
 import com.jensen.draculadaybyday.R;
 
 public class NotificationTimePreference extends DialogPreference {

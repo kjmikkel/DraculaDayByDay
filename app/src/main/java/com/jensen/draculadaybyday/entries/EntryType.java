@@ -1,4 +1,4 @@
-package com.jensen.draculadaybyday.Entries;
+package com.jensen.draculadaybyday.entries;
 
 public enum EntryType {
     DIARY_ENTRY("Diary Entry"),
@@ -8,7 +8,7 @@ public enum EntryType {
     NEWSPAPER("Newspaper"),
     NOTE("Note");
 
-    public String description;
+    public final String description;
 
     EntryType(String description) {
         this.description = description;

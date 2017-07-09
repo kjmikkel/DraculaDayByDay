@@ -17,7 +17,7 @@
         android:layout_marginRight="20dp"
         android:text="@string/pref_entryview_title_text" />
 
-    <com.jensen.draculadaybyday.Presentation.EntryView
+    <com.jensen.draculadaybyday.presentation.EntryView
         android:id="@+id/entry_view_widget"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

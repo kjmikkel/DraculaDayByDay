@@ -1,4 +1,4 @@
-package com.jensen.draculadaybyday.Presentation;
+package com.jensen.draculadaybyday.presentation;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;

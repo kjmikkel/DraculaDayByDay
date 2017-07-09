@@ -1,4 +1,4 @@
-package com.jensen.draculadaybyday.Entries;
+package com.jensen.draculadaybyday.entries;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,13 +9,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.jensen.draculadaybyday.Entry.Entry;
-import com.jensen.draculadaybyday.Presentation.EntryView;
-import com.jensen.draculadaybyday.Presentation.FontEnum;
-import com.jensen.draculadaybyday.Presentation.InitialEnum;
+import com.jensen.draculadaybyday.entry.Entry;
+import com.jensen.draculadaybyday.presentation.EntryView;
+import com.jensen.draculadaybyday.presentation.FontEnum;
+import com.jensen.draculadaybyday.presentation.InitialEnum;
 import com.jensen.draculadaybyday.R;
-import com.jensen.draculadaybyday.SQLite.FragmentEntryDatabaseHandler;
-import com.jensen.draculadaybyday.Preferences.FontSizePickerPreference;
+import com.jensen.draculadaybyday.sql_lite.FragmentEntryDatabaseHandler;
+import com.jensen.draculadaybyday.preferences.FontSizePickerPreference;
 
 /**
  * A fragment representing a single Entry detail screen.
@@ -33,7 +33,7 @@ public class EntryFragment extends Fragment {
     private Entry mEntry;
     private EntryView mEntryView;
 
-    private static FragmentEntryDatabaseHandler dbHandler = FragmentEntryDatabaseHandler.getInstance();
+    private static final FragmentEntryDatabaseHandler dbHandler = FragmentEntryDatabaseHandler.getInstance();
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -53,6 +53,7 @@ public class EntryFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // final View rootView = inflater.inflate(R.layout.entry_detail, container);
         final View rootView = inflater.inflate(R.layout.entry_detail, null);
         mEntryView = (EntryView) rootView.findViewById(R.id.entry_view_detail);
 

@@ -1,4 +1,4 @@
-package com.jensen.draculadaybyday.Entries;
+package com.jensen.draculadaybyday.entries;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,11 +17,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.jensen.draculadaybyday.Presentation.AboutPage;
-import com.jensen.draculadaybyday.Entry.Entry;
+import com.jensen.draculadaybyday.presentation.AboutPage;
+import com.jensen.draculadaybyday.entry.Entry;
 import com.jensen.draculadaybyday.R;
-import com.jensen.draculadaybyday.SQLite.FragmentEntryDatabaseHandler;
-import com.jensen.draculadaybyday.Preferences.DraculaPreferences;
+import com.jensen.draculadaybyday.sql_lite.FragmentEntryDatabaseHandler;
+import com.jensen.draculadaybyday.preferences.DraculaPreferences;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -30,12 +30,12 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import static com.jensen.draculadaybyday.Entries.EntryType.DIARY_ENTRY;
-import static com.jensen.draculadaybyday.Entries.EntryType.LETTER;
-import static com.jensen.draculadaybyday.Entries.EntryType.NEWSPAPER;
-import static com.jensen.draculadaybyday.Entries.EntryType.NOTE;
-import static com.jensen.draculadaybyday.Entries.EntryType.PHONOGRAPH;
-import static com.jensen.draculadaybyday.Entries.EntryType.TELEGRAM;
+import static com.jensen.draculadaybyday.entries.EntryType.DIARY_ENTRY;
+import static com.jensen.draculadaybyday.entries.EntryType.LETTER;
+import static com.jensen.draculadaybyday.entries.EntryType.NEWSPAPER;
+import static com.jensen.draculadaybyday.entries.EntryType.NOTE;
+import static com.jensen.draculadaybyday.entries.EntryType.PHONOGRAPH;
+import static com.jensen.draculadaybyday.entries.EntryType.TELEGRAM;
 
 /**
  * An activity representing a list of Entries. This activity

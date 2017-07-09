@@ -40,7 +40,7 @@
         android:title="@string/pref_title_initial_type" />
 
     <!-- The size of the font -->
-    <com.jensen.draculadaybyday.Preferences.FontSizePickerPreference
+    <com.jensen.draculadaybyday.preferences.FontSizePickerPreference
         android:defaultValue="@dimen/pref_default_fontsize"
         android:key="@string/pref_key_fontsize"
         android:summary="@string/pref_summary_fontsize"
@@ -49,7 +49,7 @@
         custom:min="@integer/pref_fontsize_min" />
 
     <!-- An example of how the text is going to look like -->
-    <com.jensen.draculadaybyday.Preferences.EntryViewPreference
+    <com.jensen.draculadaybyday.preferences.EntryViewPreference
         android:name="@string/pref_name_font_example"
         android:key="@string/pref_key_font_example"
         android:layout="@layout/entry_view_preference"

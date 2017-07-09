@@ -1,4 +1,4 @@
-package com.jensen.draculadaybyday.Presentation;
+package com.jensen.draculadaybyday.presentation;
 
 import android.graphics.Paint;
 import android.graphics.Typeface;

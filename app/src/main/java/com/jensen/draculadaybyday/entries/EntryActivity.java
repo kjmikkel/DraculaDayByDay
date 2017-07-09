@@ -1,4 +1,4 @@
-package com.jensen.draculadaybyday.Entries;
+package com.jensen.draculadaybyday.entries;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,11 +13,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import com.jensen.draculadaybyday.Presentation.AboutPage;
-import com.jensen.draculadaybyday.Entry.EntryCollectionPagerAdapter;
+import com.jensen.draculadaybyday.presentation.AboutPage;
+import com.jensen.draculadaybyday.entry.EntryCollectionPagerAdapter;
 import com.jensen.draculadaybyday.R;
-import com.jensen.draculadaybyday.SQLite.FragmentEntryDatabaseHandler;
-import com.jensen.draculadaybyday.Preferences.DraculaPreferences;
+import com.jensen.draculadaybyday.sql_lite.FragmentEntryDatabaseHandler;
+import com.jensen.draculadaybyday.preferences.DraculaPreferences;
 
 /**
  * An activity representing a single Entry detail screen. This

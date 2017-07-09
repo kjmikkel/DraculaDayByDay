@@ -1,4 +1,4 @@
-package com.jensen.draculadaybyday.Preferences;
+package com.jensen.draculadaybyday.preferences;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -39,7 +39,7 @@ public class DraculaPreferences extends AppCompatPreferenceActivity {
      * A preference value change listener that updates the preference's summary
      * to reflect its new value.
      */
-    private static Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener = new Preference.OnPreferenceChangeListener() {
+    private static final Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener = new Preference.OnPreferenceChangeListener() {
         @Override
         public boolean onPreferenceChange(Preference preference, Object value) {
             String stringValue = value.toString();
@@ -219,7 +219,7 @@ public class DraculaPreferences extends AppCompatPreferenceActivity {
 
         // The font key
         private static String fontKey = null;
-        private static Preference.OnPreferenceChangeListener sPreferenceUpdate = new Preference.OnPreferenceChangeListener() {
+        private static final Preference.OnPreferenceChangeListener sPreferenceUpdate = new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object value) {
                 fontExample.updateToPreferences();

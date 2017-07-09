@@ -12,7 +12,7 @@
         android:title="@string/pref_how_to_experience_title" />
 
     <!-- Reset the book experience -->
-    <com.jensen.draculadaybyday.Preferences.YesNoPreference
+    <com.jensen.draculadaybyday.preferences.YesNoPreference
         android:dialogMessage="@string/pref_reset_book_dialog_message"
         android:key="@string/pref_reset_book_key"
         android:summary="@string/pref_reset_book_summary"

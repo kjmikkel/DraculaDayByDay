@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.jensen.draculadaybyday.Presentation.AboutPage">
+    tools:context="com.jensen.draculadaybyday.presentation.AboutPage">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -36,7 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                tools:context="com.jensen.draculadaybyday.Presentation.AboutPage"
+                tools:context="com.jensen.draculadaybyday.presentation.AboutPage"
                 tools:showIn="@layout/activity_about">
 
             <!-- About the app -->

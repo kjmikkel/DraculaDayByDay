@@ -1,9 +1,9 @@
-package com.jensen.draculadaybyday.Primitives;
+package com.jensen.draculadaybyday.primitives;
 
 public class Tuple<T, S> {
 
-    public T fst;
-    public S snd;
+    public final T fst;
+    public final S snd;
 
     public Tuple(T fst, S snd) {
         this.fst = fst;

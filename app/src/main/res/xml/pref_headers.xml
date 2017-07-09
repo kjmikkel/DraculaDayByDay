@@ -3,17 +3,17 @@
     <!-- These preferences headers are only used on tablets. -->
 
     <header
-        android:fragment="com.jensen.draculadaybyday.Preferences.DraculaPreferences$GeneralPreferenceFragment"
+        android:fragment="com.jensen.draculadaybyday.preferences.DraculaPreferences$GeneralPreferenceFragment"
         android:icon="@drawable/ic_general_black_24dp"
         android:title="@string/pref_header_general" />
 
     <header
-        android:fragment="com.jensen.draculadaybyday.Preferences.DraculaPreferences$UserInterfacePreferenceFragment"
+        android:fragment="com.jensen.draculadaybyday.preferences.DraculaPreferences$UserInterfacePreferenceFragment"
         android:icon="@drawable/ic_user_interface_black_24dp"
         android:title="@string/pref_header_user_interface" />
 
     <header
-        android:fragment="com.jensen.draculadaybyday.Preferences.DraculaPreferences$NotificationPreferenceFragment"
+        android:fragment="com.jensen.draculadaybyday.preferences.DraculaPreferences$NotificationPreferenceFragment"
         android:icon="@drawable/ic_notifications_black_24dp"
         android:title="@string/pref_header_notifications" />
 </preference-headers>

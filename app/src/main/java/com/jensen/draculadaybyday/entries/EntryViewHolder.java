@@ -1,4 +1,4 @@
-package com.jensen.draculadaybyday.Entries;
+package com.jensen.draculadaybyday.entries;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.jensen.draculadaybyday.Entry.Entry;
+import com.jensen.draculadaybyday.entry.Entry;
 import com.jensen.draculadaybyday.R;
 
 public class EntryViewHolder extends RecyclerView.ViewHolder {

@@ -8,7 +8,7 @@
     android:padding="16dp"
     android:textIsSelectable="true"
     android:nestedScrollingEnabled="true"
-    tools:context="com.jensen.draculadaybyday.Entries.EntryFragment">
+    tools:context="com.jensen.draculadaybyday.entries.EntryFragment">
 
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/scroll_container_"
@@ -18,7 +18,7 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:context="mio.kon.yyb.nestedscrollviewbug.ScrollingActivity">
 
-    <com.jensen.draculadaybyday.Presentation.EntryView
+    <com.jensen.draculadaybyday.presentation.EntryView
         android:id="@+id/entry_view_detail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

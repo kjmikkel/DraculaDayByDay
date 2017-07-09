@@ -28,7 +28,7 @@
         android:title="@string/pref_title_vibrate" />
 
     <!-- When the user is going to be notified of new unlocked entries -->
-    <com.jensen.draculadaybyday.Preferences.NotificationTimePreference
+    <com.jensen.draculadaybyday.preferences.NotificationTimePreference
         android:defaultValue="@array/pref_default_notification_time"
         android:dependency="@string/pref_key_new_message_notifications"
         android:key="@string/pref_key_notification"

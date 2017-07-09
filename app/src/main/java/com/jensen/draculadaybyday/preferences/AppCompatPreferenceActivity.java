@@ -1,4 +1,4 @@
-package com.jensen.draculadaybyday.Preferences;
+package com.jensen.draculadaybyday.preferences;
 
 import android.content.res.Configuration;
 import android.os.Bundle;

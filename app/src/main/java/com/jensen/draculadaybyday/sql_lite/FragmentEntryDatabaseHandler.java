@@ -1,4 +1,4 @@
-package com.jensen.draculadaybyday.SQLite;
+package com.jensen.draculadaybyday.sql_lite;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.util.Log;
 
-import com.jensen.draculadaybyday.Entry.Entry;
+import com.jensen.draculadaybyday.entry.Entry;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
