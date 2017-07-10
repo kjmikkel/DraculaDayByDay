@@ -158,5 +158,4 @@
     </string>
     <string name="about_open_source_libraries_label">Open Source libraries used:</string>
     <string name="about_open_source_licences_label">Licenses used:</string>
-    <string name="about_error">Error occurred while opening the credits file</string>
 </resources>
