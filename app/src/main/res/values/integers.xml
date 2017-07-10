@@ -1,17 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <!-- Font size -->
     <integer name="pref_fontsize_min">5</integer>
     <integer name="pref_fontsize_max">100</integer>
-
-    <!-- Notification -->
-    <integer name="pref_notification_fromHour">19</integer>
-    <integer name="pref_notification_fromMinute">30</integer>
-
-    <integer name="pref_notification_toHour">21</integer>
-    <integer name="pref_notification_toMinute">30</integer>
-
-    <integer name="pref_notification_setHour">20</integer>
-    <integer name="pref_notification_setMinute">00</integer>
 </resources>
