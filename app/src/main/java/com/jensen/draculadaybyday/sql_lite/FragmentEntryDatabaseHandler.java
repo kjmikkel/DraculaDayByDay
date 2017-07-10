@@ -14,6 +14,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 
 public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLiteOpenHelper {
 
@@ -27,6 +28,9 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
     private static final String TYPE = "type";
     private static final String UNLOCKED = "unlocked";
     private static final String UNREAD = "unread";
+
+    // Time
+    private static final String TIME_FORMAT = "yyyy-MM-dd";
 
     // All Static variables
     // Database Version
@@ -117,7 +121,7 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
                 values.put(PERSON, entry.getPerson());
                 values.put(TEXT, entry.getTextEntry());
 
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat dateFormat = new SimpleDateFormat(TIME_FORMAT, Locale.getDefault());
                 values.put(DATE, dateFormat.format(entry.getDate().getTime()));
                 values.put(TYPE, entry.getType().description);
                 values.put(UNLOCKED, entry.getUnlocked());
@@ -303,7 +307,7 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
     }
 
     private String formatDate(Calendar date) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat dateFormat = new SimpleDateFormat(TIME_FORMAT, Locale.getDefault());
         return dateFormat.format(date.getTime());
     }
 
@@ -334,7 +338,7 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
     }
 
     public List<Entry> getDiaryEntriesBeforeDate(Calendar date) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat dateFormat = new SimpleDateFormat(TIME_FORMAT, Locale.getDefault());
         String dateValue = dateFormat.format(date.getTime());
 
         return getCheapEntryFromDatabase("1=1", null, null, DATE + ", " + ENTRY_SEQ_NUM);

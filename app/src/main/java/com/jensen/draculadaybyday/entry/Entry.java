@@ -119,8 +119,7 @@ public class Entry {
     }
 
     public String getDateString() {
-        SimpleDateFormat format = new SimpleDateFormat();
-        format.applyPattern("MMMM yyyy");
+        SimpleDateFormat format = new SimpleDateFormat("MMMM yyyy", Locale.getDefault());
         String noDateStr = format.format(date.getTime());
 
         int val = date.get(Calendar.DAY_OF_MONTH);
