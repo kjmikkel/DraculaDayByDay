@@ -16,6 +16,11 @@
     master/detail flow.
     
     -->
+    <android.support.v4.widget.SwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/entry_list_swipe"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -28,5 +33,7 @@
         app:layoutManager="LinearLayoutManager"
         tools:context="com.jensen.draculadaybyday.entries.EntryListActivity"
         tools:listitem="@layout/entry_list_content" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </LinearLayout>

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -65,6 +66,10 @@ public class EntryListActivity extends AppCompatActivity {
     private static final String MITCHELL_AND_SONS = "Mitchell, Sons and Candy to Lord Godalming";
 
     private static FragmentEntryDatabaseHandler mFragmentEntryHandler;
+
+    private SwipeRefreshLayout mSwipeContainer;
+    private SimpleItemRecyclerViewAdapter mSimpleItemAdapter;
+
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
      * device.
@@ -118,6 +123,7 @@ public class EntryListActivity extends AppCompatActivity {
         try {
             mFragmentEntryHandler.open();
 
+            //region Add entries to the database
             // Chapter 1
             addEntryToDatabase(1, JONATHAN_HARKER, R.raw.may_03_jonathan_harker, Calendar.MAY, 3, DIARY_ENTRY);
             addEntryToDatabase(1, JONATHAN_HARKER, R.raw.may_04_jonathan_harker, Calendar.MAY, 4, DIARY_ENTRY);
@@ -361,15 +367,28 @@ public class EntryListActivity extends AppCompatActivity {
 
             // Epilogue
             addEntryToDatabase(27, JONATHAN_HARKER, R.raw.final_note_jonathan_harker, Calendar.NOVEMBER, 6, DIARY_ENTRY);
+            //endregion
+
         } catch (Exception e) {
             Log.d("Database", e.getMessage());
         } finally {
             mFragmentEntryHandler.close();
         }
 
-        View recyclerView = findViewById(R.id.entry_list);
+        final RecyclerView recyclerView = (RecyclerView)findViewById(R.id.entry_list);
         assert recyclerView != null;
-        setupRecyclerView((RecyclerView) recyclerView);
+        updateRecyclerView(recyclerView, false);
+
+        mSwipeContainer = (SwipeRefreshLayout) findViewById(R.id.entry_list_swipe);
+        mSwipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                updateRecyclerView(recyclerView, true);
+            }
+        });
+
+        // Configure the refreshing colors
+        mSwipeContainer.setColorSchemeResources(android.R.color.holo_red_light, android.R.color.holo_red_dark, android.R.color.black);
 
         if (findViewById(R.id.entry_container) != null) {
             // The detail container view will be present only in the
@@ -389,7 +408,7 @@ public class EntryListActivity extends AppCompatActivity {
         }
     }
 
-    private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
+    private void updateRecyclerView(@NonNull RecyclerView recyclerView, boolean update) {
         Calendar currentDate = Calendar.getInstance();
 
         int month = currentDate.get(Calendar.MONTH) + 1;
@@ -397,7 +416,17 @@ public class EntryListActivity extends AppCompatActivity {
 
         Calendar calendar = GregorianCalendar.getInstance();
         calendar.set(1897, month, dateOfMonth);
-        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(mFragmentEntryHandler.getDiaryEntriesBeforeDate(calendar)));
+
+        List<Entry> entries = mFragmentEntryHandler.getDiaryEntriesBeforeDate(calendar);
+
+        if (update) {
+            mSimpleItemAdapter.clear();
+            mSimpleItemAdapter.addAll(entries);
+            mSwipeContainer.setRefreshing(false);
+        } else {
+            mSimpleItemAdapter = new SimpleItemRecyclerViewAdapter(entries);
+            recyclerView.setAdapter(mSimpleItemAdapter);
+        }
     }
 
     private String getStringFromId(int id) {
@@ -468,6 +497,18 @@ public class EntryListActivity extends AppCompatActivity {
         @Override
         public int getItemCount() {
             return mValues.size();
+        }
+
+        // Clean all elements of the recycler
+        public void clear() {
+            mValues.clear();;
+            notifyDataSetChanged();;
+        }
+
+        // Add a list of items
+        public void addAll(List<Entry> list) {
+            mValues.addAll(list);
+            notifyDataSetChanged();
         }
     }
 }
