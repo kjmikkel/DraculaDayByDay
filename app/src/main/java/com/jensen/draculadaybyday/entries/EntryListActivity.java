@@ -501,8 +501,8 @@ public class EntryListActivity extends AppCompatActivity {
 
         // Clean all elements of the recycler
         public void clear() {
-            mValues.clear();;
-            notifyDataSetChanged();;
+            mValues.clear();
+            notifyDataSetChanged();
         }
 
         // Add a list of items
