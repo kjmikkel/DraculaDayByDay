@@ -104,21 +104,6 @@ public class EntryListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Notifications
-        /*
-        //build notification
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.ic_fangs)
-                .setContentTitle("Simple notification")
-                .setContentText("This is test of simple notification.");
-
-        // Gets an instance of the NotificationManager service
-        NotificationManager notificationManager =(NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-        // To post your notification to the notification bar
-        notificationManager.notify(0 , mBuilder.build());
-        */
-
         setDefaultPreferences();
 
         setContentView(R.layout.activity_entry_list);
@@ -385,9 +370,6 @@ public class EntryListActivity extends AppCompatActivity {
         View recyclerView = findViewById(R.id.entry_list);
         assert recyclerView != null;
         setupRecyclerView((RecyclerView) recyclerView);
-
-        Context context = getApplicationContext();
-        //  JobScheduler jobScheduler =  context.getSystemService(context.JOB_SCHEDULER_SERVICE);
 
         if (findViewById(R.id.entry_container) != null) {
             // The detail container view will be present only in the
