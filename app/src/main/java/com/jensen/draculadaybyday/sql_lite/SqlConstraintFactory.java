@@ -1,22 +1,17 @@
 package com.jensen.draculadaybyday.sql_lite;
 
 import android.text.TextUtils;
-
-import com.jensen.draculadaybyday.entries.Person;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
-import static android.text.TextUtils.join;
-
 public class SqlConstraintFactory {
     // The list that will be joined
     private List<String> constraints;
 
-    // Time
+    // Time format
     private static final String TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     public SqlConstraintFactory() {
@@ -33,13 +28,13 @@ public class SqlConstraintFactory {
     public void beforeDate(Calendar date) {
         SimpleDateFormat dateFormat = new SimpleDateFormat(TIME_FORMAT, Locale.getDefault());
         String beforeDate = dateFormat.format(date.getTime());
-        constraints.add(String.format(Locale.getDefault(), "Datetime('%s') <= %s)", beforeDate, FragmentEntryDatabaseHandler.DATE));
+        constraints.add(String.format(Locale.getDefault(), "%s <= Datetime('%s')", FragmentEntryDatabaseHandler.DATE, beforeDate));
     }
 
     public void afterDate(Calendar date) {
         SimpleDateFormat dateFormat = new SimpleDateFormat(TIME_FORMAT, Locale.getDefault());
         String afterDate = dateFormat.format(date.getTime());
-        constraints.add(String.format(Locale.getDefault(), "%s <= Datetime('%s')", FragmentEntryDatabaseHandler.DATE, afterDate));
+        constraints.add(String.format(Locale.getDefault(), "Datetime('%s') <= %s)", afterDate, FragmentEntryDatabaseHandler.DATE));
     }
 
     public void betweenDates(Calendar beforeDateCalendar, Calendar afterDateCalendar) {

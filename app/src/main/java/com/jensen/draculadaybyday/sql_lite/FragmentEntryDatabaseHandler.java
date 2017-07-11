@@ -20,7 +20,6 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
 
     // Contacts Table Columns names
     public static final String ENTRY_SEQ_NUM = "entrySeqNum";
-    protected static final String ENTRY_DATE_NUM = "entryDateNum";
     protected static final String CHAPTER = "chapter";
     protected static final String PERSON = "person";
     protected static final String TEXT = "text";
@@ -38,9 +37,9 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
     // Database Name
     private static final String DATABASE_NAME = "fragmentEntryManager";
     // Contacts table name
-    private static final String TABLE_ENTRY = "mEntry";
-    private static final String[] allEntries = new String[]{ENTRY_SEQ_NUM, ENTRY_DATE_NUM, CHAPTER, PERSON, TEXT, DATE, TYPE, UNLOCKED, UNREAD};
-    private static final String[] allEntriesButText = new String[]{ENTRY_SEQ_NUM, ENTRY_DATE_NUM, CHAPTER, PERSON, DATE, TYPE, UNLOCKED, UNREAD};
+    private static final String TABLE_ENTRY = "Entry";
+    private static final String[] allEntries = new String[]{ENTRY_SEQ_NUM, CHAPTER, PERSON, TEXT, DATE, TYPE, UNLOCKED, UNREAD};
+    private static final String[] allEntriesButText = new String[]{ENTRY_SEQ_NUM, CHAPTER, PERSON, DATE, TYPE, UNLOCKED, UNREAD};
     // The instance of the class
     private static FragmentEntryDatabaseHandler databaseHandler = null;
     // The database
@@ -70,7 +69,6 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
     public void onCreate(SQLiteDatabase db) {
         String CREATE_ENTRY_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_ENTRY + "("
                 + ENTRY_SEQ_NUM + " INTEGER PRIMARY KEY,"
-                + ENTRY_DATE_NUM + " INTEGER,"
                 + CHAPTER + " INTEGER,"
                 + PERSON + " TEXT,"
                 + TEXT + " TEXT,"
@@ -116,7 +114,6 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
 
                 // auto-generate the ENTRY_SEQ_NUM (primary key)
 
-                values.put(ENTRY_DATE_NUM, entry.getDateEntryNum());
                 values.put(CHAPTER, entry.getChapter());
                 values.put(PERSON, entry.getPerson().toString());
                 values.put(TEXT, entry.getTextEntry());
@@ -166,7 +163,7 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
             this.open();
         }
 
-        Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM " + TABLE_ENTRY + " WHERE " + where, null);
+        Cursor cursor = db.rawQuery(String.format("SELECT COUNT(*) FROM %s WHERE %s", TABLE_ENTRY, where), null);
         cursor.moveToFirst();
         int count = cursor.getInt(0);
         cursor.close();
@@ -198,7 +195,6 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
     private Entry getEntryCompleteEntry(Cursor cursor) {
         return new Entry(
                 getShort(cursor, ENTRY_SEQ_NUM),
-                getShort(cursor, ENTRY_DATE_NUM),
                 getShort(cursor, CHAPTER),
                 getString(cursor, PERSON),
                 getString(cursor, TEXT),
@@ -212,7 +208,6 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
     private Entry getCheapDiaryEntry(Cursor cursor) {
         return new Entry(
                 getShort(cursor, ENTRY_SEQ_NUM),
-                getShort(cursor, ENTRY_DATE_NUM),
                 getShort(cursor, CHAPTER),
                 getString(cursor, PERSON),
                 null,
@@ -258,7 +253,7 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
         return entries;
     }
 
-    private LinkedList<Entry> getCheapEntryFromDatabase(String query, String[] value, String groupBy, String orderBy) {
+    private LinkedList<Entry> getCheapEntryFromDatabase(String query, String[] valueOfQueries, String orderBy) {
         if (!db.isOpen()) {
             this.open();
         }
@@ -267,8 +262,8 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
                 TABLE_ENTRY,
                 allEntriesButText,
                 query,
-                value,
-                groupBy,
+                valueOfQueries,
+                null,
                 null,
                 orderBy);
 
@@ -324,7 +319,7 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
 
     // Get a specific mEntry from a specific person
     public Entry getSpecificDiaryEntryByPerson(String person, int entryPersonNum, Calendar date) {
-        return getSingleEntry(PERSON + "=? AND " + ENTRY_DATE_NUM + "=? AND " + DATE + "<=?", new String[]{person, String.valueOf(entryPersonNum), formatDate(date)}, null, null);
+        return getSingleEntry(PERSON + "=? AND " + DATE + "<=?", new String[]{person, String.valueOf(entryPersonNum), formatDate(date)}, null, null);
     }
 
     // Get a specific mEntry from a specific Chapter
@@ -342,24 +337,24 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
         date.set(Calendar.YEAR, 1893);
 
         SqlConstraintFactory constraintFactory = new SqlConstraintFactory();
-        // constraintFactory.afterDate(date);
+
+        SqlSortFactory sortFactory = new SqlSortFactory();
+        sortFactory.dateOrder();
+        sortFactory.bookOrder();
+
+        // constraintFactory.beforeDate(date);
         // return  getCheapEntryFromDatabase(constraintFactory.getConstraint(), null, null, DATE + ", " + ENTRY_SEQ_NUM);
-        return getCheapEntryFromDatabase(constraintFactory.getConstraint(), null, null, DATE + ", " + ENTRY_SEQ_NUM);
+        return getCheapEntryFromDatabase(constraintFactory.getConstraint(), null, sortFactory.getSortOrder());
     }
 
     public int getNumUnlcokedDiaries(Calendar date) {
-        return entryCount("1=1");
-    }
+        // Set the correct year
+        date.set(Calendar.YEAR, 1893);
 
-    public List<Entry> getDiaryEntryByChapter(int chapter) {
-        return getCheapEntryFromDatabase(CHAPTER + " = ?", new String[]{String.valueOf(chapter)}, DATE, ENTRY_SEQ_NUM);
-    }
+        // Make the constraints
+        SqlConstraintFactory constraintFactory = new SqlConstraintFactory();
+        constraintFactory.beforeDate(date);
 
-    public List<Entry> getDiaryEntryByPerson(String person) {
-        return getCheapEntryFromDatabase(PERSON + " = ?", new String[]{person}, DATE, ENTRY_DATE_NUM);
-    }
-
-    public List<Entry> getDiaryEntryByType(String type) {
-        return getCheapEntryFromDatabase(TYPE + "= ?", new String[]{type}, DATE, ENTRY_SEQ_NUM);
+        return entryCount(constraintFactory.getConstraint());
     }
 }

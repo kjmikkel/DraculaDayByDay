@@ -11,9 +11,6 @@ public class Entry {
     // The number the mEntry is in the sequence
     private final short storyEntryNum;
 
-    // The number the mEntry is in the sequence for that person
-    private final short dateEntryNum;
-
     // The chapter
     private final short chapter;
 
@@ -35,11 +32,9 @@ public class Entry {
     // Whether or not the mEntry is unread
     private final boolean unread;
 
-    private Entry(int storyEntryNum, int dateEntryNum, int chapter, Person person, String diaryText, Calendar date, EntryType type, boolean unlocked, boolean unread) {
+    private Entry(int storyEntryNum, int chapter, Person person, String diaryText, Calendar date, EntryType type, boolean unlocked, boolean unread) {
 
         this.storyEntryNum = (short) storyEntryNum;
-
-        this.dateEntryNum = (short) dateEntryNum;
 
         this.chapter = (short) chapter;
 
@@ -57,11 +52,11 @@ public class Entry {
     }
 
     public Entry(int chapter, Person person, String diaryText, Calendar date, EntryType type, boolean unlocked, boolean unread) {
-        this(-1, -1, chapter, person, diaryText, date, type, unlocked, unread);
+        this(-1, chapter, person, diaryText, date, type, unlocked, unread);
     }
 
-    public Entry(int storyEntryNum, int dateEntryNum, int chapter, String personName, String diaryText, Calendar date, String type, boolean unlocked, boolean unread) {
-        this(storyEntryNum, dateEntryNum, chapter, getPerson(personName), diaryText, date, getEntryType(type), unlocked, unread);
+    public Entry(int storyEntryNum, int chapter, String personName, String diaryText, Calendar date, String type, boolean unlocked, boolean unread) {
+        this(storyEntryNum, chapter, getPerson(personName), diaryText, date, getEntryType(type), unlocked, unread);
     }
 
     private static EntryType getEntryType(String type) {
@@ -88,10 +83,6 @@ public class Entry {
 
     public short getStoryEntryNum() {
         return storyEntryNum;
-    }
-
-    public short getDateEntryNum() {
-        return dateEntryNum;
     }
 
     public short getChapter() {
