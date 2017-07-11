@@ -375,7 +375,7 @@ public class EntryListActivity extends AppCompatActivity {
             mFragmentEntryHandler.close();
         }
 
-        final RecyclerView recyclerView = (RecyclerView)findViewById(R.id.entry_list);
+        final RecyclerView recyclerView = (RecyclerView)findViewById(R.id.entry_recycle_view);
         assert recyclerView != null;
         updateRecyclerView(recyclerView, false);
 

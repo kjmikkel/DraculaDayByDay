@@ -9,7 +9,7 @@
 <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/entry_list"
+    android:id="@+id/entry_recycle_view"
     android:name="com.jensen.draculadaybyday.EntryListFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
