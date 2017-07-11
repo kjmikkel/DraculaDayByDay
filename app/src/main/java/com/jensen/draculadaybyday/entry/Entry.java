@@ -1,6 +1,8 @@
 package com.jensen.draculadaybyday.entry;
 
 import com.jensen.draculadaybyday.entries.EntryType;
+import com.jensen.draculadaybyday.entries.Person;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -16,7 +18,7 @@ public class Entry {
     private final short chapter;
 
     // The person who has written the mEntry
-    private final String person;
+    private final Person person;
 
     // The diary mEntry itself
     private final String textEntry;
@@ -33,7 +35,7 @@ public class Entry {
     // Whether or not the mEntry is unread
     private final boolean unread;
 
-    private Entry(int storyEntryNum, int dateEntryNum, int chapter, String personName, String diaryText, Calendar date, EntryType type, boolean unlocked, boolean unread) {
+    private Entry(int storyEntryNum, int dateEntryNum, int chapter, Person person, String diaryText, Calendar date, EntryType type, boolean unlocked, boolean unread) {
 
         this.storyEntryNum = (short) storyEntryNum;
 
@@ -41,7 +43,7 @@ public class Entry {
 
         this.chapter = (short) chapter;
 
-        this.person = personName;
+        this.person = person;
 
         this.textEntry = diaryText;
 
@@ -54,12 +56,12 @@ public class Entry {
         this.unread = unread;
     }
 
-    public Entry(int chapter, String personName, String diaryText, Calendar date, EntryType type, boolean unlocked, boolean unread) {
-        this(-1, -1, chapter, personName, diaryText, date, type, unlocked, unread);
+    public Entry(int chapter, Person person, String diaryText, Calendar date, EntryType type, boolean unlocked, boolean unread) {
+        this(-1, -1, chapter, person, diaryText, date, type, unlocked, unread);
     }
 
     public Entry(int storyEntryNum, int dateEntryNum, int chapter, String personName, String diaryText, Calendar date, String type, boolean unlocked, boolean unread) {
-        this(storyEntryNum, dateEntryNum, chapter, personName, diaryText, date, getEntryType(type), unlocked, unread);
+        this(storyEntryNum, dateEntryNum, chapter, getPerson(personName), diaryText, date, getEntryType(type), unlocked, unread);
     }
 
     private static EntryType getEntryType(String type) {
@@ -67,6 +69,17 @@ public class Entry {
         for(EntryType et : EntryType.values()) {
             if (et.description.equals(type)) {
                 out = et;
+                break;
+            }
+        }
+        return out;
+    }
+
+    private static Person getPerson(String person) {
+        Person out = Person.JONATHAN_HARKER;
+        for(Person p : Person.values()) {
+            if (p.name().equals(p)) {
+                out = p;
                 break;
             }
         }
@@ -86,7 +99,7 @@ public class Entry {
     }
 
     public String getPerson() {
-        return person;
+        return person.toString();
     }
 
     public String getTextEntry() {

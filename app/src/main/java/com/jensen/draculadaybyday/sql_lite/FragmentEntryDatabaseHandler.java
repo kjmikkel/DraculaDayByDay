@@ -20,17 +20,17 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
 
     // Contacts Table Columns names
     public static final String ENTRY_SEQ_NUM = "entrySeqNum";
-    private static final String ENTRY_DATE_NUM = "entryDateNum";
-    private static final String CHAPTER = "chapter";
-    private static final String PERSON = "person";
-    private static final String TEXT = "text";
-    private static final String DATE = "date";
-    private static final String TYPE = "type";
-    private static final String UNLOCKED = "unlocked";
-    private static final String UNREAD = "unread";
+    protected static final String ENTRY_DATE_NUM = "entryDateNum";
+    protected static final String CHAPTER = "chapter";
+    protected static final String PERSON = "person";
+    protected static final String TEXT = "text";
+    protected static final String DATE = "date";
+    protected static final String TYPE = "type";
+    protected static final String UNLOCKED = "unlocked";
+    protected static final String UNREAD = "unread";
 
     // Time
-    private static final String TIME_FORMAT = "yyyy-MM-dd";
+    private static final String TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     // All Static variables
     // Database Version
@@ -118,10 +118,11 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
 
                 values.put(ENTRY_DATE_NUM, entry.getDateEntryNum());
                 values.put(CHAPTER, entry.getChapter());
-                values.put(PERSON, entry.getPerson());
+                values.put(PERSON, entry.getPerson().toString());
                 values.put(TEXT, entry.getTextEntry());
 
                 SimpleDateFormat dateFormat = new SimpleDateFormat(TIME_FORMAT, Locale.getDefault());
+
                 values.put(DATE, dateFormat.format(entry.getDate().getTime()));
                 values.put(TYPE, entry.getType().description);
                 values.put(UNLOCKED, entry.getUnlocked());
@@ -338,10 +339,12 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
     }
 
     public List<Entry> getDiaryEntriesBeforeDate(Calendar date) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat(TIME_FORMAT, Locale.getDefault());
-        String dateValue = dateFormat.format(date.getTime());
+        date.set(Calendar.YEAR, 1893);
 
-        return getCheapEntryFromDatabase("1=1", null, null, DATE + ", " + ENTRY_SEQ_NUM);
+        SqlConstraintFactory constraintFactory = new SqlConstraintFactory();
+        // constraintFactory.afterDate(date);
+        // return  getCheapEntryFromDatabase(constraintFactory.getConstraint(), null, null, DATE + ", " + ENTRY_SEQ_NUM);
+        return getCheapEntryFromDatabase(constraintFactory.getConstraint(), null, null, DATE + ", " + ENTRY_SEQ_NUM);
     }
 
     public int getNumUnlcokedDiaries(Calendar date) {

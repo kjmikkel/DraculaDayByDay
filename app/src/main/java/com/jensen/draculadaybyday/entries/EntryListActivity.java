@@ -31,12 +31,30 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+// Type
 import static com.jensen.draculadaybyday.entries.EntryType.DIARY_ENTRY;
 import static com.jensen.draculadaybyday.entries.EntryType.LETTER;
 import static com.jensen.draculadaybyday.entries.EntryType.NEWSPAPER;
 import static com.jensen.draculadaybyday.entries.EntryType.NOTE;
 import static com.jensen.draculadaybyday.entries.EntryType.PHONOGRAPH;
 import static com.jensen.draculadaybyday.entries.EntryType.TELEGRAM;
+
+// Dramatis personæ
+import static com.jensen.draculadaybyday.entries.Person.ABRAHAM_VAN_HELSING;
+import static com.jensen.draculadaybyday.entries.Person.ARTHUR_HOLMWOOD;
+import static com.jensen.draculadaybyday.entries.Person.DR_SEWARD;
+import static com.jensen.draculadaybyday.entries.Person.JONATHAN_HARKER;
+import static com.jensen.draculadaybyday.entries.Person.LUCY_WESTENRA;
+import static com.jensen.draculadaybyday.entries.Person.MESSRS;
+import static com.jensen.draculadaybyday.entries.Person.MINA_HARKER;
+import static com.jensen.draculadaybyday.entries.Person.MINA_MURRAY;
+import static com.jensen.draculadaybyday.entries.Person.MITCHELL_AND_SONS;
+import static com.jensen.draculadaybyday.entries.Person.PALL_MALL_GAZETTE;
+import static com.jensen.draculadaybyday.entries.Person.PATRICK_HENNESSEY;
+import static com.jensen.draculadaybyday.entries.Person.QUINCEY_MORRIS;
+import static com.jensen.draculadaybyday.entries.Person.SAMUEL_F_BILLINGTON;
+import static com.jensen.draculadaybyday.entries.Person.SISTER_AGATHA;
+import static com.jensen.draculadaybyday.entries.Person.WESTMINISTER_GAZETTE;
 
 /**
  * An activity representing a list of Entries. This activity
@@ -47,23 +65,6 @@ import static com.jensen.draculadaybyday.entries.EntryType.TELEGRAM;
  * item details side-by-side using two vertical panes.
  */
 public class EntryListActivity extends AppCompatActivity {
-
-    // Dramatis personæ
-    private static final String JONATHAN_HARKER = "Jonathan Harker";
-    private static final String MINA_MURRAY = "Mina Murray";
-    private static final String MINA_HARKER = "Mina Harker";
-    private static final String LUCY_WESTENRA = "Lucy Westenra";
-    private static final String QUINCEY_MORRIS = "Quiencey Morris";
-    private static final String ARTHUR_HOLMWOOD = "Arthur Holmwood";
-    private static final String DR_SEWARD = "Dr. Seward";
-    private static final String SAMUEL_F_BILLINGTON = "Samuel F. Billington & Son";
-    private static final String MESSRS = "Messrs. Carter, Paterson & Co.";
-    private static final String SISTER_AGATHA = "Sister Agatha";
-    private static final String ABRAHAM_VAN_HELSING = "Abraham Van Helsing";
-    private static final String PALL_MALL_GAZETTE = "The Pall Mall Gazette";
-    private static final String PATRICK_HENNESSEY = "Patrick Hennessey";
-    private static final String WESTMINISTER_GAZETTE = "The Westminster Gazette";
-    private static final String MITCHELL_AND_SONS = "Mitchell, Sons and Candy to Lord Godalming";
 
     private static FragmentEntryDatabaseHandler mFragmentEntryHandler;
 
@@ -399,23 +400,23 @@ public class EntryListActivity extends AppCompatActivity {
         }
     }
 
-    private void addEntryToDatabase(int chapterNum, String personName, int diaryResource, @IntRange(from=1, to=12) int month, @IntRange(from=1, to=31) int date, EntryType type) {
+    private void addEntryToDatabase(int chapterNum, Person person, int diaryResource, @IntRange(from=1, to=12) int month, @IntRange(from=1, to=31) int date, EntryType type) {
         if (mFragmentEntryHandler != null) {
             Calendar calendar = Calendar.getInstance();
-            calendar.set(1893, month - 1, date);
+            calendar.set(1893, month - 1, date, 0, 0, 0);
 
-            mFragmentEntryHandler.addEntry(new Entry(chapterNum, personName, getStringFromId(diaryResource), calendar, type, false, true));
+            mFragmentEntryHandler.addEntry(new Entry(chapterNum, person, getStringFromId(diaryResource), calendar, type, false, true));
         }
     }
 
     private void updateRecyclerView(@NonNull RecyclerView recyclerView, boolean update) {
         Calendar currentDate = Calendar.getInstance();
 
-        int month = currentDate.get(Calendar.MONTH) + 1;
+        int month = currentDate.get(Calendar.MONTH);
         int dateOfMonth = currentDate.get(Calendar.DAY_OF_MONTH);
 
         Calendar calendar = GregorianCalendar.getInstance();
-        calendar.set(1897, month, dateOfMonth);
+        calendar.set(1897, month - 1, dateOfMonth);
 
         List<Entry> entries = mFragmentEntryHandler.getDiaryEntriesBeforeDate(calendar);
 

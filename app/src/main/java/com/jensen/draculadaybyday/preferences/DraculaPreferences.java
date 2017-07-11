@@ -62,7 +62,7 @@ public class DraculaPreferences extends AppCompatPreferenceActivity {
                 if (TextUtils.isEmpty(stringValue)) {
                     // Empty values correspond to 'silent' (no ringtone).
                     // FIXME: fix set the ringtone to silent
-                    //   preference.setSummary(R.string.pref_ringtone_silent);
+                  //    preference.setSummary(R.string.pref_ringtone_silent);
 
                 } else {
                     Ringtone ringtone = RingtoneManager.getRingtone(
@@ -84,7 +84,6 @@ public class DraculaPreferences extends AppCompatPreferenceActivity {
                 // simple string representation.
                 preference.setSummary(stringValue);
             }
-
 
             return true;
         }
