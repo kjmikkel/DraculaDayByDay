@@ -13,7 +13,7 @@ public class Schedule {
     private int JOB_ID = 1;
 
     private Schedule(Context context) {
-        mJobScheduler =  (JobScheduler)context.getSystemService(context.JOB_SCHEDULER_SERVICE);
+        mJobScheduler =  (JobScheduler)context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
     }
 
     public Schedule getInstance(Context context) {
