@@ -10,31 +10,36 @@ import java.util.Locale;
 public class SqlConstraintFactory {
     // The list that will be joined
     private List<String> constraints;
+    private List<String> values;
 
     // Time format
     private static final String TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     public SqlConstraintFactory() {
         constraints = new LinkedList<>();
+        values = new LinkedList<>();
     }
 
     //region Date constraints
     public void exactDate(Calendar date) {
         SimpleDateFormat dateFormat = new SimpleDateFormat(TIME_FORMAT, Locale.getDefault());
         String dateString = dateFormat.format(date.getTime());
-        constraints.add(String.format(Locale.getDefault(), "%s = Datetime('%s'))", FragmentEntryDatabaseHandler.DATE, dateString));
+        constraints.add(FragmentEntryDatabaseHandler.DATE + " = Datetime(?))");
+        values.add(dateString);
     }
 
     public void beforeDate(Calendar date) {
         SimpleDateFormat dateFormat = new SimpleDateFormat(TIME_FORMAT, Locale.getDefault());
         String beforeDate = dateFormat.format(date.getTime());
-        constraints.add(String.format(Locale.getDefault(), "%s <= Datetime('%s')", FragmentEntryDatabaseHandler.DATE, beforeDate));
+        constraints.add(FragmentEntryDatabaseHandler.DATE + " <= Datetime(?)");
+        values.add(beforeDate);
     }
 
     public void afterDate(Calendar date) {
         SimpleDateFormat dateFormat = new SimpleDateFormat(TIME_FORMAT, Locale.getDefault());
         String afterDate = dateFormat.format(date.getTime());
-        constraints.add(String.format(Locale.getDefault(), "Datetime('%s') <= %s)", afterDate, FragmentEntryDatabaseHandler.DATE));
+        constraints.add("Datetime(?) <= " + FragmentEntryDatabaseHandler.DATE);
+        values.add(afterDate);
     }
 
     public void betweenDates(Calendar beforeDateCalendar, Calendar afterDateCalendar) {
@@ -43,7 +48,9 @@ public class SqlConstraintFactory {
         String beforeDate = dateFormat.format(beforeDateCalendar.getTime());
         String afterDate = dateFormat.format(afterDateCalendar.getTime());
 
-        constraints.add(String.format(Locale.getDefault(), "%s BETWEEN Datetime('%s') AND Datetime('%s')", FragmentEntryDatabaseHandler.DATE, beforeDate, afterDate));
+        constraints.add(FragmentEntryDatabaseHandler.DATE + " BETWEEN Datetime(?) AND Datetime(?)");
+        values.add(beforeDate);
+        values.add(afterDate);
     }
     //endregion
 
@@ -80,30 +87,48 @@ public class SqlConstraintFactory {
 
     public void readStatus(boolean unread) {
         int readInt = unread ? 1 : 0;
-
         specificConstraint(FragmentEntryDatabaseHandler.UNREAD, readInt);
     }
 
-    public String getConstraint() {
-        String finalConstraints = "1 = 1";
-        if (0 < constraints.size()) {
-            finalConstraints = TextUtils.join(" AND ", constraints);
-        }
-        return finalConstraints;
+    public void unlocked(boolean unlocked) {
+        int unlockedInt = unlocked ? 1 : 0;
+        specificConstraint(FragmentEntryDatabaseHandler.UNLOCKED, unlockedInt);
     }
 
-
     private void specificConstraint(String field, Object value) {
-        constraints.add(String.format("%s = %s", field, value));
+        constraints.add(field + " = ?");
+        values.add(String.valueOf(value));
     }
 
     private void multipleNonExclusive(String field, List<? extends Object> listValues) {
         List<String> tempConstraints = new LinkedList<>();
 
         for(Object val : listValues) {
-            tempConstraints.add(String.format("%s = %s", field, val));
+            tempConstraints.add(field + " = ?");
+            values.add(String.valueOf(val));
         }
 
         constraints.add("(" + TextUtils.join(" OR ", tempConstraints) + ")");
+    }
+
+    public String getConstraint() {
+        String finalConstraints = "";
+
+        if (0 < constraints.size()) {
+            finalConstraints = TextUtils.join(" AND ", constraints);
+        }
+
+        return finalConstraints;
+    }
+
+    public String[] getValues() {
+        String[] valArray = null;
+
+        if (0 < values.size()) {
+            valArray = new String[values.size()];
+            values.toArray(valArray);
+        }
+
+        return valArray;
     }
 }

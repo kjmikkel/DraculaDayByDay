@@ -1,5 +1,6 @@
 package com.jensen.draculadaybyday.sql_lite;
 
+import android.app.ExpandableListActivity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -15,6 +16,7 @@ import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.Exchanger;
 
 public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLiteOpenHelper {
 
@@ -137,7 +139,7 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
 
     private boolean EntryAlreadyInDB(short sequenceNumber) {
         if (!db.isOpen()) {
-            this.open();
+            open();
         }
 
         Cursor cursor = db.query(
@@ -160,7 +162,7 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
 
     private int entryCount(String where) {
         if (!db.isOpen()) {
-            this.open();
+            open();
         }
 
         Cursor cursor = db.rawQuery(String.format("SELECT COUNT(*) FROM %s WHERE %s", TABLE_ENTRY, where), null);
@@ -220,7 +222,7 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
 
     private LinkedList<Entry> getCompleteEntryFromDatabase(String query, String[] value, String groupBy, String orderBy) {
         if (!db.isOpen()) {
-            this.open();
+            open();
         }
 
         Cursor cursor = db.query(
@@ -254,33 +256,39 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
     }
 
     private LinkedList<Entry> getCheapEntryFromDatabase(String query, String[] valueOfQueries, String orderBy) {
-        if (!db.isOpen()) {
-            this.open();
-        }
-
-        Cursor cursor = db.query(
-                TABLE_ENTRY,
-                allEntriesButText,
-                query,
-                valueOfQueries,
-                null,
-                null,
-                orderBy);
-
         LinkedList<Entry> entries = new LinkedList<>();
 
-        if (cursor != null && 0 < cursor.getCount()) {
-            cursor.moveToFirst();
+        try {
+            if (!db.isOpen()) {
+                open();
+            }
 
-            do {
-                entries.add(getCheapDiaryEntry(cursor));
-            } while (cursor.moveToNext());
+            Cursor cursor = db.query(
+                    TABLE_ENTRY,
+                    allEntriesButText,
+                    query,
+                    valueOfQueries,
+                    null,
+                    null,
+                    orderBy);
+
+            if (cursor != null && 0 < cursor.getCount()) {
+                cursor.moveToFirst();
+
+                do {
+                    entries.add(getCheapDiaryEntry(cursor));
+                } while (cursor.moveToNext());
+
+                // Close cursor
+                assert cursor != null;
+                cursor.close();
+            }
+        } catch (Exception e) {
+            Log.d("DB error", e.getMessage());
+        } finally {
+            // Close database
+            db.close();
         }
-
-        // Close cursor and the database
-        assert cursor != null;
-        cursor.close();
-        db.close();
 
         // return contact
         return entries;
@@ -334,17 +342,45 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
     }
 
     public List<Entry> getDiaryEntriesBeforeDate(Calendar date) {
-        date.set(Calendar.YEAR, 1893);
+        List<Entry> entries = null;
+        try {
+            date.set(Calendar.YEAR, 1893);
 
-        SqlConstraintFactory constraintFactory = new SqlConstraintFactory();
+            SqlConstraintFactory constraintFactory = new SqlConstraintFactory();
+            constraintFactory.unlocked(true);
 
-        SqlSortFactory sortFactory = new SqlSortFactory();
-        sortFactory.dateOrder();
-        sortFactory.bookOrder();
+            SqlSortFactory sortFactory = new SqlSortFactory();
+            sortFactory.dateOrder();
+            sortFactory.bookOrder();
+            entries = getCheapEntryFromDatabase(constraintFactory.getConstraint(), constraintFactory.getValues(), sortFactory.getSortOrder());
+        } catch (Exception e) {
+            Log.d("DB error", e.getMessage());
+        }
 
-        // constraintFactory.beforeDate(date);
-        // return  getCheapEntryFromDatabase(constraintFactory.getConstraint(), null, null, DATE + ", " + ENTRY_SEQ_NUM);
-        return getCheapEntryFromDatabase(constraintFactory.getConstraint(), null, sortFactory.getSortOrder());
+        return entries;
+    }
+
+    // Update the correct
+    public void unlockEntriesBeforeDate(Calendar date) {
+        try {
+            date.set(Calendar.YEAR, 1893);
+
+            SqlConstraintFactory constraintFactory = new SqlConstraintFactory();
+            constraintFactory.beforeDate(date);
+            constraintFactory.unlocked(false);
+
+            ContentValues cv = new ContentValues();
+            cv.put(UNLOCKED, true);
+            cv.put(UNREAD, true);
+
+            if (!db.isOpen()) {
+                open();
+            }
+            db.update(TABLE_ENTRY, cv, constraintFactory.getConstraint(), constraintFactory.getValues());
+            db.close();
+        } catch (Exception e) {
+            Log.d("DB error", e.getMessage());
+        }
     }
 
     public int getNumUnlcokedDiaries(Calendar date) {

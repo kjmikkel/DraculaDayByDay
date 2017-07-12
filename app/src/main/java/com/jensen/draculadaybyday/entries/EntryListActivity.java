@@ -418,6 +418,10 @@ public class EntryListActivity extends AppCompatActivity {
         Calendar calendar = GregorianCalendar.getInstance();
         calendar.set(1897, month - 1, dateOfMonth);
 
+        // Check if there are new entries available
+        mFragmentEntryHandler.unlockEntriesBeforeDate(calendar);
+
+        // Get the entries
         List<Entry> entries = mFragmentEntryHandler.getDiaryEntriesBeforeDate(calendar);
 
         if (update) {
