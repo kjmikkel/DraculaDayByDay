@@ -4,11 +4,10 @@ import android.text.TextUtils;
 
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
 
-public class SqlSortFactory {
+class SqlSortFactory {
 
-    private UniqueValueList<String> sortingOrder;
+    private final UniqueValueList<String> sortingOrder;
 
     public SqlSortFactory() {
         sortingOrder = new UniqueValueList<>();
@@ -40,7 +39,7 @@ public class SqlSortFactory {
 
     private class UniqueValueList<E> extends LinkedList<E> {
 
-        HashMap<E, Integer> recallValue;
+        final HashMap<E, Integer> recallValue;
 
         public UniqueValueList() {
             super();

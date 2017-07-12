@@ -73,7 +73,7 @@ public class Entry {
     private static Person getPerson(String person) {
         Person out = Person.JONATHAN_HARKER;
         for(Person p : Person.values()) {
-            if (p.name().equals(p)) {
+            if (p.name().equals(person)) {
                 out = p;
                 break;
             }

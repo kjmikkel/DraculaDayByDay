@@ -25,7 +25,7 @@ public class CustomTypefaceSpan extends TypefaceSpan {
         newType = type;
     }
 
-    public CustomTypefaceSpan(Parcel in) {
+    private CustomTypefaceSpan(Parcel in) {
         super(in.readString());
         newType = Typeface.createFromFile(in.readString());
     }

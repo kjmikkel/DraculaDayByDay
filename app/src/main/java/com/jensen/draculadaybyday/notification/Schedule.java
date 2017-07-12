@@ -7,7 +7,7 @@ import android.content.Context;
 
 public class Schedule {
 
-    private JobScheduler mJobScheduler;
+    private final JobScheduler mJobScheduler;
     private Schedule mSchedule;
 
     private int JOB_ID = 1;

@@ -3,8 +3,8 @@
     <string name="title_entry_detail">Entry Detail</string>
     <string name="title_item_list">Items</string>
     <string name="title_item_detail">Item Detail</string>
-    <string name="title_diaryentry_list">DiaryEntries</string>
-    <string name="title_diaryentry_detail">DiaryEntry Detail</string>
+    <string name="title_diary_entry_list">DiaryEntries</string>
+    <string name="title_diary_entry_detail">DiaryEntry Detail</string>
     <string name="title_activity_dracula_preferences">Preferences</string>
     <string name="title_activity_dracula_about">About</string>
 

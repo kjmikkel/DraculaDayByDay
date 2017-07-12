@@ -7,10 +7,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
-public class SqlConstraintFactory {
+class SqlConstraintFactory {
     // The list that will be joined
-    private List<String> constraints;
-    private List<String> values;
+    private final List<String> constraints;
+    private final List<String> values;
 
     // Time format
     private static final String TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
@@ -100,7 +100,7 @@ public class SqlConstraintFactory {
         values.add(String.valueOf(value));
     }
 
-    private void multipleNonExclusive(String field, List<? extends Object> listValues) {
+    private void multipleNonExclusive(String field, List<?> listValues) {
         List<String> tempConstraints = new LinkedList<>();
 
         for(Object val : listValues) {

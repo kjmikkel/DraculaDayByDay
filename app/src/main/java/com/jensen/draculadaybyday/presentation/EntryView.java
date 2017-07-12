@@ -1,7 +1,6 @@
 package com.jensen.draculadaybyday.presentation;
 
 import android.content.Context;
-import android.graphics.Canvas;
 import android.graphics.Typeface;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.Layout;
@@ -210,9 +209,5 @@ public class EntryView extends AppCompatTextView {
             default:
                 return Typeface.SANS_SERIF;
         }
-    }
-
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
     }
 }

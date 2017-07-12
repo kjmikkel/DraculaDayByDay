@@ -1,6 +1,5 @@
 package com.jensen.draculadaybyday.sql_lite;
 
-import android.app.ExpandableListActivity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -16,19 +15,18 @@ import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.Exchanger;
 
 public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLiteOpenHelper {
 
     // Contacts Table Columns names
     public static final String ENTRY_SEQ_NUM = "entrySeqNum";
-    protected static final String CHAPTER = "chapter";
-    protected static final String PERSON = "person";
-    protected static final String TEXT = "text";
-    protected static final String DATE = "date";
-    protected static final String TYPE = "type";
-    protected static final String UNLOCKED = "unlocked";
-    protected static final String UNREAD = "unread";
+    static final String CHAPTER = "chapter";
+    static final String PERSON = "person";
+    private static final String TEXT = "text";
+    static final String DATE = "date";
+    static final String TYPE = "type";
+    static final String UNLOCKED = "unlocked";
+    static final String UNREAD = "unread";
 
     // Time
     private static final String TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
@@ -117,7 +115,7 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
                 // auto-generate the ENTRY_SEQ_NUM (primary key)
 
                 values.put(CHAPTER, entry.getChapter());
-                values.put(PERSON, entry.getPerson().toString());
+                values.put(PERSON, entry.getPerson());
                 values.put(TEXT, entry.getTextEntry());
 
                 SimpleDateFormat dateFormat = new SimpleDateFormat(TIME_FORMAT, Locale.getDefault());
@@ -280,7 +278,6 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
                 } while (cursor.moveToNext());
 
                 // Close cursor
-                assert cursor != null;
                 cursor.close();
             }
         } catch (Exception e) {
@@ -294,51 +291,27 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
         return entries;
     }
 
-    private Entry getSingleEntry(String query, String[] value, String groupBy, String orderBy) {
-        LinkedList<Entry> entryList = getCompleteEntryFromDatabase(query, value, groupBy, orderBy);
-
-        /*
-        if (1 < entryList.size()) {
-            throw new Exception("More than one mEntry for the same sequence number");
-        }
-        */
-
-        if (0 < entryList.size()) {
-            return entryList.get(0);
-        } else {
-            return null;
-        }
-    }
-
-    private String formatDate(Calendar date) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat(TIME_FORMAT, Locale.getDefault());
-        return dateFormat.format(date.getTime());
-    }
-
-    // Get the diary mEntry for the specific sequence number and calendar date
-    public Entry getSpecificDiaryEntry(int entrySequenceNumber, Calendar date) {
-        return getSingleEntry(ENTRY_SEQ_NUM + "=? AND " + DATE + "<= ?", new String[]{String.valueOf(entrySequenceNumber), formatDate(date)}, null, null);
-    }
-
     // Get the diary mEntry based on a sequence number
     public Entry getSpecificDiaryEntry(int entrySequenceNumber) {
-        return getSingleEntry(ENTRY_SEQ_NUM + "=?", new String[]{String.valueOf(entrySequenceNumber)}, null, null);
+        LinkedList<Entry> entryList = getCompleteEntryFromDatabase(ENTRY_SEQ_NUM + "=?", new String[]{String.valueOf(entrySequenceNumber)}, null, null);
+        Entry entryToReturn = null;
+
+        if (0 < entryList.size()) {
+            entryToReturn = entryList.get(0);
+        }
+
+        return entryToReturn;
     }
 
-    // Get a specific mEntry from a specific person
-    public Entry getSpecificDiaryEntryByPerson(String person, int entryPersonNum, Calendar date) {
-        return getSingleEntry(PERSON + "=? AND " + DATE + "<=?", new String[]{person, String.valueOf(entryPersonNum), formatDate(date)}, null, null);
-    }
+    public List<Entry> getEntries(SqlConstraintFactory constraintFactory, SqlSortFactory sortFactory) {
+        List<Entry> entries = null;
+        try {
+            entries = getCheapEntryFromDatabase(constraintFactory.getConstraint(), constraintFactory.getValues(), sortFactory.getSortOrder());
+        } catch (Exception e) {
+            Log.d("DB error", e.getMessage());
+        }
 
-    // Get a specific mEntry from a specific Chapter
-    public LinkedList<Entry> getChapter(int chapter, Calendar date) {
-        //  return get
-        return null;
-    }
-
-    public List<Entry> getDiaryEntries(Calendar date) {
-        return null;
-        //    return getCompleteEntryFromDatabase(DATE + "=?", new String[] { dateValue }, DATE, ENTRY_SEQ_NUM);
+        return entries;
     }
 
     public List<Entry> getDiaryEntriesBeforeDate(Calendar date) {

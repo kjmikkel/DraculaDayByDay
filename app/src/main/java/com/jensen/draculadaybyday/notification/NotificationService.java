@@ -10,7 +10,7 @@ public class NotificationService extends JobService {
     private NotificationService mNotification;
     private NotificationManager mNotificationManager;
 
-    private UpdateAppsAsyncTask updateTask = new UpdateAppsAsyncTask();
+    private final UpdateAppsAsyncTask updateTask = new UpdateAppsAsyncTask();
 
     @Override
     public boolean onStartJob(JobParameters jobParameters) {
