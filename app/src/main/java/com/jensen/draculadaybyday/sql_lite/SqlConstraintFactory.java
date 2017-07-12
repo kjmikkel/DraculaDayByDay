@@ -31,7 +31,7 @@ class SqlConstraintFactory {
     public void beforeDate(Calendar date) {
         SimpleDateFormat dateFormat = new SimpleDateFormat(TIME_FORMAT, Locale.getDefault());
         String beforeDate = dateFormat.format(date.getTime());
-        constraints.add(FragmentEntryDatabaseHandler.DATE + " <= Datetime(?)");
+        constraints.add(FragmentEntryDatabaseHandler.DATE + " <= Datetime( ? )");
         values.add(beforeDate);
     }
 

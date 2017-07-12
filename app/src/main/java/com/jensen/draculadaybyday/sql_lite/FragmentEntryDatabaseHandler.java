@@ -102,11 +102,11 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
 
     // Inserting an mEntry
     public void addEntry(Entry entry) {
-        if (!db.isOpen()) {
-            open();
-        }
-
         try {
+            if (!db.isOpen()) {
+                open();
+            }
+
             // Check if the mEntry is already in the database
             if (!EntryAlreadyInDB(entry.getStoryEntryNum())) {
 
@@ -158,16 +158,23 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
         return false;
     }
 
-    private int entryCount(String where) {
-        if (!db.isOpen()) {
-            open();
-        }
+    private int entryCount(String selection, String[] selectionArgs) {
+        int count = 0;
+        try {
+            if (!db.isOpen()) {
+                open();
+            }
 
-        Cursor cursor = db.rawQuery(String.format("SELECT COUNT(*) FROM %s WHERE %s", TABLE_ENTRY, where), null);
-        cursor.moveToFirst();
-        int count = cursor.getInt(0);
-        cursor.close();
-        db.close();
+            Cursor cursor = db.rawQuery(String.format("SELECT COUNT(*) FROM %s WHERE %s", TABLE_ENTRY, selection), selectionArgs);
+            cursor.moveToFirst();
+            count = cursor.getInt(0);
+            cursor.close();
+
+        } catch (Exception e) {
+            Log.d("DB error", e.getMessage());
+        } finally {
+            db.close();
+        }
 
         return count;
     }
@@ -218,7 +225,7 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
         );
     }
 
-    private LinkedList<Entry> getCompleteEntryFromDatabase(String query, String[] value, String groupBy, String orderBy) {
+    private LinkedList<Entry> getCompleteEntryFromDatabase(String query, String[] valueOfQueries) {
         if (!db.isOpen()) {
             open();
         }
@@ -227,10 +234,10 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
                 TABLE_ENTRY,
                 allEntries,
                 query,
-                value,
-                groupBy,
+                valueOfQueries,
                 null,
-                orderBy);
+                null,
+                null);
 
         LinkedList<Entry> entries = new LinkedList<>();
         if (cursor != null && 0 < cursor.getCount()) {
@@ -241,7 +248,7 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
             } while (cursor.moveToNext());
         }
 
-        // Close curosor
+        // Close cursor
         assert cursor != null;
         cursor.close();
 
@@ -291,9 +298,9 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
         return entries;
     }
 
-    // Get the diary mEntry based on a sequence number
+    // Get the diary entry based on a sequence number
     public Entry getSpecificDiaryEntry(int entrySequenceNumber) {
-        LinkedList<Entry> entryList = getCompleteEntryFromDatabase(ENTRY_SEQ_NUM + "=?", new String[]{String.valueOf(entrySequenceNumber)}, null, null);
+        LinkedList<Entry> entryList = getCompleteEntryFromDatabase(ENTRY_SEQ_NUM + "= ?", new String[]{String.valueOf(entrySequenceNumber)});
         Entry entryToReturn = null;
 
         if (0 < entryList.size()) {
@@ -356,14 +363,11 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
         }
     }
 
-    public int getNumUnlcokedDiaries(Calendar date) {
-        // Set the correct year
-        date.set(Calendar.YEAR, 1893);
-
-        // Make the constraints
+    public int getNumUnlockedDiaries() {
+         // Make the constraints
         SqlConstraintFactory constraintFactory = new SqlConstraintFactory();
-        constraintFactory.beforeDate(date);
+        constraintFactory.unlocked(true);
 
-        return entryCount(constraintFactory.getConstraint());
+        return entryCount(constraintFactory.getConstraint(), constraintFactory.getValues());
     }
 }

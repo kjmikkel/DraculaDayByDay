@@ -36,7 +36,6 @@ public class EntryCollectionPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        Calendar date =  Calendar.getInstance();
-        return db.getNumUnlcokedDiaries(date);
+        return db.getNumUnlockedDiaries();
     }
 }
