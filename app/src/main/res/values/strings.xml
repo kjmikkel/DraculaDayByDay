@@ -5,8 +5,25 @@
     <string name="title_item_detail">Item Detail</string>
     <string name="title_diary_entry_list">DiaryEntries</string>
     <string name="title_diary_entry_detail">DiaryEntry Detail</string>
-    <string name="title_activity_dracula_preferences">Preferences</string>
-    <string name="title_activity_dracula_about">About</string>
+
+    <!-- Menu -->
+    <string name="menu_filter_text">Filter</string>
+    <string name="menu_sort_text">Sort</string>
+    <string name="menu_preferences_text">Preferences</string>
+    <string name="menu_about_text">About</string>
+
+    <!-- Filter page -->
+    <!-- Date -->
+    <string name="filter_date_label">Date:</string>
+    <string name="filter_exact_date">Exact date</string>
+    <string name="filter_before_date">Before date</string>
+    <string name="filter_after_date">After date</string>
+    <string name="filter_between_date">Between dates</string>
+
+    <string name="filter_persons_label">Persons:</string>
+    <string name="filter_types_label">Types:</string>
+    <string name="filter_chapters_label">Chapters:</string>
+    <string name="filter_read_label">Read:</string>
 
     <!-- Strings related to Preferences -->
 

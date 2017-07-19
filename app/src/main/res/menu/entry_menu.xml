@@ -5,22 +5,15 @@
     tools:context="com.jensen.draculadaybyday.EntryListActivity">
 
     <item
-        android:id="@+id/entry_list_filter"
-        android:icon="@drawable/ic_filter_list_black_24dp"
-        android:orderInCategory="1"
-        android:title="@string/menu_filter_text"
-        yourapp:showAsAction="always" />
-
-    <item
-        android:id="@+id/entry_list_general_preferences"
+        android:id="@+id/entry_general_preferences"
         android:icon="@drawable/ic_preferences_black_24dp"
-        android:orderInCategory="3"
+        android:orderInCategory="1"
         android:title="@string/menu_preferences_text"
-        yourapp:showAsAction="always" />
+        yourapp:showAsAction="ifRoom" />
     <item
-        android:id="@+id/entry_list_about_app"
+        android:id="@+id/entry_about_app"
         android:icon="@drawable/ic_help_black_24dp"
-        android:orderInCategory="4"
+        android:orderInCategory="2"
         android:title="@string/menu_about_text"
-        yourapp:showAsAction="always" />
+        yourapp:showAsAction="ifRoom" />
 </menu>

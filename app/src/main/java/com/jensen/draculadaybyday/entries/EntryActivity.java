@@ -32,20 +32,21 @@ public class EntryActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.entry_list_menu, menu);
+        inflater.inflate(R.menu.entry_menu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.entry_list_general_preferences:
+            case R.id.entry_general_preferences:
                 Intent preferences = new Intent(EntryActivity.this, DraculaPreferences.class);
                 startActivity(preferences);
                 return true;
-            case R.id.entry_list_about_app:
+            case R.id.entry_about_app:
                 Intent about = new Intent(EntryActivity.this, AboutPage.class);
                 startActivity(about);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

@@ -70,7 +70,10 @@ public class EntryListActivity extends AppCompatActivity {
 
     private SwipeRefreshLayout mSwipeContainer;
     private SimpleItemRecyclerViewAdapter mSimpleItemAdapter;
-
+/*
+    private SqlConstraintFactory constraintFactory,
+    private SqlSortFactory sortFactory
+*/
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
      * device.
@@ -87,6 +90,10 @@ public class EntryListActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.entry_list_filter:
+                Intent filter = new Intent(EntryListActivity.this, FilterActivity.class);
+                startActivity(filter);
+                return true;
             case R.id.entry_list_general_preferences:
                 Intent preferences = new Intent(EntryListActivity.this, DraculaPreferences.class);
                 startActivity(preferences);
@@ -94,6 +101,7 @@ public class EntryListActivity extends AppCompatActivity {
             case R.id.entry_list_about_app:
                 Intent about = new Intent(EntryListActivity.this, AboutPage.class);
                 startActivity(about);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

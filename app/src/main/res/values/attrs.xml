@@ -24,4 +24,8 @@
         <attr name="setTime" format="boolean" />
     </declare-styleable>
 
+    <declare-styleable name="MultiSpinner">
+        <attr name="android:entries" />
+    </declare-styleable>
+
 </resources>

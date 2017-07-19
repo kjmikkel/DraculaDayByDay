@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <!-- Date -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/filter_date_label" />
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/filter_date_spinner"
+        android:entries="@array/filter_date_entries" />
+
+    <!-- Person -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/filter_persons_label"/>
+    <com.jensen.draculadaybyday.presentation.MultiSpinner
+        android:id="@+id/filter_person_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/filter_persons_entries"/>
+
+    <!-- Type -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/filter_types_label"/>
+    <com.jensen.draculadaybyday.presentation.MultiSpinner
+        android:id="@+id/filter_type_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/filter_types_entries"/>
+
+    <!-- Chapters -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/filter_chapters_label"/>
+    <com.jensen.draculadaybyday.presentation.MultiSpinner
+        android:id="@+id/filter_chapters"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/filter_chapters_entries"/>
+
+    <!-- Read -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/filter_read_label"/>
+    <Spinner
+        android:id="@+id/filter_read_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/filter_read_entries"/>
+
+
+</LinearLayout>

@@ -5,4 +5,78 @@
         <item>19:30</item>
         <item>21:30</item>
     </string-array>
+
+    <string-array name="filter_date_entries">
+        <item>No specific date</item>
+        <item>Exact date</item>
+        <item>Before date</item>
+        <item>Between dates</item>
+    </string-array>
+
+    <string-array name="filter_persons_entries">
+        <item>No specific person</item>
+        <item>Jonathan Harker</item>
+        <item>Mina Murray</item>
+        <item>Mina Harker</item>
+        <item>Mina Murray or Mina Harker</item>
+        <item>Lucy Westenra</item>
+        <item>Lucy Westenra</item>
+        <item>Quiencey Morris</item>
+        <item>Arthur Holmwood</item>
+        <item>Dr. Seward</item>
+        <item>Samuel F. Billington &amp; Son</item>
+        <item>Messrs. Carter, Paterson &amp; Co.</item>
+        <item>Sister Agatha</item>
+        <item>Abraham Van Helsing</item>
+        <item>The Pall Mall Gazette</item>
+        <item>Patrick Hennessey</item>
+        <item>The Westminster Gazette</item>
+        <item>Mitchell, Sons and Candy</item>
+    </string-array>
+
+    <string-array name="filter_types_entries">
+        <item>No specific type</item>
+        <item>Diary Entry</item>
+        <item>Letter</item>
+        <item>Telegram</item>
+        <item>Phonograph</item>
+        <item>Newspaper</item>
+        <item>Note</item>
+    </string-array>
+
+    <string-array name="filter_chapters_entries">
+        <item>All chapters</item>
+        <item>Chapter 1</item>
+        <item>Chapter 2</item>
+        <item>Chapter 3</item>
+        <item>Chapter 4</item>
+        <item>Chapter 5</item>
+        <item>Chapter 6</item>
+        <item>Chapter 7</item>
+        <item>Chapter 8</item>
+        <item>Chapter 9</item>
+        <item>Chapter 10</item>
+        <item>Chapter 11</item>
+        <item>Chapter 12</item>
+        <item>Chapter 13</item>
+        <item>Chapter 14</item>
+        <item>Chapter 15</item>
+        <item>Chapter 17</item>
+        <item>Chapter 18</item>
+        <item>Chapter 19</item>
+        <item>Chapter 20</item>
+        <item>Chapter 21</item>
+        <item>Chapter 22</item>
+        <item>Chapter 23</item>
+        <item>Chapter 27</item>
+    </string-array>
+
+
+    <string-array name="filter_read_entries">
+        <item>Both read and unread</item>
+        <item>Only read entries</item>
+        <item>Only unread entries</item>
+    </string-array>
+
+
 </resources>
