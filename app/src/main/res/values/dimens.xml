@@ -7,7 +7,7 @@
     <dimen name="text_medium_margin">8dp</dimen>
     <dimen name="text_small_margin">2dp</dimen>
 
-    <dimen name="text_headline_size">20dp</dimen>
+    <dimen name="text_headline_size">20sp</dimen>
 
     <item name="pref_default_fontsize" format="float" type="dimen">14.0</item>
     <!-- Default screen margins, per the Android Design guidelines. -->
