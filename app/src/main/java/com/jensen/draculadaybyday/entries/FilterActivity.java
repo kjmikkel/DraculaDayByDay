@@ -241,9 +241,9 @@ public class FilterActivity extends AppCompatActivity {
                         RelativeLayout rl = (RelativeLayout) findViewById(layoutId);
                         ((ViewGroup) rl.getParent()).removeView(rl);
 
-                        // Remove the id from the list
+                        // Remove the id from the list - I cast
                         //noinspection SuspiciousMethodCalls
-                        idList.remove((Object) layoutId);
+                        idList.remove((Object)layoutId);
 
                         // if there is only one layout left, you cannot remove it
                         if (idList.size() == 1) {
