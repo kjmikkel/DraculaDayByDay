@@ -9,8 +9,6 @@ import android.util.Log;
 import com.jensen.draculadaybyday.entries.EntryFragment;
 import com.jensen.draculadaybyday.sql_lite.FragmentEntryDatabaseHandler;
 
-import java.util.Calendar;
-
 public class EntryCollectionPagerAdapter extends FragmentStatePagerAdapter {
 
     private final FragmentEntryDatabaseHandler db;

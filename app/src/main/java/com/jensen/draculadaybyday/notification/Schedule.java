@@ -1,8 +1,6 @@
 package com.jensen.draculadaybyday.notification;
 
-import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
-import android.content.ComponentName;
 import android.content.Context;
 
 public class Schedule {
