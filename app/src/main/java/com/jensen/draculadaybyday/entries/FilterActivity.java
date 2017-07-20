@@ -40,13 +40,14 @@ public class FilterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         try {
             setContentView(R.layout.activity_filter);
+/*
             ActionBar mActionBar = getSupportActionBar();
 
             if (mActionBar != null) {
                 mActionBar.setDisplayHomeAsUpEnabled(true);
                 mActionBar.setDisplayShowHomeEnabled(true);
             }
-
+*/
             //region Filter layout
             final Spinner dateSpinner = (Spinner)findViewById(R.id.filter_date_spinner);
             dateSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -196,7 +197,6 @@ public class FilterActivity extends AppCompatActivity {
 
                 }
             });
-
             //endregion
 
             //region Sort layout
@@ -313,6 +313,7 @@ public class FilterActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     Intent returnIntent = new Intent();
 
+                    //region Constraints
                     SqlConstraintFactory constraintFactory = new SqlConstraintFactory();
 
                     //region Date
@@ -374,7 +375,7 @@ public class FilterActivity extends AppCompatActivity {
                     }
                     //endregion
 
-                    //region read status
+                    //region Read status
                     Spinner readSpinner = (Spinner)findViewById(R.id.filter_read_spinner);
                     switch (readSpinner.getSelectedItemPosition()) {
                         // 0 is both read and unread
@@ -390,7 +391,9 @@ public class FilterActivity extends AppCompatActivity {
                     //endregion
 
                     returnIntent.putExtra("constraints", constraintFactory);
+                    //endregion
 
+                    //region Sort
                     SqlSortFactory sortFactory = new SqlSortFactory();
                     for(int idVal : idList) {
                         Spinner spinVal = getSpinner(idVal, R.id.sort_spinner);
@@ -413,6 +416,7 @@ public class FilterActivity extends AppCompatActivity {
                     }
 
                     returnIntent.putExtra("sort", sortFactory);
+                    //endregion
 
                     setResult(Activity.RESULT_OK, returnIntent);
                     finish();
