@@ -112,11 +112,6 @@ public class FontSizePickerPreference extends DialogPreference {
     }
 
     @Override
-    protected void onBindDialogView(View view) {
-        super.onBindDialogView(view);
-    }
-
-    @Override
     protected void onDialogClosed(boolean positiveResult) {
         if (positiveResult) {
 

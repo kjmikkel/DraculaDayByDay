@@ -199,11 +199,6 @@ public class DraculaPreferences extends AppCompatPreferenceActivity {
 //            bindPreferenceSummaryToValue(findPreference("example_text"));
 //            bindPreferenceSummaryToValue(findPreference("example_list"));
         }
-
-        @Override
-        public boolean onOptionsItemSelected(MenuItem item) {
-            return super.onOptionsItemSelected(item);
-        }
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)

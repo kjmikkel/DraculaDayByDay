@@ -232,11 +232,6 @@ public class NotificationTimePreference extends DialogPreference {
     }
 
     @Override
-    protected void onBindDialogView(View v) {
-        super.onBindDialogView(v);
-    }
-
-    @Override
     protected void onDialogClosed(boolean positiveResult) {
         if (positiveResult) {
             // Save the preferences for later
