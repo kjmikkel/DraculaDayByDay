@@ -247,7 +247,7 @@ public class FilterActivity extends AppCompatActivity {
 
                         // if there is only one layout left, you cannot remove it
                         if (idList.size() == 1) {
-                            getButton(idList.get(0), R.id.sort_spinner_button).setEnabled(false);
+                            getButton(idList.get(0)).setEnabled(false);
                         }
                     }
                 }
@@ -280,16 +280,16 @@ public class FilterActivity extends AppCompatActivity {
                     parentLayout.addView(rlNew, layoutParams);
 
                     //region Set the first remove button to be enabled
-                    Button firstRemoveButton = getButton(idList.get(0), R.id.sort_spinner_button);
+                    Button firstRemoveButton = getButton(idList.get(0));
                     firstRemoveButton.setEnabled(true);
 
                     // Set the tag and onClick value for the ImageView
-                    ImageView orderView = getImageView(newSortId, R.id.sort_order_button);
+                    ImageView orderView = getImageView(newSortId);
                     orderView.setTag(true);
                     orderView.setOnClickListener(clickToggle);
 
                     //Set the tag and onClick value for the remove button
-                    Button removeButton = getButton(newSortId, R.id.sort_spinner_button);
+                    Button removeButton = getButton(newSortId);
                     removeButton.setTag(newSortId);
                     removeButton.setOnClickListener(clickRemoveListener);
 
@@ -398,9 +398,9 @@ public class FilterActivity extends AppCompatActivity {
                     //region Sort
                     SqlSortFactory sortFactory = new SqlSortFactory();
                     for(int idVal : idList) {
-                        Spinner spinVal = getSpinner(idVal, R.id.sort_spinner);
+                        Spinner spinVal = getSpinner(idVal);
                         String spinnerValue = (String)spinVal.getSelectedItem();
-                        boolean ascendingOrder = (boolean)getImageView(idVal, R.id.sort_order_button).getTag();
+                        boolean ascendingOrder = (boolean)getImageView(idVal).getTag();
 
                         switch (spinnerValue) {
                             case "Book order":
@@ -438,21 +438,21 @@ public class FilterActivity extends AppCompatActivity {
     }
 
     @SuppressWarnings("ConstantConditions")
-    private Button getButton(int layoutId, int buttonId) {
+    private Button getButton(int layoutId) {
         RelativeLayout rl = (RelativeLayout)findViewById(layoutId);
-        return (Button)rl.findViewById(buttonId);
+        return (Button)rl.findViewById(R.id.sort_spinner_button);
     }
 
     @SuppressWarnings("ConstantConditions")
-    private ImageView getImageView(int layoutId, int imageViewId) {
+    private ImageView getImageView(int layoutId) {
         RelativeLayout rl = (RelativeLayout)findViewById(layoutId);
-        return (ImageView)rl.findViewById(imageViewId);
+        return (ImageView)rl.findViewById(R.id.sort_order_button);
     }
 
     @SuppressWarnings("ConstantConditions")
-    private Spinner getSpinner(int layoutId, int spinnerId) {
+    private Spinner getSpinner(int layoutId) {
         RelativeLayout rl = (RelativeLayout)findViewById(layoutId);
-        return (Spinner)rl.findViewById(spinnerId);
+        return (Spinner)rl.findViewById(R.id.sort_spinner);
     }
 
 
