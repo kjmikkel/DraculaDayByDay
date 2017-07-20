@@ -196,9 +196,9 @@
     </string>
     <string name="about_open_source_libraries_label">Open Source libraries used:</string>
     <string name="about_open_source_licences_label">Licenses used:</string>
-    <string name="about_open_source_license_text">Copyright (c) 2014, Austin Andrews (http://materialdesignicons.com/),
+    <string name="about_open_source_license_text">Copyright © 2014, Austin Andrews (http://materialdesignicons.com/),
 with Reserved Font Name Material Design Icons.
-Copyright (c) 2014, Google (http://www.google.com/design/)
+Copyright © 2014, Google (http://www.google.com/design/)
 uses the license at https://github.com/google/material-design-icons/blob/master/LICENSE
 
 This Font Software is licensed under the SIL Open Font License, Version 1.1.
