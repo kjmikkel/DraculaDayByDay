@@ -119,19 +119,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="@dimen/text_margin" >
+        android:layout_marginTop="@dimen/text_margin"
+        style="?android:attr/buttonBarStyle">
         <Button
             android:id="@+id/cancel_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/filter_cancel_button"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            style="?android:attr/buttonBarButtonStyle"/>
         <Button
             android:id="@+id/ok_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/filter_ok_button"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            style="?android:attr/buttonBarButtonStyle"/>
     </LinearLayout>
 
 </LinearLayout>
