@@ -31,7 +31,7 @@ import java.util.Locale;
 
 public class FilterActivity extends AppCompatActivity {
 
-    private List<Integer> idList = new ArrayList<>();
+    private final List<Integer> idList = new ArrayList<>();
     private static final String DATE_FORMAT = "dd/MM/yyyy";
 
 

@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class MultiSpinner extends android.support.v7.widget.AppCompatSpinner {
 
-    private CharSequence[] entries;
+    private final CharSequence[] entries;
     private boolean[] selected;
     private MultiSpinnerListener listener;
 
@@ -41,7 +41,7 @@ public class MultiSpinner extends android.support.v7.widget.AppCompatSpinner {
         return getSelectedEntries();
     }
 
-    private OnMultiChoiceClickListener mOnMultiChoiceClickListener = new OnMultiChoiceClickListener() {
+    private final OnMultiChoiceClickListener mOnMultiChoiceClickListener = new OnMultiChoiceClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which, boolean isChecked) {
             selected[which] = isChecked;
@@ -75,7 +75,7 @@ public class MultiSpinner extends android.support.v7.widget.AppCompatSpinner {
         return selectedEntries;
     }
 
-    private DialogInterface.OnClickListener mOnClickListener = new DialogInterface.OnClickListener() {
+    private final DialogInterface.OnClickListener mOnClickListener = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
             // build new spinner text & delimiter management

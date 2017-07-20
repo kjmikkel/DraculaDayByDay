@@ -4,8 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class SortValue implements Parcelable {
-    private String column;
-    private boolean asc;
+    private final String column;
+    private final boolean asc;
 
     public SortValue(String column, boolean asc) {
         this.column = column;
