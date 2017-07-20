@@ -73,7 +73,7 @@ public class EntryListActivity extends AppCompatActivity {
     private SwipeRefreshLayout mSwipeContainer;
     private SimpleItemRecyclerViewAdapter mSimpleItemAdapter;
 
-    static final int FILTER_REQUEST = 1; // The filter code
+    private static final int FILTER_REQUEST = 1; // The filter code
 
 
     private static SqlConstraintFactory constraintFactory;

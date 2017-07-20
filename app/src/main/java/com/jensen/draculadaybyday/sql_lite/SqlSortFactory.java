@@ -18,7 +18,7 @@ public class SqlSortFactory implements Parcelable {
         sortingOrder = new UniqueValueList<>();
     }
 
-    public SqlSortFactory(Parcel in) {
+    private SqlSortFactory(Parcel in) {
         sortingOrder = new UniqueValueList<>();
         try {
             List<SortValue> list = new LinkedList<>();
