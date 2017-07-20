@@ -1,14 +1,9 @@
 <resources>
     <string name="app_name">DraculaDayByDay</string>
     <string name="title_entry_detail">Entry Detail</string>
-    <string name="title_item_list">Items</string>
-    <string name="title_item_detail">Item Detail</string>
-    <string name="title_diary_entry_list">DiaryEntries</string>
-    <string name="title_diary_entry_detail">DiaryEntry Detail</string>
 
     <!-- Menu -->
     <string name="menu_filter_text">Filter</string>
-    <string name="menu_sort_text">Sort</string>
     <string name="menu_preferences_text">Preferences</string>
     <string name="menu_about_text">About</string>
 
@@ -117,8 +112,6 @@
     <string name="pref_summary_vibrate">Vibrate when a new entry has been unlocked</string>
 
     <!-- Notification times  -->
-    <string name="pref_time_for_notification_titles">Time for notification</string>
-
     <string name="pref_notification_set">Set</string>
     <string name="pref_notification_cancel">Cancel</string>
 
@@ -132,7 +125,7 @@
     <string name="pref_notification_summary_setat">Notifications of new messages will happen at %s</string>
     <string name="pref_notification_summary_interval">Notifications will happen randomly between %% and %%</string>
 
-    <string name="pref_title_notification">Set Time</string>
+    <string name="pref_title_notification">Set time for notification</string>
     <string name="pref_key_notification">notifications_when_to_notify</string>
     <string name="pref_summary_notification">Basic summary</string>
 
