@@ -41,7 +41,7 @@
 
     <!-- Buttons -->
     <string name="filter_cancel_button">Cancel</string>
-    <string name="filter_ok_button">Ok</string>
+    <string name="filter_ok_button">OK</string>
 
     <!-- Strings related to Preferences -->
 

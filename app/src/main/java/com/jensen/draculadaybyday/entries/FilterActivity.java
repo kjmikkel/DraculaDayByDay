@@ -96,7 +96,7 @@ public class FilterActivity extends AppCompatActivity {
                     LayoutInflater layoutInflator = LayoutInflater.from(getBaseContext());
                     RelativeLayout parentLayout = (RelativeLayout)findViewById(R.id.date_rl_view);
 
-                    RelativeLayout dateLayout = (RelativeLayout) layoutInflator.inflate(R.layout.single_date, null, false);
+                    RelativeLayout dateLayout = (RelativeLayout) layoutInflator.inflate(R.layout.single_date, parentLayout, false);
                     TextView textView = (TextView)dateLayout.findViewById(R.id.single_label);
                     textView.setText(getResources().getString(labelTextId));
 
@@ -127,7 +127,7 @@ public class FilterActivity extends AppCompatActivity {
                     LayoutInflater layoutInflator = LayoutInflater.from(getBaseContext());
                     RelativeLayout parentLayout = (RelativeLayout)findViewById(R.id.date_rl_view);
 
-                    RelativeLayout dateLayout = (RelativeLayout) layoutInflator.inflate(R.layout.between_dates, null, false);
+                    RelativeLayout dateLayout = (RelativeLayout) layoutInflator.inflate(R.layout.between_dates, parentLayout, false);
 
                     final Calendar initialDay = Calendar.getInstance();
                     initialDay.set(Calendar.DAY_OF_MONTH, 3);
@@ -268,7 +268,7 @@ public class FilterActivity extends AppCompatActivity {
                     RelativeLayout parentLayout = (RelativeLayout)findViewById(R.id.sort_top_rl);
 
                     LayoutInflater layoutInflator = LayoutInflater.from(getBaseContext());
-                    RelativeLayout rlNew = (RelativeLayout) layoutInflator.inflate(R.layout.sort_item, null, false);
+                    RelativeLayout rlNew = (RelativeLayout) layoutInflator.inflate(R.layout.sort_item, parentLayout, false);
 
                     rlNew.setId(newSortId);
                     idList.add(newSortId);
@@ -281,8 +281,7 @@ public class FilterActivity extends AppCompatActivity {
                     parentLayout.addView(rlNew, layoutParams);
 
                     //region Set the first remove button to be enabled
-                    RelativeLayout firstLayout = (RelativeLayout)findViewById(idList.get(0));
-                    Button firstRemoveButton = getButton(newSortId, R.id.sort_spinner_button);
+                    Button firstRemoveButton = getButton(idList.get(0), R.id.sort_spinner_button);
                     firstRemoveButton.setEnabled(true);
 
                     // Set the tag and onClick value for the ImageView
@@ -294,6 +293,8 @@ public class FilterActivity extends AppCompatActivity {
                     Button removeButton = getButton(newSortId, R.id.sort_spinner_button);
                     removeButton.setTag(newSortId);
                     removeButton.setOnClickListener(clickRemoveListener);
+
+
                     //endregion
                 }
             });
