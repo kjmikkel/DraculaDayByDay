@@ -1,44 +1,90 @@
 package com.jensen.draculadaybyday.sql_lite;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.text.TextUtils;
+import android.util.Log;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
 
-class SqlSortFactory {
+public class SqlSortFactory implements Parcelable {
 
-    private final UniqueValueList<String> sortingOrder;
+    private final UniqueValueList<SortValue> sortingOrder;
 
     public SqlSortFactory() {
         sortingOrder = new UniqueValueList<>();
     }
 
-    public void bookOrder() {
-        sortingOrder.add(FragmentEntryDatabaseHandler.ENTRY_SEQ_NUM);
+    public SqlSortFactory(Parcel in) {
+        sortingOrder = new UniqueValueList<>();
+        try {
+            List<SortValue> list = new LinkedList<>();
+            in.readList(list, SortValue.class.getClassLoader());
+
+            sortingOrder.addAll(list);
+        } catch (Exception e) {
+            Log.d("Parcel prob", e.getMessage());
+        }
     }
 
-    public void chapterOrder() {
-        sortingOrder.add(FragmentEntryDatabaseHandler.CHAPTER);
+    public void bookOrder(boolean asc) {
+        sortingOrder.add(new SortValue(FragmentEntryDatabaseHandler.ENTRY_SEQ_NUM, asc));
     }
 
-    public void personOrder() {
-        sortingOrder.add(FragmentEntryDatabaseHandler.PERSON);
+    public void chapterOrder(boolean asc) {
+        sortingOrder.add(new SortValue(FragmentEntryDatabaseHandler.CHAPTER, asc));
     }
 
-    public void dateOrder() {
-        sortingOrder.add(FragmentEntryDatabaseHandler.DATE);
+    public void personOrder(boolean asc) {
+        sortingOrder.add(new SortValue(FragmentEntryDatabaseHandler.PERSON, asc));
     }
 
-    public void entryType() {
-        sortingOrder.add(FragmentEntryDatabaseHandler.TYPE);
+    public void dateOrder(boolean asc) {
+        sortingOrder.add(new SortValue(FragmentEntryDatabaseHandler.DATE, asc));
+    }
+
+    public void entryType(boolean asc) {
+        sortingOrder.add(new SortValue(FragmentEntryDatabaseHandler.TYPE, asc));
+    }
+
+    public void readType(boolean asc) {
+        sortingOrder.add(new SortValue(FragmentEntryDatabaseHandler.UNREAD, asc));
     }
 
     public String getSortOrder() {
         return TextUtils.join(", ", sortingOrder);
+
     }
 
-    private class UniqueValueList<E> extends LinkedList<E> {
+    public void writeToParcel(Parcel out, int flags) {
+        LinkedList<SortValue> list = new LinkedList<>();
+        for(SortValue item : sortingOrder) {
+            list.add(item);
+        }
+        out.writeList(list);
+    }
 
+    public int describeContents () {
+        return 0;
+    }
+
+    public static final Parcelable.Creator<SqlSortFactory> CREATOR
+            = new Parcelable.Creator<SqlSortFactory>() {
+
+        public SqlSortFactory createFromParcel(Parcel in) {
+            return new SqlSortFactory(in);
+        }
+
+        public SqlSortFactory[] newArray(int size) {
+            return new SqlSortFactory[size];
+        }
+    };
+
+    private class UniqueValueList<E> extends LinkedList<E> {
         final HashMap<E, Integer> recallValue;
 
         public UniqueValueList() {
@@ -55,11 +101,19 @@ class SqlSortFactory {
                 recallValue.remove(item);
                 addCorrectly = false;
             }
-
-            return addCorrectly && super.add(item);
-
+            // Add the item to the hashmap
+            recallValue.put(item, 1);
+            boolean addResult = super.add(item);
+            return addResult && addCorrectly;
         }
 
+        @Override
+        public boolean addAll(Collection<? extends E> items) {
+            boolean addCorrectly = true;
+            for (E item : items) {
+                addCorrectly &= add(item);
+            }
+            return addCorrectly;
+        }
     }
-
 }

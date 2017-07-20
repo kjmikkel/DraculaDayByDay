@@ -321,30 +321,9 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
         return entries;
     }
 
-    public List<Entry> getDiaryEntriesBeforeDate(Calendar date) {
-        List<Entry> entries = null;
-        try {
-            date.set(Calendar.YEAR, 1893);
-
-            SqlConstraintFactory constraintFactory = new SqlConstraintFactory();
-            constraintFactory.unlocked(true);
-
-            SqlSortFactory sortFactory = new SqlSortFactory();
-            sortFactory.dateOrder();
-            sortFactory.bookOrder();
-            entries = getCheapEntryFromDatabase(constraintFactory.getConstraint(), constraintFactory.getValues(), sortFactory.getSortOrder());
-        } catch (Exception e) {
-            Log.d("DB error", e.getMessage());
-        }
-
-        return entries;
-    }
-
     // Update the correct
     public void unlockEntriesBeforeDate(Calendar date) {
         try {
-            date.set(Calendar.YEAR, 1893);
-
             SqlConstraintFactory constraintFactory = new SqlConstraintFactory();
             constraintFactory.beforeDate(date);
             constraintFactory.unlocked(false);

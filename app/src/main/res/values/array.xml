@@ -10,16 +10,15 @@
         <item>No specific date</item>
         <item>Exact date</item>
         <item>Before date</item>
+        <item>After date</item>
         <item>Between dates</item>
     </string-array>
 
     <string-array name="filter_persons_entries">
-        <item>No specific person</item>
+        <item>All</item>
         <item>Jonathan Harker</item>
         <item>Mina Murray</item>
         <item>Mina Harker</item>
-        <item>Mina Murray or Mina Harker</item>
-        <item>Lucy Westenra</item>
         <item>Lucy Westenra</item>
         <item>Quiencey Morris</item>
         <item>Arthur Holmwood</item>
@@ -35,7 +34,7 @@
     </string-array>
 
     <string-array name="filter_types_entries">
-        <item>No specific type</item>
+        <item>All</item>
         <item>Diary Entry</item>
         <item>Letter</item>
         <item>Telegram</item>
@@ -45,7 +44,7 @@
     </string-array>
 
     <string-array name="filter_chapters_entries">
-        <item>All chapters</item>
+        <item>All</item>
         <item>Chapter 1</item>
         <item>Chapter 2</item>
         <item>Chapter 3</item>
@@ -81,5 +80,12 @@
         <item>Only unread entries</item>
     </string-array>
 
-
+    <string-array name="sort_by_entries">
+        <item>Book order</item>
+        <item>Chapter</item>
+        <item>Person</item>
+        <item>Date</item>
+        <item>Type</item>
+        <item>Read/unread</item>
+    </string-array>
 </resources>

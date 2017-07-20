@@ -6,7 +6,7 @@
 
     <item
         android:id="@+id/entry_list_filter"
-        android:icon="@drawable/ic_filter_list_black_24dp"
+        android:icon="@drawable/ic_filter"
         android:orderInCategory="1"
         android:title="@string/menu_filter_text"
         yourapp:showAsAction="always" />

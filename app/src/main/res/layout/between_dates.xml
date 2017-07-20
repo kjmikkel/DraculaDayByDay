@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/set_date"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/between_dates_first_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/filter_between_date_one"
+        android:layout_marginEnd="@dimen/text_medium_margin"/>
+    <Button
+        android:id="@+id/between_dates_start_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/between_dates_first_label"
+        android:layout_marginEnd="@dimen/text_medium_margin"/>
+    <TextView
+        android:id="@+id/between_dates_second_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/between_dates_start_button"
+        android:text="@string/filter_between_date_two"
+        android:layout_marginEnd="@dimen/text_medium_margin"/>
+    <Button
+        android:id="@+id/between_dates_end_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/between_dates_second_label"/>
+</RelativeLayout>

@@ -23,6 +23,8 @@ import com.jensen.draculadaybyday.entry.Entry;
 import com.jensen.draculadaybyday.R;
 import com.jensen.draculadaybyday.sql_lite.FragmentEntryDatabaseHandler;
 import com.jensen.draculadaybyday.preferences.DraculaPreferences;
+import com.jensen.draculadaybyday.sql_lite.SqlConstraintFactory;
+import com.jensen.draculadaybyday.sql_lite.SqlSortFactory;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -70,10 +72,13 @@ public class EntryListActivity extends AppCompatActivity {
 
     private SwipeRefreshLayout mSwipeContainer;
     private SimpleItemRecyclerViewAdapter mSimpleItemAdapter;
-/*
-    private SqlConstraintFactory constraintFactory,
-    private SqlSortFactory sortFactory
-*/
+
+    static final int FILTER_REQUEST = 1; // The filter code
+
+
+    private static SqlConstraintFactory constraintFactory;
+    private static SqlSortFactory sortFactory;
+
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
      * device.
@@ -92,7 +97,7 @@ public class EntryListActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.entry_list_filter:
                 Intent filter = new Intent(EntryListActivity.this, FilterActivity.class);
-                startActivity(filter);
+                startActivityForResult(filter, FILTER_REQUEST);
                 return true;
             case R.id.entry_list_general_preferences:
                 Intent preferences = new Intent(EntryListActivity.this, DraculaPreferences.class);
@@ -104,6 +109,28 @@ public class EntryListActivity extends AppCompatActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+        if (requestCode == FILTER_REQUEST) {
+            // Make sure the request was successful
+            if (resultCode == RESULT_OK) {
+                // The user picked a new filter.
+                // The Intent's data Uri identifies which contact was selected.
+                constraintFactory = data.getParcelableExtra("constraints");
+                constraintFactory.unlocked(true);
+                sortFactory = data.getParcelableExtra("sort");
+
+                //region Set entries
+                // Get the entries
+                List<Entry> entries = mFragmentEntryHandler.getEntries(constraintFactory, sortFactory);
+                mSimpleItemAdapter.clear();
+                mSimpleItemAdapter.addAll(entries);
+                //endregion
+            }
         }
     }
 
@@ -121,6 +148,17 @@ public class EntryListActivity extends AppCompatActivity {
         setDefaultPreferences();
 
         setContentView(R.layout.activity_entry_list);
+
+
+        // Set the sort and constraint factories (only once)
+        if (constraintFactory == null) {
+            constraintFactory = new SqlConstraintFactory();
+            constraintFactory.unlocked(true);
+
+            sortFactory = new SqlSortFactory();
+            sortFactory.dateOrder(true);
+            sortFactory.bookOrder(true);
+        }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -424,13 +462,14 @@ public class EntryListActivity extends AppCompatActivity {
         int dateOfMonth = currentDate.get(Calendar.DAY_OF_MONTH);
 
         Calendar calendar = GregorianCalendar.getInstance();
-        calendar.set(1897, month - 1, dateOfMonth);
+        calendar.set(1893, month - 1, dateOfMonth);
 
         // Check if there are new entries available
+        mFragmentEntryHandler.getEntries(constraintFactory, sortFactory);
         mFragmentEntryHandler.unlockEntriesBeforeDate(calendar);
 
         // Get the entries
-        List<Entry> entries = mFragmentEntryHandler.getDiaryEntriesBeforeDate(calendar);
+        List<Entry> entries = mFragmentEntryHandler.getEntries(constraintFactory, sortFactory);
 
         if (update) {
             mSimpleItemAdapter.clear();

@@ -1,5 +1,7 @@
 package com.jensen.draculadaybyday.sql_lite;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.text.TextUtils;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -7,7 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
-class SqlConstraintFactory {
+public class SqlConstraintFactory implements Parcelable {
     // The list that will be joined
     private final List<String> constraints;
     private final List<String> values;
@@ -18,6 +20,14 @@ class SqlConstraintFactory {
     public SqlConstraintFactory() {
         constraints = new LinkedList<>();
         values = new LinkedList<>();
+    }
+
+    private SqlConstraintFactory(Parcel in) {
+        constraints = new LinkedList<>();
+        in.readStringList(constraints);
+
+        values = new LinkedList<>();
+        in.readStringList(values);
     }
 
     //region Date constraints
@@ -55,35 +65,20 @@ class SqlConstraintFactory {
     //endregion
 
 
-    //region Person constraints
-    public void specificPerson(String personName) {
-        specificConstraint(FragmentEntryDatabaseHandler.PERSON, personName);
-    }
-
+    // Person constraints
     public void multiplePersons(List<String> personNames) {
         multipleNonExclusive(FragmentEntryDatabaseHandler.PERSON, personNames);
     }
-    //endregion
 
-    //region Media constraint
-    public void specificMedium(String typeName) {
-        specificConstraint(FragmentEntryDatabaseHandler.TYPE, typeName);
-    }
-
-    public void multipleMediums(List<String> typeNames) {
+    //Media constraint
+    public void multipleTypes(List<String> typeNames) {
         multipleNonExclusive(FragmentEntryDatabaseHandler.TYPE, typeNames);
     }
-    //endregion
 
-    //region Chapters
-    public void specificChapter(int chapter) {
-        specificConstraint(FragmentEntryDatabaseHandler.CHAPTER, chapter);
-    }
-
-    public void multipleChapters(List<Integer> chapters) {
+    //Chapter constraint
+    public void multipleChapters(List<String> chapters) {
         multipleNonExclusive(FragmentEntryDatabaseHandler.CHAPTER, chapters);
     }
-    //endregion
 
     public void readStatus(boolean unread) {
         int readInt = unread ? 1 : 0;
@@ -131,4 +126,25 @@ class SqlConstraintFactory {
 
         return valArray;
     }
+
+    public void writeToParcel(Parcel out, int flags) {
+        out.writeStringList(constraints);
+        out.writeStringList(values);
+    }
+
+    public int describeContents () {
+        return 0;
+    }
+
+    public static final Parcelable.Creator<SqlConstraintFactory> CREATOR
+            = new Parcelable.Creator<SqlConstraintFactory>() {
+
+        public SqlConstraintFactory createFromParcel(Parcel in) {
+            return new SqlConstraintFactory(in);
+        }
+
+        public SqlConstraintFactory[] newArray(int size) {
+            return new SqlConstraintFactory[size];
+        }
+    };
 }

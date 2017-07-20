@@ -3,18 +3,36 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <!-- Date -->
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    <!-- Filter -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="@string/filter_title"
+        android:layout_marginBottom="@dimen/text_medium_margin"
+        android:textSize="@dimen/text_headline_size" />
+
+    <!-- Date -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/date_rl_view">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/date_textview"
         android:text="@string/filter_date_label" />
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/filter_date_spinner"
+        android:layout_below="@id/date_textview"
         android:entries="@array/filter_date_entries" />
+    </RelativeLayout>
 
     <!-- Person -->
     <TextView
@@ -44,7 +62,7 @@
         android:layout_height="wrap_content"
         android:text="@string/filter_chapters_label"/>
     <com.jensen.draculadaybyday.presentation.MultiSpinner
-        android:id="@+id/filter_chapters"
+        android:id="@+id/filter_chapter_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:entries="@array/filter_chapters_entries"/>
@@ -58,7 +76,62 @@
         android:id="@+id/filter_read_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:entries="@array/filter_read_entries"/>
+        android:entries="@array/filter_read_entries" />
+    </LinearLayout>
 
+    <!-- Sort -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="3">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/text_margin"
+        android:layout_marginBottom="@dimen/text_medium_margin"
+        android:text="@string/sort_title"
+        android:textSize="@dimen/text_headline_size" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/sort_top_rl">
+                <include android:id="@+id/sort_spinner_1" layout="@layout/sort_item" />
+            </RelativeLayout>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/sort_add_button"
+                android:text="@string/sort_add"
+                android:layout_below="@+id/sort_top_rl"/>
+        </RelativeLayout>
+    </android.support.v4.widget.NestedScrollView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/text_margin" >
+        <Button
+            android:id="@+id/cancel_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/filter_cancel_button"
+            android:layout_weight="1"/>
+        <Button
+            android:id="@+id/ok_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/filter_ok_button"
+            android:layout_weight="1" />
+    </LinearLayout>
 
 </LinearLayout>
