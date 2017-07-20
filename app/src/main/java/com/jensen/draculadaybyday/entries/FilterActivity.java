@@ -403,18 +403,25 @@ public class FilterActivity extends AppCompatActivity {
                         String spinnerValue = (String)spinVal.getSelectedItem();
                         boolean ascendingOrder = (boolean)getImageView(idVal, R.id.sort_order_button).getTag();
 
-                        if (spinnerValue.equals("Book order")) {
-                            sortFactory.bookOrder(ascendingOrder);
-                        } else if (spinnerValue.equals("Chapter")) {
-                            sortFactory.chapterOrder(ascendingOrder);
-                        } else if (spinnerValue.equals("Person")) {
-                            sortFactory.personOrder(ascendingOrder);
-                        } else if (spinnerValue.equals("Date")) {
-                            sortFactory.dateOrder(ascendingOrder);
-                        } else if (spinnerValue.equals("Type")) {
-                            sortFactory.entryType(ascendingOrder);
-                        } else if (spinnerValue.equals("Read/unread")) {
-                            sortFactory.readType(ascendingOrder);
+                        switch (spinnerValue) {
+                            case "Book order":
+                                sortFactory.bookOrder(ascendingOrder);
+                                break;
+                            case "Chapter":
+                                sortFactory.chapterOrder(ascendingOrder);
+                                break;
+                            case "Person":
+                                sortFactory.personOrder(ascendingOrder);
+                                break;
+                            case "Date":
+                                sortFactory.dateOrder(ascendingOrder);
+                                break;
+                            case "Type":
+                                sortFactory.entryType(ascendingOrder);
+                                break;
+                            case "Read/Unread":
+                                sortFactory.readType(ascendingOrder);
+                                break;
                         }
                     }
 

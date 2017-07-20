@@ -86,6 +86,6 @@
         <item>Person</item>
         <item>Date</item>
         <item>Type</item>
-        <item>Read/unread</item>
+        <item>Read/Unread</item>
     </string-array>
 </resources>
