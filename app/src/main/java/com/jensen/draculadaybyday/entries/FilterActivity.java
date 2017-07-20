@@ -40,14 +40,14 @@ public class FilterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         try {
             setContentView(R.layout.activity_filter);
-/*
+
             ActionBar mActionBar = getSupportActionBar();
 
             if (mActionBar != null) {
                 mActionBar.setDisplayHomeAsUpEnabled(true);
                 mActionBar.setDisplayShowHomeEnabled(true);
             }
-*/
+
             //region Filter layout
             final Spinner dateSpinner = (Spinner)findViewById(R.id.filter_date_spinner);
             dateSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -213,8 +213,10 @@ public class FilterActivity extends AppCompatActivity {
                     boolean ascending = !(boolean)view.getTag();
                     if (ascending) {
                         view.setImageDrawable(getResources().getDrawable(R.drawable.ic_sort_ascending, getTheme()));
+                        view.setContentDescription(getResources().getString(R.string.sort_asc_description));
                     } else {
                         view.setImageDrawable(getResources().getDrawable(R.drawable.ic_sort_descending, getTheme()));
+                        view.setContentDescription(getResources().getString(R.string.sort_desc_description));
                     }
                     view.setTag(ascending);
                 }

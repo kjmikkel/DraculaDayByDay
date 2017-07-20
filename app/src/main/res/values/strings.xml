@@ -35,6 +35,8 @@
 
     <!-- Sort button -->
     <string name="sort_add">Add</string>
+    <string name="sort_asc_description">Ascending order</string>
+    <string name="sort_desc_description">Descending order</string>
     <string name="sort_remove">Remove</string>
 
     <!-- Buttons -->

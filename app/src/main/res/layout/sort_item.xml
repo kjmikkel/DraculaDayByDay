@@ -17,6 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_toEndOf="@id/sort_spinner"
         android:layout_marginTop="@dimen/text_medium_margin"
+        android:contentDescription="@string/sort_asc_description"
         android:src="@drawable/ic_sort_ascending"/>
 
     <Button
