@@ -35,6 +35,7 @@ public class FilterActivity extends AppCompatActivity {
     private static final String DATE_FORMAT = "dd/MM/yyyy";
 
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -241,11 +242,9 @@ public class FilterActivity extends AppCompatActivity {
                         ((ViewGroup) rl.getParent()).removeView(rl);
 
                         // Remove the id from the list
-                        try {
-                            idList.remove((Object) layoutId);
-                        } catch (Exception e) {
-                            Log.d("UI error", e.getMessage());
-                        }
+                        //noinspection SuspiciousMethodCalls
+                        idList.remove((Object) layoutId);
+
                         // if there is only one layout left, you cannot remove it
                         if (idList.size() == 1) {
                             getButton(idList.get(0), R.id.sort_spinner_button).setEnabled(false);
@@ -438,16 +437,19 @@ public class FilterActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressWarnings("ConstantConditions")
     private Button getButton(int layoutId, int buttonId) {
         RelativeLayout rl = (RelativeLayout)findViewById(layoutId);
         return (Button)rl.findViewById(buttonId);
     }
 
+    @SuppressWarnings("ConstantConditions")
     private ImageView getImageView(int layoutId, int imageViewId) {
         RelativeLayout rl = (RelativeLayout)findViewById(layoutId);
         return (ImageView)rl.findViewById(imageViewId);
     }
 
+    @SuppressWarnings("ConstantConditions")
     private Spinner getSpinner(int layoutId, int spinnerId) {
         RelativeLayout rl = (RelativeLayout)findViewById(layoutId);
         return (Spinner)rl.findViewById(spinnerId);
