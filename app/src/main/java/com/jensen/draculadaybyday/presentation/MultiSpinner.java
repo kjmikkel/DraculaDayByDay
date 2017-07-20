@@ -110,6 +110,6 @@ public class MultiSpinner extends android.support.v7.widget.AppCompatSpinner {
     }
 
     public interface MultiSpinnerListener {
-        public void onItemsSelected(boolean[] selected);
+        void onItemsSelected(boolean[] selected);
     }
 }
