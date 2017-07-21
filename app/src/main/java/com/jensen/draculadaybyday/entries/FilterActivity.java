@@ -241,11 +241,40 @@ public class FilterActivity extends AppCompatActivity {
                         RelativeLayout rl = (RelativeLayout) findViewById(layoutId);
                         ((ViewGroup) rl.getParent()).removeView(rl);
 
-                        // Remove the id from the list - I cast
+                        // We need to ensure that the relative layout is not messed up
+                        // If there are at least there sorting objects left a, b, and c,
+                        // (let x > y indicate that y is directly below x) and a > b > c, a and we
+                        // remove b, then we must have a > c
+                        if (3 <= idList.size()) {
+                            int removeIndex = idList.indexOf((Object)layoutId);
+                            // We should never do this for the first or the last element in the list
+                            if (0 < removeIndex && removeIndex < idList.size() - 1 ) {
+
+                                // The indexes
+                                int idAboveIndex = removeIndex - 1;
+                                int idBelowIndex = removeIndex + 1;
+
+                                // The ids
+                                int idAbove = idList.get(idAboveIndex);
+                                int idBelow = idList.get(idBelowIndex);
+
+                                RelativeLayout rlBelow = (RelativeLayout)findViewById(idBelow);
+
+                                RelativeLayout.LayoutParams aboveLayoutParams
+                                        = new RelativeLayout.LayoutParams(
+                                        ViewGroup.LayoutParams.MATCH_PARENT,
+                                        ViewGroup.LayoutParams.WRAP_CONTENT
+                                );
+                                aboveLayoutParams.addRule(RelativeLayout.BELOW, idAbove);
+                                rlBelow.setLayoutParams(aboveLayoutParams);
+                            }
+                        }
+
+                        // Remove the id from the list - I cast to object so it removes the integer, not the object at the position
                         //noinspection SuspiciousMethodCalls
                         idList.remove((Object)layoutId);
 
-                        // if there is only one layout left, you cannot remove it
+                        // if there is only one layout left, we disable its ability to remove itself
                         if (idList.size() == 1) {
                             getButton(idList.get(0)).setEnabled(false);
                         }
@@ -292,8 +321,6 @@ public class FilterActivity extends AppCompatActivity {
                     Button removeButton = getButton(newSortId);
                     removeButton.setTag(newSortId);
                     removeButton.setOnClickListener(clickRemoveListener);
-
-
                     //endregion
                 }
             });
