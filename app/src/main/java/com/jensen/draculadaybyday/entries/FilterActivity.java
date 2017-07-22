@@ -2,10 +2,12 @@ package com.jensen.draculadaybyday.entries;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +22,7 @@ import android.widget.TextView;
 
 import com.jensen.draculadaybyday.R;
 import com.jensen.draculadaybyday.presentation.MultiSpinner;
+import com.jensen.draculadaybyday.sql_lite.Constraint;
 import com.jensen.draculadaybyday.sql_lite.SqlConstraintFactory;
 import com.jensen.draculadaybyday.sql_lite.SqlSortFactory;
 
@@ -31,14 +34,17 @@ import java.util.Locale;
 
 public class FilterActivity extends AppCompatActivity {
 
+    public final static String CONSTRAINTS_INTENT_KEY = "constraints";
+    public final static String SORTING_INTENT_KEY = "sorting";
+
     private final List<Integer> idList = new ArrayList<>();
     private static final String DATE_FORMAT = "dd/MM/yyyy";
-
 
     @SuppressWarnings("ConstantConditions")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         try {
             setContentView(R.layout.activity_filter);
 
@@ -51,7 +57,7 @@ public class FilterActivity extends AppCompatActivity {
 
             //region Filter layout
             final Spinner dateSpinner = (Spinner)findViewById(R.id.filter_date_spinner);
-            dateSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            AdapterView.OnItemSelectedListener dateSpinnerSelectedListener = new AdapterView.OnItemSelectedListener() {
                 private void removeOldView() {
                     RelativeLayout rl = (RelativeLayout)findViewById(R.id.set_date);
                     if (rl != null) {
@@ -75,7 +81,7 @@ public class FilterActivity extends AppCompatActivity {
                         };
 
                         DatePickerDialog dlg = new DatePickerDialog(FilterActivity.this, setListener,
-                               calendar.get(Calendar.YEAR),
+                                calendar.get(Calendar.YEAR),
                                 calendar.get(Calendar.MONTH),
                                 calendar.get(Calendar.DAY_OF_MONTH)) {
                             @Override
@@ -197,7 +203,9 @@ public class FilterActivity extends AppCompatActivity {
                 public void onNothingSelected(AdapterView<?> parent) {
 
                 }
-            });
+            };
+
+            dateSpinner.setOnItemSelectedListener(dateSpinnerSelectedListener);
             //endregion
 
             //region Sort layout
@@ -236,7 +244,7 @@ public class FilterActivity extends AppCompatActivity {
                     // but just in case
                     if (1 < idList.size()) {
                         // Find and remove the view
-                        int layoutId = (int) v.getTag();
+                        int layoutId = (Integer) v.getTag();
 
                         RelativeLayout rl = (RelativeLayout) findViewById(layoutId);
                         ((ViewGroup) rl.getParent()).removeView(rl);
@@ -246,7 +254,7 @@ public class FilterActivity extends AppCompatActivity {
                         // (let x > y indicate that y is directly below x) and a > b > c, a and we
                         // remove b, then we must have a > c
                         if (3 <= idList.size()) {
-                            int removeIndex = idList.indexOf((Object)layoutId);
+                            int removeIndex = idList.indexOf(layoutId);
                             // We should never do this for the first or the last element in the list
                             if (0 < removeIndex && removeIndex < idList.size() - 1 ) {
 
@@ -419,7 +427,7 @@ public class FilterActivity extends AppCompatActivity {
                     }
                     //endregion
 
-                    returnIntent.putExtra("constraints", constraintFactory);
+                    returnIntent.putExtra(CONSTRAINTS_INTENT_KEY, constraintFactory);
                     //endregion
 
                     //region Sort
@@ -451,17 +459,139 @@ public class FilterActivity extends AppCompatActivity {
                         }
                     }
 
-                    returnIntent.putExtra("sort", sortFactory);
+                    returnIntent.putExtra(SORTING_INTENT_KEY, sortFactory);
                     //endregion
 
                     setResult(Activity.RESULT_OK, returnIntent);
                     finish();
                 }
             });
-
         } catch (Exception e) {
             Log.d("Filter exception", e.getMessage());
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        Spinner dateSpinner = (Spinner)findViewById(R.id.filter_date_spinner);
+        int dateSelectedPostion = dateSpinner.getSelectedItemPosition();
+
+        outState.putInt("dateSelectedPos", dateSelectedPostion);
+        if (1 <= dateSelectedPostion && dateSelectedPostion <= 3) {
+            final Button dateButton = (Button) findViewById(R.id.single_button);
+            String text = (String)dateButton.getText();
+            outState.putString("date", text);
+        }
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        Spinner dateSpinner = (Spinner)findViewById(R.id.filter_date_spinner);
+        int dateSelectedPosition = savedInstanceState.getInt("dateSelectedPos");
+        dateSpinner.setSelection(dateSelectedPosition);
+        if (1 <= dateSelectedPosition && dateSelectedPosition <= 3) {
+            final Button dateButton = (Button) findViewById(R.id.single_button);
+            String text = (String) savedInstanceState.get("date");
+            dateButton.setText(text);
+        }
+    }
+
+    @Override
+    public void onPostCreate (Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+
+    }
+
+    @Override
+    public void onRestart() {
+        super.onRestart();
+
+        try {
+            //region Change the GUI to fit the values given in the intent
+            Intent intent = getIntent();
+
+            //region Filter
+            SqlConstraintFactory constraintFactory = (SqlConstraintFactory) intent.getExtras().get(CONSTRAINTS_INTENT_KEY);
+            // String[] constraints = constraintFactory.getConstraint().split("AND");
+            List<Constraint> constraints = constraintFactory.getConstraintEnums();
+            String[] values = constraintFactory.getValues();
+
+            int valueIndex = 0;
+
+            Spinner dateSpinner = (Spinner) findViewById(R.id.filter_date_spinner);
+
+            for (int constraintIndex = 0; constraintIndex < constraints.size(); constraintIndex++) {
+                switch (constraints.get(constraintIndex)) {
+                    // Date
+                    case EXACT_DATE:
+                        dateSpinner.setSelection(1, true);
+                        // dateSpinnerSelectedListener.onItemSelected(null, dateSpinner, 1, -1);
+
+
+//                        dateSpinner.setSelected(true);
+//                        dateSpinner.setSelection(1);
+
+                        Calendar dateRep = getCalendarFromString(values[valueIndex]);
+                        /*
+                        RelativeLayout rl = (RelativeLayout) findViewById(R.id.set_date);
+                        Button dateButton = (Button) findViewById(R.id.single_button);
+                        dateButton.setText(values[valueIndex]);
+                        dateButton.setTag(dateRep);
+                        */
+                        break;
+                    case BEFORE_DATE:
+                        //             dateSpinner.setSelection(2);
+                        break;
+                    case AFTER_DATE:
+                        //           dateSpinner.setSelection(3);
+                        break;
+                    case BETWEEN_DATE:
+                        //           dateSpinner.setSelection(4);
+
+
+                        // Between dates uses 2 values, so we need use an extra one
+                        valueIndex++;
+                        break;
+                    // Type
+                    case TYPE:
+                        break;
+                    // Person
+                    case PERSON:
+                        break;
+                    // Chapter
+                    case CHAPTER:
+                        break;
+                    case READ_OR_UNREAD:
+                        break;
+                }
+                valueIndex++;
+            }
+
+
+            //endregion
+
+            //region Sort
+
+            //endregion
+            //endregion
+        } catch (Exception e) {
+            Log.d("PostCreate", e.getMessage());
+        }
+    }
+
+    private Calendar getCalendarFromString(String dateRep) {
+        String[] rep = dateRep.split("-");
+        int year = Integer.valueOf(rep[0]);
+        int month = Integer.valueOf(rep[1]);
+        int day = Integer.valueOf(rep[2].substring(0, 2));
+
+        Calendar cal = Calendar.getInstance();
+        cal.set(day, month, year);
+        return cal;
     }
 
     @SuppressWarnings("ConstantConditions")

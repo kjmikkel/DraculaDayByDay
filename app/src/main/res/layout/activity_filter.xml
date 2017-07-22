@@ -3,11 +3,20 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+    <!-- Filter -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-    <!-- Filter -->
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -92,9 +101,6 @@
         android:text="@string/sort_title"
         android:textSize="@dimen/text_headline_size" />
 
-    <android.support.v4.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
@@ -111,10 +117,10 @@
                 android:text="@string/sort_add"
                 android:layout_below="@+id/sort_top_rl"/>
         </RelativeLayout>
-    </android.support.v4.widget.NestedScrollView>
     </LinearLayout>
 
-    <LinearLayout
+    <!-- OK and cancel buttons -->
+            <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -135,5 +141,6 @@
             android:layout_weight="1"
             style="?android:attr/buttonBarButtonStyle"/>
     </LinearLayout>
-
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

@@ -75,7 +75,6 @@ public class EntryListActivity extends AppCompatActivity {
 
     private static final int FILTER_REQUEST = 1; // The filter code
 
-
     private static SqlConstraintFactory constraintFactory;
     private static SqlSortFactory sortFactory;
 
@@ -97,6 +96,8 @@ public class EntryListActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.entry_list_filter:
                 Intent filter = new Intent(EntryListActivity.this, FilterActivity.class);
+                filter.putExtra(FilterActivity.CONSTRAINTS_INTENT_KEY, constraintFactory);
+                filter.putExtra(FilterActivity.SORTING_INTENT_KEY, sortFactory);
                 startActivityForResult(filter, FILTER_REQUEST);
                 return true;
             case R.id.entry_list_general_preferences:
@@ -120,9 +121,9 @@ public class EntryListActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 // The user picked a new filter.
                 // The Intent's data Uri identifies which contact was selected.
-                constraintFactory = data.getParcelableExtra("constraints");
+                constraintFactory = data.getParcelableExtra(FilterActivity.CONSTRAINTS_INTENT_KEY);
                 constraintFactory.unlocked(true);
-                sortFactory = data.getParcelableExtra("sort");
+                sortFactory = data.getParcelableExtra(FilterActivity.SORTING_INTENT_KEY);
 
                 //region Set entries
                 // Get the entries
