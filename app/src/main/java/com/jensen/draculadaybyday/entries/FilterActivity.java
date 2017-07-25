@@ -2,12 +2,11 @@ package com.jensen.draculadaybyday.entries;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,6 +38,10 @@ public class FilterActivity extends AppCompatActivity {
 
     private final List<Integer> idList = new ArrayList<>();
     private static final String DATE_FORMAT = "dd/MM/yyyy";
+
+    //region Manipulate date picker
+
+    //endregion
 
     @SuppressWarnings("ConstantConditions")
     @Override
@@ -172,6 +175,9 @@ public class FilterActivity extends AppCompatActivity {
 
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    int val = 0;
+                    val++;
+
                     try {
                         switch (dateSpinner.getSelectedItemPosition()) {
                             case 0:
@@ -475,28 +481,127 @@ public class FilterActivity extends AppCompatActivity {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
+        //region Date spinner
         Spinner dateSpinner = (Spinner)findViewById(R.id.filter_date_spinner);
-        int dateSelectedPostion = dateSpinner.getSelectedItemPosition();
+        int dateSelectedPosition = dateSpinner.getSelectedItemPosition();
 
-        outState.putInt("dateSelectedPos", dateSelectedPostion);
-        if (1 <= dateSelectedPostion && dateSelectedPostion <= 3) {
-            final Button dateButton = (Button) findViewById(R.id.single_button);
-            String text = (String)dateButton.getText();
-            outState.putString("date", text);
+        outState.putInt("dateSelectedPos", dateSelectedPosition);
+        if (1 <= dateSelectedPosition && dateSelectedPosition <= 3) {
+            Button dateButton = (Button) findViewById(R.id.single_button);
+            outState.putString("date_text", (String) dateButton.getText());
+
+            Calendar cal = (Calendar)dateButton.getTag();
+            outState.putSerializable("dateCal", cal);
+        } else if (dateSelectedPosition == 4) {
+            Button dateButtonStart = (Button) findViewById(R.id.between_dates_start_button);
+            Button dateButtonEnd = (Button) findViewById(R.id.between_dates_end_button);
+
+            outState.putString("date_start_text", (String)dateButtonStart.getText());
+            outState.putString("date_end_text", (String)dateButtonEnd.getText());
+
+            Calendar calStart = (Calendar)dateButtonStart.getTag();
+            Calendar calEnd = (Calendar)dateButtonEnd.getTag();
+
+            outState.putSerializable("dateCal_start", calStart);
+            outState.putSerializable("dateCal_end", calEnd);
         }
+        //endregion
+
+        //region Persons
+        MultiSpinner personSpinner = (MultiSpinner)findViewById(R.id.filter_person_spinner);
+        List<String> persons = personSpinner.getSelected();
+        outState.putStringArrayList("persons", new ArrayList<>(persons));
+        //endregion
+
+        //region Types
+        MultiSpinner typeSpinner = (MultiSpinner)findViewById(R.id.filter_type_spinner);
+        List<String> types = typeSpinner.getSelected();
+        outState.putStringArrayList("types", new ArrayList<>(types));
+        //endregion
+
+        //region Chapters
+        MultiSpinner chapterSpinner = (MultiSpinner)findViewById(R.id.filter_chapter_spinner);
+        List<String> chapters = chapterSpinner.getSelected();
+        outState.putStringArrayList("chapters", new ArrayList(chapters));
+        //endregion
+
+        //region Read/unread
+        Spinner readSpinner = (Spinner)findViewById(R.id.filter_read_spinner);
+        outState.putInt("readPos", readSpinner.getSelectedItemPosition());
+        //endregion
     }
 
     @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
+    public void onRestoreInstanceState(final Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
-        Spinner dateSpinner = (Spinner)findViewById(R.id.filter_date_spinner);
-        int dateSelectedPosition = savedInstanceState.getInt("dateSelectedPos");
-        dateSpinner.setSelection(dateSelectedPosition);
-        if (1 <= dateSelectedPosition && dateSelectedPosition <= 3) {
-            final Button dateButton = (Button) findViewById(R.id.single_button);
-            String text = (String) savedInstanceState.get("date");
-            dateButton.setText(text);
+        try {
+            //region Date spinner
+            final Spinner dateSpinner = (Spinner) findViewById(R.id.filter_date_spinner);
+            final int dateSelectedPosition = savedInstanceState.getInt("dateSelectedPos");
+            dateSpinner.setSelection(dateSelectedPosition);
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    switch (dateSelectedPosition) {
+                        case 1:
+                        case 2:
+                        case 3:
+                            String buttonString = savedInstanceState.getString("date_text");
+                            Calendar cal = (Calendar) savedInstanceState.getSerializable("dateCal");
+
+                            Button dateButton = (Button) findViewById(R.id.single_button);
+                            dateButton.setText(buttonString);
+                            dateButton.setTag(cal);
+                            break;
+                        case 4:
+                            String buttonStartString = savedInstanceState.getString("date_start_text");
+                            String buttonEndString = savedInstanceState.getString("date_end_text");
+
+                            Calendar calStart = (Calendar)savedInstanceState.getSerializable("dateCal_start");
+                            Calendar calEnd = (Calendar)savedInstanceState.getSerializable("dateCal_end");
+
+                            Button dateButtonStart = (Button) findViewById(R.id.between_dates_start_button);
+                            Button dateButtonEnd = (Button) findViewById(R.id.between_dates_end_button);
+
+                            dateButtonStart.setText(buttonStartString);
+                            dateButtonEnd.setText(buttonEndString);
+
+                            dateButtonStart.setTag(calStart);
+                            dateButtonEnd.setTag(calEnd);
+                            break;
+                    }
+                }
+            }, 250);
+            //endregion
+
+            //region Persons
+            ArrayList<String> persons = savedInstanceState.getStringArrayList("persons");
+            MultiSpinner personSpinner = (MultiSpinner)findViewById(R.id.filter_person_spinner);
+            personSpinner.setSelectedEntries(persons);
+            //endregion
+
+            //region Types
+            ArrayList<String> types = savedInstanceState.getStringArrayList("types");
+            MultiSpinner typeSpinner = (MultiSpinner)findViewById(R.id.filter_type_spinner);
+            typeSpinner.setSelectedEntries(types);
+            //endregion
+
+            //region Chapters
+            ArrayList<String> chapters = savedInstanceState.getStringArrayList("chapters");
+            MultiSpinner chapterSpinner = (MultiSpinner)findViewById(R.id.filter_chapter_spinner);
+            chapterSpinner.setSelectedEntries(chapters);
+            //endregion
+
+            //region read/unread
+            int position = savedInstanceState.getInt("readPos");
+            Spinner readSpinner = (Spinner)findViewById(R.id.filter_read_spinner);
+            readSpinner.setSelection(position, false);
+            //endregion
+
+        } catch (Exception e) {
+            Log.d("RestoreInstance", e.getMessage());
         }
     }
 

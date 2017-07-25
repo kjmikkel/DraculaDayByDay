@@ -51,7 +51,7 @@ public class MultiSpinner extends android.support.v7.widget.AppCompatSpinner {
     private List<String> getSelectedEntries() {
         LinkedList<String> selectedEntries = new LinkedList<>();
 
-        //region If nothing is selected, then selected the frist element
+        //region If nothing is selected, then selected the first element
         boolean anythingSelected = false;
         for(boolean items : selected) {
             anythingSelected |= items;
@@ -73,6 +73,33 @@ public class MultiSpinner extends android.support.v7.widget.AppCompatSpinner {
         }
 
         return selectedEntries;
+    }
+
+    public void setSelectedEntries(List<String> entriesToSelect) {
+        // unset all values
+        for(int i = 0; i < selected.length; i++) {
+            selected[i] = false;
+        }
+
+        // Set the values
+        for(int i = 0; i < entries.length; i++) {
+            if (entriesToSelect.contains(entries[i])) {
+                selected[i] = true;
+            }
+        }
+
+        // build new spinner text & delimiter management
+        String finalSelectedString = TextUtils.join(", ", entriesToSelect);
+
+        // display new text
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
+                android.R.layout.simple_spinner_item,
+                new String[] { finalSelectedString });
+        setAdapter(adapter);
+
+        if (listener != null) {
+            listener.onItemsSelected(selected);
+        }
     }
 
     private final DialogInterface.OnClickListener mOnClickListener = new DialogInterface.OnClickListener() {
