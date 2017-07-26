@@ -39,10 +39,6 @@ public class FilterActivity extends AppCompatActivity {
     private final List<Integer> idList = new ArrayList<>();
     private static final String DATE_FORMAT = "dd/MM/yyyy";
 
-    //region Manipulate date picker
-
-    //endregion
-
     @SuppressWarnings("ConstantConditions")
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -175,9 +171,6 @@ public class FilterActivity extends AppCompatActivity {
 
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    int val = 0;
-                    val++;
-
                     try {
                         switch (dateSpinner.getSelectedItemPosition()) {
                             case 0:
@@ -207,7 +200,7 @@ public class FilterActivity extends AppCompatActivity {
 
                 @Override
                 public void onNothingSelected(AdapterView<?> parent) {
-
+                    // This is required to be here
                 }
             };
 
@@ -481,6 +474,7 @@ public class FilterActivity extends AppCompatActivity {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
+        //region Filter
         //region Date spinner
         Spinner dateSpinner = (Spinner)findViewById(R.id.filter_date_spinner);
         int dateSelectedPosition = dateSpinner.getSelectedItemPosition();
@@ -529,6 +523,24 @@ public class FilterActivity extends AppCompatActivity {
         Spinner readSpinner = (Spinner)findViewById(R.id.filter_read_spinner);
         outState.putInt("readPos", readSpinner.getSelectedItemPosition());
         //endregion
+        //endregion
+
+        //region Sort
+        int[] sortPositionArray = new int[idList.size()];
+        boolean[] sortAscArray = new boolean[idList.size()];
+        for(int i = 0; i < idList.size(); i++) {
+            // int current
+            int relativeViewId = idList.get(i);
+            Spinner sortSpinner = getSpinner(relativeViewId);
+            sortPositionArray[i] = sortSpinner.getSelectedItemPosition();
+
+            ImageView imageView = getImageView(relativeViewId);
+            sortAscArray[i] = (boolean)imageView.getTag();
+        }
+
+        outState.putIntArray("sortPosition", sortPositionArray);
+        outState.putBooleanArray("sortAsc", sortAscArray);
+        //endregion
     }
 
     @Override
@@ -536,6 +548,7 @@ public class FilterActivity extends AppCompatActivity {
         super.onRestoreInstanceState(savedInstanceState);
 
         try {
+            //region Filter
             //region Date spinner
             final Spinner dateSpinner = (Spinner) findViewById(R.id.filter_date_spinner);
             final int dateSelectedPosition = savedInstanceState.getInt("dateSelectedPos");
@@ -599,7 +612,32 @@ public class FilterActivity extends AppCompatActivity {
             Spinner readSpinner = (Spinner)findViewById(R.id.filter_read_spinner);
             readSpinner.setSelection(position, false);
             //endregion
+            //endregion
 
+            //region Sort
+            int[] positionArray = (int[])savedInstanceState.get("sortPosition");
+            boolean[] sortAscArray = (boolean[])savedInstanceState.get("sortAsc");
+            /*
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+            */
+
+            Button addButton = (Button)findViewById(R.id.sort_add_button);
+            for(int i = 0; i < positionArray.length-1; i++) {
+                addButton.performClick();
+            }
+            for(int i = 0; i < positionArray.length; i++) {
+                Spinner spinner = getSpinner(idList.get(i));
+                spinner.setSelection(positionArray[i], false);
+
+                ImageView ascView = getImageView(idList.get(i));
+                ascView.setTag(true);
+                if (!sortAscArray[i]) {
+                    ascView.performClick();
+                }
+            }
+            //endregion
         } catch (Exception e) {
             Log.d("RestoreInstance", e.getMessage());
         }
