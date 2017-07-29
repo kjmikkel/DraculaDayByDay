@@ -36,8 +36,23 @@ import java.util.Locale;
 
 public class FilterActivity extends AppCompatActivity {
 
+    //region Constants
     public final static String CONSTRAINTS_INTENT_KEY = "constraints";
     public final static String SORTING_INTENT_KEY = "sorting";
+    private static final String DATE_SELECTED_POS = "dateSelectedPos";
+    private static final String DATE_TEXT = "date_text";
+    private static final String DATE_CAL = "dateCal";
+    private static final String DATE_START_TEXT = "date_start_text";
+    private static final String DATE_END_TEXT = "date_end_text";
+    private static final String DATE_CAL_START = "dateCal_start";
+    private static final String DATE_CAL_END = "dateCal_end";
+    private static final String PERSONS = "persons";
+    private static final String TYPES = "types";
+    private static final String CHAPTERS = "chapters";
+    private static final String READ_POS = "readPos";
+    private static final String SORT_POSITION = "sortPosition";
+    private static final String SORT_ASC = "sortAsc";
+    //endregion
 
     private final List<Integer> idList = new ArrayList<>();
     private static final String DATE_FORMAT = "dd/MM/yyyy";
@@ -50,6 +65,7 @@ public class FilterActivity extends AppCompatActivity {
 
                 SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
                 Calendar cal = getCalendarFromString(stringDateRep);
+                assert dateButton != null;
                 dateButton.setTag(cal);
 
                 int month = cal.get(Calendar.MONTH)-1;
@@ -501,7 +517,7 @@ public class FilterActivity extends AppCompatActivity {
             Spinner dateSpinner = (Spinner) findViewById(R.id.filter_date_spinner);
 
             //region Date
-            final DateConstraint dateConstraint = (DateConstraint) constraintFactory.getConstraint(constraintFactory.DATE);
+            final DateConstraint dateConstraint = (DateConstraint) constraintFactory.getConstraint(SqlConstraintFactory.DATE);
             if (dateConstraint.hasConstraints()) {
                 switch (dateConstraint.getDateType()) {
                     case DateConstraint.BEFORE:
@@ -601,8 +617,6 @@ public class FilterActivity extends AppCompatActivity {
                 int idVal = idList.get(i);
 
                 Spinner sortSpinner = getSpinner(idVal);
-                String mSortValue = sortValues.get(i).getColumn();
-
                 sortSpinner.setSelection(sortValues.get(i).getSpinnerIndex());
 
                 ImageView sortImageView = getImageView(idVal);
@@ -619,6 +633,7 @@ public class FilterActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -628,49 +643,49 @@ public class FilterActivity extends AppCompatActivity {
         Spinner dateSpinner = (Spinner)findViewById(R.id.filter_date_spinner);
         int dateSelectedPosition = dateSpinner.getSelectedItemPosition();
 
-        outState.putInt("dateSelectedPos", dateSelectedPosition);
+        outState.putInt(DATE_SELECTED_POS, dateSelectedPosition);
         if (1 <= dateSelectedPosition && dateSelectedPosition <= 3) {
             Button dateButton = (Button) findViewById(R.id.single_button);
-            outState.putString("date_text", (String) dateButton.getText());
+            outState.putString(DATE_TEXT, (String) dateButton.getText());
 
             Calendar cal = (Calendar)dateButton.getTag();
-            outState.putSerializable("dateCal", cal);
+            outState.putSerializable(DATE_CAL, cal);
         } else if (dateSelectedPosition == 4) {
             Button dateButtonStart = (Button) findViewById(R.id.between_dates_start_button);
             Button dateButtonEnd = (Button) findViewById(R.id.between_dates_end_button);
 
-            outState.putString("date_start_text", (String)dateButtonStart.getText());
-            outState.putString("date_end_text", (String)dateButtonEnd.getText());
+            outState.putString(DATE_START_TEXT, (String)dateButtonStart.getText());
+            outState.putString(DATE_END_TEXT, (String)dateButtonEnd.getText());
 
             Calendar calStart = (Calendar)dateButtonStart.getTag();
             Calendar calEnd = (Calendar)dateButtonEnd.getTag();
 
-            outState.putSerializable("dateCal_start", calStart);
-            outState.putSerializable("dateCal_end", calEnd);
+            outState.putSerializable(DATE_CAL_START, calStart);
+            outState.putSerializable(DATE_CAL_END, calEnd);
         }
         //endregion
 
         //region Persons
         MultiSpinner personSpinner = (MultiSpinner)findViewById(R.id.filter_person_spinner);
         List<String> persons = personSpinner.getSelected();
-        outState.putStringArrayList("persons", new ArrayList<>(persons));
+        outState.putStringArrayList(PERSONS, new ArrayList<>(persons));
         //endregion
 
         //region Types
         MultiSpinner typeSpinner = (MultiSpinner)findViewById(R.id.filter_type_spinner);
         List<String> types = typeSpinner.getSelected();
-        outState.putStringArrayList("types", new ArrayList<>(types));
+        outState.putStringArrayList(TYPES, new ArrayList<>(types));
         //endregion
 
         //region Chapters
         MultiSpinner chapterSpinner = (MultiSpinner)findViewById(R.id.filter_chapter_spinner);
         List<String> chapters = chapterSpinner.getSelected();
-        outState.putStringArrayList("chapters", new ArrayList(chapters));
+        outState.putStringArrayList(CHAPTERS, new ArrayList<>(chapters));
         //endregion
 
         //region Read/unread
         Spinner readSpinner = (Spinner)findViewById(R.id.filter_read_spinner);
-        outState.putInt("readPos", readSpinner.getSelectedItemPosition());
+        outState.putInt(READ_POS, readSpinner.getSelectedItemPosition());
         //endregion
         //endregion
 
@@ -687,8 +702,8 @@ public class FilterActivity extends AppCompatActivity {
             sortAscArray[i] = (boolean)imageView.getTag();
         }
 
-        outState.putIntArray("sortPosition", sortPositionArray);
-        outState.putBooleanArray("sortAsc", sortAscArray);
+        outState.putIntArray(SORT_POSITION, sortPositionArray);
+        outState.putBooleanArray(SORT_ASC, sortAscArray);
         //endregion
     }
 
@@ -700,7 +715,8 @@ public class FilterActivity extends AppCompatActivity {
             //region Filter
             //region Date spinner
             final Spinner dateSpinner = (Spinner) findViewById(R.id.filter_date_spinner);
-            final int dateSelectedPosition = savedInstanceState.getInt("dateSelectedPos");
+            final int dateSelectedPosition = savedInstanceState.getInt(DATE_SELECTED_POS);
+            //noinspection ConstantConditions
             dateSpinner.setSelection(dateSelectedPosition);
 
             new Handler().postDelayed(new Runnable() {
@@ -710,24 +726,27 @@ public class FilterActivity extends AppCompatActivity {
                         case 1:
                         case 2:
                         case 3:
-                            String buttonString = savedInstanceState.getString("date_text");
-                            Calendar cal = (Calendar) savedInstanceState.getSerializable("dateCal");
+                            String buttonString = savedInstanceState.getString(DATE_TEXT);
+                            Calendar cal = (Calendar) savedInstanceState.getSerializable(DATE_CAL);
 
                             Button dateButton = (Button) findViewById(R.id.single_button);
+                            assert dateButton != null;
                             dateButton.setText(buttonString);
                             dateButton.setTag(cal);
                             break;
                         case 4:
-                            String buttonStartString = savedInstanceState.getString("date_start_text");
-                            String buttonEndString = savedInstanceState.getString("date_end_text");
+                            String buttonStartString = savedInstanceState.getString(DATE_START_TEXT);
+                            String buttonEndString = savedInstanceState.getString(DATE_END_TEXT);
 
-                            Calendar calStart = (Calendar)savedInstanceState.getSerializable("dateCal_start");
-                            Calendar calEnd = (Calendar)savedInstanceState.getSerializable("dateCal_end");
+                            Calendar calStart = (Calendar)savedInstanceState.getSerializable(DATE_CAL_START);
+                            Calendar calEnd = (Calendar)savedInstanceState.getSerializable(DATE_CAL_END);
 
                             Button dateButtonStart = (Button) findViewById(R.id.between_dates_start_button);
                             Button dateButtonEnd = (Button) findViewById(R.id.between_dates_end_button);
 
+                            assert dateButtonStart != null;
                             dateButtonStart.setText(buttonStartString);
+                            assert dateButtonEnd != null;
                             dateButtonEnd.setText(buttonEndString);
 
                             dateButtonStart.setTag(calStart);
@@ -739,37 +758,43 @@ public class FilterActivity extends AppCompatActivity {
             //endregion
 
             //region Persons
-            ArrayList<String> persons = savedInstanceState.getStringArrayList("persons");
+            ArrayList<String> persons = savedInstanceState.getStringArrayList(PERSONS);
             MultiSpinner personSpinner = (MultiSpinner)findViewById(R.id.filter_person_spinner);
+            //noinspection ConstantConditions
             personSpinner.setSelectedEntries(persons);
             //endregion
 
             //region Types
-            ArrayList<String> types = savedInstanceState.getStringArrayList("types");
+            ArrayList<String> types = savedInstanceState.getStringArrayList(TYPES);
             MultiSpinner typeSpinner = (MultiSpinner)findViewById(R.id.filter_type_spinner);
+            //noinspection ConstantConditions
             typeSpinner.setSelectedEntries(types);
             //endregion
 
             //region Chapters
-            ArrayList<String> chapters = savedInstanceState.getStringArrayList("chapters");
+            ArrayList<String> chapters = savedInstanceState.getStringArrayList(CHAPTERS);
             MultiSpinner chapterSpinner = (MultiSpinner)findViewById(R.id.filter_chapter_spinner);
+            //noinspection ConstantConditions
             chapterSpinner.setSelectedEntries(chapters);
             //endregion
 
             //region read/unread
-            int position = savedInstanceState.getInt("readPos");
+            int position = savedInstanceState.getInt(READ_POS);
             Spinner readSpinner = (Spinner)findViewById(R.id.filter_read_spinner);
+            //noinspection ConstantConditions
             readSpinner.setSelection(position, false);
             //endregion
             //endregion
 
             //region Sort
-            int[] positionArray = (int[])savedInstanceState.get("sortPosition");
-            boolean[] sortAscArray = (boolean[])savedInstanceState.get("sortAsc");
+            int[] positionArray = (int[])savedInstanceState.get(SORT_POSITION);
+            boolean[] sortAscArray = (boolean[])savedInstanceState.get(SORT_ASC);
 
             // There will always be at least one sort
             Button addButton = (Button)findViewById(R.id.sort_add_button);
+            //noinspection ConstantConditions
             for(int i = 0; i < positionArray.length-1; i++) {
+                //noinspection ConstantConditions
                 addButton.performClick();
             }
             for(int i = 0; i < positionArray.length; i++) {
@@ -778,6 +803,7 @@ public class FilterActivity extends AppCompatActivity {
 
                 ImageView ascView = getImageView(idList.get(i));
                 ascView.setTag(true);
+                //noinspection ConstantConditions
                 if (!sortAscArray[i]) {
                     ascView.performClick();
                 }

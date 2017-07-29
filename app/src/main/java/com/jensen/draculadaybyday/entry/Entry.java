@@ -26,13 +26,10 @@ public class Entry {
     // The type of the mEntry
     private final EntryType type;
 
-    // Whether or not the mEntry is unlocked
-    private final boolean unlocked;
-
     // Whether or not the mEntry is unread
     private final boolean unread;
 
-    private Entry(int storyEntryNum, int chapter, Person person, String diaryText, Calendar date, EntryType type, boolean unlocked, boolean unread) {
+    private Entry(int storyEntryNum, int chapter, Person person, String diaryText, Calendar date, EntryType type, boolean unread) {
 
         this.storyEntryNum = (short) storyEntryNum;
 
@@ -46,17 +43,15 @@ public class Entry {
 
         this.type = type;
 
-        this.unlocked = unlocked;
-
         this.unread = unread;
     }
 
-    public Entry(int chapter, Person person, String diaryText, Calendar date, EntryType type, boolean unlocked, boolean unread) {
-        this(-1, chapter, person, diaryText, date, type, unlocked, unread);
+    public Entry(int chapter, Person person, String diaryText, Calendar date, EntryType type, boolean unread) {
+        this(-1, chapter, person, diaryText, date, type, unread);
     }
 
-    public Entry(int storyEntryNum, int chapter, String personName, String diaryText, Calendar date, String type, boolean unlocked, boolean unread) {
-        this(storyEntryNum, chapter, getPerson(personName), diaryText, date, getEntryType(type), unlocked, unread);
+    public Entry(int storyEntryNum, int chapter, String personName, String diaryText, Calendar date, String type, boolean unread) {
+        this(storyEntryNum, chapter, getPerson(personName), diaryText, date, getEntryType(type), unread);
     }
 
     private static EntryType getEntryType(String type) {
@@ -104,8 +99,6 @@ public class Entry {
     public EntryType getType() {
         return type;
     }
-
-    public boolean getUnlocked() { return unlocked; }
 
     public boolean getUnread() { return unread; }
 

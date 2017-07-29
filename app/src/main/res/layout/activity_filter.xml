@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
     <!-- Filter -->
     <LinearLayout
         android:layout_width="match_parent"
@@ -100,27 +97,26 @@
         android:layout_marginBottom="@dimen/text_medium_margin"
         android:text="@string/sort_title"
         android:textSize="@dimen/text_headline_size" />
-
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/sort_top_rl">
+            android:layout_height="wrap_content"
+            android:id="@+id/sort_top_rl">
                 <include android:id="@+id/sort_spinner_1" layout="@layout/sort_item" />
-            </RelativeLayout>
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/sort_add_button"
-                android:text="@string/sort_add"
-                android:layout_below="@+id/sort_top_rl"/>
         </RelativeLayout>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/sort_add_button"
+            android:text="@string/sort_add"
+            android:layout_below="@+id/sort_top_rl"/>
+    </RelativeLayout>
     </LinearLayout>
 
     <!-- OK and cancel buttons -->
-            <LinearLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -141,6 +137,5 @@
             android:layout_weight="1"
             style="?android:attr/buttonBarButtonStyle"/>
     </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>

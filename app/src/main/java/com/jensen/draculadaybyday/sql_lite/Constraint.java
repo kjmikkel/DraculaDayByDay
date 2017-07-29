@@ -10,7 +10,7 @@ import java.util.List;
 public class Constraint implements Parcelable {
 
     private String constraintSqlText;
-    private List<String> constraintSqlValues;
+    final private List<String> constraintSqlValues;
 
     public Constraint() {
         constraintSqlText = "";

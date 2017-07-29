@@ -82,9 +82,14 @@ public class MultiSpinner extends android.support.v7.widget.AppCompatSpinner {
         }
 
         // Set the values
+        int entriesToSelectIndex = 0;
         for(int i = 0; i < entries.length; i++) {
-            if (entriesToSelect.contains(entries[i])) {
+            if (entries[i].equals(entriesToSelect.get(entriesToSelectIndex))) {
                 selected[i] = true;
+                entriesToSelectIndex++;
+                if (entriesToSelectIndex == entriesToSelect.size()) {
+                    break;
+                }
             }
         }
 

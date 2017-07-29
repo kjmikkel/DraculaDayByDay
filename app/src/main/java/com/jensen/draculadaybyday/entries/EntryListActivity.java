@@ -456,7 +456,7 @@ public class EntryListActivity extends AppCompatActivity {
             Calendar calendar = Calendar.getInstance();
             calendar.set(1893, month - 1, date, 0, 0, 0);
 
-            mFragmentEntryHandler.addEntry(new Entry(chapterNum, person, getStringFromId(diaryResource), calendar, type, false, true));
+            mFragmentEntryHandler.addEntry(new Entry(chapterNum, person, getStringFromId(diaryResource), calendar, type, true));
         }
     }
 
