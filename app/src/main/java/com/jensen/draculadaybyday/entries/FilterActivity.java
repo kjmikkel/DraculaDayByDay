@@ -17,11 +17,14 @@ import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import com.jensen.draculadaybyday.R;
 import com.jensen.draculadaybyday.presentation.MultiSpinner;
 import com.jensen.draculadaybyday.sql_lite.Constraint;
+import com.jensen.draculadaybyday.sql_lite.DateConstraint;
+import com.jensen.draculadaybyday.sql_lite.SortValue;
 import com.jensen.draculadaybyday.sql_lite.SqlConstraintFactory;
 import com.jensen.draculadaybyday.sql_lite.SqlSortFactory;
 
@@ -38,6 +41,23 @@ public class FilterActivity extends AppCompatActivity {
 
     private final List<Integer> idList = new ArrayList<>();
     private static final String DATE_FORMAT = "dd/MM/yyyy";
+
+    private void setSingleDay(final String stringDateRep) {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Button dateButton = (Button) findViewById(R.id.single_button);
+
+                SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
+                Calendar cal = getCalendarFromString(stringDateRep);
+                dateButton.setTag(cal);
+
+                int month = cal.get(Calendar.MONTH)-1;
+                cal.set(Calendar.MONTH, month);
+
+                dateButton.setText(dateFormat.format(cal.getTime()));
+            }}, 100);
+    }
 
     @SuppressWarnings("ConstantConditions")
     @Override
@@ -333,6 +353,7 @@ public class FilterActivity extends AppCompatActivity {
             });
             //endregion
 
+            //region cancel/OK button
             final Button cancelButton = (Button)findViewById(R.id.cancel_button);
             cancelButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -465,8 +486,136 @@ public class FilterActivity extends AppCompatActivity {
                     finish();
                 }
             });
+            //endregion
         } catch (Exception e) {
             Log.d("Filter exception", e.getMessage());
+        }
+
+        try {
+            //region Change the GUI to fit the values given in the intent
+            Intent intent = getIntent();
+
+            //region Filter
+            SqlConstraintFactory constraintFactory = (SqlConstraintFactory) intent.getExtras().get(CONSTRAINTS_INTENT_KEY);
+
+            Spinner dateSpinner = (Spinner) findViewById(R.id.filter_date_spinner);
+
+            //region Date
+            final DateConstraint dateConstraint = (DateConstraint) constraintFactory.getConstraint(constraintFactory.DATE);
+            if (dateConstraint.hasConstraints()) {
+                switch (dateConstraint.getDateType()) {
+                    case DateConstraint.BEFORE:
+                        dateSpinner.setSelection(1, false);
+                        setSingleDay(dateConstraint.getConstraintSqlValues().get(0));
+                        break;
+                    case DateConstraint.AFTER:
+                        dateSpinner.setSelection(2, false);
+                        setSingleDay(dateConstraint.getConstraintSqlValues().get(0));
+                        break;
+                    case DateConstraint.EXACT:
+                        dateSpinner.setSelection(3, false);
+                        setSingleDay(dateConstraint.getConstraintSqlValues().get(0));
+                        break;
+                    case DateConstraint.BETWEEN:
+                        dateSpinner.setSelection(4, false);
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                Calendar calStart = getCalendarFromString(dateConstraint.getConstraintSqlValues().get(0));
+                                Calendar calEnd = getCalendarFromString(dateConstraint.getConstraintSqlValues().get(1));
+
+                                int beforeMonth = calStart.get(Calendar.MONTH)-1;
+                                int afterMonth = calEnd.get(Calendar.MONTH)-1;
+
+                                calStart.set(Calendar.MONTH, beforeMonth);
+                                calEnd.set(Calendar.MONTH, afterMonth);
+
+                                SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
+
+                                Button dateButtonStart = (Button) findViewById(R.id.between_dates_start_button);
+                                Button dateButtonEnd = (Button) findViewById(R.id.between_dates_end_button);
+
+                                dateButtonStart.setText(dateFormat.format(calStart.getTime()));
+                                dateButtonEnd.setText(dateFormat.format(calEnd.getTime()));
+
+                                dateButtonStart.setTag(calStart);
+                                dateButtonEnd.setTag(calEnd);
+                            }}, 100);
+                        break;
+                }
+            }
+            //endregion
+
+
+            //region Set the Multi spinners
+            //region Type constraints
+            Constraint typeConstraints = constraintFactory.getConstraint(SqlConstraintFactory.TYPE);
+            if (typeConstraints.hasConstraints()) {
+                MultiSpinner typeMultiSpin = (MultiSpinner) findViewById(R.id.filter_type_spinner);
+                typeMultiSpin.setSelectedEntries(typeConstraints.getConstraintSqlValues());
+            }
+            //endregion
+            //region Person constraints
+            Constraint personConstraints = constraintFactory.getConstraint(SqlConstraintFactory.PERSON);
+            if (personConstraints.hasConstraints()) {
+                MultiSpinner personMultiSpin = (MultiSpinner)findViewById(R.id.filter_person_spinner);
+                personMultiSpin.setSelectedEntries(personConstraints.getConstraintSqlValues());
+            }
+            //endregion
+            //region Chapter constraints
+            Constraint chapterConstraints = constraintFactory.getConstraint(SqlConstraintFactory.CHAPTER);
+            if (chapterConstraints.hasConstraints()) {
+                MultiSpinner chapterSpinner = (MultiSpinner)findViewById(R.id.filter_chapter_spinner);
+                chapterSpinner.setSelectedEntries(chapterConstraints.getConstraintSqlValues());
+            }
+            //endregion
+            //endregion
+
+            //region Read or unread
+            Constraint readConstraints = constraintFactory.getConstraint(SqlConstraintFactory.READ);
+            if (readConstraints.hasConstraints()) {
+                Spinner spinner = (Spinner) findViewById(R.id.filter_read_spinner);
+                SpinnerAdapter typeSpinnerAdapter = spinner.getAdapter();
+                for (int i = 0; i < typeSpinnerAdapter.getCount(); i++) {
+                    if (readConstraints.getConstraintSqlValues().get(0).equals(typeSpinnerAdapter.getItem(i))) {
+                        spinner.setSelection(i, false);
+                        break;
+                    }
+                }
+            }
+            //endregion
+            //endregion
+
+            //region Sort
+            SqlSortFactory sortFactory = (SqlSortFactory) intent.getExtras().get(SORTING_INTENT_KEY);
+            List<SortValue> sortValues = sortFactory.getSortingOrderList();
+
+            Button addButton = (Button)findViewById(R.id.sort_add_button);
+
+            // Take account of the fact that we are sorting
+            for(int i = 0; i < sortValues.size() - 1; i++) {
+                addButton.performClick();
+            }
+            for(int i = 0; i < sortValues.size(); i++) {
+                SortValue sortValue = sortValues.get(i);
+                int idVal = idList.get(i);
+
+                Spinner sortSpinner = getSpinner(idVal);
+                String mSortValue = sortValues.get(i).getColumn();
+
+                sortSpinner.setSelection(sortValues.get(i).getSpinnerIndex());
+
+                ImageView sortImageView = getImageView(idVal);
+                if (!sortValue.getAscending()) {
+                    sortImageView.performClick();
+                }
+            }
+            //endregion
+            //endregion
+
+
+        } catch (Exception e) {
+            Log.d("", e.getMessage());
         }
     }
 
@@ -617,12 +766,8 @@ public class FilterActivity extends AppCompatActivity {
             //region Sort
             int[] positionArray = (int[])savedInstanceState.get("sortPosition");
             boolean[] sortAscArray = (boolean[])savedInstanceState.get("sortAsc");
-            /*
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-            */
 
+            // There will always be at least one sort
             Button addButton = (Button)findViewById(R.id.sort_add_button);
             for(int i = 0; i < positionArray.length-1; i++) {
                 addButton.performClick();
@@ -643,89 +788,6 @@ public class FilterActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public void onPostCreate (Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-
-    }
-
-    @Override
-    public void onRestart() {
-        super.onRestart();
-
-        try {
-            //region Change the GUI to fit the values given in the intent
-            Intent intent = getIntent();
-
-            //region Filter
-            SqlConstraintFactory constraintFactory = (SqlConstraintFactory) intent.getExtras().get(CONSTRAINTS_INTENT_KEY);
-            // String[] constraints = constraintFactory.getConstraint().split("AND");
-            List<Constraint> constraints = constraintFactory.getConstraintEnums();
-            String[] values = constraintFactory.getValues();
-
-            int valueIndex = 0;
-
-            Spinner dateSpinner = (Spinner) findViewById(R.id.filter_date_spinner);
-
-            for (int constraintIndex = 0; constraintIndex < constraints.size(); constraintIndex++) {
-                switch (constraints.get(constraintIndex)) {
-                    // Date
-                    case EXACT_DATE:
-                        dateSpinner.setSelection(1, true);
-                        // dateSpinnerSelectedListener.onItemSelected(null, dateSpinner, 1, -1);
-
-
-//                        dateSpinner.setSelected(true);
-//                        dateSpinner.setSelection(1);
-
-                        Calendar dateRep = getCalendarFromString(values[valueIndex]);
-                        /*
-                        RelativeLayout rl = (RelativeLayout) findViewById(R.id.set_date);
-                        Button dateButton = (Button) findViewById(R.id.single_button);
-                        dateButton.setText(values[valueIndex]);
-                        dateButton.setTag(dateRep);
-                        */
-                        break;
-                    case BEFORE_DATE:
-                        //             dateSpinner.setSelection(2);
-                        break;
-                    case AFTER_DATE:
-                        //           dateSpinner.setSelection(3);
-                        break;
-                    case BETWEEN_DATE:
-                        //           dateSpinner.setSelection(4);
-
-
-                        // Between dates uses 2 values, so we need use an extra one
-                        valueIndex++;
-                        break;
-                    // Type
-                    case TYPE:
-                        break;
-                    // Person
-                    case PERSON:
-                        break;
-                    // Chapter
-                    case CHAPTER:
-                        break;
-                    case READ_OR_UNREAD:
-                        break;
-                }
-                valueIndex++;
-            }
-
-
-            //endregion
-
-            //region Sort
-
-            //endregion
-            //endregion
-        } catch (Exception e) {
-            Log.d("PostCreate", e.getMessage());
-        }
-    }
-
     private Calendar getCalendarFromString(String dateRep) {
         String[] rep = dateRep.split("-");
         int year = Integer.valueOf(rep[0]);
@@ -733,7 +795,7 @@ public class FilterActivity extends AppCompatActivity {
         int day = Integer.valueOf(rep[2].substring(0, 2));
 
         Calendar cal = Calendar.getInstance();
-        cal.set(day, month, year);
+        cal.set(year, month, day);
         return cal;
     }
 

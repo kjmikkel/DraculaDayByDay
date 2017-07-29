@@ -328,13 +328,17 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
             constraintFactory.beforeDate(date);
             constraintFactory.unlocked(false);
 
+            SqlSortFactory fact = new SqlSortFactory();
+            fact.dateOrder(true);
+
             ContentValues cv = new ContentValues();
-            cv.put(UNLOCKED, true);
-            cv.put(UNREAD, true);
+            cv.put(UNLOCKED, 1);
+            cv.put(UNREAD, 1);
 
             if (!db.isOpen()) {
                 open();
             }
+
             db.update(TABLE_ENTRY, cv, constraintFactory.getConstraint(), constraintFactory.getValues());
             db.close();
         } catch (Exception e) {

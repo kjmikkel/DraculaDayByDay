@@ -6,10 +6,24 @@ import android.os.Parcelable;
 public class SortValue implements Parcelable {
     private final String column;
     private final boolean asc;
+    private final int spinnerIndex;
 
-    public SortValue(String column, boolean asc) {
+    public SortValue(String column, boolean asc, int spinnerIndex) {
         this.column = column;
         this.asc = asc;
+        this.spinnerIndex = spinnerIndex;
+    }
+
+    public String getColumn() {
+        return column;
+    }
+
+    public boolean getAscending() {
+        return asc;
+    }
+
+    public int getSpinnerIndex() {
+        return spinnerIndex;
     }
 
     public SortValue(Parcel in) {
@@ -17,6 +31,7 @@ public class SortValue implements Parcelable {
         boolean[] singleBool = new boolean[1];
         in.readBooleanArray(singleBool);
         this.asc = singleBool[0];
+        this.spinnerIndex = in.readInt();
     }
 
     public int describeContents () {
@@ -26,6 +41,7 @@ public class SortValue implements Parcelable {
     public void writeToParcel(Parcel out, int flags) {
         out.writeString(column);
         out.writeBooleanArray(new boolean[] { asc });
+        out.writeInt(this.spinnerIndex);
     }
 
     public static final Parcelable.Creator<SortValue> CREATOR = new Parcelable.Creator<SortValue>() {

@@ -119,18 +119,22 @@ public class EntryListActivity extends AppCompatActivity {
         if (requestCode == FILTER_REQUEST) {
             // Make sure the request was successful
             if (resultCode == RESULT_OK) {
-                // The user picked a new filter.
-                // The Intent's data Uri identifies which contact was selected.
-                constraintFactory = data.getParcelableExtra(FilterActivity.CONSTRAINTS_INTENT_KEY);
-                constraintFactory.unlocked(true);
-                sortFactory = data.getParcelableExtra(FilterActivity.SORTING_INTENT_KEY);
+              try {
+                  // The user picked a new filter.
+                  // The Intent's data Uri identifies which contact was selected.
+                  constraintFactory = data.getParcelableExtra(FilterActivity.CONSTRAINTS_INTENT_KEY);
+                  constraintFactory.unlocked(true);
+                  sortFactory = data.getParcelableExtra(FilterActivity.SORTING_INTENT_KEY);
 
-                //region Set entries
-                // Get the entries
-                List<Entry> entries = mFragmentEntryHandler.getEntries(constraintFactory, sortFactory);
-                mSimpleItemAdapter.clear();
-                mSimpleItemAdapter.addAll(entries);
-                //endregion
+                  //region Set entries
+                  // Get the entries
+                  List<Entry> entries = mFragmentEntryHandler.getEntries(constraintFactory, sortFactory);
+                  mSimpleItemAdapter.clear();
+                  mSimpleItemAdapter.addAll(entries);
+                  //endregion
+              } catch (Exception e) {
+                  Log.d("onActivityResult", e.getMessage());
+              }
             }
         }
     }
@@ -466,7 +470,6 @@ public class EntryListActivity extends AppCompatActivity {
         calendar.set(1893, month - 1, dateOfMonth);
 
         // Check if there are new entries available
-        mFragmentEntryHandler.getEntries(constraintFactory, sortFactory);
         mFragmentEntryHandler.unlockEntriesBeforeDate(calendar);
 
         // Get the entries

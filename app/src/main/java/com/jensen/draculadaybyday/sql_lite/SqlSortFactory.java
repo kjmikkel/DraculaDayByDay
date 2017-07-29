@@ -5,6 +5,7 @@ import android.os.Parcelable;
 import android.text.TextUtils;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -30,33 +31,40 @@ public class SqlSortFactory implements Parcelable {
         }
     }
 
+    public List<SortValue> getSortingOrderList() {
+        List<SortValue> returnValue = new ArrayList<>();
+        for(SortValue sortValue : sortingOrder) {
+            returnValue.add(sortValue);
+        }
+        return returnValue;
+    }
+
     public void bookOrder(boolean asc) {
-        sortingOrder.add(new SortValue(FragmentEntryDatabaseHandler.ENTRY_SEQ_NUM, asc));
+        sortingOrder.add(new SortValue(FragmentEntryDatabaseHandler.ENTRY_SEQ_NUM, asc, 0));
     }
 
     public void chapterOrder(boolean asc) {
-        sortingOrder.add(new SortValue(FragmentEntryDatabaseHandler.CHAPTER, asc));
+        sortingOrder.add(new SortValue(FragmentEntryDatabaseHandler.CHAPTER, asc, 1));
     }
 
     public void personOrder(boolean asc) {
-        sortingOrder.add(new SortValue(FragmentEntryDatabaseHandler.PERSON, asc));
+        sortingOrder.add(new SortValue(FragmentEntryDatabaseHandler.PERSON, asc, 2));
     }
 
     public void dateOrder(boolean asc) {
-        sortingOrder.add(new SortValue(FragmentEntryDatabaseHandler.DATE, asc));
+        sortingOrder.add(new SortValue(FragmentEntryDatabaseHandler.DATE, asc, 3));
     }
 
     public void entryType(boolean asc) {
-        sortingOrder.add(new SortValue(FragmentEntryDatabaseHandler.TYPE, asc));
+        sortingOrder.add(new SortValue(FragmentEntryDatabaseHandler.TYPE, asc, 4));
     }
 
     public void readType(boolean asc) {
-        sortingOrder.add(new SortValue(FragmentEntryDatabaseHandler.UNREAD, asc));
+        sortingOrder.add(new SortValue(FragmentEntryDatabaseHandler.UNREAD, asc, 5));
     }
 
     public String getSortOrder() {
         return TextUtils.join(", ", sortingOrder);
-
     }
 
     public void writeToParcel(Parcel out, int flags) {
