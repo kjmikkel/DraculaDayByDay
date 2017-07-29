@@ -38,8 +38,6 @@ public class FontSizePickerPreference extends DialogPreference {
     private int integerFontSize = -1;
     private int fractionalFontSize = -1;
 
-    private float value;
-
     public FontSizePickerPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
 
@@ -163,14 +161,10 @@ public class FontSizePickerPreference extends DialogPreference {
         return value <= max ? value : max;
     }
 
-    public float getValue() {
-        return this.value;
-    }
-
     private void setValue(float value) {
         // Set and save the value
-        this.value = value;
-        persistFloat(this.value);
+        float value1 = value;
+        persistFloat(value1);
 
         // Get the values for the number pickers
         String[] strValue = Float.toString(value).split("\\.");

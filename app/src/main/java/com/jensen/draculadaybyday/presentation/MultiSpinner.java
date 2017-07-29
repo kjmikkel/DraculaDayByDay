@@ -8,6 +8,7 @@ import android.content.res.TypedArray;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.jensen.draculadaybyday.R;
 
@@ -43,10 +44,34 @@ public class MultiSpinner extends android.support.v7.widget.AppCompatSpinner {
 
     private final OnMultiChoiceClickListener mOnMultiChoiceClickListener = new OnMultiChoiceClickListener() {
         @Override
-        public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-            selected[which] = isChecked;
+        public void onClick(DialogInterface dialog, int position, boolean isChecked) {
+            selected[position] = isChecked;
+            AlertDialog alertDialog = (AlertDialog)dialog;
+
+            ListView mListView = alertDialog.getListView();
+            // Turn off the "All" item it is selected AND we are selecting something other item AND that item is being turend on
+            if (mListView.isItemChecked(0) && 0 < position && isChecked) {
+                selected[0] = false;
+                mListView.performItemClick(mListView, 0, 0);
+            } else if (mListView.isItemChecked(0) && position == 0) {
+                for(int i = 1; i < mListView.getCount(); i++) {
+                    if (mListView.isItemChecked(i)) {
+                        mListView.performItemClick(mListView, i, 0);
+                    }
+                }
+            }
+
+            // If every item has been turned off, then we turn on the "All" item
+            boolean anythingSelected = false;
+            for(boolean items : selected) {
+                anythingSelected |= items;
+            }
+            if(!anythingSelected) {
+                mListView.performItemClick(mListView, 0, 0);
+            }
         }
     };
+
 
     private List<String> getSelectedEntries() {
         LinkedList<String> selectedEntries = new LinkedList<>();
@@ -134,13 +159,16 @@ public class MultiSpinner extends android.support.v7.widget.AppCompatSpinner {
                 .setMultiChoiceItems(entries, selected, mOnMultiChoiceClickListener)
                 .setPositiveButton(android.R.string.ok, mOnClickListener)
                 .show();
+
         return true;
     }
 
+    @SuppressWarnings("unused")
     public void setMultiSpinnerListener(MultiSpinnerListener listener) {
         this.listener = listener;
     }
 
+    @SuppressWarnings("unused")
     public interface MultiSpinnerListener {
         void onItemsSelected(boolean[] selected);
     }
