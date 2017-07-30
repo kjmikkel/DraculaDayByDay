@@ -6,9 +6,9 @@ import android.util.Log;
 
 public class DateConstraint extends Constraint {
 
-    public static final int BEFORE = 0;
-    public static final int AFTER = 1;
-    public static final int EXACT = 2;
+    public static final int EXACT = 0;
+    public static final int BEFORE = 1;
+    public static final int AFTER = 2;
     public static final int BETWEEN = 3;
 
 
@@ -29,19 +29,19 @@ public class DateConstraint extends Constraint {
     }
 
     public void setDateConstraint(int dateType, String date) {
-        if (BEFORE <= dateType && dateType <= EXACT) {
+        if (EXACT <= dateType && dateType <= AFTER) {
             this.dateType = dateType;
 
             // Set the SQL
             switch (dateType) {
+                case EXACT:
+                    setConstraintSqlText(EXACT_DATE);
+                    break;
                 case BEFORE:
                     setConstraintSqlText(BEFORE_DATE);
                     break;
                 case AFTER:
                     setConstraintSqlText(AFTER_DATE);
-                    break;
-                case EXACT:
-                    setConstraintSqlText(EXACT_DATE);
                     break;
             }
         }

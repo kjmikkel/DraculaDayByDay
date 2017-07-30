@@ -520,15 +520,15 @@ public class FilterActivity extends AppCompatActivity {
             final DateConstraint dateConstraint = (DateConstraint) constraintFactory.getConstraint(SqlConstraintFactory.DATE);
             if (dateConstraint.hasConstraints()) {
                 switch (dateConstraint.getDateType()) {
-                    case DateConstraint.BEFORE:
+                    case DateConstraint.EXACT:
                         dateSpinner.setSelection(1, false);
                         setSingleDay(dateConstraint.getConstraintSqlValues().get(0));
                         break;
-                    case DateConstraint.AFTER:
+                    case DateConstraint.BEFORE:
                         dateSpinner.setSelection(2, false);
                         setSingleDay(dateConstraint.getConstraintSqlValues().get(0));
                         break;
-                    case DateConstraint.EXACT:
+                    case DateConstraint.AFTER:
                         dateSpinner.setSelection(3, false);
                         setSingleDay(dateConstraint.getConstraintSqlValues().get(0));
                         break;
