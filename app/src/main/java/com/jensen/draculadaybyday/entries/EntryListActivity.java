@@ -524,8 +524,10 @@ public class EntryListActivity extends AppCompatActivity {
         public void onBindViewHolder(@NonNull final EntryViewHolder holder, int position) {
             // Set the views
             holder.entry = mValues.get(position);
+            // holder.mNewsType.getLayoutParams().height = holder.mNewsType.getWidth();
             holder.setViews();
 
+            //region View on click
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -548,6 +550,7 @@ public class EntryListActivity extends AppCompatActivity {
                     }
                 }
             });
+            //endregion
         }
 
         @Override

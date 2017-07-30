@@ -163,8 +163,7 @@ public class FontSizePickerPreference extends DialogPreference {
 
     private void setValue(float value) {
         // Set and save the value
-        float value1 = value;
-        persistFloat(value1);
+        persistFloat(value);
 
         // Get the values for the number pickers
         String[] strValue = Float.toString(value).split("\\.");

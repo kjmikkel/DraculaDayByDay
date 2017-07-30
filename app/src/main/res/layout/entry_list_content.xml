@@ -21,7 +21,7 @@
             android:gravity="center"
             android:textAppearance="?attr/textAppearanceListItem" />
 
-        <ImageView
+        <com.jensen.draculadaybyday.presentation.SquareImageView
             android:id="@+id/news_type"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
