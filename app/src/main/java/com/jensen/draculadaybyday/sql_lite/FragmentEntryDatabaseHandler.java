@@ -108,12 +108,11 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
             }
 
             // Check if the mEntry is already in the database
-            if (!EntryAlreadyInDB(entry.getStoryEntryNum())) {
+            if (!EntryAlreadyInDB(entry)) {
 
                 ContentValues values = new ContentValues();
 
-                // auto-generate the ENTRY_SEQ_NUM (primary key)
-
+                values.put(ENTRY_SEQ_NUM, entry.getStoryEntryNum());
                 values.put(CHAPTER, entry.getChapter());
                 values.put(PERSON, entry.getPerson());
                 values.put(TEXT, entry.getTextEntry());
@@ -135,7 +134,7 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
         }
     }
 
-    private boolean EntryAlreadyInDB(short sequenceNumber) {
+    private boolean EntryAlreadyInDB(Entry entry) {
         if (!db.isOpen()) {
             open();
         }
@@ -144,18 +143,18 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
                 TABLE_ENTRY,
                 new String[]{ENTRY_SEQ_NUM},
                 ENTRY_SEQ_NUM + " = ?",
-                new String[]{String.valueOf(sequenceNumber)},
+                new String[]{String.valueOf(entry.getStoryEntryNum())},
                 null,
                 null,
                 null);
 
-        if (cursor != null && 0 < cursor.getCount()) {
-            cursor.moveToFirst();
-            return sequenceNumber == getShort(cursor, ENTRY_SEQ_NUM);
+        // if cursor exists then check if there is at least one entry
+        boolean entryExists = false;
+        if (cursor != null) {
+            entryExists = 0 < cursor.getCount();
+            cursor.close();
         }
-        assert cursor != null;
-        cursor.close();
-        return false;
+        return entryExists;
     }
 
     private int entryCount(String selection, String[] selectionArgs) {

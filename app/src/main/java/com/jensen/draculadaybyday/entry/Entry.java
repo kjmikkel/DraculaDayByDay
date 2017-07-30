@@ -29,8 +29,7 @@ public class Entry {
     // Whether or not the mEntry is unread
     private final boolean unread;
 
-    private Entry(int storyEntryNum, int chapter, Person person, String diaryText, Calendar date, EntryType type, boolean unread) {
-
+    public Entry(int storyEntryNum, int chapter, Person person, String diaryText, Calendar date, EntryType type, boolean unread) {
         this.storyEntryNum = (short) storyEntryNum;
 
         this.chapter = (short) chapter;
@@ -44,10 +43,6 @@ public class Entry {
         this.type = type;
 
         this.unread = unread;
-    }
-
-    public Entry(int chapter, Person person, String diaryText, Calendar date, EntryType type, boolean unread) {
-        this(-1, chapter, person, diaryText, date, type, unread);
     }
 
     public Entry(int storyEntryNum, int chapter, String personName, String diaryText, Calendar date, String type, boolean unread) {

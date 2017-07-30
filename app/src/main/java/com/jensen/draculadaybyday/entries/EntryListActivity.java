@@ -78,6 +78,8 @@ public class EntryListActivity extends AppCompatActivity {
     private static SqlConstraintFactory constraintFactory;
     private static SqlSortFactory sortFactory;
 
+    int entrySequenceNum;
+
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
      * device.
@@ -174,6 +176,8 @@ public class EntryListActivity extends AppCompatActivity {
 
         try {
             mFragmentEntryHandler.open();
+
+            entrySequenceNum = 0;
 
             //region Add entries to the database
             // Chapter 1
@@ -456,7 +460,8 @@ public class EntryListActivity extends AppCompatActivity {
             Calendar calendar = Calendar.getInstance();
             calendar.set(1893, month - 1, date, 0, 0, 0);
 
-            mFragmentEntryHandler.addEntry(new Entry(chapterNum, person, getStringFromId(diaryResource), calendar, type, true));
+            mFragmentEntryHandler.addEntry(new Entry(entrySequenceNum, chapterNum, person, getStringFromId(diaryResource), calendar, type, true));
+            entrySequenceNum++;
         }
     }
 
