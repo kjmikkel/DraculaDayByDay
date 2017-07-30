@@ -8,7 +8,6 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -32,7 +31,7 @@ public class SqlConstraintFactory implements Parcelable {
     private final Constraint unlockedConstraint;
 
     // Time format
-    private static final DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss").withLocale(Locale.getDefault());
+    private static final DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd").withLocale(Locale.getDefault());
 
     public SqlConstraintFactory() {
         dateConstraint = new DateConstraint();

@@ -141,7 +141,7 @@ public class FilterActivity extends AppCompatActivity {
                     textView.setText(getResources().getString(labelTextId));
 
                     final Button dateButton = (Button)dateLayout.findViewById(R.id.single_button);
-                    final DateTime initialDay = new DateTime().withYear(1893).withMonthOfYear(DateTimeConstants.MARCH).withDayOfMonth(3)
+                    final DateTime initialDay = new DateTime().withYear(1893).withMonthOfYear(DateTimeConstants.MAY).withDayOfMonth(3)
                             .withHourOfDay(0).withMinuteOfHour(0).withSecondOfMinute(0);
 
                     dateButton.setText(initialDay.toString(DATE_FORMAT));
@@ -166,7 +166,7 @@ public class FilterActivity extends AppCompatActivity {
 
                     RelativeLayout dateLayout = (RelativeLayout) layoutInflator.inflate(R.layout.between_dates, parentLayout, false);
 
-                    final DateTime initialDay = new DateTime().withYear(1893).withMonthOfYear(DateTimeConstants.MARCH).withDayOfMonth(3)
+                    final DateTime initialDay = new DateTime().withYear(1893).withMonthOfYear(DateTimeConstants.MAY).withDayOfMonth(3)
                             .withHourOfDay(0).withMinuteOfHour(0).withSecondOfMinute(0);
 
                     final Button startDateButton = (Button) dateLayout.findViewById(R.id.between_dates_start_button);

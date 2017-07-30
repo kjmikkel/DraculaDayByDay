@@ -20,17 +20,17 @@ import java.util.Locale;
 public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLiteOpenHelper {
 
     // Contacts Table Columns names
-    public static final String ENTRY_SEQ_NUM = "entrySeqNum";
-    static final String CHAPTER = "chapter";
-    static final String PERSON = "person";
-    private static final String TEXT = "text";
-    static final String DATE = "date";
-    static final String TYPE = "type";
-    static final String UNLOCKED = "unlocked";
-    static final String UNREAD = "unread";
+    public static final String ENTRY_SEQ_NUM = "EntrySeqNum";
+    static final String CHAPTER = "Chapter";
+    static final String PERSON = "Person";
+    private static final String TEXT = "Text";
+    static final String DATE = "Date";
+    static final String TYPE = "Type";
+    static final String UNLOCKED = "Unlocked";
+    static final String UNREAD = "Unread";
 
     // Time
-    private static final DateTimeFormatter TIME_FORMAT = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss").withLocale(Locale.getDefault());
+    private static final DateTimeFormatter TIME_FORMAT = DateTimeFormat.forPattern("yyyy-MM-dd").withLocale(Locale.getDefault());
 
     // All Static variables
     // Database Version
@@ -49,7 +49,7 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
     private FragmentEntryDatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.db = this.getWritableDatabase();
-        this.db.execSQL("DROP TABLE IF EXISTS " + TABLE_ENTRY);
+        this.db.execSQL("DROP TABLE IF EXISTS " + TABLE_ENTRY + ";");
         this.onCreate(db);
     }
 
@@ -77,7 +77,7 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
                 + TYPE + " TEXT,"
                 + UNLOCKED + " INTEGER,"
                 + UNREAD + " INTEGER"
-                + ")";
+                + ");";
         db.execSQL(CREATE_ENTRY_TABLE);
     }
 
@@ -85,7 +85,7 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_ENTRY);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_ENTRY + ";");
 
         // Create tables again
         onCreate(db);
@@ -117,11 +117,10 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
                 values.put(CHAPTER, entry.getChapter());
                 values.put(PERSON, entry.getPerson());
                 values.put(TEXT, entry.getTextEntry());
-
                 values.put(DATE, entry.getDate().toString(TIME_FORMAT));
                 values.put(TYPE, entry.getType().description);
-                values.put(UNLOCKED, false);
-                values.put(UNREAD, entry.getUnread());
+                values.put(UNLOCKED, 0);
+                values.put(UNREAD, entry.getUnread() ? 1 : 0);
 
                 // Inserting row
                 db.insertOrThrow(TABLE_ENTRY, null, values);
@@ -163,7 +162,7 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
                 open();
             }
 
-            Cursor cursor = db.rawQuery(String.format("SELECT COUNT(*) FROM %s WHERE %s", TABLE_ENTRY, selection), selectionArgs);
+            Cursor cursor = db.rawQuery(String.format("SELECT COUNT(*) FROM %s WHERE %s;", TABLE_ENTRY, selection), selectionArgs);
             cursor.moveToFirst();
             count = cursor.getInt(0);
             cursor.close();
@@ -319,14 +318,17 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
 
     // Update the correct
     public void unlockEntriesBeforeDate(DateTime date) {
+        SqlConstraintFactory constraintFactory = new SqlConstraintFactory();
+        constraintFactory.beforeDate(date);
+        constraintFactory.unlocked(false);
+
+        SqlSortFactory fact = new SqlSortFactory();
+        fact.dateOrder(true);
+
+        String constraint = constraintFactory.getConstraint();
+        String[] values = constraintFactory.getValues();
+
         try {
-            SqlConstraintFactory constraintFactory = new SqlConstraintFactory();
-            constraintFactory.beforeDate(date);
-            constraintFactory.unlocked(false);
-
-            SqlSortFactory fact = new SqlSortFactory();
-            fact.dateOrder(true);
-
             ContentValues cv = new ContentValues();
             cv.put(UNLOCKED, 1);
             cv.put(UNREAD, 1);

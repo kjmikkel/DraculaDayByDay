@@ -11,11 +11,10 @@ public class DateConstraint extends Constraint {
     public static final int AFTER = 2;
     public static final int BETWEEN = 3;
 
-
-    private static final String BEFORE_DATE = FragmentEntryDatabaseHandler.DATE + " <= Datetime(?)";
-    private static final String AFTER_DATE = "Datetime(?) <= " + FragmentEntryDatabaseHandler.DATE;
-    private static final String EXACT_DATE = FragmentEntryDatabaseHandler.DATE + " = Datetime(?)";
-    private static final String BETWEEN_DATES = FragmentEntryDatabaseHandler.DATE + " BETWEEN Datetime(?) AND Datetime(?)";
+    private static final String BEFORE_DATE = String.format("%s <= ?", FragmentEntryDatabaseHandler.DATE );
+    private static final String AFTER_DATE = String.format("? <= %s", FragmentEntryDatabaseHandler.DATE);
+    private static final String EXACT_DATE = String.format("%s = ?", FragmentEntryDatabaseHandler.DATE);
+    private static final String BETWEEN_DATES = String.format("%s BETWEEN ? AND ?", FragmentEntryDatabaseHandler.DATE);
 
     private int dateType;
 
