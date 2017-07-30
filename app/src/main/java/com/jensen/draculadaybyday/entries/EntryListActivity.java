@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.jensen.draculadaybyday.filter.FilterActivity;
 import com.jensen.draculadaybyday.presentation.AboutPage;
 import com.jensen.draculadaybyday.entry.Entry;
 import com.jensen.draculadaybyday.R;

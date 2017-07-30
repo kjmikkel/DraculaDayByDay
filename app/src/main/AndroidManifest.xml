@@ -40,7 +40,7 @@
 
         <!-- Filter page -->
         <activity
-            android:name=".entries.FilterActivity"
+            android:name=".filter.FilterActivity"
             android:parentActivityName=".entries.EntryListActivity"
             android:label="@string/menu_filter_text" />
 

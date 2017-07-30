@@ -1,4 +1,4 @@
-package com.jensen.draculadaybyday.entries;
+package com.jensen.draculadaybyday.filter;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
