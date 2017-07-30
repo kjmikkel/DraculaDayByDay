@@ -9,9 +9,10 @@ import android.util.Log;
 
 import com.jensen.draculadaybyday.entry.Entry;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -29,7 +30,7 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
     static final String UNREAD = "unread";
 
     // Time
-    private static final String TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    private static final DateTimeFormatter TIME_FORMAT = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss").withLocale(Locale.getDefault());
 
     // All Static variables
     // Database Version
@@ -117,9 +118,7 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
                 values.put(PERSON, entry.getPerson());
                 values.put(TEXT, entry.getTextEntry());
 
-                SimpleDateFormat dateFormat = new SimpleDateFormat(TIME_FORMAT, Locale.getDefault());
-
-                values.put(DATE, dateFormat.format(entry.getDate().getTime()));
+                values.put(DATE, entry.getDate().toString(TIME_FORMAT));
                 values.put(TYPE, entry.getType().description);
                 values.put(UNLOCKED, false);
                 values.put(UNREAD, entry.getUnread());
@@ -178,12 +177,12 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
         return count;
     }
 
-    private Calendar makeDate(String date_rep) {
+    private DateTime makeDate(String date_rep) {
         int year = Integer.valueOf(date_rep.substring(0, 4));
         int month = Integer.valueOf(date_rep.substring(5, 7));
         int day = Integer.valueOf(date_rep.substring(8, 10));
 
-        return new GregorianCalendar(year, month, day);
+        return new DateTime().withYear(year).withMonthOfYear(month).withDayOfMonth(day).withHourOfDay(0).withMinuteOfHour(0).withSecondOfMinute(0);
     }
 
     private short getShort(Cursor cursor, String column) {
@@ -319,7 +318,7 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
     }
 
     // Update the correct
-    public void unlockEntriesBeforeDate(Calendar date) {
+    public void unlockEntriesBeforeDate(DateTime date) {
         try {
             SqlConstraintFactory constraintFactory = new SqlConstraintFactory();
             constraintFactory.beforeDate(date);

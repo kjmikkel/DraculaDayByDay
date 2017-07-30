@@ -3,9 +3,13 @@ package com.jensen.draculadaybyday.sql_lite;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
+
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -28,7 +32,7 @@ public class SqlConstraintFactory implements Parcelable {
     private final Constraint unlockedConstraint;
 
     // Time format
-    private static final String TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    private static final DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss").withLocale(Locale.getDefault());
 
     public SqlConstraintFactory() {
         dateConstraint = new DateConstraint();
@@ -49,29 +53,24 @@ public class SqlConstraintFactory implements Parcelable {
     }
 
     //region Date constraints
-    public void exactDate(Calendar date) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat(TIME_FORMAT, Locale.getDefault());
-        String dateString = dateFormat.format(date.getTime());
+    public void exactDate(DateTime date) {
+        String dateString = date.toString(fmt);
         dateConstraint.setDateConstraint(DateConstraint.EXACT, dateString);
     }
 
-    public void beforeDate(Calendar date) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat(TIME_FORMAT, Locale.getDefault());
-        String beforeDate = dateFormat.format(date.getTime());
+    public void beforeDate(DateTime date) {
+        String beforeDate = date.toString(fmt);
         dateConstraint.setDateConstraint(DateConstraint.BEFORE, beforeDate);
     }
 
-    public void afterDate(Calendar date) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat(TIME_FORMAT, Locale.getDefault());
-        String afterDate = dateFormat.format(date.getTime());
+    public void afterDate(DateTime date) {
+        String afterDate = date.toString(fmt);
         dateConstraint.setDateConstraint(DateConstraint.AFTER, afterDate);
     }
 
-    public void betweenDates(Calendar beforeDateCalendar, Calendar afterDateCalendar) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat(TIME_FORMAT, Locale.getDefault());
-
-        String beforeDate = dateFormat.format(beforeDateCalendar.getTime());
-        String afterDate = dateFormat.format(afterDateCalendar.getTime());
+    public void betweenDates(DateTime beforeDateCalendar, DateTime afterDateCalendar) {
+        String beforeDate = beforeDateCalendar.toString(fmt);
+        String afterDate = afterDateCalendar.toString(fmt);
 
         dateConstraint.setDateConstraint(beforeDate, afterDate);
     }

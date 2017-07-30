@@ -35,6 +35,8 @@ dependencies {
     compile 'com.android.support:design:23.4.0'
     //noinspection GradleDependency
     compile 'com.android.support:support-vector-drawable:23.4.0'
+    //noinspection GradleDependency
+    compile 'net.danlew:android.joda:2.9.9'
     // Library for unit testing
     testCompile 'junit:junit:4.12'
 }

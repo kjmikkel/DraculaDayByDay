@@ -28,9 +28,12 @@ import com.jensen.draculadaybyday.sql_lite.SortValue;
 import com.jensen.draculadaybyday.sql_lite.SqlConstraintFactory;
 import com.jensen.draculadaybyday.sql_lite.SqlSortFactory;
 
-import java.text.SimpleDateFormat;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeConstants;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -55,7 +58,7 @@ public class FilterActivity extends AppCompatActivity {
     //endregion
 
     private final List<Integer> idList = new ArrayList<>();
-    private static final String DATE_FORMAT = "dd/MM/yyyy";
+    private static final DateTimeFormatter DATE_FORMAT = DateTimeFormat.forPattern("dd/MM/yyyy").withLocale(Locale.getDefault());
 
     private void setSingleDay(final String stringDateRep) {
         new Handler().postDelayed(new Runnable() {
@@ -63,15 +66,10 @@ public class FilterActivity extends AppCompatActivity {
             public void run() {
                 Button dateButton = (Button) findViewById(R.id.single_button);
 
-                SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
-                Calendar cal = getCalendarFromString(stringDateRep);
+                DateTime cal = getCalendarFromString(stringDateRep);
                 assert dateButton != null;
                 dateButton.setTag(cal);
-
-                int month = cal.get(Calendar.MONTH)-1;
-                cal.set(Calendar.MONTH, month);
-
-                dateButton.setText(dateFormat.format(cal.getTime()));
+                dateButton.setText(cal.toString(DATE_FORMAT));
             }}, 100);
     }
 
@@ -101,29 +99,29 @@ public class FilterActivity extends AppCompatActivity {
                     }
                 }
 
-                private void getDatePicker(final Calendar calendar, final Button dateButton) {
+                private void getDatePicker(final DateTime initialDay, final Button dateButton) {
                     try {
                         DatePickerDialog.OnDateSetListener setListener = new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                                SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
-
-                                Calendar newDate = Calendar.getInstance();
-                                newDate.set(year, monthOfYear, dayOfMonth);
-                                dateButton.setText(dateFormat.format(newDate.getTime()));
+                            DateTime newDate = new DateTime().withYear(year).withMonthOfYear(monthOfYear + 1).withDayOfMonth(dayOfMonth)
+                                    .withHourOfDay(0).withMinuteOfHour(0).withSecondOfMinute(0);
+                                dateButton.setText(newDate.toString(DATE_FORMAT));
                                 dateButton.setTag(newDate);
                             }
                         };
 
+                        DateTime currentDate = (DateTime)dateButton.getTag();
+
                         DatePickerDialog dlg = new DatePickerDialog(FilterActivity.this, setListener,
-                                calendar.get(Calendar.YEAR),
-                                calendar.get(Calendar.MONTH),
-                                calendar.get(Calendar.DAY_OF_MONTH)) {
+                                currentDate.getYear(),
+                                currentDate.getMonthOfYear() - 1,
+                                currentDate.getDayOfMonth()) {
                             @Override
                             protected void onCreate(Bundle savedInstanceState) {
                                 super.onCreate(savedInstanceState);
                                 DatePicker dp = this.getDatePicker();
-                                dp.setMinDate(calendar.getTimeInMillis());
+                                dp.setMinDate(initialDay.getMillis());
                             }
                         };
 
@@ -143,13 +141,10 @@ public class FilterActivity extends AppCompatActivity {
                     textView.setText(getResources().getString(labelTextId));
 
                     final Button dateButton = (Button)dateLayout.findViewById(R.id.single_button);
-                    final Calendar initialDay = Calendar.getInstance();
-                    initialDay.set(Calendar.DAY_OF_MONTH, 3);
-                    initialDay.set(Calendar.MONTH, 2);
-                    initialDay.set(Calendar.YEAR, 1893);
+                    final DateTime initialDay = new DateTime().withYear(1893).withMonthOfYear(DateTimeConstants.MARCH).withDayOfMonth(3)
+                            .withHourOfDay(0).withMinuteOfHour(0).withSecondOfMinute(0);
 
-                    SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
-                    dateButton.setText(dateFormat.format(initialDay.getTime()));
+                    dateButton.setText(initialDay.toString(DATE_FORMAT));
                     dateButton.setTag(initialDay);
                     dateButton.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -171,15 +166,11 @@ public class FilterActivity extends AppCompatActivity {
 
                     RelativeLayout dateLayout = (RelativeLayout) layoutInflator.inflate(R.layout.between_dates, parentLayout, false);
 
-                    final Calendar initialDay = Calendar.getInstance();
-                    initialDay.set(Calendar.DAY_OF_MONTH, 3);
-                    initialDay.set(Calendar.MONTH, 2);
-                    initialDay.set(Calendar.YEAR, 1893);
-
-                    SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
+                    final DateTime initialDay = new DateTime().withYear(1893).withMonthOfYear(DateTimeConstants.MARCH).withDayOfMonth(3)
+                            .withHourOfDay(0).withMinuteOfHour(0).withSecondOfMinute(0);
 
                     final Button startDateButton = (Button) dateLayout.findViewById(R.id.between_dates_start_button);
-                    startDateButton.setText(dateFormat.format(initialDay.getTime()));
+                    startDateButton.setText(initialDay.toString(DATE_FORMAT));
                     startDateButton.setTag(initialDay);
                     startDateButton.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -189,7 +180,7 @@ public class FilterActivity extends AppCompatActivity {
                     });
 
                     final Button endDateButton = (Button) dateLayout.findViewById(R.id.between_dates_end_button);
-                    endDateButton.setText(dateFormat.format(initialDay.getTime()));
+                    endDateButton.setText(initialDay.toString(DATE_FORMAT));
                     endDateButton.setTag(initialDay);
                     endDateButton.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -394,27 +385,24 @@ public class FilterActivity extends AppCompatActivity {
                     switch (dateSpinner.getSelectedItemPosition()) {
                         case 1:
                             Button exactDate = (Button)findViewById(R.id.single_button);
-                            Calendar exactDateCalendar = (Calendar) exactDate.getTag();
-                            constraintFactory.exactDate(exactDateCalendar);
+                            constraintFactory.exactDate((DateTime) exactDate.getTag());
                             break;
                         case 2:
                             Button beforeDate = (Button)findViewById(R.id.single_button);
-                            Calendar beforeDateCalendar = (Calendar)beforeDate.getTag();
-                            constraintFactory.beforeDate(beforeDateCalendar);
+                            constraintFactory.beforeDate((DateTime)beforeDate.getTag());
                             break;
 
                         case 3:
                             Button afterDate = (Button)findViewById(R.id.single_button);
-                            Calendar afterDateCalendar = (Calendar)afterDate.getTag();
-                            constraintFactory.afterDate(afterDateCalendar);
+                            constraintFactory.afterDate((DateTime) afterDate.getTag());
                             break;
 
                         case 4:
                             Button startDateButton = (Button)findViewById(R.id.between_dates_start_button);
-                            Calendar startDateCalendar = (Calendar)startDateButton.getTag();
+                            DateTime startDateCalendar = (DateTime) startDateButton.getTag();
 
                             Button endDateButton = (Button)findViewById(R.id.between_dates_end_button);
-                            Calendar endDateCalendar = (Calendar)endDateButton.getTag();
+                            DateTime endDateCalendar = (DateTime) endDateButton.getTag();
 
                             constraintFactory.betweenDates(startDateCalendar, endDateCalendar);
                             break;
@@ -537,22 +525,20 @@ public class FilterActivity extends AppCompatActivity {
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                Calendar calStart = getCalendarFromString(dateConstraint.getConstraintSqlValues().get(0));
-                                Calendar calEnd = getCalendarFromString(dateConstraint.getConstraintSqlValues().get(1));
+                                DateTime calStart = getCalendarFromString(dateConstraint.getConstraintSqlValues().get(0));
+                                DateTime calEnd = getCalendarFromString(dateConstraint.getConstraintSqlValues().get(1));
 
-                                int beforeMonth = calStart.get(Calendar.MONTH)-1;
-                                int afterMonth = calEnd.get(Calendar.MONTH)-1;
+                                int beforeMonth = calStart.getMonthOfYear();
+                                int afterMonth = calEnd.getMonthOfYear();
 
-                                calStart.set(Calendar.MONTH, beforeMonth);
-                                calEnd.set(Calendar.MONTH, afterMonth);
-
-                                SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
+                                calStart.withMonthOfYear(beforeMonth);
+                                calEnd.withMonthOfYear(afterMonth);
 
                                 Button dateButtonStart = (Button) findViewById(R.id.between_dates_start_button);
                                 Button dateButtonEnd = (Button) findViewById(R.id.between_dates_end_button);
 
-                                dateButtonStart.setText(dateFormat.format(calStart.getTime()));
-                                dateButtonEnd.setText(dateFormat.format(calEnd.getTime()));
+                                dateButtonStart.setText(calStart.toString(DATE_FORMAT));
+                                dateButtonEnd.setText(calEnd.toString(DATE_FORMAT));
 
                                 dateButtonStart.setTag(calStart);
                                 dateButtonEnd.setTag(calEnd);
@@ -648,7 +634,7 @@ public class FilterActivity extends AppCompatActivity {
             Button dateButton = (Button) findViewById(R.id.single_button);
             outState.putString(DATE_TEXT, (String) dateButton.getText());
 
-            Calendar cal = (Calendar)dateButton.getTag();
+            DateTime cal = (DateTime) dateButton.getTag();
             outState.putSerializable(DATE_CAL, cal);
         } else if (dateSelectedPosition == 4) {
             Button dateButtonStart = (Button) findViewById(R.id.between_dates_start_button);
@@ -657,8 +643,8 @@ public class FilterActivity extends AppCompatActivity {
             outState.putString(DATE_START_TEXT, (String)dateButtonStart.getText());
             outState.putString(DATE_END_TEXT, (String)dateButtonEnd.getText());
 
-            Calendar calStart = (Calendar)dateButtonStart.getTag();
-            Calendar calEnd = (Calendar)dateButtonEnd.getTag();
+            DateTime calStart = (DateTime) dateButtonStart.getTag();
+            DateTime calEnd = (DateTime) dateButtonEnd.getTag();
 
             outState.putSerializable(DATE_CAL_START, calStart);
             outState.putSerializable(DATE_CAL_END, calEnd);
@@ -727,7 +713,7 @@ public class FilterActivity extends AppCompatActivity {
                         case 2:
                         case 3:
                             String buttonString = savedInstanceState.getString(DATE_TEXT);
-                            Calendar cal = (Calendar) savedInstanceState.getSerializable(DATE_CAL);
+                            DateTime cal = (DateTime) savedInstanceState.getSerializable(DATE_CAL);
 
                             Button dateButton = (Button) findViewById(R.id.single_button);
                             assert dateButton != null;
@@ -738,8 +724,8 @@ public class FilterActivity extends AppCompatActivity {
                             String buttonStartString = savedInstanceState.getString(DATE_START_TEXT);
                             String buttonEndString = savedInstanceState.getString(DATE_END_TEXT);
 
-                            Calendar calStart = (Calendar)savedInstanceState.getSerializable(DATE_CAL_START);
-                            Calendar calEnd = (Calendar)savedInstanceState.getSerializable(DATE_CAL_END);
+                            DateTime calStart = (DateTime) savedInstanceState.getSerializable(DATE_CAL_START);
+                            DateTime calEnd = (DateTime) savedInstanceState.getSerializable(DATE_CAL_END);
 
                             Button dateButtonStart = (Button) findViewById(R.id.between_dates_start_button);
                             Button dateButtonEnd = (Button) findViewById(R.id.between_dates_end_button);
@@ -814,15 +800,13 @@ public class FilterActivity extends AppCompatActivity {
         }
     }
 
-    private Calendar getCalendarFromString(String dateRep) {
+    private DateTime getCalendarFromString(String dateRep) {
         String[] rep = dateRep.split("-");
         int year = Integer.valueOf(rep[0]);
         int month = Integer.valueOf(rep[1]);
         int day = Integer.valueOf(rep[2].substring(0, 2));
 
-        Calendar cal = Calendar.getInstance();
-        cal.set(year, month, day);
-        return cal;
+        return new DateTime().withYear(year).withMonthOfYear(month).withDayOfMonth(day).withHourOfDay(0).withMinuteOfHour(0).withSecondOfMinute(0);
     }
 
     @SuppressWarnings("ConstantConditions")
