@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.jensen.draculadaybyday.R;
 import com.jensen.draculadaybyday.presentation.MultiSpinner;
@@ -60,16 +61,26 @@ public class FilterActivity extends AppCompatActivity {
     private final List<Integer> idList = new ArrayList<>();
     private static final DateTimeFormatter DATE_FORMAT = DateTimeFormat.forPattern("dd/MM/yyyy").withLocale(Locale.getDefault());
 
-    private void setSingleDay(final String stringDateRep) {
+    private void setSingleDay(final DateConstraint constraint, final boolean beforeOrAfter) {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 Button dateButton = (Button) findViewById(R.id.single_button);
 
-                DateTime cal = getCalendarFromString(stringDateRep);
+                ToggleButton inclusiveButton = (ToggleButton)findViewById(R.id.inclusive_button);
+
+                DateTime cal = getCalendarFromString(constraint.getConstraintSqlValues().get(0));
                 assert dateButton != null;
                 dateButton.setTag(cal);
                 dateButton.setText(cal.toString(DATE_FORMAT));
+                if (beforeOrAfter) {
+                    inclusiveButton.setVisibility(View.VISIBLE);
+                    inclusiveButton.setEnabled(true);
+                    inclusiveButton.setChecked(constraint.getInclusive());
+                } else {
+                    inclusiveButton.setVisibility(View.INVISIBLE);
+                    inclusiveButton.setEnabled(false);
+                }
             }}, 100);
     }
 
@@ -132,7 +143,7 @@ public class FilterActivity extends AppCompatActivity {
                     }
                 }
 
-                private void addSingleDate(int labelTextId) {
+                private void addSingleDate(int labelTextId, boolean inclusive) {
                     LayoutInflater layoutInflator = LayoutInflater.from(getBaseContext());
                     RelativeLayout parentLayout = (RelativeLayout)findViewById(R.id.date_rl_view);
 
@@ -158,6 +169,15 @@ public class FilterActivity extends AppCompatActivity {
                             ViewGroup.LayoutParams.WRAP_CONTENT);
                     layoutParams.addRule(RelativeLayout.BELOW, R.id.filter_date_spinner);
                     parentLayout.addView(dateLayout, layoutParams);
+
+                    ToggleButton inclusiveButton = (ToggleButton)findViewById(R.id.inclusive_button);
+                    if (inclusive) {
+                        inclusiveButton.setVisibility(View.VISIBLE);
+                        inclusiveButton.setEnabled(true);
+                    } else {
+                        inclusiveButton.setVisibility(View.INVISIBLE);
+                        inclusiveButton.setEnabled(false);
+                    }
                 }
 
                 private void addBetweenDates() {
@@ -205,15 +225,15 @@ public class FilterActivity extends AppCompatActivity {
                                 break;
                             case 1:
                                 removeOldView();
-                                addSingleDate(R.string.filter_on_date);
+                                addSingleDate(R.string.filter_on_date, false);
                                 break;
                             case 2:
                                 removeOldView();
-                                addSingleDate(R.string.filter_before_date);
+                                addSingleDate(R.string.filter_before_date, true);
                                 break;
                             case 3:
                                 removeOldView();
-                                addSingleDate(R.string.filter_after_date);
+                                addSingleDate(R.string.filter_after_date, true);
                                 break;
                             case 4:
                                 removeOldView();
@@ -381,6 +401,8 @@ public class FilterActivity extends AppCompatActivity {
                     SqlConstraintFactory constraintFactory = new SqlConstraintFactory();
 
                     //region Date
+                    ToggleButton inclusive_button = (ToggleButton)findViewById(R.id.inclusive_button);
+
                     Spinner dateSpinner = (Spinner)findViewById(R.id.filter_date_spinner);
                     switch (dateSpinner.getSelectedItemPosition()) {
                         case 1:
@@ -389,14 +411,12 @@ public class FilterActivity extends AppCompatActivity {
                             break;
                         case 2:
                             Button beforeDate = (Button)findViewById(R.id.single_button);
-                            constraintFactory.beforeDate((DateTime)beforeDate.getTag());
+                            constraintFactory.beforeDate((DateTime)beforeDate.getTag(), inclusive_button.isChecked());
                             break;
-
                         case 3:
                             Button afterDate = (Button)findViewById(R.id.single_button);
-                            constraintFactory.afterDate((DateTime) afterDate.getTag());
+                            constraintFactory.afterDate((DateTime) afterDate.getTag(), inclusive_button.isChecked());
                             break;
-
                         case 4:
                             Button startDateButton = (Button)findViewById(R.id.between_dates_start_button);
                             DateTime startDateCalendar = (DateTime) startDateButton.getTag();
@@ -510,15 +530,15 @@ public class FilterActivity extends AppCompatActivity {
                 switch (dateConstraint.getDateType()) {
                     case DateConstraint.EXACT:
                         dateSpinner.setSelection(1, false);
-                        setSingleDay(dateConstraint.getConstraintSqlValues().get(0));
+                        setSingleDay(dateConstraint, false);
                         break;
                     case DateConstraint.BEFORE:
                         dateSpinner.setSelection(2, false);
-                        setSingleDay(dateConstraint.getConstraintSqlValues().get(0));
+                        setSingleDay(dateConstraint, true);
                         break;
                     case DateConstraint.AFTER:
                         dateSpinner.setSelection(3, false);
-                        setSingleDay(dateConstraint.getConstraintSqlValues().get(0));
+                        setSingleDay(dateConstraint, true);
                         break;
                     case DateConstraint.BETWEEN:
                         dateSpinner.setSelection(4, false);

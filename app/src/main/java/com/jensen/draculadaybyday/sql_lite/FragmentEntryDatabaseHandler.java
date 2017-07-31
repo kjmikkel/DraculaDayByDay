@@ -319,14 +319,11 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
     // Update the correct
     public void unlockEntriesBeforeDate(DateTime date) {
         SqlConstraintFactory constraintFactory = new SqlConstraintFactory();
-        constraintFactory.beforeDate(date);
+        constraintFactory.beforeDate(date, true);
         constraintFactory.unlocked(false);
 
         SqlSortFactory fact = new SqlSortFactory();
         fact.dateOrder(true);
-
-        String constraint = constraintFactory.getConstraint();
-        String[] values = constraintFactory.getValues();
 
         try {
             ContentValues cv = new ContentValues();

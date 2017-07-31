@@ -15,4 +15,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toEndOf="@id/single_label"/>
+    <ToggleButton
+        android:id="@+id/inclusive_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/single_button"
+        android:textOff="@string/filter_inclusive_button_no"
+        android:textOn="@string/filter_inclusive_button_yes"
+        android:checked="true" />
 </RelativeLayout>

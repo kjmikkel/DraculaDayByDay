@@ -16,11 +16,15 @@
     <!-- Date -->
     <string name="filter_date_label">Date:</string>
 
-    <string name="filter_on_date">On date </string>
+    <string name="filter_on_date">On date</string>
     <string name="filter_before_date">Before date</string>
     <string name="filter_after_date">After date</string>
     <string name="filter_between_date_one">Between the</string>
     <string name="filter_between_date_two">and</string>
+    <string name="filter_inclusive_label">inclusive</string>
+    <!-- Toggle buttons text -->
+    <string name="filter_inclusive_button_yes">Inclusive</string>
+    <string name="filter_inclusive_button_no">Exclusive</string>
 
     <!-- Misc -->
     <string name="filter_persons_label">Persons:</string>

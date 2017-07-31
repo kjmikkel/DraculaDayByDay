@@ -54,17 +54,17 @@ public class SqlConstraintFactory implements Parcelable {
     //region Date constraints
     public void exactDate(DateTime date) {
         String dateString = date.toString(fmt);
-        dateConstraint.setDateConstraint(DateConstraint.EXACT, dateString);
+        dateConstraint.setDateConstraint(dateString);
     }
 
-    public void beforeDate(DateTime date) {
+    public void beforeDate(DateTime date, boolean inclusive) {
         String beforeDate = date.toString(fmt);
-        dateConstraint.setDateConstraint(DateConstraint.BEFORE, beforeDate);
+        dateConstraint.setDateConstraint(DateConstraint.BEFORE, beforeDate, inclusive);
     }
 
-    public void afterDate(DateTime date) {
+    public void afterDate(DateTime date, boolean inclusive) {
         String afterDate = date.toString(fmt);
-        dateConstraint.setDateConstraint(DateConstraint.AFTER, afterDate);
+        dateConstraint.setDateConstraint(DateConstraint.AFTER, afterDate, inclusive);
     }
 
     public void betweenDates(DateTime beforeDateCalendar, DateTime afterDateCalendar) {
