@@ -1,5 +1,6 @@
 package com.jensen.draculadaybyday.entries;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.jensen.draculadaybyday.presentation.AboutPage;
 import com.jensen.draculadaybyday.entry.EntryCollectionPagerAdapter;
@@ -46,6 +48,9 @@ public class EntryActivity extends AppCompatActivity {
             case R.id.entry_about_app:
                 Intent about = new Intent(EntryActivity.this, AboutPage.class);
                 startActivity(about);
+                return true;
+            case android.R.id.home:
+                finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

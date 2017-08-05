@@ -77,7 +77,9 @@ public class EntryListActivity extends AppCompatActivity {
     private SwipeRefreshLayout mSwipeContainer;
     private SimpleItemRecyclerViewAdapter mSimpleItemAdapter;
 
+    private static final int SINGLE_ENTRY = 0; // The entry code
     private static final int FILTER_REQUEST = 1; // The filter code
+
 
     private static SqlConstraintFactory constraintFactory;
     private static SqlSortFactory sortFactory;
@@ -121,27 +123,27 @@ public class EntryListActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // Check which request we're responding to
-        if (requestCode == FILTER_REQUEST) {
+        try {
             // Make sure the request was successful
             if (resultCode == RESULT_OK) {
-              try {
-                  // The user picked a new filter.
-                  // The Intent's data Uri identifies which contact was selected.
-                  constraintFactory = data.getParcelableExtra(FilterActivity.CONSTRAINTS_INTENT_KEY);
-                  constraintFactory.unlocked(true);
-                  sortFactory = data.getParcelableExtra(FilterActivity.SORTING_INTENT_KEY);
+                // Check which request we're responding to
+                if (requestCode == FILTER_REQUEST) {
+                    // The user picked a new filter.
+                    // The Intent's data Uri identifies which contact was selected.
+                    constraintFactory = data.getParcelableExtra(FilterActivity.CONSTRAINTS_INTENT_KEY);
+                    constraintFactory.unlocked(true);
+                    sortFactory = data.getParcelableExtra(FilterActivity.SORTING_INTENT_KEY);
 
-                  //region Set entries
-                  // Get the entries
-                  List<Entry> entries = mFragmentEntryHandler.getEntries(constraintFactory, sortFactory);
-                  mSimpleItemAdapter.clear();
-                  mSimpleItemAdapter.addAll(entries);
+                    //region Set entries
+                    // Get the entries
+                    List<Entry> entries = mFragmentEntryHandler.getEntries(constraintFactory, sortFactory);
+                    mSimpleItemAdapter.clear();
+                    mSimpleItemAdapter.addAll(entries);
                   //endregion
-              } catch (Exception e) {
-                  Log.d("onActivityResult", e.getMessage());
-              }
+                }
             }
+        } catch (Exception e) {
+            Log.d("onActivityResult", e.getMessage());
         }
     }
 
@@ -550,7 +552,7 @@ public class EntryListActivity extends AppCompatActivity {
 
                         // insert the values
                         intent.putExtra(FragmentEntryDatabaseHandler.ENTRY_SEQ_NUM, holder.entry.getStoryEntryNum());
-                        context.startActivity(intent);
+                        startActivity(intent);
                     }
                 }
             });
