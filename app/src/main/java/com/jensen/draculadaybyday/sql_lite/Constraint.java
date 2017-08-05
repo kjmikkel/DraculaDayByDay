@@ -25,7 +25,7 @@ public class Constraint implements Parcelable {
     }
 
     //region ConstraintSqlText
-    protected void setConstraintSqlText(String constraintSqlText) {
+    void setConstraintSqlText(String constraintSqlText) {
         this.constraintSqlText = constraintSqlText;
     }
 
@@ -35,7 +35,7 @@ public class Constraint implements Parcelable {
     //endregion
 
     //region ConstraintValue
-    protected void addConstraintSqlValue(String constraintValue) {
+    void addConstraintSqlValue(String constraintValue) {
         constraintSqlValues.add(constraintValue);
     }
 

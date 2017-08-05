@@ -6,8 +6,6 @@ import android.text.TextUtils;
 
 import com.jensen.draculadaybyday.sql_lite.DateConstraintArg.DateConstraintArg;
 
-import org.joda.time.DateTime;
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -20,6 +18,7 @@ public class SqlConstraintFactory implements Parcelable {
     public static final int TYPE = 2;
     public static final int CHAPTER = 3;
     public static final int READ = 4;
+    @SuppressWarnings("WeakerAccess")
     public static final int UNLOCKED = 5;
 
     private final DateConstraint dateConstraint;

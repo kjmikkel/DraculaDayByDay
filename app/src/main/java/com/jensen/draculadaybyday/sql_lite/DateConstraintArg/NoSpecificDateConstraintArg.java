@@ -2,7 +2,6 @@ package com.jensen.draculadaybyday.sql_lite.DateConstraintArg;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
 public class NoSpecificDateConstraintArg extends DateConstraintArg {
 
@@ -35,11 +34,7 @@ public class NoSpecificDateConstraintArg extends DateConstraintArg {
     }
 
     public void writeToParcel(Parcel out, int flags) {
-        try {
             // Do nothing
-        } catch (Exception e) {
-            Log.d("DateConstraint", e.getMessage());
-        }
     }
 
     private NoSpecificDateConstraintArg(Parcel in) {

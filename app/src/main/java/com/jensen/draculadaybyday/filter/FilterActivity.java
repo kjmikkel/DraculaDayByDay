@@ -92,7 +92,7 @@ public class FilterActivity extends AppCompatActivity {
             final Spinner dateSpinner = (Spinner)findViewById(R.id.filter_date_spinner);
 
             List<DateConstraintArg> dateConstraints = constraintFactory.getDateConstraintArgs();
-            final ArrayAdapter<DateConstraint> dateAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, dateConstraints);
+            final ArrayAdapter<DateConstraintArg> dateAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, dateConstraints);
             dateSpinner.setAdapter(dateAdapter);
             AdapterView.OnItemSelectedListener dateSpinnerSelectedListener = new AdapterView.OnItemSelectedListener() {
                 private DateTime getDateTime(DateConstraintArg dateArg, boolean secondButton) {

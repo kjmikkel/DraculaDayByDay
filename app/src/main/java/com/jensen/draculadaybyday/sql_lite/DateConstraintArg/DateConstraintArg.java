@@ -7,7 +7,7 @@ import org.joda.time.DateTimeConstants;
 
 public abstract class DateConstraintArg implements Parcelable {
 
-    protected DateTime dateTime;
+    DateTime dateTime;
 
     public DateTime getDate() {
         return dateTime;
@@ -17,8 +17,9 @@ public abstract class DateConstraintArg implements Parcelable {
         this.dateTime = dateTime;
     }
 
-    protected DateTime initialDateTime = new DateTime(1893, DateTimeConstants.MAY, 3, 0, 0, 0, 0);
+    final DateTime initialDateTime = new DateTime(1893, DateTimeConstants.MAY, 3, 0, 0, 0, 0);
 
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean isValueDefault() {
         return initialDateTime.equals(dateTime);
     }

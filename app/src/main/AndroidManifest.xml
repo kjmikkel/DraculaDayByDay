@@ -15,7 +15,7 @@
             android:enabled="true"
             android:exported="false"/>
 
-        <!-- Entrylist page -->
+        <!-- EntryList page -->
         <activity
             android:name=".entries.EntryListActivity"
             android:label="@string/app_name"

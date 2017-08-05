@@ -35,7 +35,6 @@ import org.joda.time.DateTimeConstants;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.sql.Date;
 import java.util.List;
 
 // Type
@@ -83,7 +82,7 @@ public class EntryListActivity extends AppCompatActivity {
     private static SqlConstraintFactory constraintFactory;
     private static SqlSortFactory sortFactory;
 
-    int entrySequenceNum;
+    private int entrySequenceNum;
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet

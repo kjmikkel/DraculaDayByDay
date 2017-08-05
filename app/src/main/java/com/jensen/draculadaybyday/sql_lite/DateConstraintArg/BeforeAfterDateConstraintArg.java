@@ -2,13 +2,13 @@ package com.jensen.draculadaybyday.sql_lite.DateConstraintArg;
 
 public abstract class BeforeAfterDateConstraintArg extends DateConstraintArg {
 
-    protected boolean inclusive;
+    boolean inclusive;
 
-    public BeforeAfterDateConstraintArg() {
+    BeforeAfterDateConstraintArg() {
 
     }
 
-    public BeforeAfterDateConstraintArg(boolean inclusive) {
+    BeforeAfterDateConstraintArg(boolean inclusive) {
         this.inclusive = inclusive;
     }
 
