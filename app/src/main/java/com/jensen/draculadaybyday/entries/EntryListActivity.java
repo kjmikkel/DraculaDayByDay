@@ -463,7 +463,7 @@ public class EntryListActivity extends AppCompatActivity {
 
     private void addEntryToDatabase(int chapterNum, Person person, int diaryResource, @IntRange(from=1, to=12) int month, @IntRange(from=1, to=31) int date, EntryType type) {
         if (mFragmentEntryHandler != null) {
-            DateTime dateTime = new DateTime().withYear(1893).withMonthOfYear(month).withDayOfMonth(date).withHourOfDay(0).withMinuteOfHour(0).withSecondOfMinute(0).withMillisOfSecond(0);
+            DateTime dateTime = new DateTime(1893, month, date, 0, 0, 0, 0);
 
             mFragmentEntryHandler.addEntry(new Entry(entrySequenceNum, chapterNum, person, getStringFromId(diaryResource), dateTime, type, true));
             entrySequenceNum++;
@@ -471,6 +471,7 @@ public class EntryListActivity extends AppCompatActivity {
     }
 
     private void updateRecyclerView(@NonNull RecyclerView recyclerView, boolean update) {
+        // We need today, but in 1893
         DateTime calendar = new DateTime().withYear(1893).withHourOfDay(0).withMinuteOfHour(0).withSecondOfMinute(0).withMillisOfSecond(0);
 
         // Check if there are new entries available

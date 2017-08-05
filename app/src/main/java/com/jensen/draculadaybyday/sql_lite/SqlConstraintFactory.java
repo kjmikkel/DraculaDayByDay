@@ -4,14 +4,13 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 
+import com.jensen.draculadaybyday.sql_lite.DateConstraintArg.DateConstraintArg;
+
 import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Locale;
 
 public class SqlConstraintFactory implements Parcelable {
     // The list that will be joined
@@ -29,9 +28,6 @@ public class SqlConstraintFactory implements Parcelable {
     private final Constraint chapterConstraint;
     private final Constraint readConstraint;
     private final Constraint unlockedConstraint;
-
-    // Time format
-    private static final DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd").withLocale(Locale.getDefault());
 
     public SqlConstraintFactory() {
         dateConstraint = new DateConstraint();
@@ -51,30 +47,14 @@ public class SqlConstraintFactory implements Parcelable {
         unlockedConstraint = in.readParcelable(Constraint.class.getClassLoader());
     }
 
-    //region Date constraints
-    public void exactDate(DateTime date) {
-        String dateString = date.toString(fmt);
-        dateConstraint.setDateConstraint(dateString);
+    // Date constraint
+    public void setDateConstraint(DateConstraintArg dateConstraintArg) {
+        dateConstraint.setDateConstraint(dateConstraintArg);
     }
 
-    public void beforeDate(DateTime date, boolean inclusive) {
-        String beforeDate = date.toString(fmt);
-        dateConstraint.setDateConstraint(DateConstraint.BEFORE, beforeDate, inclusive);
+    public List<DateConstraintArg> getDateConstraintArgs() {
+        return this.dateConstraint.getDateConstraintArgs();
     }
-
-    public void afterDate(DateTime date, boolean inclusive) {
-        String afterDate = date.toString(fmt);
-        dateConstraint.setDateConstraint(DateConstraint.AFTER, afterDate, inclusive);
-    }
-
-    public void betweenDates(DateTime beforeDateCalendar, DateTime afterDateCalendar) {
-        String beforeDate = beforeDateCalendar.toString(fmt);
-        String afterDate = afterDateCalendar.toString(fmt);
-
-        dateConstraint.setDateConstraint(beforeDate, afterDate);
-    }
-    //endregion
-
 
     // Person constraints
     public void multiplePersons(List<String> personNames) {

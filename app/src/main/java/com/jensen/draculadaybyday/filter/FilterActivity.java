@@ -12,7 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -25,6 +27,13 @@ import com.jensen.draculadaybyday.R;
 import com.jensen.draculadaybyday.presentation.MultiSpinner;
 import com.jensen.draculadaybyday.sql_lite.Constraint;
 import com.jensen.draculadaybyday.sql_lite.DateConstraint;
+import com.jensen.draculadaybyday.sql_lite.DateConstraintArg.AfterDateConstraintArg;
+import com.jensen.draculadaybyday.sql_lite.DateConstraintArg.BeforeAfterDateConstraintArg;
+import com.jensen.draculadaybyday.sql_lite.DateConstraintArg.BeforeDateConstraintArg;
+import com.jensen.draculadaybyday.sql_lite.DateConstraintArg.BetweenDateConstraintArg;
+import com.jensen.draculadaybyday.sql_lite.DateConstraintArg.DateConstraintArg;
+import com.jensen.draculadaybyday.sql_lite.DateConstraintArg.ExactDateConstraintArg;
+import com.jensen.draculadaybyday.sql_lite.DateConstraintArg.NoSpecificDateConstraintArg;
 import com.jensen.draculadaybyday.sql_lite.SortValue;
 import com.jensen.draculadaybyday.sql_lite.SqlConstraintFactory;
 import com.jensen.draculadaybyday.sql_lite.SqlSortFactory;
@@ -61,35 +70,15 @@ public class FilterActivity extends AppCompatActivity {
     private final List<Integer> idList = new ArrayList<>();
     private static final DateTimeFormatter DATE_FORMAT = DateTimeFormat.forPattern("dd/MM/yyyy").withLocale(Locale.getDefault());
 
-    private void setSingleDay(final DateConstraint constraint, final boolean beforeOrAfter) {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Button dateButton = (Button) findViewById(R.id.single_button);
-
-                ToggleButton inclusiveButton = (ToggleButton)findViewById(R.id.inclusive_button);
-
-                DateTime cal = getCalendarFromString(constraint.getConstraintSqlValues().get(0));
-                assert dateButton != null;
-                dateButton.setTag(cal);
-                dateButton.setText(cal.toString(DATE_FORMAT));
-                if (beforeOrAfter) {
-                    inclusiveButton.setVisibility(View.VISIBLE);
-                    inclusiveButton.setEnabled(true);
-                    inclusiveButton.setChecked(constraint.getInclusive());
-                } else {
-                    inclusiveButton.setVisibility(View.INVISIBLE);
-                    inclusiveButton.setEnabled(false);
-                }
-            }}, 100);
-    }
-
     @SuppressWarnings("ConstantConditions")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         try {
+            Intent intent = getIntent();
+            SqlConstraintFactory constraintFactory = (SqlConstraintFactory) intent.getExtras().get(CONSTRAINTS_INTENT_KEY);
+
             setContentView(R.layout.activity_filter);
 
             ActionBar mActionBar = getSupportActionBar();
@@ -101,7 +90,31 @@ public class FilterActivity extends AppCompatActivity {
 
             //region Filter layout
             final Spinner dateSpinner = (Spinner)findViewById(R.id.filter_date_spinner);
+
+            List<DateConstraintArg> dateConstraints = constraintFactory.getDateConstraintArgs();
+            final ArrayAdapter<DateConstraint> dateAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, dateConstraints);
+            dateSpinner.setAdapter(dateAdapter);
             AdapterView.OnItemSelectedListener dateSpinnerSelectedListener = new AdapterView.OnItemSelectedListener() {
+                private DateTime getDateTime(DateConstraintArg dateArg, boolean secondButton) {
+                    DateTime date;
+                    if (!secondButton) {
+                        date = dateArg.getDate();
+                    } else {
+                        BetweenDateConstraintArg between = (BetweenDateConstraintArg)dateArg;
+                        date = between.getSecondDate();
+                    }
+                    return date;
+                }
+
+                private void setDateTime(DateConstraintArg dateArg, DateTime dateTime, boolean secondButton) {
+                    if (!secondButton) {
+                        dateArg.setDate(dateTime);
+                    } else {
+                        BetweenDateConstraintArg between = (BetweenDateConstraintArg)dateArg;
+                        between.setSecondDate(dateTime);
+                    }
+                }
+
                 private void removeOldView() {
                     RelativeLayout rl = (RelativeLayout)findViewById(R.id.set_date);
                     if (rl != null) {
@@ -110,19 +123,23 @@ public class FilterActivity extends AppCompatActivity {
                     }
                 }
 
-                private void getDatePicker(final DateTime initialDay, final Button dateButton) {
+                private void getDatePicker(final Button dateButton, final boolean secondButton) {
                     try {
                         DatePickerDialog.OnDateSetListener setListener = new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                            DateTime newDate = new DateTime().withYear(year).withMonthOfYear(monthOfYear + 1).withDayOfMonth(dayOfMonth)
-                                    .withHourOfDay(0).withMinuteOfHour(0).withSecondOfMinute(0);
-                                dateButton.setText(newDate.toString(DATE_FORMAT));
-                                dateButton.setTag(newDate);
+                                DateTime date;
+                                DateConstraintArg dateArg = (DateConstraintArg) dateButton.getTag();
+
+                                date = new DateTime(year, monthOfYear + 1, dayOfMonth, 0, 0, 0, 0);
+
+                                dateButton.setText(date.toString(DATE_FORMAT));
+                                setDateTime(dateArg, date, secondButton);
                             }
                         };
 
-                        DateTime currentDate = (DateTime)dateButton.getTag();
+                        DateConstraintArg currentDateArg = (DateConstraintArg)dateButton.getTag();
+                        DateTime currentDate = getDateTime(currentDateArg, secondButton);
 
                         DatePickerDialog dlg = new DatePickerDialog(FilterActivity.this, setListener,
                                 currentDate.getYear(),
@@ -132,7 +149,7 @@ public class FilterActivity extends AppCompatActivity {
                             protected void onCreate(Bundle savedInstanceState) {
                                 super.onCreate(savedInstanceState);
                                 DatePicker dp = this.getDatePicker();
-                                dp.setMinDate(initialDay.getMillis());
+                                dp.setMinDate(new DateTime().withYear(1893).withMonthOfYear(DateTimeConstants.MAY).withDayOfMonth(3).getMillis());
                             }
                         };
 
@@ -143,7 +160,7 @@ public class FilterActivity extends AppCompatActivity {
                     }
                 }
 
-                private void addSingleDate(int labelTextId, boolean inclusive) {
+                private void addSingleDate(int labelTextId, final DateConstraintArg dateArg) {
                     LayoutInflater layoutInflator = LayoutInflater.from(getBaseContext());
                     RelativeLayout parentLayout = (RelativeLayout)findViewById(R.id.date_rl_view);
 
@@ -152,15 +169,14 @@ public class FilterActivity extends AppCompatActivity {
                     textView.setText(getResources().getString(labelTextId));
 
                     final Button dateButton = (Button)dateLayout.findViewById(R.id.single_button);
-                    final DateTime initialDay = new DateTime().withYear(1893).withMonthOfYear(DateTimeConstants.MAY).withDayOfMonth(3)
-                            .withHourOfDay(0).withMinuteOfHour(0).withSecondOfMinute(0);
+                    final DateTime initialDay = dateArg.getDate();
 
                     dateButton.setText(initialDay.toString(DATE_FORMAT));
-                    dateButton.setTag(initialDay);
+                    dateButton.setTag(dateArg);
                     dateButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            getDatePicker(initialDay, dateButton);
+                            getDatePicker(dateButton, false);
                         }
                     });
 
@@ -171,41 +187,46 @@ public class FilterActivity extends AppCompatActivity {
                     parentLayout.addView(dateLayout, layoutParams);
 
                     ToggleButton inclusiveButton = (ToggleButton)findViewById(R.id.inclusive_button);
-                    if (inclusive) {
+                    if (dateArg instanceof BeforeAfterDateConstraintArg) {
+                        final BeforeAfterDateConstraintArg date = (BeforeAfterDateConstraintArg)dateArg;
                         inclusiveButton.setVisibility(View.VISIBLE);
                         inclusiveButton.setEnabled(true);
+                        inclusiveButton.setChecked(date.getInclusive());
+                        inclusiveButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                date.setInclusive(isChecked);
+                            }
+                        });
                     } else {
                         inclusiveButton.setVisibility(View.INVISIBLE);
                         inclusiveButton.setEnabled(false);
                     }
                 }
 
-                private void addBetweenDates() {
+                private void addBetweenDates(BetweenDateConstraintArg between) {
                     LayoutInflater layoutInflator = LayoutInflater.from(getBaseContext());
                     RelativeLayout parentLayout = (RelativeLayout)findViewById(R.id.date_rl_view);
 
                     RelativeLayout dateLayout = (RelativeLayout) layoutInflator.inflate(R.layout.between_dates, parentLayout, false);
 
-                    final DateTime initialDay = new DateTime().withYear(1893).withMonthOfYear(DateTimeConstants.MAY).withDayOfMonth(3)
-                            .withHourOfDay(0).withMinuteOfHour(0).withSecondOfMinute(0);
-
                     final Button startDateButton = (Button) dateLayout.findViewById(R.id.between_dates_start_button);
-                    startDateButton.setText(initialDay.toString(DATE_FORMAT));
-                    startDateButton.setTag(initialDay);
+                    startDateButton.setText(between.getDate().toString(DATE_FORMAT));
+                    startDateButton.setTag(between);
                     startDateButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            getDatePicker(initialDay, startDateButton);
+                            getDatePicker(startDateButton, false);
                         }
                     });
 
                     final Button endDateButton = (Button) dateLayout.findViewById(R.id.between_dates_end_button);
-                    endDateButton.setText(initialDay.toString(DATE_FORMAT));
-                    endDateButton.setTag(initialDay);
+                    endDateButton.setText(between.getSecondDate().toString(DATE_FORMAT));
+                    endDateButton.setTag(between);
                     endDateButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            getDatePicker(initialDay, endDateButton);
+                            getDatePicker(endDateButton, true);
                         }
                     });
 
@@ -219,26 +240,22 @@ public class FilterActivity extends AppCompatActivity {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     try {
-                        switch (dateSpinner.getSelectedItemPosition()) {
-                            case 0:
-                                removeOldView();
-                                break;
-                            case 1:
-                                removeOldView();
-                                addSingleDate(R.string.filter_on_date, false);
-                                break;
-                            case 2:
-                                removeOldView();
-                                addSingleDate(R.string.filter_before_date, true);
-                                break;
-                            case 3:
-                                removeOldView();
-                                addSingleDate(R.string.filter_after_date, true);
-                                break;
-                            case 4:
-                                removeOldView();
-                                addBetweenDates();
-                                break;
+                        DateConstraintArg dateArg = (DateConstraintArg)dateSpinner.getSelectedItem();
+
+                        if (dateArg instanceof NoSpecificDateConstraintArg) {
+                            removeOldView();
+                        } else if (dateArg instanceof ExactDateConstraintArg) {
+                            removeOldView();
+                            addSingleDate(R.string.filter_on_date, dateArg);
+                        } else if (dateArg instanceof BeforeDateConstraintArg) {
+                            removeOldView();
+                            addSingleDate(R.string.filter_before_date, dateArg);
+                        } else if (dateArg instanceof AfterDateConstraintArg) {
+                            removeOldView();
+                            addSingleDate(R.string.filter_after_date, dateArg);
+                        } else {
+                            removeOldView();
+                            addBetweenDates((BetweenDateConstraintArg)dateArg);
                         }
                     } catch (Exception e) {
                         Log.d("Date", e.getMessage());
@@ -252,6 +269,12 @@ public class FilterActivity extends AppCompatActivity {
             };
 
             dateSpinner.setOnItemSelectedListener(dateSpinnerSelectedListener);
+            for(int i = 1; i < dateConstraints.size(); i++) {
+                if (!dateConstraints.get(i).isValueDefault()) {
+                    dateSpinner.setSelection(i, false);
+                    break;
+                }
+            }
             //endregion
 
             //region Sort layout
@@ -401,32 +424,8 @@ public class FilterActivity extends AppCompatActivity {
                     SqlConstraintFactory constraintFactory = new SqlConstraintFactory();
 
                     //region Date
-                    ToggleButton inclusive_button = (ToggleButton)findViewById(R.id.inclusive_button);
-
                     Spinner dateSpinner = (Spinner)findViewById(R.id.filter_date_spinner);
-                    switch (dateSpinner.getSelectedItemPosition()) {
-                        case 1:
-                            Button exactDate = (Button)findViewById(R.id.single_button);
-                            constraintFactory.exactDate((DateTime) exactDate.getTag());
-                            break;
-                        case 2:
-                            Button beforeDate = (Button)findViewById(R.id.single_button);
-                            constraintFactory.beforeDate((DateTime)beforeDate.getTag(), inclusive_button.isChecked());
-                            break;
-                        case 3:
-                            Button afterDate = (Button)findViewById(R.id.single_button);
-                            constraintFactory.afterDate((DateTime) afterDate.getTag(), inclusive_button.isChecked());
-                            break;
-                        case 4:
-                            Button startDateButton = (Button)findViewById(R.id.between_dates_start_button);
-                            DateTime startDateCalendar = (DateTime) startDateButton.getTag();
-
-                            Button endDateButton = (Button)findViewById(R.id.between_dates_end_button);
-                            DateTime endDateCalendar = (DateTime) endDateButton.getTag();
-
-                            constraintFactory.betweenDates(startDateCalendar, endDateCalendar);
-                            break;
-                    }
+                    constraintFactory.setDateConstraint((DateConstraintArg) dateSpinner.getSelectedItem());
                     //endregion
 
                     //region Person
@@ -518,52 +517,19 @@ public class FilterActivity extends AppCompatActivity {
         try {
             //region Change the GUI to fit the values given in the intent
             Intent intent = getIntent();
-
-            //region Filter
             SqlConstraintFactory constraintFactory = (SqlConstraintFactory) intent.getExtras().get(CONSTRAINTS_INTENT_KEY);
+            //region Filter
 
             Spinner dateSpinner = (Spinner) findViewById(R.id.filter_date_spinner);
 
             //region Date
             final DateConstraint dateConstraint = (DateConstraint) constraintFactory.getConstraint(SqlConstraintFactory.DATE);
             if (dateConstraint.hasConstraints()) {
-                switch (dateConstraint.getDateType()) {
-                    case DateConstraint.EXACT:
-                        dateSpinner.setSelection(1, false);
-                        setSingleDay(dateConstraint, false);
+                for(int i = 0; i < dateSpinner.getCount(); i++) {
+                    if (dateConstraint.getDateConstraintArgs() == dateSpinner.getItemAtPosition(i)) {
+                        dateSpinner.setSelection(i, false);
                         break;
-                    case DateConstraint.BEFORE:
-                        dateSpinner.setSelection(2, false);
-                        setSingleDay(dateConstraint, true);
-                        break;
-                    case DateConstraint.AFTER:
-                        dateSpinner.setSelection(3, false);
-                        setSingleDay(dateConstraint, true);
-                        break;
-                    case DateConstraint.BETWEEN:
-                        dateSpinner.setSelection(4, false);
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                DateTime calStart = getCalendarFromString(dateConstraint.getConstraintSqlValues().get(0));
-                                DateTime calEnd = getCalendarFromString(dateConstraint.getConstraintSqlValues().get(1));
-
-                                int beforeMonth = calStart.getMonthOfYear();
-                                int afterMonth = calEnd.getMonthOfYear();
-
-                                calStart.withMonthOfYear(beforeMonth);
-                                calEnd.withMonthOfYear(afterMonth);
-
-                                Button dateButtonStart = (Button) findViewById(R.id.between_dates_start_button);
-                                Button dateButtonEnd = (Button) findViewById(R.id.between_dates_end_button);
-
-                                dateButtonStart.setText(calStart.toString(DATE_FORMAT));
-                                dateButtonEnd.setText(calEnd.toString(DATE_FORMAT));
-
-                                dateButtonStart.setTag(calStart);
-                                dateButtonEnd.setTag(calEnd);
-                            }}, 100);
-                        break;
+                    }
                 }
             }
             //endregion
@@ -818,15 +784,6 @@ public class FilterActivity extends AppCompatActivity {
         } catch (Exception e) {
             Log.d("RestoreInstance", e.getMessage());
         }
-    }
-
-    private DateTime getCalendarFromString(String dateRep) {
-        String[] rep = dateRep.split("-");
-        int year = Integer.valueOf(rep[0]);
-        int month = Integer.valueOf(rep[1]);
-        int day = Integer.valueOf(rep[2].substring(0, 2));
-
-        return new DateTime().withYear(year).withMonthOfYear(month).withDayOfMonth(day).withHourOfDay(0).withMinuteOfHour(0).withSecondOfMinute(0);
     }
 
     @SuppressWarnings("ConstantConditions")

@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteException;
 import android.util.Log;
 
 import com.jensen.draculadaybyday.entry.Entry;
+import com.jensen.draculadaybyday.sql_lite.DateConstraintArg.BeforeDateConstraintArg;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -319,7 +320,8 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
     // Update the correct
     public void unlockEntriesBeforeDate(DateTime date) {
         SqlConstraintFactory constraintFactory = new SqlConstraintFactory();
-        constraintFactory.beforeDate(date, true);
+        BeforeDateConstraintArg before = new BeforeDateConstraintArg(date, true);
+        constraintFactory.setDateConstraint(before);
         constraintFactory.unlocked(false);
 
         SqlSortFactory fact = new SqlSortFactory();
