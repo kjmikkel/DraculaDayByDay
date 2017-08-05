@@ -1,6 +1,5 @@
 package com.jensen.draculadaybyday.entries;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,7 +12,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.jensen.draculadaybyday.presentation.AboutPage;
 import com.jensen.draculadaybyday.entry.EntryCollectionPagerAdapter;

@@ -37,6 +37,7 @@ public class NoSpecificDateConstraintArg extends DateConstraintArg {
             // Do nothing
     }
 
+    @SuppressWarnings("UnusedParameters")
     private NoSpecificDateConstraintArg(Parcel in) {
         // Do nothing
     }

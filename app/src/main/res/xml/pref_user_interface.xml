@@ -17,7 +17,7 @@
 
     <!-- The list of fonts -->
     <ListPreference
-        android:id="@+id/user_interrface_pref_font"
+        android:id="@+id/user_interface_pref_font"
         android:defaultValue="@string/pref_default_value_font_type"
         android:entries="@array/pref_font_type_titles"
         android:entryValues="@array/pref_font_type_titles"
@@ -29,7 +29,7 @@
 
     <!-- The list of initial fonts -->
     <ListPreference
-        android:id="@+id/user_interrface_pref_initial"
+        android:id="@+id/user_interface_pref_initial"
         android:defaultValue="@string/pref_default_value_initial_type"
         android:entries="@array/pref_initial_type_entries"
         android:entryValues="@array/pref_initial_type_entries"
