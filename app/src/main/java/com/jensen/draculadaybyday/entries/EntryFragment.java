@@ -87,18 +87,19 @@ public class EntryFragment extends Fragment {
             if (mEntry != null) {
                 text = mEntry.getTextEntry();
             }
+            if (text != null && !DEFAULT_BODY.equals(text) && !text.isEmpty()) {
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
 
-            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+                String fontType = preferences.getString(getString(R.string.pref_key_font_type), getString(R.string.pref_default_value_font_type));
+                FontEnum fontEnum = FontEnum.valueOf(fontType.toUpperCase().replace(" ", "_"));
 
-            String strInitial = preferences.getString("user_interface_pref_initial", getString(R.string.pref_default_value_initial_type));
-            InitialEnum initialEnum = InitialEnum.valueOf(strInitial.toUpperCase().replace(" ", "_"));
+                String initialType = preferences.getString(getString(R.string.pref_key_initial_type), getString(R.string.pref_default_value_initial_type));
+                InitialEnum initialEnum = InitialEnum.valueOf(initialType.toUpperCase().replace(" ", "_"));
 
-            String strFont = preferences.getString("user_interface_pref_font", getString(R.string.pref_default_value_font_type));
-            FontEnum fontEnum = FontEnum.valueOf(strFont.toUpperCase().replace(" ", "_"));
+                float textSize = preferences.getFloat(FontSizePickerPreference.PREFERENCE_NAME, 14.0f);
 
-            float textSize = preferences.getFloat(FontSizePickerPreference.PREFERENCE_NAME, 14.0f);
-
-           mEntryView.setText(text, initialEnum, fontEnum, textSize);
+                mEntryView.setText(text, initialEnum, fontEnum, textSize);
+            }
         }
     }
 }

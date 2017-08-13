@@ -182,7 +182,7 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
         int month = Integer.valueOf(date_rep.substring(5, 7));
         int day = Integer.valueOf(date_rep.substring(8, 10));
 
-        return new DateTime().withYear(year).withMonthOfYear(month).withDayOfMonth(day).withHourOfDay(0).withMinuteOfHour(0).withSecondOfMinute(0);
+        return DateConstructorUtility.getDateTime(year, month, day);
     }
 
     private short getShort(Cursor cursor, String column) {
@@ -244,11 +244,8 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
             } while (cursor.moveToNext());
         }
 
-        // Close cursor
-        assert cursor != null;
-        cursor.close();
-
         // Close the cursor and the database
+        assert cursor != null;
         cursor.close();
         db.close();
 

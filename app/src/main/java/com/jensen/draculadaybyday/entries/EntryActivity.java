@@ -118,7 +118,7 @@ public class EntryActivity extends AppCompatActivity {
                     }
                 });
 
-                mViewPager.setCurrentItem(startSeqNumber - 1);
+                mViewPager.setCurrentItem(startSeqNumber);
             }
         } catch (Exception e) {
             Log.d("Exception", e.getMessage());

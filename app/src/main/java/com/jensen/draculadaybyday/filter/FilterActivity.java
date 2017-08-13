@@ -34,12 +34,12 @@ import com.jensen.draculadaybyday.sql_lite.DateConstraintArg.BetweenDateConstrai
 import com.jensen.draculadaybyday.sql_lite.DateConstraintArg.DateConstraintArg;
 import com.jensen.draculadaybyday.sql_lite.DateConstraintArg.ExactDateConstraintArg;
 import com.jensen.draculadaybyday.sql_lite.DateConstraintArg.NoSpecificDateConstraintArg;
+import com.jensen.draculadaybyday.sql_lite.DateConstructorUtility;
 import com.jensen.draculadaybyday.sql_lite.SortValue;
 import com.jensen.draculadaybyday.sql_lite.SqlConstraintFactory;
 import com.jensen.draculadaybyday.sql_lite.SqlSortFactory;
 
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeConstants;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -131,7 +131,7 @@ public class FilterActivity extends AppCompatActivity {
                                 DateTime date;
                                 DateConstraintArg dateArg = (DateConstraintArg) dateButton.getTag();
 
-                                date = new DateTime(year, monthOfYear + 1, dayOfMonth, 0, 0, 0, 0);
+                                date = DateConstructorUtility.getDateTime(year, monthOfYear + 1, dayOfMonth);
 
                                 dateButton.setText(date.toString(DATE_FORMAT));
                                 setDateTime(dateArg, date, secondButton);
@@ -149,7 +149,7 @@ public class FilterActivity extends AppCompatActivity {
                             protected void onCreate(Bundle savedInstanceState) {
                                 super.onCreate(savedInstanceState);
                                 DatePicker dp = this.getDatePicker();
-                                dp.setMinDate(new DateTime().withYear(1893).withMonthOfYear(DateTimeConstants.MAY).withDayOfMonth(3).getMillis());
+                                dp.setMinDate(DateConstructorUtility.initialDate.getMillis());
                             }
                         };
 

@@ -39,54 +39,58 @@ public class EntryView extends AppCompatTextView {
     }
 
     private void setTextWithoutInitial(String text, FontEnum fontEnum, float fontSize) {
-        setTextSize(SIZE_UNIT, fontSize);
+        try {
+            setTextSize(SIZE_UNIT, fontSize);
 
-        String finalText = "";
+            String finalText = "";
 
-        String dateStr = null;
-        Tuple<Integer, Integer> dateInterval = findDatePart(text);
-        if (dateInterval.fst != -1 && dateInterval.snd != -1) {
-            dateStr = text.substring(dateInterval.fst, dateInterval.snd) + "\n";
-            finalText += dateStr;
+            String dateStr = null;
+            Tuple<Integer, Integer> dateInterval = findDatePart(text);
+            if (dateInterval.fst != -1 && dateInterval.snd != -1) {
+                dateStr = text.substring(dateInterval.fst, dateInterval.snd) + "\n";
+                finalText += dateStr;
+            }
+
+            String locationStr = null;
+            Tuple<Integer, Integer> locationInterval = findLocation(text);
+            if (locationInterval.fst != -1 && locationInterval.snd != -1) {
+                locationStr = text.substring(locationInterval.fst, locationInterval.snd) + "\n\n";
+                finalText += locationStr;
+            }
+
+            String commentStr = null;
+            Tuple<Integer, Integer> commentInterval = findComment(text);
+            if (commentInterval.fst != -1 && commentInterval.snd != -1) {
+                commentStr = text.substring(commentInterval.fst, commentInterval.snd) + "\n\n";
+                finalText += commentStr;
+            }
+
+            Tuple<Integer, Integer> entryInterval = findEntry(text);
+            if (entryInterval.fst != -1 && entryInterval.snd != -1) {
+                finalText += text.substring(entryInterval.fst, entryInterval.snd);
+            }
+
+            int currentIndex = 0;
+            SpannableStringBuilder SS = new SpannableStringBuilder(finalText);
+            if (dateStr != null) {
+                SS.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER), currentIndex, currentIndex + dateStr.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+                currentIndex += dateStr.length();
+            }
+            if (locationStr != null) {
+                SS.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER), currentIndex, currentIndex + locationStr.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+                currentIndex += locationStr.length();
+            }
+
+            if (commentStr != null) {
+                SS.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER), currentIndex, currentIndex + commentStr.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+            }
+
+            SS.setSpan(new CustomTypefaceSpan("", getMainBodyType(fontEnum)), 0, finalText.length() - 1, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+
+            setText(SS);
+        } catch (Exception e) {
+            Log.d("ErrorInitial", e.getMessage());
         }
-
-        String locationStr = null;
-        Tuple<Integer, Integer> locationInterval = findLocation(text);
-        if (locationInterval.fst != -1 && locationInterval.snd != -1) {
-            locationStr = text.substring(locationInterval.fst, locationInterval.snd) + "\n\n";
-            finalText += locationStr;
-        }
-
-        String commentStr = null;
-        Tuple<Integer, Integer> commentInterval = findComment(text);
-        if (commentInterval.fst != -1 && commentInterval.snd != -1) {
-            commentStr = text.substring(commentInterval.fst, commentInterval.snd) + "\n\n";
-            finalText += commentStr;
-        }
-
-        Tuple<Integer, Integer> entryInterval = findEntry(text);
-        if (entryInterval.fst != -1 && entryInterval.snd != -1) {
-            finalText += text.substring(entryInterval.fst, entryInterval.snd);
-        }
-
-        int currentIndex = 0;
-        SpannableStringBuilder SS = new SpannableStringBuilder(finalText);
-        if (dateStr != null) {
-            SS.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER), currentIndex, currentIndex + dateStr.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
-            currentIndex += dateStr.length();
-        }
-        if (locationStr != null) {
-            SS.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER), currentIndex, currentIndex + locationStr.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
-            currentIndex += locationStr.length();
-        }
-
-        if (commentStr != null) {
-            SS.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER), currentIndex, currentIndex + commentStr.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
-        }
-
-        SS.setSpan(new CustomTypefaceSpan("", getMainBodyType(fontEnum)), 0, finalText.length() - 1, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
-
-        setText(SS);
     }
 
     private void setTextWithInitial(String text, InitialEnum initialFont, FontEnum basicFont, float fontSize) {
@@ -146,7 +150,7 @@ public class EntryView extends AppCompatTextView {
 
             setText(SS);
         } catch (Exception e) {
-            Log.d("EntryView", e.getMessage());
+            Log.d("setTextWithInitial", e.getMessage());
         }
     }
 

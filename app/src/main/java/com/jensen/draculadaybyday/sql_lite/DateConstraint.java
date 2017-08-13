@@ -11,8 +11,6 @@ import com.jensen.draculadaybyday.sql_lite.DateConstraintArg.DateConstraintArg;
 import com.jensen.draculadaybyday.sql_lite.DateConstraintArg.ExactDateConstraintArg;
 import com.jensen.draculadaybyday.sql_lite.DateConstraintArg.NoSpecificDateConstraintArg;
 
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeConstants;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -68,10 +66,6 @@ public class DateConstraint extends Constraint {
         }
     }
 
-    private DateTime getStartDate() {
-        return new DateTime(1893, DateTimeConstants.MAY, 3, 0, 0, 0, 0);
-    }
-
     public List<DateConstraintArg> getDateConstraintArgs() {
         List<DateConstraintArg> dateConstraintArgs = new ArrayList<>(5);
         dateConstraintArgs.add(new NoSpecificDateConstraintArg());
@@ -79,25 +73,25 @@ public class DateConstraint extends Constraint {
         if (constraintArg instanceof ExactDateConstraintArg) {
             dateConstraintArgs.add(constraintArg);
         } else {
-            dateConstraintArgs.add(new ExactDateConstraintArg(getStartDate()));
+            dateConstraintArgs.add(new ExactDateConstraintArg(DateConstructorUtility.initialDate));
         }
 
         if (constraintArg instanceof BeforeDateConstraintArg) {
             dateConstraintArgs.add(constraintArg);
         } else {
-            dateConstraintArgs.add(new BeforeDateConstraintArg(getStartDate(), false));
+            dateConstraintArgs.add(new BeforeDateConstraintArg(DateConstructorUtility.initialDate, false));
         }
 
         if (constraintArg instanceof AfterDateConstraintArg) {
             dateConstraintArgs.add(constraintArg);
         } else {
-            dateConstraintArgs.add(new AfterDateConstraintArg(getStartDate(), false));
+            dateConstraintArgs.add(new AfterDateConstraintArg(DateConstructorUtility.initialDate, false));
         }
 
         if (constraintArg instanceof BetweenDateConstraintArg) {
             dateConstraintArgs.add(constraintArg);
         } else {
-            dateConstraintArgs.add(new BetweenDateConstraintArg(getStartDate(), getStartDate()));
+            dateConstraintArgs.add(new BetweenDateConstraintArg(DateConstructorUtility.initialDate, DateConstructorUtility.initialDate));
         }
 
         return dateConstraintArgs;

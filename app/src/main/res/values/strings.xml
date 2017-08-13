@@ -51,26 +51,12 @@
 
     <!-- The font type -->
     <string name="pref_title_font_type">Font</string>
-    <string-array name="pref_font_type_titles">
-        <item>Droid Sans</item>
-        <item>Droid Serif</item>
-        <item>Droid Sans Mono</item>
-        <item>Ravali</item>
-        <item>Harrington</item>
-        <item>Victorian</item>
-        <item>Victorian with Initial</item>
-    </string-array>
     <string name="pref_key_font_type">user_interface_pref_font</string>
     <string name="pref_summary_font_type">The font for the story is %s</string>
     <string name="pref_default_value_font_type">Victorian with Initial</string>
 
     <!-- The font initial -->
     <string name="pref_title_initial_type">Initial</string>
-    <string-array name="pref_initial_type_entries">
-        <item>Rediviva Zierbuchstaben</item>
-        <item>Wieynk Fraktur Zier</item>
-        <item>Preciosa</item>
-    </string-array>
     <string name="pref_key_initial_type">user_interface_pref_initial</string>
     <string name="pref_summary_initial_type">The font initial is %s</string>
     <string name="pref_default_value_initial_type">Rediviva Zierbuchstaben</string>
@@ -135,12 +121,15 @@
     <!-- When to show -->
     <string name="pref_how_to_experience_title">How to experience the book</string>
     <string name="pref_experience_default_value">On the actual day</string>
+    <string name="pref_experience_tempo">In the same tempo</string>
     <string name="pref_summary_how_to_experience">You can either experience the book on calendar days it happened, or in the same tempo (with today being the first day)</string>
-    <string-array name="list_preference_how_to_experience">
-        <item>On the actual day</item>
-        <item>In the same tempo</item>
-    </string-array>
     <string name="pref_key_how_to_experience">experience_preference</string>
+
+    <!-- Store time -->
+    <string name="pref_key_start_date_time">experience_tempo_start_time</string>
+
+    <!--- First run -->
+    <string name="pref_key_first_run">pref_first_run_bool</string>
 
     <!-- Reset Book  -->
     <string name="pref_reset_book_dialog_message">Do you really want to reset the book to the beginning? This action cannot be undone</string>
@@ -159,6 +148,7 @@
     <string name="title_activity_about">About</string>
 
     <!-- Descriptions -->
+    <string name="preference_how_to_experience">Dracula Day-by-Day lets you experience Bram Stoker\'s Dracula in the same tempo as the people in the novel. You can either let the entries be unlocked on the actual day of the year they were written, or in the same temp (with the first day being today).</string>
 
     <!-- Image descriptions -->
     <string name="news_type_default">The type of the entry</string>

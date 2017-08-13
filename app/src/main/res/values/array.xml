@@ -1,5 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string-array name="list_preference_how_to_experience">
+        <item>On the actual day</item>
+        <item>In the same tempo</item>
+    </string-array>
+
+    <!-- initial fonts -->
+    <string-array name="pref_initial_type_entries">
+        <item>Rediviva Zierbuchstaben</item>
+        <item>Wieynk Fraktur Zier</item>
+        <item>Preciosa</item>
+    </string-array>
+
+    <!-- fonts -->
+    <string-array name="pref_font_type_titles">
+        <item>Droid Sans</item>
+        <item>Droid Serif</item>
+        <item>Droid Sans Mono</item>
+        <item>Ravali</item>
+        <item>Harrington</item>
+        <item>Victorian</item>
+        <item>Victorian with Initial</item>
+    </string-array>
+
     <string-array name="pref_default_notification_time">
         <item>20:00</item>
         <item>19:30</item>
@@ -60,6 +83,7 @@
         <item>Chapter 13</item>
         <item>Chapter 14</item>
         <item>Chapter 15</item>
+        <item>Chapter 16</item>
         <item>Chapter 17</item>
         <item>Chapter 18</item>
         <item>Chapter 19</item>

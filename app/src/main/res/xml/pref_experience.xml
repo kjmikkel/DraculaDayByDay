@@ -2,6 +2,7 @@
 
     <!-- When to show -->
     <ListPreference
+        android:id="@+id/how_to_experience"
         android:defaultValue="@string/pref_experience_default_value"
         android:entries="@array/list_preference_how_to_experience"
         android:entryValues="@array/list_preference_how_to_experience"

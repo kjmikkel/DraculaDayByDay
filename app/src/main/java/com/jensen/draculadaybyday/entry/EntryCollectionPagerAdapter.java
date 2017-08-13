@@ -14,7 +14,6 @@ public class EntryCollectionPagerAdapter extends FragmentStatePagerAdapter {
     private final FragmentEntryDatabaseHandler db;
 
     public EntryCollectionPagerAdapter(FragmentManager fm) {
-
         super(fm);
         this.db = FragmentEntryDatabaseHandler.getInstance();
     }
@@ -22,11 +21,11 @@ public class EntryCollectionPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int i) {
         Log.d("Item", "The index is " + i);
-        EntryFragment fragment =  new EntryFragment();
+        EntryFragment fragment = new EntryFragment();
 
         // Put the value of the next sequence number
         Bundle argBundle = new Bundle();
-        argBundle.putShort(FragmentEntryDatabaseHandler.ENTRY_SEQ_NUM, (short) (i+1));
+        argBundle.putShort(FragmentEntryDatabaseHandler.ENTRY_SEQ_NUM, (short) (i));
         fragment.setArguments(argBundle);
 
         return fragment;

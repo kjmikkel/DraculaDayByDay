@@ -1,7 +1,9 @@
 package com.jensen.draculadaybyday.entries;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.IntRange;
@@ -17,11 +19,18 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.jensen.draculadaybyday.filter.FilterActivity;
 import com.jensen.draculadaybyday.presentation.AboutPage;
 import com.jensen.draculadaybyday.entry.Entry;
 import com.jensen.draculadaybyday.R;
+import com.jensen.draculadaybyday.sql_lite.DateConstructorUtility;
+import com.jensen.draculadaybyday.sql_lite.ExperienceMode;
 import com.jensen.draculadaybyday.sql_lite.FragmentEntryDatabaseHandler;
 import com.jensen.draculadaybyday.preferences.DraculaPreferences;
 import com.jensen.draculadaybyday.sql_lite.SqlConstraintFactory;
@@ -77,14 +86,14 @@ public class EntryListActivity extends AppCompatActivity {
     private SwipeRefreshLayout mSwipeContainer;
     private SimpleItemRecyclerViewAdapter mSimpleItemAdapter;
 
-    private static final int SINGLE_ENTRY = 0; // The entry code
     private static final int FILTER_REQUEST = 1; // The filter code
-
 
     private static SqlConstraintFactory constraintFactory;
     private static SqlSortFactory sortFactory;
 
     private int entrySequenceNum;
+
+    private SharedPreferences prefs = null;
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -150,7 +159,7 @@ public class EntryListActivity extends AppCompatActivity {
     private void setDefaultPreferences() {
         // Create the default preferences
         PreferenceManager.setDefaultValues(this, R.xml.pref_user_interface, false);
-        PreferenceManager.setDefaultValues(this, R.xml.pref_general, false);
+        PreferenceManager.setDefaultValues(this, R.xml.pref_experience, false);
         PreferenceManager.setDefaultValues(this, R.xml.pref_notification, false);
     }
 
@@ -159,11 +168,75 @@ public class EntryListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         JodaTimeAndroid.init(this);
 
+        //region Preferences
         setDefaultPreferences();
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        //endregion
 
         setContentView(R.layout.activity_entry_list);
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        try {
+            if (prefs.getBoolean(getString(R.string.pref_key_first_run), true)) {
 
+                final Dialog dlg = new Dialog(this, R.style.CustomDialog);
+                View description = View.inflate(this, R.layout.custom_listview, null);
+
+                // Set the text
+                TextView textView = (TextView) description.findViewById(R.id.custom_list_view_description);
+                textView.setText(getString(R.string.preference_how_to_experience));
+
+                // Set the list items
+                ListView listView = (ListView) description.findViewById(R.id.custom_list_view_list_items);
+
+                String[] experienceChoices = getResources().getStringArray(R.array.list_preference_how_to_experience);
+                final ArrayAdapter<String> arrayAdapterItems = new ArrayAdapter<>(this, android.R.layout.simple_expandable_list_item_1, experienceChoices);
+
+                listView.setAdapter(arrayAdapterItems);
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        SharedPreferences.Editor prefEditor = prefs.edit();
+                        prefEditor.putString(getString(R.string.pref_key_how_to_experience), parent.getItemAtPosition(position).toString());
+                        prefEditor.putBoolean(getString(R.string.pref_key_first_run), false);
+
+                        // If it is the same tempo, then we save the current date
+                        if (parent.getItemAtPosition(position).toString().equals(getString(R.string.pref_experience_tempo))) {
+                            DateTime today = DateConstructorUtility.todayInThePast(ExperienceMode.EXPERIENCE_IN_SAME_TEMPO);
+                            prefEditor.putLong(getString(R.string.pref_key_start_date_time), today.getMillis());
+                        }
+
+                        prefEditor.apply();
+                        dlg.dismiss();
+                        setUpEntries();
+                    }
+                });
+
+                dlg.setContentView(description);
+                dlg.setTitle(getString(R.string.pref_how_to_experience_title));
+
+                dlg.setCancelable(false);
+                dlg.show();
+
+                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                if (dlg.getWindow() != null) {
+                    lp.copyFrom(dlg.getWindow().getAttributes());
+                    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                    dlg.getWindow().setAttributes(lp);
+                }
+            } else {
+               setUpEntries();
+            }
+        } catch (Exception e) {
+            Log.d("", e.getMessage());
+        }
+    }
+
+    private void setUpEntries() {
         // Set the sort and constraint factories (only once)
         if (constraintFactory == null) {
             constraintFactory = new SqlConstraintFactory();
@@ -464,7 +537,7 @@ public class EntryListActivity extends AppCompatActivity {
 
     private void addEntryToDatabase(int chapterNum, Person person, int diaryResource, @IntRange(from=1, to=12) int month, @IntRange(from=1, to=31) int date, EntryType type) {
         if (mFragmentEntryHandler != null) {
-            DateTime dateTime = new DateTime(1893, month, date, 0, 0, 0, 0);
+            DateTime dateTime = DateConstructorUtility.getDateTime(month, date);
 
             mFragmentEntryHandler.addEntry(new Entry(entrySequenceNum, chapterNum, person, getStringFromId(diaryResource), dateTime, type, true));
             entrySequenceNum++;
@@ -472,11 +545,11 @@ public class EntryListActivity extends AppCompatActivity {
     }
 
     private void updateRecyclerView(@NonNull RecyclerView recyclerView, boolean update) {
-        // We need today, but in 1893
-        DateTime calendar = new DateTime().withYear(1893).withHourOfDay(0).withMinuteOfHour(0).withSecondOfMinute(0).withMillisOfSecond(0);
+        // We need today
+        DateTime dateTime = DateConstructorUtility.getUnlockDate(this);
 
         // Check if there are new entries available
-        mFragmentEntryHandler.unlockEntriesBeforeDate(calendar);
+        mFragmentEntryHandler.unlockEntriesBeforeDate(dateTime);
 
         // Get the entries
         List<Entry> entries = mFragmentEntryHandler.getEntries(constraintFactory, sortFactory);

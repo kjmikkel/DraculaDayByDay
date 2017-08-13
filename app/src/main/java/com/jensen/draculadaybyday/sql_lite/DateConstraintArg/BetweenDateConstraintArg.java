@@ -4,6 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
+import com.jensen.draculadaybyday.sql_lite.DateConstructorUtility;
+
 import org.joda.time.DateTime;
 
 public class BetweenDateConstraintArg extends DateConstraintArg {
@@ -34,7 +36,7 @@ public class BetweenDateConstraintArg extends DateConstraintArg {
 
     @Override
     public boolean isValueDefault() {
-        return super.isValueDefault() && initialDateTime.equals(endTime);
+        return super.isValueDefault() && DateConstructorUtility.initialDate.equals(endTime);
     }
 
     //region Parcelable
