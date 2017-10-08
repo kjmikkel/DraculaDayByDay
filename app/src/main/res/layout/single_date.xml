@@ -9,7 +9,8 @@
         android:id="@+id/single_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/text_medium_margin"/>
+        android:layout_marginEnd="@dimen/text_medium_margin"
+        android:textIsSelectable="false"/>
     <Button
         android:id="@+id/single_button"
         android:layout_width="wrap_content"

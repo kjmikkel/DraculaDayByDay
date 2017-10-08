@@ -113,7 +113,7 @@ public class EntryListActivity extends AppCompatActivity {
     /**
      * Activate the menu option the user has selected
      * @param item - the item the user has selected
-     * @return
+     * @return Returns whether or not the menu options ended successfully
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -192,7 +192,7 @@ public class EntryListActivity extends AppCompatActivity {
 
     /**
      * Set up the basics when the activity is created
-     * @param savedInstanceState
+     * @param savedInstanceState - Used to restore a previus state
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {

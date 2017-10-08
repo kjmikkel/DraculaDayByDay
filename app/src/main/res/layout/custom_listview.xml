@@ -9,7 +9,8 @@
         android:id="@+id/custom_list_view_description"
         android:layout_marginEnd="@dimen/text_margin"
         android:layout_marginStart="@dimen/text_margin"
-        android:layout_marginTop="@dimen/text_margin"/>
+        android:layout_marginTop="@dimen/text_margin"
+        android:textIsSelectable="false"/>
     <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

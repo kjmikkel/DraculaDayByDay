@@ -11,7 +11,8 @@
         android:layout_weight="1"
         android:layout_marginBottom="@dimen/text_margin"
         android:layout_marginStart="@dimen/text_medium_margin"
-        android:textAppearance="?attr/textAppearanceListItem"/>
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:textIsSelectable="false"/>
 
     <ImageView
         android:id="@+id/experience_bar_image"
@@ -19,5 +20,6 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/text_margin"
         android:background="@drawable/ic_help_black_24dp"
+        android:contentDescription="@string/how_to_experience"
         android:layout_marginEnd="@dimen/text_medium_margin"/>
 </LinearLayout>

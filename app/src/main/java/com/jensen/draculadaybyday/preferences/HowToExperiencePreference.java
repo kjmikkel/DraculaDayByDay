@@ -119,7 +119,7 @@ public class HowToExperiencePreference extends DialogPreference {
                             prefEditor.putBoolean(mContext.getString(R.string.pref_in_the_right_year), DateConstructorUtility.inRightYear());
                         }
 
-                        prefEditor.commit();
+                        prefEditor.apply();
                     }
 
                     if (getDialog() != null) {

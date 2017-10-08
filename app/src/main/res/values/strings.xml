@@ -152,6 +152,7 @@
 
     <!-- Descriptions -->
     <string name="preference_how_to_experience">Dracula Day-by-Day lets you experience Bram Stoker\'s Dracula in several ways - please select one below:</string>
+    <string name="how_to_experience">Explanation of how this option will let you experience the app.</string>
 
     <!-- Image descriptions -->
     <string name="news_type_default">The type of the entry</string>

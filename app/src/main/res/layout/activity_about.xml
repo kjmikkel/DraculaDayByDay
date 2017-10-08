@@ -96,7 +96,8 @@
                 android:id="@+id/open_source_lib"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/activity_vertical_margin" />
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:textIsSelectable="false"/>
 
             <View
                 android:layout_width="match_parent"

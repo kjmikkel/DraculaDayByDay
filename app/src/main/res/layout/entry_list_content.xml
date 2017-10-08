@@ -10,7 +10,8 @@
             android:layout_margin="@dimen/text_small_margin"
             android:layout_weight="4"
             android:gravity="center"
-            android:textAppearance="?attr/textAppearanceListItem" />
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:textIsSelectable="false"/>
 
         <TextView
             android:id="@+id/name"
@@ -19,7 +20,8 @@
             android:layout_margin="@dimen/text_small_margin"
             android:layout_weight="5"
             android:gravity="center"
-            android:textAppearance="?attr/textAppearanceListItem" />
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:textIsSelectable="false"/>
 
         <com.jensen.draculadaybyday.presentation.SquareImageView
             android:id="@+id/news_type"
