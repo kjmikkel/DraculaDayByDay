@@ -1,7 +1,7 @@
 package com.jensen.draculadaybyday.entries;
 
-import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -19,18 +19,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import com.jensen.draculadaybyday.filter.FilterActivity;
 import com.jensen.draculadaybyday.presentation.AboutPage;
 import com.jensen.draculadaybyday.entry.Entry;
 import com.jensen.draculadaybyday.R;
+import com.jensen.draculadaybyday.presentation.DialogCloseListener;
+import com.jensen.draculadaybyday.presentation.HowToExperienceDialog;
 import com.jensen.draculadaybyday.sql_lite.DateConstructorUtility;
-import com.jensen.draculadaybyday.sql_lite.ExperienceMode;
 import com.jensen.draculadaybyday.sql_lite.FragmentEntryDatabaseHandler;
 import com.jensen.draculadaybyday.preferences.DraculaPreferences;
 import com.jensen.draculadaybyday.sql_lite.SqlConstraintFactory;
@@ -54,7 +50,7 @@ import static com.jensen.draculadaybyday.entries.EntryType.NOTE;
 import static com.jensen.draculadaybyday.entries.EntryType.PHONOGRAPH;
 import static com.jensen.draculadaybyday.entries.EntryType.TELEGRAM;
 
-// Dramatis personæ
+//region Dramatis personæ
 import static com.jensen.draculadaybyday.entries.Person.ABRAHAM_VAN_HELSING;
 import static com.jensen.draculadaybyday.entries.Person.ARTHUR_HOLMWOOD;
 import static com.jensen.draculadaybyday.entries.Person.DR_SEWARD;
@@ -70,6 +66,7 @@ import static com.jensen.draculadaybyday.entries.Person.QUINCEY_MORRIS;
 import static com.jensen.draculadaybyday.entries.Person.SAMUEL_F_BILLINGTON;
 import static com.jensen.draculadaybyday.entries.Person.SISTER_AGATHA;
 import static com.jensen.draculadaybyday.entries.Person.WESTMINISTER_GAZETTE;
+//endregion
 
 /**
  * An activity representing a list of Entries. This activity
@@ -101,6 +98,11 @@ public class EntryListActivity extends AppCompatActivity {
      */
     private boolean mTwoPane;
 
+    /**
+     * Creates the options menu
+     * @param menu - the menu object to inflate our layout into
+     * @return Returns whether the menus were correctly created
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -108,28 +110,48 @@ public class EntryListActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Activate the menu option the user has selected
+     * @param item - the item the user has selected
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        boolean returnValue;
         switch (item.getItemId()) {
             case R.id.entry_list_filter:
                 Intent filter = new Intent(EntryListActivity.this, FilterActivity.class);
                 filter.putExtra(FilterActivity.CONSTRAINTS_INTENT_KEY, constraintFactory);
                 filter.putExtra(FilterActivity.SORTING_INTENT_KEY, sortFactory);
                 startActivityForResult(filter, FILTER_REQUEST);
-                return true;
+                returnValue = true;
+                break;
             case R.id.entry_list_general_preferences:
                 Intent preferences = new Intent(EntryListActivity.this, DraculaPreferences.class);
                 startActivity(preferences);
-                return true;
+                returnValue = true;
+                break;
             case R.id.entry_list_about_app:
                 Intent about = new Intent(EntryListActivity.this, AboutPage.class);
                 startActivity(about);
-                return true;
+                returnValue = true;
+                break;
             default:
-                return super.onOptionsItemSelected(item);
+                returnValue = super.onOptionsItemSelected(item);
+                break;
         }
+
+        return returnValue;
     }
 
+    /**
+     * Handles return values from other processes, such as when you set up the constraints and the
+     * filter
+     * @param requestCode - The code indicating from where the results come from
+     * @param resultCode - The code indicating whether the activity was successful or not in its
+     *                   action
+     * @param data - The data we are going to be working on
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         try {
@@ -139,23 +161,28 @@ public class EntryListActivity extends AppCompatActivity {
                 if (requestCode == FILTER_REQUEST) {
                     // The user picked a new filter.
                     // The Intent's data Uri identifies which contact was selected.
-                    constraintFactory = data.getParcelableExtra(FilterActivity.CONSTRAINTS_INTENT_KEY);
+                    constraintFactory = data
+                            .getParcelableExtra(FilterActivity.CONSTRAINTS_INTENT_KEY);
                     constraintFactory.unlocked(true);
                     sortFactory = data.getParcelableExtra(FilterActivity.SORTING_INTENT_KEY);
 
                     //region Set entries
                     // Get the entries
-                    List<Entry> entries = mFragmentEntryHandler.getEntries(constraintFactory, sortFactory);
+                    List<Entry> entries = mFragmentEntryHandler
+                            .getEntries(constraintFactory, sortFactory);
                     mSimpleItemAdapter.clear();
                     mSimpleItemAdapter.addAll(entries);
-                  //endregion
+                    //endregion
                 }
             }
         } catch (Exception e) {
-            Log.d("onActivityResult", e.getMessage());
+            Log.e("onActivityResult", e.getMessage());
         }
     }
 
+    /**
+     * Set the default preference values
+     */
     private void setDefaultPreferences() {
         // Create the default preferences
         PreferenceManager.setDefaultValues(this, R.xml.pref_user_interface, false);
@@ -163,6 +190,10 @@ public class EntryListActivity extends AppCompatActivity {
         PreferenceManager.setDefaultValues(this, R.xml.pref_notification, false);
     }
 
+    /**
+     * Set up the basics when the activity is created
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -176,66 +207,38 @@ public class EntryListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_entry_list);
     }
 
+    /**
+     * Code to be executed when the activity is resumed
+     */
     @Override
     protected void onResume() {
         super.onResume();
         try {
             if (prefs.getBoolean(getString(R.string.pref_key_first_run), true)) {
-
-                final Dialog dlg = new Dialog(this, R.style.CustomDialog);
-                View description = View.inflate(this, R.layout.custom_listview, null);
-
-                // Set the text
-                TextView textView = (TextView) description.findViewById(R.id.custom_list_view_description);
-                textView.setText(getString(R.string.preference_how_to_experience));
-
-                // Set the list items
-                ListView listView = (ListView) description.findViewById(R.id.custom_list_view_list_items);
-
-                String[] experienceChoices = getResources().getStringArray(R.array.list_preference_how_to_experience);
-                final ArrayAdapter<String> arrayAdapterItems = new ArrayAdapter<>(this, android.R.layout.simple_expandable_list_item_1, experienceChoices);
-
-                listView.setAdapter(arrayAdapterItems);
-                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
+                // Setup so the user can tell the app how to experience the story
+                HowToExperienceDialog dialog = new HowToExperienceDialog();
+                DialogCloseListener closeListener = new DialogCloseListener() {
                     @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        SharedPreferences.Editor prefEditor = prefs.edit();
-                        prefEditor.putString(getString(R.string.pref_key_how_to_experience), parent.getItemAtPosition(position).toString());
-                        prefEditor.putBoolean(getString(R.string.pref_key_first_run), false);
-
-                        // If it is the same tempo, then we save the current date
-                        if (parent.getItemAtPosition(position).toString().equals(getString(R.string.pref_experience_tempo))) {
-                            DateTime today = DateConstructorUtility.todayInThePast(ExperienceMode.EXPERIENCE_IN_SAME_TEMPO);
-                            prefEditor.putLong(getString(R.string.pref_key_start_date_time), today.getMillis());
-                        }
-
-                        prefEditor.apply();
-                        dlg.dismiss();
+                    public void handleDialogClose(DialogInterface dialog) {
                         setUpEntries();
                     }
-                });
-
-                dlg.setContentView(description);
-                dlg.setTitle(getString(R.string.pref_how_to_experience_title));
-
-                dlg.setCancelable(false);
-                dlg.show();
-
-                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-                if (dlg.getWindow() != null) {
-                    lp.copyFrom(dlg.getWindow().getAttributes());
-                    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-                    dlg.getWindow().setAttributes(lp);
-                }
+                };
+                dialog.addDismissListener(closeListener);
+                dialog.show(getFragmentManager(), "HowToExperience");
             } else {
-               setUpEntries();
+                setUpEntries();
             }
         } catch (Exception e) {
-            Log.d("", e.getMessage());
+            Log.e("", e.getMessage());
         }
     }
 
+    /**
+     * Setup the entries:
+     * 1. Set up the basic constraints
+     * 2. Add the entries to the database
+     * 3. Find and display the entries
+     */
     private void setUpEntries() {
         // Set the sort and constraint factories (only once)
         if (constraintFactory == null) {
@@ -506,12 +509,12 @@ public class EntryListActivity extends AppCompatActivity {
             //endregion
 
         } catch (Exception e) {
-            Log.d("Database", e.getMessage());
+            Log.e("Database", e.getMessage());
         } finally {
             mFragmentEntryHandler.close();
         }
 
-        final RecyclerView recyclerView = (RecyclerView)findViewById(R.id.entry_recycle_view);
+        final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.entry_recycle_view);
         assert recyclerView != null;
         updateRecyclerView(recyclerView, false);
 
@@ -535,7 +538,16 @@ public class EntryListActivity extends AppCompatActivity {
         }
     }
 
-    private void addEntryToDatabase(int chapterNum, Person person, int diaryResource, @IntRange(from=1, to=12) int month, @IntRange(from=1, to=31) int date, EntryType type) {
+    /**
+     * Add a single entry to the database
+     * @param chapterNum - The chapter the entry belongs to
+     * @param person - The person who made the entry
+     * @param diaryResource - The id of the resource file to
+     * @param month - The month of the entry
+     * @param date - the day of month of the entry
+     * @param type - The type of the entry (newspaper, diary, phonograph, etc.)
+     */
+    private void addEntryToDatabase(int chapterNum, Person person, int diaryResource, @IntRange(from = 1, to = 12) int month, @IntRange(from = 1, to = 31) int date, EntryType type) {
         if (mFragmentEntryHandler != null) {
             DateTime dateTime = DateConstructorUtility.getDateTime(month, date);
 
@@ -544,9 +556,21 @@ public class EntryListActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Update the recycle view ot contain the correct entries
+     * @param recyclerView - The recycleview that will be updated
+     * @param update - Whether we are to perform an actual update, or the initial update
+     */
     private void updateRecyclerView(@NonNull RecyclerView recyclerView, boolean update) {
         // We need today
         DateTime dateTime = DateConstructorUtility.getUnlockDate(this);
+
+        // Start with locking all entries
+        String resetKey = getString(R.string.pref_reset_book_key);
+        // Get reset value (and set it to false)
+        boolean resetBook = prefs.getBoolean(resetKey, false);
+        prefs.edit().putBoolean(resetKey, false);
+        mFragmentEntryHandler.lockAllEntries(resetBook);
 
         // Check if there are new entries available
         mFragmentEntryHandler.unlockEntriesBeforeDate(dateTime);
@@ -564,6 +588,12 @@ public class EntryListActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Read the string from the the resource file
+     * @param id - The id of the resource file
+     * @return The string the resource file contains
+     */
+    @NonNull
     private String getStringFromId(int id) {
         InputStream stream = getResources().openRawResource((id));
         BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
@@ -577,14 +607,18 @@ public class EntryListActivity extends AppCompatActivity {
             }
             while (line != null);
         } catch (Exception e) {
-            Log.d("Reading problems", e.getMessage());
+            Log.e("Reading problems", e.getMessage());
         }
 
         return sb.toString();
     }
 
-    public class SimpleItemRecyclerViewAdapter
-            extends RecyclerView.Adapter<EntryViewHolder> {
+    /**
+     * The Adapter for the recycle view - it is the part of the code responsible with ensuring which
+     * entries should be available for the RecycleView - loading and unloading them in and out of
+     * memory
+     */
+    public class SimpleItemRecyclerViewAdapter extends RecyclerView.Adapter<EntryViewHolder> {
 
         private final List<Entry> mValues;
 
@@ -592,6 +626,12 @@ public class EntryListActivity extends AppCompatActivity {
             mValues = items;
         }
 
+        /**
+         * Crates the viewholder (the visual part of the recycleview
+         * @param parent - The parent the EntryViewHolder will be connected to
+         * @param viewType - Not used
+         * @return The EntryViewHolder created
+         */
         @Override
         public EntryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext())
@@ -599,6 +639,12 @@ public class EntryListActivity extends AppCompatActivity {
             return new EntryViewHolder(view);
         }
 
+        /**
+         * Get the views, set them up, and ensure we can load the individual entreis by clicking
+         * on them
+         * @param holder - The holder that we use to display them
+         * @param position - The position we have clicked on
+         */
         @Override
         public void onBindViewHolder(@NonNull final EntryViewHolder holder, int position) {
             // Set the views
@@ -611,7 +657,8 @@ public class EntryListActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     if (mTwoPane) {
                         Bundle arguments = new Bundle();
-                        arguments.putShort(FragmentEntryDatabaseHandler.ENTRY_SEQ_NUM, holder.entry.getStoryEntryNum());
+                        arguments.putShort(FragmentEntryDatabaseHandler.ENTRY_SEQ_NUM,
+                                holder.entry.getStoryEntryNum());
                         EntryFragment fragment = new EntryFragment();
                         fragment.setArguments(arguments);
                         getSupportFragmentManager().beginTransaction()
@@ -623,7 +670,8 @@ public class EntryListActivity extends AppCompatActivity {
                         Intent intent = new Intent(context, EntryActivity.class);
 
                         // insert the values
-                        intent.putExtra(FragmentEntryDatabaseHandler.ENTRY_SEQ_NUM, holder.entry.getStoryEntryNum());
+                        intent.putExtra(FragmentEntryDatabaseHandler.ENTRY_SEQ_NUM,
+                                holder.entry.getStoryEntryNum());
                         startActivity(intent);
                     }
                 }
@@ -631,18 +679,27 @@ public class EntryListActivity extends AppCompatActivity {
             //endregion
         }
 
+        /**
+         * Returns how many items there are available
+         * @return - The number of available entries
+         */
         @Override
         public int getItemCount() {
             return mValues.size();
         }
 
-        // Clean all elements of the recycler
+        /**
+         * Clean all elements of the recycler
+         */
         public void clear() {
             mValues.clear();
             notifyDataSetChanged();
         }
 
-        // Add a list of items
+        /**
+         * Add a list of items
+         * @param list - The list to add
+         */
         public void addAll(List<Entry> list) {
             mValues.addAll(list);
             notifyDataSetChanged();

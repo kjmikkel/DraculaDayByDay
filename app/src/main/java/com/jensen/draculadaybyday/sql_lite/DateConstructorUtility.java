@@ -24,7 +24,7 @@ public class DateConstructorUtility {
         DateTime dateTime;
         ExperienceMode mode = unlockMethod.equals(context.getString(R.string.pref_experience_default_value)) ? ExperienceMode.EXPERIENCE_ON_SAME_DAY : ExperienceMode.EXPERIENCE_IN_SAME_TEMPO;
         if (mode == ExperienceMode.EXPERIENCE_ON_SAME_DAY) {
-            dateTime = todayInThePast(ExperienceMode.EXPERIENCE_ON_SAME_DAY);
+            dateTime = todayInThePast();
         } else {
             dateTime = getInSameTempoDate(context);
         }
@@ -32,16 +32,19 @@ public class DateConstructorUtility {
         return dateTime;
     }
 
-    public static DateTime todayInThePast(ExperienceMode mode) {
+    public static DateTime todayInThePast() {
         DateTime today = new DateTime();
-        today = getDateTime(today.monthOfYear().get(), today.dayOfMonth().get());
+        return getDateTime(today.monthOfYear().get(), today.dayOfMonth().get());
+    }
 
-        if(mode == ExperienceMode.EXPERIENCE_ON_SAME_DAY && !(firstDayOfJanuary.isBefore(today) && initialDate.isAfter(today))) {
-            // if we are not in the interval first of January to the third of May, then the year is 1892
-            today.withYear(1892);
+    public static boolean inRightYear() {
+        DateTime today = new DateTime();
+        boolean returnValue = true;
+        if (firstDayOfJanuary.isBefore(today) && initialDate.isAfter(today)) {
+            // if we are not in the interval first of January to the third of May, then we need to mark it
+            returnValue = false;
         }
-
-        return today;
+        return returnValue;
     }
 
     private static DateTime getInSameTempoDate(Context context) {
@@ -49,7 +52,7 @@ public class DateConstructorUtility {
         long timeInMilliseconds = prefManager.getLong(context.getString(R.string.pref_key_start_date_time), 0); //todayInThePast(ExperienceMode.EXPERIENCE_IN_SAME_TEMPO).getMillis());
 
         DateTime startTime = new DateTime(timeInMilliseconds);
-        DateTime endTime = todayInThePast(ExperienceMode.EXPERIENCE_IN_SAME_TEMPO);
+        DateTime endTime = todayInThePast();
 
         DateTime returnDateTime;
         if (startTime.isBefore(endTime) || startTime.isEqual(endTime)) {

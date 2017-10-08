@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Used to create teh  -->
-<android.support.v4.widget.SwipeRefreshLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/entry_list_swipe"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    <!-- Enable the layout to update by swiping up -->
+    <android.support.v4.widget.SwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/entry_list_swipe"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-<android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/entry_recycle_view"
-    android:name="com.jensen.draculadaybyday.EntryListFragment"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
-    app:layoutManager="LinearLayoutManager"
-    tools:listitem="@layout/entry_list_content" />
-
+    <!-- The recycle view to handle all the entries that have been unlocked -->
+    <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/entry_recycle_view"
+        android:name="com.jensen.draculadaybyday.EntryListFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="@dimen/text_margin"
+        android:layout_marginEnd="@dimen/text_margin"
+        app:layoutManager="LinearLayoutManager"
+        tools:listitem="@layout/entry_list_content" />
 </android.support.v4.widget.SwipeRefreshLayout>

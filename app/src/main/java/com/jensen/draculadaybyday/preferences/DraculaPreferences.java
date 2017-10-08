@@ -3,7 +3,9 @@ package com.jensen.draculadaybyday.preferences;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -17,9 +19,14 @@ import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.jensen.draculadaybyday.R;
+import com.jensen.draculadaybyday.sql_lite.DateConstructorUtility;
+import com.jensen.draculadaybyday.sql_lite.ExperienceMode;
+
+import org.joda.time.DateTime;
 
 import java.util.List;
 
@@ -119,13 +126,16 @@ public class DraculaPreferences extends AppCompatPreferenceActivity {
                         .getString(preference.getKey(), ""));
     }
 
+    private static SharedPreferences prefs;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setupActionBar();
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         // Make the code that monitors if the preferences change
-        // TODO Add this
+
     }
 
     /**
@@ -186,6 +196,56 @@ public class DraculaPreferences extends AppCompatPreferenceActivity {
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class GeneralPreferenceFragment extends PreferenceFragment {
+
+        // How to experience the book
+        private static String howToExperienceKey = null;
+        // Reset key
+        private static String resetKey = null;
+        private static final Preference.OnPreferenceChangeListener sExperiencePreferenceUpdate = new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                SharedPreferences.Editor prefEditor = prefs.edit();
+
+                try {
+                    if (preference.getKey().equals(howToExperienceKey)) {
+                        ExperienceMode mode = newValue.toString().equals(preference.getContext().getString(R.string.pref_experience_default_value))
+                                ? ExperienceMode.EXPERIENCE_ON_SAME_DAY : ExperienceMode.EXPERIENCE_IN_SAME_TEMPO;
+                        if (mode == ExperienceMode.EXPERIENCE_IN_SAME_TEMPO) {
+                            resetTime(prefEditor, preference.getContext());
+                        }
+                    } else if (preference.getKey().equals(resetKey)) {
+                        Boolean reset = Boolean.valueOf(newValue.toString());
+                        if (reset) {
+                            String howToExperience = Resources.getSystem().getString(R.string.pref_key_how_to_experience);
+                            String defaultValue = Resources.getSystem().getString(R.string.pref_experience_default_value);
+                            ExperienceMode mode = prefs.getString(howToExperience, defaultValue).equals(defaultValue)
+                                    ? ExperienceMode.EXPERIENCE_ON_SAME_DAY : ExperienceMode.EXPERIENCE_IN_SAME_TEMPO;
+
+                            if (mode == ExperienceMode.EXPERIENCE_IN_SAME_TEMPO) {
+                                resetTime(prefEditor, preference.getContext());
+                            } else {
+                            /*
+                            if(mode == ExperienceMode.EXPERIENCE_ON_SAME_DAY && !(firstDayOfJanuary.isBefore(today) && initialDate.isAfter(today))) {
+                                // if we are not in the interval first of January to the third of May, then the year is 1892
+                                today.withYear(1892);
+                            }
+                            */
+                            }
+                        }
+                    }
+                } catch (Exception e) {
+                    Log.e("PreferenceChanged", e.getMessage());
+                }
+                return true;
+            }
+        };
+
+        private static void resetTime(SharedPreferences.Editor prefEditor, Context context) {
+            DateTime today = DateConstructorUtility.todayInThePast();
+            prefEditor.putLong(context.getString(R.string.pref_key_start_date_time), today.getMillis());
+            prefEditor.apply();
+        }
+
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -198,6 +258,13 @@ public class DraculaPreferences extends AppCompatPreferenceActivity {
             // guidelines.
 //            bindPreferenceSummaryToValue(findPreference("example_text"));
 //            bindPreferenceSummaryToValue(findPreference("example_list"));
+            howToExperienceKey = getString(R.string.pref_key_how_to_experience);
+            resetKey = getString(R.string.pref_reset_book_key);
+
+            findPreference(howToExperienceKey)
+                    .setOnPreferenceChangeListener(sExperiencePreferenceUpdate);
+            findPreference(resetKey)
+                    .setOnPreferenceChangeListener(sExperiencePreferenceUpdate);
         }
     }
 
@@ -212,13 +279,12 @@ public class DraculaPreferences extends AppCompatPreferenceActivity {
         private static ListPreference initialPreference = null;
 
         // The font key
-        private static String fontKey = null;
-        private static final Preference.OnPreferenceChangeListener sPreferenceUpdate = new Preference.OnPreferenceChangeListener() {
+        private static final Preference.OnPreferenceChangeListener sFontPreferenceUpdate = new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object value) {
                 fontExample.updateToPreferences();
 
-                if (preference.getKey().equals(fontKey)) {
+                if (preference.getKey().equals(Resources.getSystem().getString(R.string.pref_key_font_type))) {
                     setEnabledStateOfInitial(value.toString());
                 }
                 return true;
@@ -243,8 +309,6 @@ public class DraculaPreferences extends AppCompatPreferenceActivity {
             fontPreference = (ListPreference) findPreference((getString(R.string.pref_key_font_type)));
             initialPreference = (ListPreference) findPreference(getString(R.string.pref_key_initial_type));
 
-            fontKey = getString(R.string.pref_key_font_type);
-
             setUpdatePref(R.string.pref_key_font_type);
             setUpdatePref(R.string.pref_key_fontsize);
             setUpdatePref(R.string.pref_key_initial_type);
@@ -253,7 +317,7 @@ public class DraculaPreferences extends AppCompatPreferenceActivity {
         }
 
         private void setUpdatePref(int prefId) {
-            findPreference(getString(prefId)).setOnPreferenceChangeListener(sPreferenceUpdate);
+            findPreference(getString(prefId)).setOnPreferenceChangeListener(sFontPreferenceUpdate);
         }
 
         @Override

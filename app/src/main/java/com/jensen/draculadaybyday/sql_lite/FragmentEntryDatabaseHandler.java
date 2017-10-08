@@ -169,7 +169,7 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
             cursor.close();
 
         } catch (Exception e) {
-            Log.d("DB error", e.getMessage());
+            Log.e("DB error", e.getMessage());
         } finally {
             db.close();
         }
@@ -281,7 +281,7 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
                 cursor.close();
             }
         } catch (Exception e) {
-            Log.d("DB error", e.getMessage());
+            Log.e("DB error", e.getMessage());
         } finally {
             // Close database
             db.close();
@@ -314,15 +314,39 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
         return entries;
     }
 
-    // Update the correct
+    /**
+     * Lock all entries
+     * @param reset - Whether or not we want to reset the
+     */
+    public void lockAllEntries(boolean reset) {
+        try {
+            ContentValues cv = new ContentValues();
+            cv.put(UNLOCKED, 0);
+            if (reset) {
+                cv.put(UNREAD, 1);
+            }
+
+            if (!db.isOpen()) {
+                open();
+            }
+
+            db.update(TABLE_ENTRY, cv, "1=1", null);
+        } catch (Exception e) {
+            Log.e("DB error", e.getMessage());
+        } finally {
+            db.close();
+        }
+    }
+
+    /**
+     * Unlock the correct entries
+     * @param date - the date up to which we are unlocking
+     */
     public void unlockEntriesBeforeDate(DateTime date) {
         SqlConstraintFactory constraintFactory = new SqlConstraintFactory();
         BeforeDateConstraintArg before = new BeforeDateConstraintArg(date, true);
         constraintFactory.setDateConstraint(before);
         constraintFactory.unlocked(false);
-
-        SqlSortFactory fact = new SqlSortFactory();
-        fact.dateOrder(true);
 
         try {
             ContentValues cv = new ContentValues();
@@ -334,9 +358,10 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
             }
 
             db.update(TABLE_ENTRY, cv, constraintFactory.getConstraint(), constraintFactory.getValues());
-            db.close();
         } catch (Exception e) {
-            Log.d("DB error", e.getMessage());
+            Log.e("DB error", e.getMessage());
+        } finally {
+            db.close();
         }
     }
 
