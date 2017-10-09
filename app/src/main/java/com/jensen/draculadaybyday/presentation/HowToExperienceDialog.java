@@ -44,7 +44,7 @@ public class HowToExperienceDialog extends DialogFragment {
         setupView(view);
     }
 
-    private View setupView(View view) {
+    private void setupView(View view) {
         // Set the text
         TextView textView = (TextView) view.findViewById(R.id.custom_list_view_description);
         textView.setText(getString(R.string.preference_how_to_experience));
@@ -69,8 +69,6 @@ public class HowToExperienceDialog extends DialogFragment {
         } catch (Exception e) {
             Log.e("HowToExperience", e.getMessage());
         }
-
-        return view;
     }
     /*
     public View getView(LayoutInflater inflater, ViewGroup container) {
@@ -83,7 +81,7 @@ public class HowToExperienceDialog extends DialogFragment {
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
         if (closeListener != null) {
-            closeListener.handleDialogClose(null);
+            closeListener.handleDialogClose();
         }
     }
 
@@ -112,7 +110,7 @@ public class HowToExperienceDialog extends DialogFragment {
         }
 
         @Override
-        public void onBindViewHolder(HowToExperienceHolder holder, final int position) {
+        public void onBindViewHolder(final HowToExperienceHolder holder, int position) {
             final Context context = getContext();
             final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
@@ -124,7 +122,7 @@ public class HowToExperienceDialog extends DialogFragment {
                 @Override
                 public void onClick(View v) {
                     SharedPreferences.Editor prefEditor = prefs.edit();
-                    String experienceModeString = headlines[position];
+                    String experienceModeString = headlines[holder.getAdapterPosition()];
                     prefEditor.putString(context.getString(R.string.pref_key_how_to_experience), experienceModeString);
                     prefEditor.putBoolean(context.getString(R.string.pref_key_first_run), false);
 
@@ -149,8 +147,8 @@ public class HowToExperienceDialog extends DialogFragment {
                 @Override
                 public void onClick(View v) {
                     AlertDialog alertDialog = new AlertDialog.Builder(context).create();
-                    alertDialog.setTitle(headlines[position]);
-                    alertDialog.setMessage(descriptions[position]);
+                    alertDialog.setTitle(headlines[holder.getAdapterPosition()]);
+                    alertDialog.setMessage(descriptions[holder.getAdapterPosition()]);
                     alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "OK",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {

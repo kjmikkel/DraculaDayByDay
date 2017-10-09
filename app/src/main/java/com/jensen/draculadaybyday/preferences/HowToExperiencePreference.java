@@ -25,7 +25,7 @@ import org.joda.time.DateTime;
 
 public class HowToExperiencePreference extends DialogPreference {
 
-    private Context mContext;
+    private final Context mContext;
 
     public HowToExperiencePreference(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -41,8 +41,9 @@ public class HowToExperiencePreference extends DialogPreference {
 
     @Override
     protected View onCreateDialogView() {
-        LayoutInflater inflater = LayoutInflater.from(mContext);
-        View view = inflater.inflate(R.layout.custom_listview, null);
+        // LayoutInflater inflater = LayoutInflater.from(mContext);
+        //View view = inflater.inflate(R.layout.custom_listview, mContext.getp);
+        View view = View.inflate(mContext, R.layout.custom_listview, null);
         return setupView(view);
     }
 
@@ -69,7 +70,7 @@ public class HowToExperiencePreference extends DialogPreference {
 
         private final String[] headlines;
         private final String[] descriptions;
-        private Context mContext;
+        private final Context mContext;
 
         public ExperienceViewAdapter(String[] headlines, String[] descriptions, Context context) throws Exception {
             this.headlines = headlines;
@@ -90,7 +91,7 @@ public class HowToExperiencePreference extends DialogPreference {
         }
 
         @Override
-        public void onBindViewHolder(HowToExperienceHolder holder, final int position) {
+        public void onBindViewHolder(final HowToExperienceHolder holder, int position) {
             final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
 
             // Set the views
@@ -101,7 +102,7 @@ public class HowToExperiencePreference extends DialogPreference {
                 @Override
                 public void onClick(View v) {
                     SharedPreferences.Editor prefEditor = prefs.edit();
-                    String experienceModeString = headlines[position];
+                    String experienceModeString = headlines[holder.getAdapterPosition()];
 
                     if (callChangeListener(experienceModeString)) {
                         prefEditor.putString(mContext.getString(R.string.pref_key_how_to_experience), experienceModeString);
@@ -132,8 +133,8 @@ public class HowToExperiencePreference extends DialogPreference {
                 @Override
                 public void onClick(View v) {
                     AlertDialog alertDialog = new AlertDialog.Builder(mContext).create();
-                    alertDialog.setTitle(headlines[position]);
-                    alertDialog.setMessage(descriptions[position]);
+                    alertDialog.setTitle(headlines[holder.getAdapterPosition()]);
+                    alertDialog.setMessage(descriptions[holder.getAdapterPosition()]);
                     alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "OK",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {

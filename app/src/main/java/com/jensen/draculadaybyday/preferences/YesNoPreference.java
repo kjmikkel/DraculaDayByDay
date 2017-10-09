@@ -68,7 +68,7 @@ public class YesNoPreference extends DialogPreference {
      *
      * @return The value of the preference.
      */
-    public boolean getValue() {
+    private boolean getValue() {
         return mWasPositiveResult;
     }
 
@@ -78,7 +78,7 @@ public class YesNoPreference extends DialogPreference {
      *
      * @param value The value of the preference.
      */
-    public void setValue(boolean value) {
+    private void setValue(boolean value) {
         mWasPositiveResult = value;
 
         persistBoolean(value);

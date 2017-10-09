@@ -9,8 +9,8 @@ import com.jensen.draculadaybyday.R;
 
 public class HowToExperienceHolder extends RecyclerView.ViewHolder {
 
-    public TextView textView;
-    public ImageView imageView;
+    final public TextView textView;
+    final public ImageView imageView;
 
     public HowToExperienceHolder(View view) {
         super(view);

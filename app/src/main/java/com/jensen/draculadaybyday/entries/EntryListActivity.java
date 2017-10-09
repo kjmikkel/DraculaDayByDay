@@ -1,7 +1,6 @@
 package com.jensen.draculadaybyday.entries;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -219,7 +218,7 @@ public class EntryListActivity extends AppCompatActivity {
                 HowToExperienceDialog dialog = new HowToExperienceDialog();
                 DialogCloseListener closeListener = new DialogCloseListener() {
                     @Override
-                    public void handleDialogClose(DialogInterface dialog) {
+                    public void handleDialogClose() {
                         setUpEntries();
                     }
                 };
@@ -569,7 +568,7 @@ public class EntryListActivity extends AppCompatActivity {
         String resetKey = getString(R.string.pref_reset_book_key);
         // Get reset value (and set it to false)
         boolean resetBook = prefs.getBoolean(resetKey, false);
-        prefs.edit().putBoolean(resetKey, false);
+        prefs.edit().putBoolean(resetKey, false).apply();
         mFragmentEntryHandler.lockAllEntries(resetBook);
 
         // Check if there are new entries available
