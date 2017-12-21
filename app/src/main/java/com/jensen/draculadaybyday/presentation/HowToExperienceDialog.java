@@ -61,16 +61,6 @@ public class HowToExperienceDialog extends DialogFragment {
 
             dlg.setTitle(getString(R.string.pref_how_to_experience_title));
             setCancelable(false);
-
-            /*
-            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-            if (dlg.getWindow() != null) {
-                lp.copyFrom(dlg.getWindow().getAttributes());
-                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-                lp.height = 600;
-                dlg.getWindow().setAttributes(lp);
-            }
-            */
         } catch (Exception e) {
             Log.e("HowToExperience", e.getMessage());
         }
