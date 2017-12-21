@@ -33,9 +33,7 @@ public class SqlSortFactory implements Parcelable {
 
     public List<SortValue> getSortingOrderList() {
         List<SortValue> returnValue = new ArrayList<>();
-        for(SortValue sortValue : sortingOrder) {
-            returnValue.add(sortValue);
-        }
+        returnValue.addAll(sortingOrder);
         return returnValue;
     }
 
@@ -69,9 +67,7 @@ public class SqlSortFactory implements Parcelable {
 
     public void writeToParcel(Parcel out, int flags) {
         LinkedList<SortValue> list = new LinkedList<>();
-        for(SortValue item : sortingOrder) {
-            list.add(item);
-        }
+        list.addAll(sortingOrder);
         out.writeList(list);
     }
 

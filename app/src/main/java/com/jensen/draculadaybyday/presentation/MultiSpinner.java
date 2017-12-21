@@ -160,7 +160,7 @@ public class MultiSpinner extends android.support.v7.widget.AppCompatSpinner {
                 .setPositiveButton(android.R.string.ok, mOnClickListener)
                 .show();
 
-        return true;
+        return super.performClick();
     }
 
     @SuppressWarnings("unused")

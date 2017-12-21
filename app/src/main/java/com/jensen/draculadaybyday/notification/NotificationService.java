@@ -38,7 +38,7 @@ public class NotificationService extends JobService {
         return updateTask.stopJob(jobParameters);
     }
 
-    private class UpdateAppsAsyncTask extends AsyncTask<JobParameters, Void, JobParameters[]> {
+    private static class UpdateAppsAsyncTask extends AsyncTask<JobParameters, Void, JobParameters[]> {
 
 
         @Override
@@ -52,7 +52,7 @@ public class NotificationService extends JobService {
         protected void onPostExecute(JobParameters[] result) {
             for (JobParameters params : result) {
                 if (!hasJobBeenStopped(params)) {
-                    jobFinished(params, false);
+//                    jobFinished(params, false);
                 }
             }
         }

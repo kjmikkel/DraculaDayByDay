@@ -10,6 +10,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -56,16 +57,20 @@ public class HowToExperienceDialog extends DialogFragment {
             String[] choiceDescription = getResources().getStringArray(R.array.list_preference_how_to_experience_description);
             ExperienceViewAdapter experienceViewAdapter = new ExperienceViewAdapter(experienceChoices, choiceDescription, dlg);
             recyclerView.setAdapter(experienceViewAdapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
             dlg.setTitle(getString(R.string.pref_how_to_experience_title));
             setCancelable(false);
 
+            /*
             WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
             if (dlg.getWindow() != null) {
                 lp.copyFrom(dlg.getWindow().getAttributes());
                 lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.height = 600;
                 dlg.getWindow().setAttributes(lp);
             }
+            */
         } catch (Exception e) {
             Log.e("HowToExperience", e.getMessage());
         }

@@ -41,8 +41,6 @@ public class HowToExperiencePreference extends DialogPreference {
 
     @Override
     protected View onCreateDialogView() {
-        // LayoutInflater inflater = LayoutInflater.from(mContext);
-        //View view = inflater.inflate(R.layout.custom_listview, mContext.getp);
         View view = View.inflate(mContext, R.layout.custom_listview, null);
         return setupView(view);
     }
