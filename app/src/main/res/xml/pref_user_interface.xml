@@ -42,7 +42,7 @@
     <!-- The size of the font -->
     <com.jensen.draculadaybyday.preferences.FontSizePickerPreference
         android:defaultValue="@dimen/pref_default_fontsize"
-        android:key="@string/pref_key_fontsize"
+        android:key="@string/pref_key_font_size"
         android:summary="@string/pref_summary_fontsize"
         android:title="@string/pref_title_text_fontsize"
         custom:max="@integer/pref_fontsize_max"

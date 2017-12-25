@@ -108,7 +108,7 @@ public class EntryViewPreference extends Preference {
             makeInitialFromString(initialString);
         }
 
-        fontSize = sp.getFloat(res.getString(R.string.pref_key_fontsize), fontSize);
+        fontSize = sp.getFloat(res.getString(R.string.pref_key_font_size), fontSize);
 
         entryView.setText(text, initialEnum, fontEnum, fontSize);
     }

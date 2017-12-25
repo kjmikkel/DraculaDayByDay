@@ -278,13 +278,16 @@ public class DraculaPreferences extends AppCompatPreferenceActivity {
         private static ListPreference fontPreference = null;
         private static ListPreference initialPreference = null;
 
+        // The name of the keys (which cannot be accessed during the preference update
+        private static String key_initial_type;
+
         // The font key
         private static final Preference.OnPreferenceChangeListener sFontPreferenceUpdate = new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object value) {
                 fontExample.updateToPreferences();
 
-                if (preference.getKey().equals(Resources.getSystem().getString(R.string.pref_key_font_type))) {
+                if (preference.getKey().equals(key_initial_type)) {
                     setEnabledStateOfInitial(value.toString());
                 }
                 return true;
@@ -309,8 +312,10 @@ public class DraculaPreferences extends AppCompatPreferenceActivity {
             fontPreference = (ListPreference) findPreference((getString(R.string.pref_key_font_type)));
             initialPreference = (ListPreference) findPreference(getString(R.string.pref_key_initial_type));
 
+            key_initial_type = getString(R.string.pref_key_initial_type);
+
             setUpdatePref(R.string.pref_key_font_type);
-            setUpdatePref(R.string.pref_key_fontsize);
+            setUpdatePref(R.string.pref_key_font_size);
             setUpdatePref(R.string.pref_key_initial_type);
 
             setEnabledStateOfInitial(fontPreference.getValue());
