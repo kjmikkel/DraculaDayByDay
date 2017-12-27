@@ -83,11 +83,13 @@ public class EntryFragment extends Fragment {
     private void setText() {
         if (mEntryView != null) {
 
-            String text = DEFAULT_BODY;
+            EntryText entry = null;
+
             if (mEntry != null) {
-                text = mEntry.getTextEntry();
+                entry = mEntry.getTextEntry();
             }
-            if (text != null && !DEFAULT_BODY.equals(text) && !text.isEmpty()) {
+
+            if (entry != null && !DEFAULT_BODY.equals(entry.getRawText()) &&  !entry.getRawText().isEmpty()) {
                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
 
                 String fontType = preferences.getString(getString(R.string.pref_key_font_type), getString(R.string.pref_default_value_font_type));
@@ -98,7 +100,7 @@ public class EntryFragment extends Fragment {
 
                 float textSize = preferences.getFloat(FontSizePickerPreference.PREFERENCE_NAME, 14.0f);
 
-                mEntryView.setText(text, initialEnum, fontEnum, textSize);
+                mEntryView.setText(entry, initialEnum, fontEnum, textSize);
             }
         }
     }

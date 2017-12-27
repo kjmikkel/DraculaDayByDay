@@ -12,6 +12,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
 
+import com.jensen.draculadaybyday.entries.EntryText;
 import com.jensen.draculadaybyday.primitives.Tuple;
 
 public class EntryView extends AppCompatTextView {
@@ -30,44 +31,43 @@ public class EntryView extends AppCompatTextView {
         super(context, attrs, defStyle);
     }
 
-    public void setText(String text, InitialEnum initialEnum, FontEnum fontEnum, float fontSize) {
+    public void setText(EntryText entry, InitialEnum initialEnum, FontEnum fontEnum, float fontSize) {
+  /*
         if (!fontEnum.withInitial()) {
-            setTextWithoutInitial(text, fontEnum, fontSize);
+            setTextWithoutInitial(entry, fontEnum, fontSize);
         } else {
-            setTextWithInitial(text, initialEnum, fontEnum, fontSize);
-        }
+        */
+            setTextWithInitial(entry, initialEnum, fontEnum, fontSize, fontEnum.withInitial());
+//        }
     }
 
-    private void setTextWithoutInitial(String text, FontEnum fontEnum, float fontSize) {
+    /*
+    private void setTextWithoutInitial(EntryText entry, FontEnum fontEnum, float fontSize) {
         try {
             setTextSize(SIZE_UNIT, fontSize);
 
             String finalText = "";
 
             String dateStr = null;
-            Tuple<Integer, Integer> dateInterval = findDatePart(text);
-            if (dateInterval.fst != -1 && dateInterval.snd != -1) {
-                dateStr = text.substring(dateInterval.fst, dateInterval.snd) + "\n";
+            if (entry.hasDate()) {
+                dateStr = entry.getDate() + "\n";
                 finalText += dateStr;
             }
 
             String locationStr = null;
-            Tuple<Integer, Integer> locationInterval = findLocation(text);
-            if (locationInterval.fst != -1 && locationInterval.snd != -1) {
-                locationStr = text.substring(locationInterval.fst, locationInterval.snd) + "\n\n";
+            if (entry.hasLocation()) {
+                locationStr = entry.getLocation() + "\n\n";
                 finalText += locationStr;
             }
 
             String commentStr = null;
-            Tuple<Integer, Integer> commentInterval = findComment(text);
-            if (commentInterval.fst != -1 && commentInterval.snd != -1) {
-                commentStr = text.substring(commentInterval.fst, commentInterval.snd) + "\n\n";
+            if (entry.hasComment()) {
+                commentStr = entry.getComment() + "\n\n";
                 finalText += commentStr;
             }
 
-            Tuple<Integer, Integer> entryInterval = findEntry(text);
-            if (entryInterval.fst != -1 && entryInterval.snd != -1) {
-                finalText += text.substring(entryInterval.fst, entryInterval.snd);
+            if (entry.hasEntry()) {
+                finalText += entry.getMainEntry();
             }
 
             int currentIndex = 0;
@@ -92,37 +92,34 @@ public class EntryView extends AppCompatTextView {
             Log.d("ErrorInitial", e.getMessage());
         }
     }
+    */
 
-    private void setTextWithInitial(String text, InitialEnum initialFont, FontEnum basicFont, float fontSize) {
+    private void setTextWithInitial(EntryText entry, InitialEnum initialFont, FontEnum basicFont, float fontSize, boolean hasInitial) {
         try {
             setTextSize(SIZE_UNIT, fontSize);
 
             String finalText = "";
 
             String dateStr = null;
-            Tuple<Integer, Integer> dateInterval = findDatePart(text);
-            if (dateInterval.fst != -1 && dateInterval.snd != -1) {
-                dateStr = text.substring(dateInterval.fst, dateInterval.snd) + "\n";
+            if (entry.hasDate()) {
+                dateStr = entry.getDate() + "\n";
                 finalText += dateStr;
             }
 
             String locationStr = null;
-            Tuple<Integer, Integer> locationInterval = findLocation(text);
-            if (locationInterval.fst != -1 && locationInterval.snd != -1) {
-                locationStr = text.substring(locationInterval.fst, locationInterval.snd) + "\n\n";
+            if (entry.hasLocation()) {
+                locationStr = entry.getLocation() + "\n\n";
                 finalText += locationStr;
             }
 
             String commentStr = null;
-            Tuple<Integer, Integer> commentInterval = findComment(text);
-            if (commentInterval.fst != -1 && commentInterval.snd != -1) {
-                commentStr = text.substring(commentInterval.fst, commentInterval.snd) + "\n\n";
+            if (entry.hasComment()) {
+                commentStr = entry.getComment() + "\n\n";
                 finalText += commentStr;
             }
 
-            Tuple<Integer, Integer> entryInterval = findEntry(text);
-            if (entryInterval.fst != -1 && entryInterval.snd != -1) {
-                finalText += text.substring(entryInterval.fst, entryInterval.snd);
+            if (entry.hasEntry()) {
+                finalText += entry.getMainEntry();
             }
 
             int currentIndex = 0;
@@ -143,41 +140,18 @@ public class EntryView extends AppCompatTextView {
                 currentIndex += commentStr.length();
             }
 
-            SS.setSpan(new CustomTypefaceSpan("", getInitialType(initialFont)), currentIndex, currentIndex + 1, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
-            SS.setSpan(new RelativeSizeSpan(2.5f), currentIndex, currentIndex + 1, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+            if (hasInitial) {
+                SS.setSpan(new CustomTypefaceSpan("", getInitialType(initialFont)), currentIndex, currentIndex + 1, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+                SS.setSpan(new RelativeSizeSpan(2.5f), currentIndex, currentIndex + 1, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+                currentIndex++;
+            }
 
-            SS.setSpan(new CustomTypefaceSpan("", getMainBodyType(basicFont)), currentIndex + 1, finalText.length() - 1, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+            SS.setSpan(new CustomTypefaceSpan("", getMainBodyType(basicFont)), currentIndex, finalText.length() - 1, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
 
             setText(SS);
         } catch (Exception e) {
             Log.d("setTextWithInitial", e.getMessage());
         }
-    }
-
-    private Tuple<Integer, Integer> findDatePart(String text) {
-        return parseText("d", text);
-    }
-
-    private Tuple<Integer, Integer> findLocation(String text) {
-        return parseText("l", text);
-    }
-
-    private Tuple<Integer, Integer> findComment(String text) {
-        return parseText("c", text);
-    }
-
-    private Tuple<Integer, Integer> findEntry(String text) {
-        return parseText("e", text);
-    }
-
-    private Tuple<Integer, Integer> parseText(String indicator, String text) {
-        String start = String.format("[%s]", indicator);
-        String end = String.format("[/%s]", indicator);
-
-        int startIndex = text.indexOf(start) + start.length();
-        int endIndex = text.indexOf(end);
-
-        return new Tuple<>(startIndex, endIndex);
     }
 
     private Typeface makeFont(String fontName) {

@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.jensen.draculadaybyday.entries.EntryText;
 import com.jensen.draculadaybyday.presentation.EntryView;
 import com.jensen.draculadaybyday.presentation.FontEnum;
 import com.jensen.draculadaybyday.presentation.InitialEnum;
@@ -87,7 +88,7 @@ public class EntryViewPreference extends Preference {
 
     private void setValuesForEntryView() {
         if (entryView != null) {
-            entryView.setText(text, initialEnum, fontEnum, fontSize);
+            entryView.setText(new EntryText(text), initialEnum, fontEnum, fontSize);
         }
     }
 
@@ -110,7 +111,7 @@ public class EntryViewPreference extends Preference {
 
         fontSize = sp.getFloat(res.getString(R.string.pref_key_font_size), fontSize);
 
-        entryView.setText(text, initialEnum, fontEnum, fontSize);
+        entryView.setText(new EntryText(text), initialEnum, fontEnum, fontSize);
     }
 
     @Override

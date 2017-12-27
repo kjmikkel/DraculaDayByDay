@@ -117,7 +117,7 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
                 values.put(ENTRY_SEQ_NUM, entry.getStoryEntryNum());
                 values.put(CHAPTER, entry.getChapter());
                 values.put(PERSON, entry.getPerson());
-                values.put(TEXT, entry.getTextEntry());
+                values.put(TEXT, entry.getTextEntry().getRawText());
                 values.put(DATE, entry.getDate().toString(TIME_FORMAT));
                 values.put(TYPE, entry.getType().description);
                 values.put(UNLOCKED, 0);

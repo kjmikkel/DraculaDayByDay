@@ -47,58 +47,75 @@ public class DraculaPreferences extends AppCompatPreferenceActivity {
      * to reflect its new value.
      */
     private static final Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener = new Preference.OnPreferenceChangeListener() {
+        /**
+         * Listener that runs when the  value of a preference is updated
+         * @param preference the preference that is updated
+         * @param value the value of the preference
+         * @return whether or not the preference was successfully changed
+         */
         @Override
         public boolean onPreferenceChange(Preference preference, Object value) {
-            String stringValue = value.toString();
+            boolean returnValue = false;
 
-            if (preference instanceof ListPreference) {
-                // For list preferences, look up the correct display value in
-                // the preference's 'entries' list.
-                ListPreference listPreference = (ListPreference) preference;
-                int index = listPreference.findIndexOfValue(stringValue);
+            try {
+                String stringValue = value.toString();
 
-                // Set the summary to reflect the new value.
-                preference.setSummary(
-                        index >= 0
-                                ? listPreference.getEntries()[index]
-                                : null);
+                if (preference instanceof ListPreference) {
+                    // For list preferences, look up the correct display value in
+                    // the preference's 'entries' list.
+                    ListPreference listPreference = (ListPreference) preference;
+                    int index = listPreference.findIndexOfValue(stringValue);
 
-            } else if (preference instanceof RingtonePreference) {
-                // For ringtone preferences, look up the correct display value
-                // using RingtoneManager.
-                if (TextUtils.isEmpty(stringValue)) {
-                    // Empty values correspond to 'silent' (no ringtone).
-                    // FIXME: fix set the ringtone to silent
-                  //    preference.setSummary(R.string.pref_ringtone_silent);
+                    // Set the summary to reflect the new value.
+                    preference.setSummary(
+                            index >= 0
+                                    ? listPreference.getEntries()[index]
+                                    : null);
+
+                } else if (preference instanceof RingtonePreference) {
+                    // For ringtone preferences, look up the correct display value
+                    // using RingtoneManager.
+                    if (TextUtils.isEmpty(stringValue)) {
+                        // Empty values correspond to 'silent' (no ringtone).
+                        // FIXME: fix set the ringtone to silent
+                        //    preference.setSummary(R.string.pref_ringtone_silent);
+
+                    } else {
+                        Ringtone ringtone = RingtoneManager.getRingtone(
+                                preference.getContext(), Uri.parse(stringValue));
+
+                        if (ringtone == null) {
+                            // Clear the summary if there was a lookup error.
+                            preference.setSummary(null);
+                        } else {
+                            // Set the summary to reflect the new ringtone display
+                            // name.
+                            String name = ringtone.getTitle(preference.getContext());
+                            preference.setSummary(name);
+                        }
+                    }
 
                 } else {
-                    Ringtone ringtone = RingtoneManager.getRingtone(
-                            preference.getContext(), Uri.parse(stringValue));
-
-                    if (ringtone == null) {
-                        // Clear the summary if there was a lookup error.
-                        preference.setSummary(null);
-                    } else {
-                        // Set the summary to reflect the new ringtone display
-                        // name.
-                        String name = ringtone.getTitle(preference.getContext());
-                        preference.setSummary(name);
-                    }
+                    // For all other preferences, set the summary to the value's
+                    // simple string representation.
+                    preference.setSummary(stringValue);
                 }
 
-            } else {
-                // For all other preferences, set the summary to the value's
-                // simple string representation.
-                preference.setSummary(stringValue);
+                returnValue = true;
+            } catch (Exception e) {
+                Log.e("Preference Exception", e.getMessage());
             }
 
-            return true;
+            return returnValue;
         }
     };
 
     /**
      * Helper method to determine if the device has an extra-large screen. For
      * example, 10" tablets are extra-large.
+     *
+     * @param context the context of the application
+     * @return whether or not we are dealing with an extra large tablet
      */
     private static boolean isXLargeTablet(Context context) {
         return (context.getResources().getConfiguration().screenLayout
@@ -111,6 +128,8 @@ public class DraculaPreferences extends AppCompatPreferenceActivity {
      * preference title) is updated to reflect the value. The summary is also
      * immediately updated upon calling this method. The exact display format is
      * dependent on the type of preference.
+     *
+     * @param preference the preference that we want to bind to a value
      *
      * @see #sBindPreferenceSummaryToValueListener
      */
@@ -128,13 +147,17 @@ public class DraculaPreferences extends AppCompatPreferenceActivity {
 
     private static SharedPreferences prefs;
 
+    /**
+     * Called when the preferences are created
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setupActionBar();
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-        // Make the code that monitors if the preferences change
+        //TODO: Make the code that monitors if the preferences change
 
     }
 
@@ -150,6 +173,11 @@ public class DraculaPreferences extends AppCompatPreferenceActivity {
         }
     }
 
+    /**
+     * When an item is selected in the options menu
+     * @param item the item in the menu
+     * @return if the selection was successful
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -190,6 +218,7 @@ public class DraculaPreferences extends AppCompatPreferenceActivity {
                 || NotificationPreferenceFragment.class.getName().equals(fragmentName);
     }
 
+    //region General Preference
     /**
      * This fragment shows general preferences only. It is used when the
      * activity is showing a two-pane settings UI.
@@ -201,7 +230,15 @@ public class DraculaPreferences extends AppCompatPreferenceActivity {
         private static String howToExperienceKey = null;
         // Reset key
         private static String resetKey = null;
+
         private static final Preference.OnPreferenceChangeListener sExperiencePreferenceUpdate = new Preference.OnPreferenceChangeListener() {
+
+            /**
+             * What happens when you update the experience preference
+             * @param preference the preference object to update
+             * @param newValue the new value for the experience value
+             * @return whether the preference was updated successfully
+             */
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
                 SharedPreferences.Editor prefEditor = prefs.edit();
@@ -240,12 +277,21 @@ public class DraculaPreferences extends AppCompatPreferenceActivity {
             }
         };
 
+        /**
+         * Reset the time for the preferences
+         * @param prefEditor the preference editor
+         * @param context the context of the application
+         */
         private static void resetTime(SharedPreferences.Editor prefEditor, Context context) {
             DateTime today = DateConstructorUtility.todayInThePast();
             prefEditor.putLong(context.getString(R.string.pref_key_start_date_time), today.getMillis());
             prefEditor.apply();
         }
 
+        /**
+         * When we create the experience preference
+         * @param savedInstanceState
+         */
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -256,8 +302,6 @@ public class DraculaPreferences extends AppCompatPreferenceActivity {
             // to their values. When their values change, their summaries are
             // updated to reflect the new value, per the Android Design
             // guidelines.
-//            bindPreferenceSummaryToValue(findPreference("example_text"));
-//            bindPreferenceSummaryToValue(findPreference("example_list"));
             howToExperienceKey = getString(R.string.pref_key_how_to_experience);
             resetKey = getString(R.string.pref_reset_book_key);
 
@@ -267,7 +311,9 @@ public class DraculaPreferences extends AppCompatPreferenceActivity {
                     .setOnPreferenceChangeListener(sExperiencePreferenceUpdate);
         }
     }
+    //endregion
 
+    //region User Interface Preference
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class UserInterfacePreferenceFragment extends PreferenceFragment {
 
@@ -278,11 +324,16 @@ public class DraculaPreferences extends AppCompatPreferenceActivity {
         private static ListPreference fontPreference = null;
         private static ListPreference initialPreference = null;
 
-        // The name of the keys (which cannot be accessed during the preference update
+        // The name of the keys (which cannot be accessed during the preference update)
         private static String key_initial_type;
 
-        // The font key
         private static final Preference.OnPreferenceChangeListener sFontPreferenceUpdate = new Preference.OnPreferenceChangeListener() {
+            /**
+             * When the preference is changed
+             * @param preference the preference that is to be changed
+             * @param value the new value that is to be changed
+             * @return
+             */
             @Override
             public boolean onPreferenceChange(Preference preference, Object value) {
                 fontExample.updateToPreferences();
@@ -294,6 +345,10 @@ public class DraculaPreferences extends AppCompatPreferenceActivity {
             }
         };
 
+        /**
+         * Set whether or not the intial is enabled or disabled
+         * @param value the value of the type - the state is only set to true if the font contains "initial"
+         */
         private static void setEnabledStateOfInitial(String value) {
             if (fontPreference != null && initialPreference != null) {
                 String fontPreferenceValue = value.toLowerCase();
@@ -301,6 +356,10 @@ public class DraculaPreferences extends AppCompatPreferenceActivity {
             }
         }
 
+        /**
+         * Create the preference fragment
+         * @param savedInstanceState the saved instance state
+         */
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -321,10 +380,19 @@ public class DraculaPreferences extends AppCompatPreferenceActivity {
             setEnabledStateOfInitial(fontPreference.getValue());
         }
 
+        /**
+         * Register the preference id with the change listener
+         * @param prefId the id that will be registered with the listener
+         */
         private void setUpdatePref(int prefId) {
             findPreference(getString(prefId)).setOnPreferenceChangeListener(sFontPreferenceUpdate);
         }
 
+        /**
+         * When an item is selected in the options menu
+         * @param item the item in the menu
+         * @return if the selection was successful
+         */
         @Override
         public boolean onOptionsItemSelected(MenuItem item) {
             int id = item.getItemId();
@@ -335,7 +403,9 @@ public class DraculaPreferences extends AppCompatPreferenceActivity {
             return super.onOptionsItemSelected(item);
         }
     }
+    //endregion
 
+    //region Notification Preference
     /**
      * This fragment shows notification preferences only. It is used when the
      * activity is showing a two-pane settings UI.
@@ -355,15 +425,25 @@ public class DraculaPreferences extends AppCompatPreferenceActivity {
             // bindPreferenceSummaryToValue(findPreference("notifications_new_message_ringtone"));
         }
 
+        /**
+         * When the option is selected
+         * @param item the item that was selected
+         * @return whether or not it was correctly executed
+         */
         @Override
         public boolean onOptionsItemSelected(MenuItem item) {
+            boolean returnValue;
+
             int id = item.getItemId();
             if (id == android.R.id.home) {
                 startActivity(new Intent(getActivity(), DraculaPreferences.class));
-                //   NavUtils.navigateUpTo(this, new Intent(this, EntryListActivity.class));
-                return true;
+                returnValue = true;
+            } else {
+                returnValue = super.onOptionsItemSelected(item);
             }
-            return super.onOptionsItemSelected(item);
+
+            return returnValue;
         }
     }
+    //endregion
 }

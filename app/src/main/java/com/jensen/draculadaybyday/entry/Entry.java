@@ -1,5 +1,6 @@
 package com.jensen.draculadaybyday.entry;
 
+import com.jensen.draculadaybyday.entries.EntryText;
 import com.jensen.draculadaybyday.entries.EntryType;
 import com.jensen.draculadaybyday.entries.Person;
 
@@ -20,7 +21,7 @@ public class Entry {
     private final Person person;
 
     // The diary mEntry itself
-    private final String textEntry;
+    private final EntryText entryText;
 
     // The date the fragment was written
     private final DateTime date;
@@ -38,7 +39,11 @@ public class Entry {
 
         this.person = person;
 
-        this.textEntry = diaryText;
+        if (diaryText != null) {
+            this.entryText = new EntryText(diaryText);
+        } else {
+            this.entryText = null;
+        }
 
         this.date = date;
 
@@ -85,8 +90,8 @@ public class Entry {
         return person.toString();
     }
 
-    public String getTextEntry() {
-        return textEntry;
+    public EntryText getTextEntry() {
+        return entryText;
     }
 
     public DateTime getDate() {
