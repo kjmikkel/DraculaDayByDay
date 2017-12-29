@@ -1,6 +1,5 @@
 package com.jensen.draculadaybyday.entry;
 
-import com.jensen.draculadaybyday.entries.EntryText;
 import com.jensen.draculadaybyday.entries.EntryType;
 import com.jensen.draculadaybyday.entries.Person;
 

@@ -149,7 +149,7 @@ public class DraculaPreferences extends AppCompatPreferenceActivity {
 
     /**
      * Called when the preferences are created
-     * @param savedInstanceState
+     * @param savedInstanceState the saved instance from a previous state
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -290,7 +290,7 @@ public class DraculaPreferences extends AppCompatPreferenceActivity {
 
         /**
          * When we create the experience preference
-         * @param savedInstanceState
+         * @param savedInstanceState the saved instance from a previous state
          */
         @Override
         public void onCreate(Bundle savedInstanceState) {
@@ -328,20 +328,30 @@ public class DraculaPreferences extends AppCompatPreferenceActivity {
         private static String key_initial_type;
 
         private static final Preference.OnPreferenceChangeListener sFontPreferenceUpdate = new Preference.OnPreferenceChangeListener() {
+
             /**
+             }
              * When the preference is changed
              * @param preference the preference that is to be changed
              * @param value the new value that is to be changed
-             * @return
+             * @return whether the preference was changed or not
              */
             @Override
             public boolean onPreferenceChange(Preference preference, Object value) {
-                fontExample.updateToPreferences();
+                boolean returnValue = false;
 
-                if (preference.getKey().equals(key_initial_type)) {
-                    setEnabledStateOfInitial(value.toString());
+                try {
+                    fontExample.updateToPreferences();
+
+                    if (preference.getKey().equals(key_initial_type)) {
+                        setEnabledStateOfInitial(value.toString());
+                    }
+                    returnValue = true;
+                } catch(Exception e) {
+                    Log.e("PreferenceChange", e.getMessage());
                 }
-                return true;
+
+                return returnValue;
             }
         };
 

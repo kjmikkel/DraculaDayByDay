@@ -4,6 +4,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
+import com.jensen.draculadaybyday.sql_lite.DateConstraint;
+import com.jensen.draculadaybyday.sql_lite.DateConstructorUtility;
+
 import org.joda.time.DateTime;
 
 public class ExactDateConstraintArg extends DateConstraintArg {

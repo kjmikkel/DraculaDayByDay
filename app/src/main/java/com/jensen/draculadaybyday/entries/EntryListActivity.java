@@ -95,6 +95,7 @@ public class EntryListActivity extends AppCompatActivity {
 
     /**
      * Creates the options menu
+     *
      * @param menu - the menu object to inflate our layout into
      * @return Returns whether the menus were correctly created
      */
@@ -107,6 +108,7 @@ public class EntryListActivity extends AppCompatActivity {
 
     /**
      * Activate the menu option the user has selected
+     *
      * @param item - the item the user has selected
      * @return Returns whether or not the menu options ended successfully
      */
@@ -142,10 +144,11 @@ public class EntryListActivity extends AppCompatActivity {
     /**
      * Handles return values from other processes, such as when you set up the constraints and the
      * filter
+     *
      * @param requestCode - The code indicating from where the results come from
-     * @param resultCode - The code indicating whether the activity was successful or not in its
-     *                   action
-     * @param data - The data we are going to be working on
+     * @param resultCode  - The code indicating whether the activity was successful or not in its
+     *                    action
+     * @param data        - The data we are going to be working on
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -187,6 +190,7 @@ public class EntryListActivity extends AppCompatActivity {
 
     /**
      * Set up the basics when the activity is created
+     *
      * @param savedInstanceState - Used to restore a previus state
      */
     @Override
@@ -535,12 +539,13 @@ public class EntryListActivity extends AppCompatActivity {
 
     /**
      * Add a single entry to the database
-     * @param chapterNum - The chapter the entry belongs to
-     * @param person - The person who made the entry
+     *
+     * @param chapterNum    - The chapter the entry belongs to
+     * @param person        - The person who made the entry
      * @param diaryResource - The id of the resource file to
-     * @param month - The month of the entry
-     * @param date - the day of month of the entry
-     * @param type - The type of the entry (newspaper, diary, phonograph, etc.)
+     * @param month         - The month of the entry
+     * @param date          - the day of month of the entry
+     * @param type          - The type of the entry (newspaper, diary, phonograph, etc.)
      */
     private void addEntryToDatabase(int chapterNum, Person person, int diaryResource, @IntRange(from = 1, to = 12) int month, @IntRange(from = 1, to = 31) int date, EntryType type) {
         if (mFragmentEntryHandler != null) {
@@ -553,8 +558,9 @@ public class EntryListActivity extends AppCompatActivity {
 
     /**
      * Update the recycle view ot contain the correct entries
+     *
      * @param recyclerView - The recycleview that will be updated
-     * @param update - Whether we are to perform an actual update, or the initial update
+     * @param update       - Whether we are to perform an actual update, or the initial update
      */
     private void updateRecyclerView(@NonNull RecyclerView recyclerView, boolean update) {
         // We need today
@@ -585,6 +591,7 @@ public class EntryListActivity extends AppCompatActivity {
 
     /**
      * Read the string from the the resource file
+     *
      * @param id - The id of the resource file
      * @return The string the resource file contains
      */
@@ -623,7 +630,8 @@ public class EntryListActivity extends AppCompatActivity {
 
         /**
          * Crates the viewholder (the visual part of the recycleview
-         * @param parent - The parent the EntryViewHolder will be connected to
+         *
+         * @param parent   - The parent the EntryViewHolder will be connected to
          * @param viewType - Not used
          * @return The EntryViewHolder created
          */
@@ -637,7 +645,8 @@ public class EntryListActivity extends AppCompatActivity {
         /**
          * Get the views, set them up, and ensure we can load the individual entreis by clicking
          * on them
-         * @param holder - The holder that we use to display them
+         *
+         * @param holder   - The holder that we use to display them
          * @param position - The position we have clicked on
          */
         @Override
@@ -676,6 +685,7 @@ public class EntryListActivity extends AppCompatActivity {
 
         /**
          * Returns how many items there are available
+         *
          * @return - The number of available entries
          */
         @Override
@@ -693,6 +703,7 @@ public class EntryListActivity extends AppCompatActivity {
 
         /**
          * Add a list of items
+         *
          * @param list - The list to add
          */
         public void addAll(List<Entry> list) {

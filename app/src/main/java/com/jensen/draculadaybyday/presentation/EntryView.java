@@ -12,7 +12,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
 
-import com.jensen.draculadaybyday.entries.EntryText;
+import com.jensen.draculadaybyday.entry.EntryText;
 
 public class EntryView extends AppCompatTextView {
 

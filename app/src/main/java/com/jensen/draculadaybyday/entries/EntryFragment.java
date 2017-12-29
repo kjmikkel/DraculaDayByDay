@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.jensen.draculadaybyday.R;
 import com.jensen.draculadaybyday.entry.Entry;
+import com.jensen.draculadaybyday.entry.EntryText;
 import com.jensen.draculadaybyday.preferences.FontSizePickerPreference;
 import com.jensen.draculadaybyday.presentation.EntryView;
 import com.jensen.draculadaybyday.presentation.FontEnum;

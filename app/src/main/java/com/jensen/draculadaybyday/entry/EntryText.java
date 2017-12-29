@@ -1,16 +1,16 @@
-package com.jensen.draculadaybyday.entries;
+package com.jensen.draculadaybyday.entry;
 
 public class EntryText {
 
-    private String rawText;
+    private final String rawText;
 
-    private String date;
+    private final String date;
 
-    private String location;
+    private final String location;
 
-    private String comment;
+    private final String comment;
 
-    private String mainEntry;
+    private final String mainEntry;
 
     public EntryText(String text) {
         this.rawText = text;
