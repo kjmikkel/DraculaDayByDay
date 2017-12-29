@@ -63,10 +63,6 @@ import static com.jensen.draculadaybyday.entries.Person.SAMUEL_F_BILLINGTON;
 import static com.jensen.draculadaybyday.entries.Person.SISTER_AGATHA;
 import static com.jensen.draculadaybyday.entries.Person.WESTMINISTER_GAZETTE;
 
-// Type
-//region Dramatis personæ
-//endregion
-
 /**
  * An activity representing a list of Entries. This activity
  * has different presentations for handset and tablet-size devices. On
