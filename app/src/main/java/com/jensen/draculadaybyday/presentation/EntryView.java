@@ -13,7 +13,6 @@ import android.util.Log;
 import android.util.TypedValue;
 
 import com.jensen.draculadaybyday.entries.EntryText;
-import com.jensen.draculadaybyday.primitives.Tuple;
 
 public class EntryView extends AppCompatTextView {
 
@@ -32,69 +31,10 @@ public class EntryView extends AppCompatTextView {
     }
 
     public void setText(EntryText entry, InitialEnum initialEnum, FontEnum fontEnum, float fontSize) {
-  /*
-        if (!fontEnum.withInitial()) {
-            setTextWithoutInitial(entry, fontEnum, fontSize);
-        } else {
-        */
-            setTextWithInitial(entry, initialEnum, fontEnum, fontSize, fontEnum.withInitial());
-//        }
+        setLocalText(entry, initialEnum, fontEnum, fontSize);
     }
 
-    /*
-    private void setTextWithoutInitial(EntryText entry, FontEnum fontEnum, float fontSize) {
-        try {
-            setTextSize(SIZE_UNIT, fontSize);
-
-            String finalText = "";
-
-            String dateStr = null;
-            if (entry.hasDate()) {
-                dateStr = entry.getDate() + "\n";
-                finalText += dateStr;
-            }
-
-            String locationStr = null;
-            if (entry.hasLocation()) {
-                locationStr = entry.getLocation() + "\n\n";
-                finalText += locationStr;
-            }
-
-            String commentStr = null;
-            if (entry.hasComment()) {
-                commentStr = entry.getComment() + "\n\n";
-                finalText += commentStr;
-            }
-
-            if (entry.hasEntry()) {
-                finalText += entry.getMainEntry();
-            }
-
-            int currentIndex = 0;
-            SpannableStringBuilder SS = new SpannableStringBuilder(finalText);
-            if (dateStr != null) {
-                SS.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER), currentIndex, currentIndex + dateStr.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
-                currentIndex += dateStr.length();
-            }
-            if (locationStr != null) {
-                SS.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER), currentIndex, currentIndex + locationStr.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
-                currentIndex += locationStr.length();
-            }
-
-            if (commentStr != null) {
-                SS.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER), currentIndex, currentIndex + commentStr.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
-            }
-
-            SS.setSpan(new CustomTypefaceSpan("", getMainBodyType(fontEnum)), 0, finalText.length() - 1, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
-
-            setText(SS);
-        } catch (Exception e) {
-            Log.d("ErrorInitial", e.getMessage());
-        }
-    }
-    */
-
-    private void setTextWithInitial(EntryText entry, InitialEnum initialFont, FontEnum basicFont, float fontSize, boolean hasInitial) {
+    private void setLocalText(EntryText entry, InitialEnum initialFont, FontEnum basicFont, float fontSize) {
         try {
             setTextSize(SIZE_UNIT, fontSize);
 
@@ -140,7 +80,7 @@ public class EntryView extends AppCompatTextView {
                 currentIndex += commentStr.length();
             }
 
-            if (hasInitial) {
+            if (basicFont.hasInitial()) {
                 SS.setSpan(new CustomTypefaceSpan("", getInitialType(initialFont)), currentIndex, currentIndex + 1, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
                 SS.setSpan(new RelativeSizeSpan(2.5f), currentIndex, currentIndex + 1, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
                 currentIndex++;
@@ -150,7 +90,7 @@ public class EntryView extends AppCompatTextView {
 
             setText(SS);
         } catch (Exception e) {
-            Log.d("setTextWithInitial", e.getMessage());
+            Log.d("setLocalText", e.getMessage());
         }
     }
 
