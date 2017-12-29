@@ -11,11 +11,11 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.jensen.draculadaybyday.R;
 import com.jensen.draculadaybyday.entries.EntryText;
 import com.jensen.draculadaybyday.presentation.EntryView;
 import com.jensen.draculadaybyday.presentation.FontEnum;
 import com.jensen.draculadaybyday.presentation.InitialEnum;
-import com.jensen.draculadaybyday.R;
 
 public class EntryViewPreference extends Preference {
     private EntryView entryView;

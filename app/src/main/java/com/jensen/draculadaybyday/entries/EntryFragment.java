@@ -10,13 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.jensen.draculadaybyday.R;
 import com.jensen.draculadaybyday.entry.Entry;
+import com.jensen.draculadaybyday.preferences.FontSizePickerPreference;
 import com.jensen.draculadaybyday.presentation.EntryView;
 import com.jensen.draculadaybyday.presentation.FontEnum;
 import com.jensen.draculadaybyday.presentation.InitialEnum;
-import com.jensen.draculadaybyday.R;
 import com.jensen.draculadaybyday.sql_lite.FragmentEntryDatabaseHandler;
-import com.jensen.draculadaybyday.preferences.FontSizePickerPreference;
 
 /**
  * A fragment representing a single Entry detail screen.

@@ -13,11 +13,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import com.jensen.draculadaybyday.presentation.AboutPage;
-import com.jensen.draculadaybyday.entry.EntryCollectionPagerAdapter;
 import com.jensen.draculadaybyday.R;
-import com.jensen.draculadaybyday.sql_lite.FragmentEntryDatabaseHandler;
+import com.jensen.draculadaybyday.entry.EntryCollectionPagerAdapter;
 import com.jensen.draculadaybyday.preferences.DraculaPreferences;
+import com.jensen.draculadaybyday.presentation.AboutPage;
+import com.jensen.draculadaybyday.sql_lite.FragmentEntryDatabaseHandler;
 
 /**
  * An activity representing a single Entry detail screen. This

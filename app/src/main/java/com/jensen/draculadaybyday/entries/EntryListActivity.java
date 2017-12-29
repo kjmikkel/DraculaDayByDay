@@ -19,15 +19,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.jensen.draculadaybyday.filter.FilterActivity;
-import com.jensen.draculadaybyday.presentation.AboutPage;
-import com.jensen.draculadaybyday.entry.Entry;
 import com.jensen.draculadaybyday.R;
+import com.jensen.draculadaybyday.entry.Entry;
+import com.jensen.draculadaybyday.filter.FilterActivity;
+import com.jensen.draculadaybyday.preferences.DraculaPreferences;
+import com.jensen.draculadaybyday.presentation.AboutPage;
 import com.jensen.draculadaybyday.presentation.DialogCloseListener;
 import com.jensen.draculadaybyday.presentation.HowToExperienceDialog;
 import com.jensen.draculadaybyday.sql_lite.DateConstructorUtility;
 import com.jensen.draculadaybyday.sql_lite.FragmentEntryDatabaseHandler;
-import com.jensen.draculadaybyday.preferences.DraculaPreferences;
 import com.jensen.draculadaybyday.sql_lite.SqlConstraintFactory;
 import com.jensen.draculadaybyday.sql_lite.SqlSortFactory;
 
@@ -41,15 +41,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
 
-// Type
 import static com.jensen.draculadaybyday.entries.EntryType.DIARY_ENTRY;
 import static com.jensen.draculadaybyday.entries.EntryType.LETTER;
 import static com.jensen.draculadaybyday.entries.EntryType.NEWSPAPER;
 import static com.jensen.draculadaybyday.entries.EntryType.NOTE;
 import static com.jensen.draculadaybyday.entries.EntryType.PHONOGRAPH;
 import static com.jensen.draculadaybyday.entries.EntryType.TELEGRAM;
-
-//region Dramatis personæ
 import static com.jensen.draculadaybyday.entries.Person.ABRAHAM_VAN_HELSING;
 import static com.jensen.draculadaybyday.entries.Person.ARTHUR_HOLMWOOD;
 import static com.jensen.draculadaybyday.entries.Person.DR_SEWARD;
@@ -65,6 +62,9 @@ import static com.jensen.draculadaybyday.entries.Person.QUINCEY_MORRIS;
 import static com.jensen.draculadaybyday.entries.Person.SAMUEL_F_BILLINGTON;
 import static com.jensen.draculadaybyday.entries.Person.SISTER_AGATHA;
 import static com.jensen.draculadaybyday.entries.Person.WESTMINISTER_GAZETTE;
+
+// Type
+//region Dramatis personæ
 //endregion
 
 /**

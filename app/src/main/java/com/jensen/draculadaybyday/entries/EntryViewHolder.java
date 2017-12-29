@@ -8,8 +8,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.jensen.draculadaybyday.entry.Entry;
 import com.jensen.draculadaybyday.R;
+import com.jensen.draculadaybyday.entry.Entry;
 import com.jensen.draculadaybyday.presentation.SquareImageView;
 
 public class EntryViewHolder extends RecyclerView.ViewHolder {

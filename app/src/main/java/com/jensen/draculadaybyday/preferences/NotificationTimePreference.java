@@ -16,8 +16,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import com.jensen.draculadaybyday.primitives.Tuple;
 import com.jensen.draculadaybyday.R;
+import com.jensen.draculadaybyday.primitives.Tuple;
 
 import java.util.Locale;
 
