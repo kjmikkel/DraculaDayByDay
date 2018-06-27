@@ -1,5 +1,5 @@
 # DraculaDayByDay
-An Android app to experience Bram Stokers work in "real time".
+An Android app to experience Bram Stokers work in same tempo as the characters in the novel.
 
 Dracula by Bram Stoker is, amongst other things, an epistolary novel - that is to say, a novel where the story is told through diary entries, newspaper articles, letters, and so forth. In the case of Dracula, all the entries are dated.
 
