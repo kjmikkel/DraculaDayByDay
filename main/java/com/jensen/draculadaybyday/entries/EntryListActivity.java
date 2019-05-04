@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import com.jensen.draculadaybyday.R;
 import com.jensen.draculadaybyday.entry.Entry;
 import com.jensen.draculadaybyday.filter.FilterActivity;
+import com.jensen.draculadaybyday.notification.NotificationUtils;
 import com.jensen.draculadaybyday.preferences.DraculaPreferences;
 import com.jensen.draculadaybyday.presentation.AboutPage;
 import com.jensen.draculadaybyday.presentation.DialogCloseListener;
@@ -30,15 +31,12 @@ import com.jensen.draculadaybyday.sql_lite.DateConstructorUtility;
 import com.jensen.draculadaybyday.sql_lite.FragmentEntryDatabaseHandler;
 import com.jensen.draculadaybyday.sql_lite.SqlConstraintFactory;
 import com.jensen.draculadaybyday.sql_lite.SqlSortFactory;
-
-import net.danlew.android.joda.JodaTimeAndroid;
-
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeConstants;
+import com.jensen.draculadaybyday.time.DateTimeConstants;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static com.jensen.draculadaybyday.entries.EntryType.DIARY_ENTRY;
@@ -86,6 +84,8 @@ public class EntryListActivity extends AppCompatActivity {
     private int entrySequenceNum;
 
     private SharedPreferences prefs = null;
+
+    private NotificationUtils mNotificationUtils;
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -196,12 +196,12 @@ public class EntryListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        JodaTimeAndroid.init(this);
-
         //region Preferences
         setDefaultPreferences();
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         //endregion
+
+        mNotificationUtils = new NotificationUtils(this);
 
         setContentView(R.layout.activity_entry_list);
     }
@@ -549,7 +549,7 @@ public class EntryListActivity extends AppCompatActivity {
      */
     private void addEntryToDatabase(int chapterNum, Person person, int diaryResource, @IntRange(from = 1, to = 12) int month, @IntRange(from = 1, to = 31) int date, EntryType type) {
         if (mFragmentEntryHandler != null) {
-            DateTime dateTime = DateConstructorUtility.getDateTime(month, date);
+            LocalDateTime dateTime = DateConstructorUtility.getDateTime(month, date);
 
             mFragmentEntryHandler.addEntry(new Entry(entrySequenceNum, chapterNum, person, getStringFromId(diaryResource), dateTime, type, true));
             entrySequenceNum++;
@@ -564,7 +564,7 @@ public class EntryListActivity extends AppCompatActivity {
      */
     private void updateRecyclerView(@NonNull RecyclerView recyclerView, boolean update) {
         // We need today
-        DateTime dateTime = DateConstructorUtility.getUnlockDate(this);
+        LocalDateTime dateTime = DateConstructorUtility.getUnlockDate(this);
 
         // Start with locking all entries
         String resetKey = getString(R.string.pref_reset_book_key);

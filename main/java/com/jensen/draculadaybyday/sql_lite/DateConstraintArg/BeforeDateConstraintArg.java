@@ -4,13 +4,13 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
-import org.joda.time.DateTime;
+import java.time.LocalDateTime;
 
 public class BeforeDateConstraintArg extends BeforeAfterDateConstraintArg {
 
-    public BeforeDateConstraintArg(DateTime dateTime, boolean inclusive) {
+    public BeforeDateConstraintArg(LocalDateTime localDateTime, boolean inclusive) {
         super(inclusive);
-        this.dateTime = dateTime;
+        this.localDateTime = localDateTime;
     }
 
     public String getSQLText() {
@@ -47,7 +47,7 @@ public class BeforeDateConstraintArg extends BeforeAfterDateConstraintArg {
 
     public void writeToParcel(Parcel out, int flags) {
         try {
-            out.writeSerializable(this.dateTime);
+            out.writeSerializable(this.localDateTime);
             out.writeInt(this.inclusive ? 1 : 0);
         } catch (Exception e) {
             Log.d("DateConstraint", e.getMessage());
@@ -55,7 +55,7 @@ public class BeforeDateConstraintArg extends BeforeAfterDateConstraintArg {
     }
 
     private BeforeDateConstraintArg(Parcel in) {
-        this.dateTime = (DateTime) in.readSerializable();
+        this.localDateTime = (LocalDateTime) in.readSerializable();
         this.inclusive = in.readInt() == 1;
     }
     //endregion

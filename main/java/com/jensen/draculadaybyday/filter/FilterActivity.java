@@ -39,10 +39,8 @@ import com.jensen.draculadaybyday.sql_lite.SortValue;
 import com.jensen.draculadaybyday.sql_lite.SqlConstraintFactory;
 import com.jensen.draculadaybyday.sql_lite.SqlSortFactory;
 
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
-
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -68,7 +66,7 @@ public class FilterActivity extends AppCompatActivity {
     //endregion
 
     private final List<Integer> idList = new ArrayList<>();
-    private static final DateTimeFormatter DATE_FORMAT = DateTimeFormat.forPattern("dd/MM/yyyy").withLocale(Locale.getDefault());
+    private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.getDefault());
 
     @SuppressWarnings("ConstantConditions")
     @Override
@@ -89,14 +87,14 @@ public class FilterActivity extends AppCompatActivity {
             }
 
             //region Filter layout
-            final Spinner dateSpinner = (Spinner)findViewById(R.id.filter_date_spinner);
+            final Spinner dateSpinner = findViewById(R.id.filter_date_spinner);
 
             List<DateConstraintArg> dateConstraints = constraintFactory.getDateConstraintArgs();
             final ArrayAdapter<DateConstraintArg> dateAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, dateConstraints);
             dateSpinner.setAdapter(dateAdapter);
             AdapterView.OnItemSelectedListener dateSpinnerSelectedListener = new AdapterView.OnItemSelectedListener() {
-                private DateTime getDateTime(DateConstraintArg dateArg, boolean secondButton) {
-                    DateTime date;
+                private LocalDateTime getDateTime(DateConstraintArg dateArg, boolean secondButton) {
+                    LocalDateTime date;
                     if (!secondButton) {
                         date = dateArg.getDate();
                     } else {
@@ -106,7 +104,7 @@ public class FilterActivity extends AppCompatActivity {
                     return date;
                 }
 
-                private void setDateTime(DateConstraintArg dateArg, DateTime dateTime, boolean secondButton) {
+                private void setDateTime(DateConstraintArg dateArg, LocalDateTime dateTime, boolean secondButton) {
                     if (!secondButton) {
                         dateArg.setDate(dateTime);
                     } else {
@@ -116,9 +114,9 @@ public class FilterActivity extends AppCompatActivity {
                 }
 
                 private void removeOldView() {
-                    RelativeLayout rl = (RelativeLayout)findViewById(R.id.set_date);
+                    RelativeLayout rl = findViewById(R.id.set_date);
                     if (rl != null) {
-                        RelativeLayout parentView = (RelativeLayout)findViewById(R.id.date_rl_view);
+                        RelativeLayout parentView = findViewById(R.id.date_rl_view);
                         parentView.removeView(rl);
                     }
                 }
@@ -128,28 +126,28 @@ public class FilterActivity extends AppCompatActivity {
                         DatePickerDialog.OnDateSetListener setListener = new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                                DateTime date;
+                                LocalDateTime date;
                                 DateConstraintArg dateArg = (DateConstraintArg) dateButton.getTag();
 
                                 date = DateConstructorUtility.getDateTime(year, monthOfYear + 1, dayOfMonth);
 
-                                dateButton.setText(date.toString(DATE_FORMAT));
+                                dateButton.setText(date.format(DATE_FORMAT));
                                 setDateTime(dateArg, date, secondButton);
                             }
                         };
 
                         DateConstraintArg currentDateArg = (DateConstraintArg)dateButton.getTag();
-                        DateTime currentDate = getDateTime(currentDateArg, secondButton);
+                        LocalDateTime currentDate = getDateTime(currentDateArg, secondButton);
 
                         DatePickerDialog dlg = new DatePickerDialog(FilterActivity.this, setListener,
                                 currentDate.getYear(),
-                                currentDate.getMonthOfYear() - 1,
+                                currentDate.getMonth().ordinal() - 1,
                                 currentDate.getDayOfMonth()) {
                             @Override
                             protected void onCreate(Bundle savedInstanceState) {
                                 super.onCreate(savedInstanceState);
                                 DatePicker dp = this.getDatePicker();
-                                dp.setMinDate(DateConstructorUtility.initialDate.getMillis());
+                                dp.setMinDate(DateConstructorUtility.getMilliseconds(DateConstructorUtility.initialDate));
                             }
                         };
 
@@ -162,16 +160,16 @@ public class FilterActivity extends AppCompatActivity {
 
                 private void addSingleDate(int labelTextId, final DateConstraintArg dateArg) {
                     LayoutInflater layoutInflator = LayoutInflater.from(getBaseContext());
-                    RelativeLayout parentLayout = (RelativeLayout)findViewById(R.id.date_rl_view);
+                    RelativeLayout parentLayout = findViewById(R.id.date_rl_view);
 
                     RelativeLayout dateLayout = (RelativeLayout) layoutInflator.inflate(R.layout.single_date, parentLayout, false);
-                    TextView textView = (TextView)dateLayout.findViewById(R.id.single_label);
+                    TextView textView = dateLayout.findViewById(R.id.single_label);
                     textView.setText(getResources().getString(labelTextId));
 
-                    final Button dateButton = (Button)dateLayout.findViewById(R.id.single_button);
-                    final DateTime initialDay = dateArg.getDate();
+                    final Button dateButton = dateLayout.findViewById(R.id.single_button);
+                    final LocalDateTime initialDay = dateArg.getDate();
 
-                    dateButton.setText(initialDay.toString(DATE_FORMAT));
+                    dateButton.setText(initialDay.format(DATE_FORMAT));
                     dateButton.setTag(dateArg);
                     dateButton.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -186,7 +184,7 @@ public class FilterActivity extends AppCompatActivity {
                     layoutParams.addRule(RelativeLayout.BELOW, R.id.filter_date_spinner);
                     parentLayout.addView(dateLayout, layoutParams);
 
-                    ToggleButton inclusiveButton = (ToggleButton)findViewById(R.id.inclusive_button);
+                    ToggleButton inclusiveButton = findViewById(R.id.inclusive_button);
                     if (dateArg instanceof BeforeAfterDateConstraintArg) {
                         final BeforeAfterDateConstraintArg date = (BeforeAfterDateConstraintArg)dateArg;
                         inclusiveButton.setVisibility(View.VISIBLE);
@@ -206,12 +204,12 @@ public class FilterActivity extends AppCompatActivity {
 
                 private void addBetweenDates(BetweenDateConstraintArg between) {
                     LayoutInflater layoutInflator = LayoutInflater.from(getBaseContext());
-                    RelativeLayout parentLayout = (RelativeLayout)findViewById(R.id.date_rl_view);
+                    RelativeLayout parentLayout = findViewById(R.id.date_rl_view);
 
                     RelativeLayout dateLayout = (RelativeLayout) layoutInflator.inflate(R.layout.between_dates, parentLayout, false);
 
-                    final Button startDateButton = (Button) dateLayout.findViewById(R.id.between_dates_start_button);
-                    startDateButton.setText(between.getDate().toString(DATE_FORMAT));
+                    final Button startDateButton =  dateLayout.findViewById(R.id.between_dates_start_button);
+                    startDateButton.setText(between.getDate().format(DATE_FORMAT));
                     startDateButton.setTag(between);
                     startDateButton.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -220,8 +218,8 @@ public class FilterActivity extends AppCompatActivity {
                         }
                     });
 
-                    final Button endDateButton = (Button) dateLayout.findViewById(R.id.between_dates_end_button);
-                    endDateButton.setText(between.getSecondDate().toString(DATE_FORMAT));
+                    final Button endDateButton = dateLayout.findViewById(R.id.between_dates_end_button);
+                    endDateButton.setText(between.getSecondDate().format(DATE_FORMAT));
                     endDateButton.setTag(between);
                     endDateButton.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -278,11 +276,11 @@ public class FilterActivity extends AppCompatActivity {
             //endregion
 
             //region Sort layout
-            RelativeLayout topRl = (RelativeLayout)findViewById(R.id.sort_spinner_1);
+            RelativeLayout topRl = findViewById(R.id.sort_spinner_1);
             int topRlId = topRl.getId();
             idList.add(topRlId);
 
-            final ImageView sortOrderView = (ImageView)findViewById(R.id.sort_order_button) ;
+            final ImageView sortOrderView = findViewById(R.id.sort_order_button) ;
             sortOrderView.setTag(true);
             final View.OnClickListener clickToggle = new View.OnClickListener() {
                 @Override
@@ -302,7 +300,7 @@ public class FilterActivity extends AppCompatActivity {
             sortOrderView.setOnClickListener(clickToggle);
 
             // Remove button - As long as there is only one instance of the sort values, you cannot remove it
-            final Button removeButton = (Button)topRl.findViewById(R.id.sort_spinner_button);
+            final Button removeButton = topRl.findViewById(R.id.sort_spinner_button);
             removeButton.setTag(topRlId);
             removeButton.setEnabled(false);
 
@@ -315,7 +313,7 @@ public class FilterActivity extends AppCompatActivity {
                         // Find and remove the view
                         int layoutId = (Integer) v.getTag();
 
-                        RelativeLayout rl = (RelativeLayout) findViewById(layoutId);
+                        RelativeLayout rl =  findViewById(layoutId);
                         ((ViewGroup) rl.getParent()).removeView(rl);
 
                         // We need to ensure that the relative layout is not messed up
@@ -335,7 +333,7 @@ public class FilterActivity extends AppCompatActivity {
                                 int idAbove = idList.get(idAboveIndex);
                                 int idBelow = idList.get(idBelowIndex);
 
-                                RelativeLayout rlBelow = (RelativeLayout)findViewById(idBelow);
+                                RelativeLayout rlBelow = findViewById(idBelow);
 
                                 RelativeLayout.LayoutParams aboveLayoutParams
                                         = new RelativeLayout.LayoutParams(
@@ -361,7 +359,7 @@ public class FilterActivity extends AppCompatActivity {
             removeButton.setOnClickListener(clickRemoveListener);
 
             // Add button
-            Button addButton = (Button)findViewById(R.id.sort_add_button);
+            Button addButton = findViewById(R.id.sort_add_button);
             addButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -370,7 +368,7 @@ public class FilterActivity extends AppCompatActivity {
                     int newSortId = lastSortId + 1;
 
                     // Get the viewgroup of the last item
-                    RelativeLayout parentLayout = (RelativeLayout)findViewById(R.id.sort_top_rl);
+                    RelativeLayout parentLayout = findViewById(R.id.sort_top_rl);
 
                     LayoutInflater layoutInflator = LayoutInflater.from(getBaseContext());
                     RelativeLayout rlNew = (RelativeLayout) layoutInflator.inflate(R.layout.sort_item, parentLayout, false);
@@ -404,7 +402,7 @@ public class FilterActivity extends AppCompatActivity {
             //endregion
 
             //region cancel/OK button
-            final Button cancelButton = (Button)findViewById(R.id.cancel_button);
+            final Button cancelButton = findViewById(R.id.cancel_button);
             cancelButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -414,7 +412,7 @@ public class FilterActivity extends AppCompatActivity {
                 }
             });
 
-            Button okButton = (Button)findViewById(R.id.ok_button);
+            Button okButton = findViewById(R.id.ok_button);
             okButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -424,12 +422,12 @@ public class FilterActivity extends AppCompatActivity {
                     SqlConstraintFactory constraintFactory = new SqlConstraintFactory();
 
                     //region Date
-                    Spinner dateSpinner = (Spinner)findViewById(R.id.filter_date_spinner);
+                    Spinner dateSpinner = findViewById(R.id.filter_date_spinner);
                     constraintFactory.setDateConstraint((DateConstraintArg) dateSpinner.getSelectedItem());
                     //endregion
 
                     //region Person
-                    MultiSpinner personSpinner = (MultiSpinner)findViewById(R.id.filter_person_spinner);
+                    MultiSpinner personSpinner = findViewById(R.id.filter_person_spinner);
                     List<String> persons = personSpinner.getSelected();
 
                     if(!persons.get(0).equals("All")) {
@@ -438,7 +436,7 @@ public class FilterActivity extends AppCompatActivity {
                     //endregion
 
                     //region Type
-                    MultiSpinner typeSpinner = (MultiSpinner)findViewById(R.id.filter_type_spinner);
+                    MultiSpinner typeSpinner = findViewById(R.id.filter_type_spinner);
                     List<String> types = typeSpinner.getSelected();
 
                     if (!types.get(0).equals("All")) {
@@ -447,7 +445,7 @@ public class FilterActivity extends AppCompatActivity {
                     //endregion
 
                     //region Chapters
-                    MultiSpinner chapterSpinner = (MultiSpinner)findViewById(R.id.filter_chapter_spinner);
+                    MultiSpinner chapterSpinner = findViewById(R.id.filter_chapter_spinner);
                     List<String> chapters = chapterSpinner.getSelected();
 
                     if (!chapters.get(0).equals("All")) {
@@ -456,7 +454,7 @@ public class FilterActivity extends AppCompatActivity {
                     //endregion
 
                     //region Read status
-                    Spinner readSpinner = (Spinner)findViewById(R.id.filter_read_spinner);
+                    Spinner readSpinner = findViewById(R.id.filter_read_spinner);
                     switch (readSpinner.getSelectedItemPosition()) {
                         // 0 is both read and unread
                         case 1:
@@ -520,7 +518,7 @@ public class FilterActivity extends AppCompatActivity {
             SqlConstraintFactory constraintFactory = (SqlConstraintFactory) intent.getExtras().get(CONSTRAINTS_INTENT_KEY);
             //region Filter
 
-            Spinner dateSpinner = (Spinner) findViewById(R.id.filter_date_spinner);
+            Spinner dateSpinner = findViewById(R.id.filter_date_spinner);
 
             //region Date
             final DateConstraint dateConstraint = (DateConstraint) constraintFactory.getConstraint(SqlConstraintFactory.DATE);
@@ -539,21 +537,21 @@ public class FilterActivity extends AppCompatActivity {
             //region Type constraints
             Constraint typeConstraints = constraintFactory.getConstraint(SqlConstraintFactory.TYPE);
             if (typeConstraints.hasConstraints()) {
-                MultiSpinner typeMultiSpin = (MultiSpinner) findViewById(R.id.filter_type_spinner);
+                MultiSpinner typeMultiSpin = findViewById(R.id.filter_type_spinner);
                 typeMultiSpin.setSelectedEntries(typeConstraints.getConstraintSqlValues());
             }
             //endregion
             //region Person constraints
             Constraint personConstraints = constraintFactory.getConstraint(SqlConstraintFactory.PERSON);
             if (personConstraints.hasConstraints()) {
-                MultiSpinner personMultiSpin = (MultiSpinner)findViewById(R.id.filter_person_spinner);
+                MultiSpinner personMultiSpin = findViewById(R.id.filter_person_spinner);
                 personMultiSpin.setSelectedEntries(personConstraints.getConstraintSqlValues());
             }
             //endregion
             //region Chapter constraints
             Constraint chapterConstraints = constraintFactory.getConstraint(SqlConstraintFactory.CHAPTER);
             if (chapterConstraints.hasConstraints()) {
-                MultiSpinner chapterSpinner = (MultiSpinner)findViewById(R.id.filter_chapter_spinner);
+                MultiSpinner chapterSpinner = findViewById(R.id.filter_chapter_spinner);
                 chapterSpinner.setSelectedEntries(chapterConstraints.getConstraintSqlValues());
             }
             //endregion
@@ -562,7 +560,7 @@ public class FilterActivity extends AppCompatActivity {
             //region Read or unread
             Constraint readConstraints = constraintFactory.getConstraint(SqlConstraintFactory.READ);
             if (readConstraints.hasConstraints()) {
-                Spinner spinner = (Spinner) findViewById(R.id.filter_read_spinner);
+                Spinner spinner = findViewById(R.id.filter_read_spinner);
                 SpinnerAdapter typeSpinnerAdapter = spinner.getAdapter();
                 for (int i = 0; i < typeSpinnerAdapter.getCount(); i++) {
                     if (readConstraints.getConstraintSqlValues().get(0).equals(typeSpinnerAdapter.getItem(i))) {
@@ -578,7 +576,7 @@ public class FilterActivity extends AppCompatActivity {
             SqlSortFactory sortFactory = (SqlSortFactory) intent.getExtras().get(SORTING_INTENT_KEY);
             List<SortValue> sortValues = sortFactory.getSortingOrderList();
 
-            Button addButton = (Button)findViewById(R.id.sort_add_button);
+            Button addButton = findViewById(R.id.sort_add_button);
 
             // Take account of the fact that we are sorting
             for(int i = 0; i < sortValues.size() - 1; i++) {
@@ -612,25 +610,25 @@ public class FilterActivity extends AppCompatActivity {
 
         //region Filter
         //region Date spinner
-        Spinner dateSpinner = (Spinner)findViewById(R.id.filter_date_spinner);
+        Spinner dateSpinner = findViewById(R.id.filter_date_spinner);
         int dateSelectedPosition = dateSpinner.getSelectedItemPosition();
 
         outState.putInt(DATE_SELECTED_POS, dateSelectedPosition);
         if (1 <= dateSelectedPosition && dateSelectedPosition <= 3) {
-            Button dateButton = (Button) findViewById(R.id.single_button);
+            Button dateButton = findViewById(R.id.single_button);
             outState.putString(DATE_TEXT, (String) dateButton.getText());
 
-            DateTime cal = (DateTime) dateButton.getTag();
+            LocalDateTime cal = (LocalDateTime) dateButton.getTag();
             outState.putSerializable(DATE_CAL, cal);
         } else if (dateSelectedPosition == 4) {
-            Button dateButtonStart = (Button) findViewById(R.id.between_dates_start_button);
-            Button dateButtonEnd = (Button) findViewById(R.id.between_dates_end_button);
+            Button dateButtonStart = findViewById(R.id.between_dates_start_button);
+            Button dateButtonEnd = findViewById(R.id.between_dates_end_button);
 
             outState.putString(DATE_START_TEXT, (String)dateButtonStart.getText());
             outState.putString(DATE_END_TEXT, (String)dateButtonEnd.getText());
 
-            DateTime calStart = (DateTime) dateButtonStart.getTag();
-            DateTime calEnd = (DateTime) dateButtonEnd.getTag();
+            LocalDateTime calStart = (LocalDateTime) dateButtonStart.getTag();
+            LocalDateTime calEnd = (LocalDateTime) dateButtonEnd.getTag();
 
             outState.putSerializable(DATE_CAL_START, calStart);
             outState.putSerializable(DATE_CAL_END, calEnd);
@@ -638,25 +636,25 @@ public class FilterActivity extends AppCompatActivity {
         //endregion
 
         //region Persons
-        MultiSpinner personSpinner = (MultiSpinner)findViewById(R.id.filter_person_spinner);
+        MultiSpinner personSpinner = findViewById(R.id.filter_person_spinner);
         List<String> persons = personSpinner.getSelected();
         outState.putStringArrayList(PERSONS, new ArrayList<>(persons));
         //endregion
 
         //region Types
-        MultiSpinner typeSpinner = (MultiSpinner)findViewById(R.id.filter_type_spinner);
+        MultiSpinner typeSpinner = findViewById(R.id.filter_type_spinner);
         List<String> types = typeSpinner.getSelected();
         outState.putStringArrayList(TYPES, new ArrayList<>(types));
         //endregion
 
         //region Chapters
-        MultiSpinner chapterSpinner = (MultiSpinner)findViewById(R.id.filter_chapter_spinner);
+        MultiSpinner chapterSpinner = findViewById(R.id.filter_chapter_spinner);
         List<String> chapters = chapterSpinner.getSelected();
         outState.putStringArrayList(CHAPTERS, new ArrayList<>(chapters));
         //endregion
 
         //region Read/unread
-        Spinner readSpinner = (Spinner)findViewById(R.id.filter_read_spinner);
+        Spinner readSpinner = findViewById(R.id.filter_read_spinner);
         outState.putInt(READ_POS, readSpinner.getSelectedItemPosition());
         //endregion
         //endregion
@@ -686,7 +684,7 @@ public class FilterActivity extends AppCompatActivity {
         try {
             //region Filter
             //region Date spinner
-            final Spinner dateSpinner = (Spinner) findViewById(R.id.filter_date_spinner);
+            final Spinner dateSpinner = findViewById(R.id.filter_date_spinner);
             final int dateSelectedPosition = savedInstanceState.getInt(DATE_SELECTED_POS);
             //noinspection ConstantConditions
             dateSpinner.setSelection(dateSelectedPosition);
@@ -699,9 +697,9 @@ public class FilterActivity extends AppCompatActivity {
                         case 2:
                         case 3:
                             String buttonString = savedInstanceState.getString(DATE_TEXT);
-                            DateTime cal = (DateTime) savedInstanceState.getSerializable(DATE_CAL);
+                            LocalDateTime cal = (LocalDateTime) savedInstanceState.getSerializable(DATE_CAL);
 
-                            Button dateButton = (Button) findViewById(R.id.single_button);
+                            Button dateButton = findViewById(R.id.single_button);
                             assert dateButton != null;
                             dateButton.setText(buttonString);
                             dateButton.setTag(cal);
@@ -710,11 +708,11 @@ public class FilterActivity extends AppCompatActivity {
                             String buttonStartString = savedInstanceState.getString(DATE_START_TEXT);
                             String buttonEndString = savedInstanceState.getString(DATE_END_TEXT);
 
-                            DateTime calStart = (DateTime) savedInstanceState.getSerializable(DATE_CAL_START);
-                            DateTime calEnd = (DateTime) savedInstanceState.getSerializable(DATE_CAL_END);
+                            LocalDateTime calStart = (LocalDateTime) savedInstanceState.getSerializable(DATE_CAL_START);
+                            LocalDateTime calEnd = (LocalDateTime) savedInstanceState.getSerializable(DATE_CAL_END);
 
-                            Button dateButtonStart = (Button) findViewById(R.id.between_dates_start_button);
-                            Button dateButtonEnd = (Button) findViewById(R.id.between_dates_end_button);
+                            Button dateButtonStart = findViewById(R.id.between_dates_start_button);
+                            Button dateButtonEnd = findViewById(R.id.between_dates_end_button);
 
                             assert dateButtonStart != null;
                             dateButtonStart.setText(buttonStartString);
@@ -731,28 +729,28 @@ public class FilterActivity extends AppCompatActivity {
 
             //region Persons
             ArrayList<String> persons = savedInstanceState.getStringArrayList(PERSONS);
-            MultiSpinner personSpinner = (MultiSpinner)findViewById(R.id.filter_person_spinner);
+            MultiSpinner personSpinner = findViewById(R.id.filter_person_spinner);
             //noinspection ConstantConditions
             personSpinner.setSelectedEntries(persons);
             //endregion
 
             //region Types
             ArrayList<String> types = savedInstanceState.getStringArrayList(TYPES);
-            MultiSpinner typeSpinner = (MultiSpinner)findViewById(R.id.filter_type_spinner);
+            MultiSpinner typeSpinner = findViewById(R.id.filter_type_spinner);
             //noinspection ConstantConditions
             typeSpinner.setSelectedEntries(types);
             //endregion
 
             //region Chapters
             ArrayList<String> chapters = savedInstanceState.getStringArrayList(CHAPTERS);
-            MultiSpinner chapterSpinner = (MultiSpinner)findViewById(R.id.filter_chapter_spinner);
+            MultiSpinner chapterSpinner = findViewById(R.id.filter_chapter_spinner);
             //noinspection ConstantConditions
             chapterSpinner.setSelectedEntries(chapters);
             //endregion
 
             //region read/unread
             int position = savedInstanceState.getInt(READ_POS);
-            Spinner readSpinner = (Spinner)findViewById(R.id.filter_read_spinner);
+            Spinner readSpinner = findViewById(R.id.filter_read_spinner);
             //noinspection ConstantConditions
             readSpinner.setSelection(position, false);
             //endregion
@@ -763,7 +761,7 @@ public class FilterActivity extends AppCompatActivity {
             boolean[] sortAscArray = (boolean[])savedInstanceState.get(SORT_ASC);
 
             // There will always be at least one sort
-            Button addButton = (Button)findViewById(R.id.sort_add_button);
+            Button addButton = findViewById(R.id.sort_add_button);
             //noinspection ConstantConditions
             for(int i = 0; i < positionArray.length-1; i++) {
                 //noinspection ConstantConditions
@@ -788,19 +786,19 @@ public class FilterActivity extends AppCompatActivity {
 
     @SuppressWarnings("ConstantConditions")
     private Button getButton(int layoutId) {
-        RelativeLayout rl = (RelativeLayout)findViewById(layoutId);
+        RelativeLayout rl = findViewById(layoutId);
         return (Button)rl.findViewById(R.id.sort_spinner_button);
     }
 
     @SuppressWarnings("ConstantConditions")
     private ImageView getImageView(int layoutId) {
-        RelativeLayout rl = (RelativeLayout)findViewById(layoutId);
+        RelativeLayout rl = findViewById(layoutId);
         return (ImageView)rl.findViewById(R.id.sort_order_button);
     }
 
     @SuppressWarnings("ConstantConditions")
     private Spinner getSpinner(int layoutId) {
-        RelativeLayout rl = (RelativeLayout)findViewById(layoutId);
+        RelativeLayout rl = findViewById(layoutId);
         return (Spinner)rl.findViewById(R.id.sort_spinner);
     }
 

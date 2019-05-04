@@ -39,7 +39,7 @@ public class EntryViewPreference extends Preference {
             text = array.getString(R.styleable.EntryViewPreference_text);
 
             // Get the font
-            String font = array.getString(R.styleable.EntryViewPreference_font);
+            String font = array.getString(R.styleable.EntryViewPreference_textFont);
             makeFontFromString(font);
 
             String initialFont = array.getString(R.styleable.EntryViewPreference_initial);

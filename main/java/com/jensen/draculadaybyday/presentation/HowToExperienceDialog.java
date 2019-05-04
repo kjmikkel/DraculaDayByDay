@@ -22,7 +22,7 @@ import com.jensen.draculadaybyday.R;
 import com.jensen.draculadaybyday.sql_lite.DateConstructorUtility;
 import com.jensen.draculadaybyday.sql_lite.ExperienceMode;
 
-import org.joda.time.DateTime;
+import java.time.LocalDateTime;
 
 public class HowToExperienceDialog extends DialogFragment {
 
@@ -46,12 +46,12 @@ public class HowToExperienceDialog extends DialogFragment {
 
     private void setupView(View view) {
         // Set the text
-        TextView textView = (TextView) view.findViewById(R.id.custom_list_view_description);
+        TextView textView = view.findViewById(R.id.custom_list_view_description);
         textView.setText(getString(R.string.preference_how_to_experience));
 
         try {
             Dialog dlg = getDialog();
-            final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.custom_list_view_list_items);
+            final RecyclerView recyclerView = view.findViewById(R.id.custom_list_view_list_items);
             String[] experienceChoices = getResources().getStringArray(R.array.list_preference_how_to_experience);
             String[] choiceDescription = getResources().getStringArray(R.array.list_preference_how_to_experience_description);
             ExperienceViewAdapter experienceViewAdapter = new ExperienceViewAdapter(experienceChoices, choiceDescription, dlg);
@@ -85,7 +85,7 @@ public class HowToExperienceDialog extends DialogFragment {
         private final String[] descriptions;
         private final Dialog dlg;
 
-        public ExperienceViewAdapter(String[] headlines, String[] descriptions, Dialog dlg) throws Exception {
+        private ExperienceViewAdapter(@NonNull String[] headlines, @NonNull String[] descriptions, Dialog dlg) throws Exception {
             this.headlines = headlines;
             this.descriptions = descriptions;
             this.dlg = dlg;
@@ -124,8 +124,8 @@ public class HowToExperienceDialog extends DialogFragment {
 
                     // If it is the same tempo, then we save the current date
                     if (mode == ExperienceMode.EXPERIENCE_IN_SAME_TEMPO) {
-                        DateTime today = DateConstructorUtility.todayInThePast();
-                        prefEditor.putLong(context.getString(R.string.pref_key_start_date_time), today.getMillis());
+                        LocalDateTime today = DateConstructorUtility.todayInThePast();
+                        prefEditor.putLong(context.getString(R.string.pref_key_start_date_time), DateConstructorUtility.getMilliseconds(today));
                     } else {
                         prefEditor.putBoolean(context.getString(R.string.pref_in_the_right_year), DateConstructorUtility.inRightYear());
                     }

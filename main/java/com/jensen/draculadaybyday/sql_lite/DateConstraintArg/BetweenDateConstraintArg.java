@@ -6,22 +6,22 @@ import android.util.Log;
 
 import com.jensen.draculadaybyday.sql_lite.DateConstructorUtility;
 
-import org.joda.time.DateTime;
+import java.time.LocalDateTime;
 
 public class BetweenDateConstraintArg extends DateConstraintArg {
 
-    private DateTime endTime;
+    private LocalDateTime endTime;
 
-    public BetweenDateConstraintArg(DateTime startTime, DateTime endTime) {
-        this.dateTime = startTime;
+    public BetweenDateConstraintArg(LocalDateTime startTime, LocalDateTime endTime) {
+        this.localDateTime = startTime;
         this.endTime = endTime;
     }
 
-    public DateTime getSecondDate() {
+    public LocalDateTime getSecondDate() {
         return this.endTime;
     }
 
-    public void setSecondDate(DateTime endTime) {
+    public void setSecondDate(LocalDateTime endTime) {
         this.endTime = endTime;
     }
 
@@ -56,7 +56,7 @@ public class BetweenDateConstraintArg extends DateConstraintArg {
 
     public void writeToParcel(Parcel out, int flags) {
         try {
-            out.writeSerializable(this.dateTime);
+            out.writeSerializable(this.localDateTime);
             out.writeSerializable(this.endTime);
         } catch (Exception e) {
             Log.d("DateConstraint", e.getMessage());
@@ -64,8 +64,8 @@ public class BetweenDateConstraintArg extends DateConstraintArg {
     }
 
     private BetweenDateConstraintArg(Parcel in) {
-        this.dateTime = (DateTime) in.readSerializable();
-        this.endTime = (DateTime) in.readSerializable();
+        this.localDateTime = (LocalDateTime) in.readSerializable();
+        this.endTime = (LocalDateTime) in.readSerializable();
     }
     //endregion
 }

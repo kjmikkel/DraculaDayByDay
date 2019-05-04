@@ -1,17 +1,23 @@
 package com.jensen.draculadaybyday.presentation;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
+import android.media.Image;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.Layout;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.AlignmentSpan;
+import android.text.style.ImageSpan;
 import android.text.style.RelativeSizeSpan;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
+import android.widget.ImageView;
 
+import com.jensen.draculadaybyday.R;
 import com.jensen.draculadaybyday.entry.EntryText;
 
 public class EntryView extends AppCompatTextView {
@@ -63,6 +69,8 @@ public class EntryView extends AppCompatTextView {
             }
 
             int currentIndex = 0;
+            int startOfMainText = 0;
+
             SpannableStringBuilder SS = new SpannableStringBuilder(finalText);
             if (dateStr != null) {
                 SS.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER), currentIndex, currentIndex + dateStr.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
@@ -80,17 +88,31 @@ public class EntryView extends AppCompatTextView {
                 currentIndex += commentStr.length();
             }
 
+            startOfMainText = currentIndex;
+
             if (basicFont.hasInitial()) {
                 SS.setSpan(new CustomTypefaceSpan("", getInitialType(initialFont)), currentIndex, currentIndex + 1, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
                 SS.setSpan(new RelativeSizeSpan(2.5f), currentIndex, currentIndex + 1, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
                 currentIndex++;
             }
 
+            if (entry.hasDividers()) {
+                Context context = getContext();
+                ImageSpan imageSpan = new ImageSpan(context, R.drawable.ic_englische_linie);
+
+                Log.d("setLocalText", entry.getDate());
+
+                for (int index : entry.getDividers()) {
+                    int startIndex = startOfMainText + index + 2;
+                    SS.setSpan(imageSpan, startIndex, startIndex + 1, 0);
+                }
+            }
+
             SS.setSpan(new CustomTypefaceSpan("", getMainBodyType(basicFont)), currentIndex, finalText.length() - 1, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
 
             setText(SS);
         } catch (Exception e) {
-            Log.d("setLocalText", e.getMessage());
+            Log.e("setLocalText", e.getMessage());
         }
     }
 

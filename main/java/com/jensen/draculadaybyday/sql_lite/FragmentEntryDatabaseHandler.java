@@ -10,10 +10,8 @@ import android.util.Log;
 import com.jensen.draculadaybyday.entry.Entry;
 import com.jensen.draculadaybyday.sql_lite.DateConstraintArg.BeforeDateConstraintArg;
 
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
-
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -31,7 +29,7 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
     static final String UNREAD = "Unread";
 
     // Time
-    private static final DateTimeFormatter TIME_FORMAT = DateTimeFormat.forPattern("yyyy-MM-dd").withLocale(Locale.getDefault());
+    private static final DateTimeFormatter TIME_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.getDefault());
 
     // All Static variables
     // Database Version
@@ -118,7 +116,7 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
                 values.put(CHAPTER, entry.getChapter());
                 values.put(PERSON, entry.getPerson());
                 values.put(TEXT, entry.getTextEntry().getRawText());
-                values.put(DATE, entry.getDate().toString(TIME_FORMAT));
+                values.put(DATE, entry.getDate().format(TIME_FORMAT));
                 values.put(TYPE, entry.getType().description);
                 values.put(UNLOCKED, 0);
                 values.put(UNREAD, entry.getUnread() ? 1 : 0);
@@ -177,7 +175,7 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
         return count;
     }
 
-    private DateTime makeDate(String date_rep) {
+    private LocalDateTime makeDate(String date_rep) {
         int year = Integer.valueOf(date_rep.substring(0, 4));
         int month = Integer.valueOf(date_rep.substring(5, 7));
         int day = Integer.valueOf(date_rep.substring(8, 10));
@@ -342,7 +340,7 @@ public class FragmentEntryDatabaseHandler extends android.database.sqlite.SQLite
      * Unlock the correct entries
      * @param date - the date up to which we are unlocking
      */
-    public void unlockEntriesBeforeDate(DateTime date) {
+    public void unlockEntriesBeforeDate(LocalDateTime date) {
         SqlConstraintFactory constraintFactory = new SqlConstraintFactory();
         BeforeDateConstraintArg before = new BeforeDateConstraintArg(date, true);
         constraintFactory.setDateConstraint(before);

@@ -2,7 +2,7 @@
 <resources>
     <declare-styleable name="EntryViewPreference">
         <attr name="text" format="string" />
-        <attr name="font" format="string" />
+        <attr name="textFont" format="string" />
         <attr name="initial" format="string" />
         <attr name="fontSize" format="float" />
     </declare-styleable>

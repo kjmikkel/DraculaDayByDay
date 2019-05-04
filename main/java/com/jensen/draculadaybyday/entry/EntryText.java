@@ -1,6 +1,12 @@
 package com.jensen.draculadaybyday.entry;
 
+import android.util.Log;
+
+import java.util.ArrayList;
+
 public class EntryText {
+
+    private final String seperator = "-sep-";
 
     private final String rawText;
 
@@ -10,7 +16,9 @@ public class EntryText {
 
     private final String comment;
 
-    private final String mainEntry;
+    private String mainEntry;
+
+    private final ArrayList<Integer> dividers = new ArrayList<>();
 
     public EntryText(String text) {
         this.rawText = text;
@@ -19,6 +27,26 @@ public class EntryText {
         location = parseText("l", text);
         comment = parseText("c", text);
         mainEntry = parseText("e", text);
+
+        findDividers();
+    }
+
+    private void findDividers() {
+        int startIndex = mainEntry.indexOf(seperator, 0);
+        try {
+
+            if (startIndex > -1) {
+                do {
+                    dividers.add(startIndex);
+
+                    // Replace the separation indicator with a space
+                    mainEntry = mainEntry.replaceFirst(seperator, " ");
+                    startIndex = mainEntry.indexOf(seperator, startIndex);
+                } while (startIndex > -1);
+            }
+        } catch(Exception e) {
+            Log.e("EntryText", e.getMessage());
+        }
     }
 
     private String parseText(String indicator, String text) {
@@ -79,5 +107,11 @@ public class EntryText {
     public String getMainEntry() {
         return mainEntry;
     }
+    //endregion
+
+    //region Dividers
+    public boolean hasDividers() { return !dividers.isEmpty(); }
+
+    public ArrayList<Integer> getDividers() { return dividers; }
     //endregion
 }

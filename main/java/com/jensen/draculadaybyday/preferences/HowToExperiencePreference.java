@@ -21,7 +21,7 @@ import com.jensen.draculadaybyday.presentation.HowToExperienceHolder;
 import com.jensen.draculadaybyday.sql_lite.DateConstructorUtility;
 import com.jensen.draculadaybyday.sql_lite.ExperienceMode;
 
-import org.joda.time.DateTime;
+import java.time.LocalDateTime;
 
 public class HowToExperiencePreference extends DialogPreference {
 
@@ -47,11 +47,11 @@ public class HowToExperiencePreference extends DialogPreference {
 
     private View setupView(View view) {
         // Set the text
-        TextView textView = (TextView) view.findViewById(R.id.custom_list_view_description);
+        TextView textView = view.findViewById(R.id.custom_list_view_description);
         textView.setText(mContext.getString(R.string.preference_how_to_experience));
 
         try {
-            final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.custom_list_view_list_items);
+            final RecyclerView recyclerView = view.findViewById(R.id.custom_list_view_list_items);
             String[] experienceChoices = mContext.getResources().getStringArray(R.array.list_preference_how_to_experience);
             String[] choiceDescription = mContext.getResources().getStringArray(R.array.list_preference_how_to_experience_description);
             HowToExperiencePreference.ExperienceViewAdapter experienceViewAdapter = new HowToExperiencePreference.ExperienceViewAdapter(experienceChoices, choiceDescription, mContext);
@@ -70,7 +70,7 @@ public class HowToExperiencePreference extends DialogPreference {
         private final String[] descriptions;
         private final Context mContext;
 
-        public ExperienceViewAdapter(String[] headlines, String[] descriptions, Context context) throws Exception {
+        private ExperienceViewAdapter(@NonNull String[] headlines, @NonNull String[] descriptions, Context context) throws Exception {
             this.headlines = headlines;
             this.descriptions = descriptions;
             this.mContext = context;
@@ -110,8 +110,8 @@ public class HowToExperiencePreference extends DialogPreference {
 
                         // If it is the same tempo, then we save the current date
                         if (mode == ExperienceMode.EXPERIENCE_IN_SAME_TEMPO) {
-                            DateTime today = DateConstructorUtility.todayInThePast();
-                            prefEditor.putLong(mContext.getString(R.string.pref_key_start_date_time), today.getMillis());
+                            LocalDateTime today = DateConstructorUtility.todayInThePast();
+                            prefEditor.putLong(mContext.getString(R.string.pref_key_start_date_time), DateConstructorUtility.getMilliseconds(today));
                             // We apply the reset
                             prefEditor.putBoolean(mContext.getString(R.string.pref_reset_book_key), true);
                         } else {

@@ -26,8 +26,7 @@ import com.jensen.draculadaybyday.R;
 import com.jensen.draculadaybyday.sql_lite.DateConstructorUtility;
 import com.jensen.draculadaybyday.sql_lite.ExperienceMode;
 
-import org.joda.time.DateTime;
-
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -283,8 +282,8 @@ public class DraculaPreferences extends AppCompatPreferenceActivity {
          * @param context the context of the application
          */
         private static void resetTime(SharedPreferences.Editor prefEditor, Context context) {
-            DateTime today = DateConstructorUtility.todayInThePast();
-            prefEditor.putLong(context.getString(R.string.pref_key_start_date_time), today.getMillis());
+            LocalDateTime today = DateConstructorUtility.todayInThePast();
+            prefEditor.putLong(context.getString(R.string.pref_key_start_date_time), DateConstructorUtility.getMilliseconds(today));
             prefEditor.apply();
         }
 

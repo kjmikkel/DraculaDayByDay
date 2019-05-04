@@ -3,10 +3,10 @@ package com.jensen.draculadaybyday.entry;
 import com.jensen.draculadaybyday.entries.EntryType;
 import com.jensen.draculadaybyday.entries.Person;
 
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormatter;
-import org.joda.time.format.DateTimeFormatterBuilder;
-
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.temporal.ChronoField;
 import java.util.Locale;
 
 public class Entry {
@@ -23,7 +23,7 @@ public class Entry {
     private final EntryText entryText;
 
     // The date the fragment was written
-    private final DateTime date;
+    private final LocalDateTime date;
 
     // The type of the mEntry
     private final EntryType type;
@@ -31,7 +31,7 @@ public class Entry {
     // Whether or not the mEntry is unread
     private final boolean unread;
 
-    public Entry(int storyEntryNum, int chapter, Person person, String diaryText, DateTime date, EntryType type, boolean unread) {
+    public Entry(int storyEntryNum, int chapter, Person person, String diaryText, LocalDateTime date, EntryType type, boolean unread) {
         this.storyEntryNum = (short) storyEntryNum;
 
         this.chapter = (short) chapter;
@@ -51,7 +51,7 @@ public class Entry {
         this.unread = unread;
     }
 
-    public Entry(int storyEntryNum, int chapter, String personName, String diaryText, DateTime date, String type, boolean unread) {
+    public Entry(int storyEntryNum, int chapter, String personName, String diaryText, LocalDateTime date, String type, boolean unread) {
         this(storyEntryNum, chapter, getPerson(personName), diaryText, date, getEntryType(type), unread);
     }
 
@@ -93,7 +93,7 @@ public class Entry {
         return entryText;
     }
 
-    public DateTime getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
@@ -118,16 +118,16 @@ public class Entry {
 
     public String getDateString() {
         DateTimeFormatter fmt = new DateTimeFormatterBuilder()
-                .appendDayOfMonth(1)
+                .appendValue(ChronoField.DAY_OF_MONTH)
                 .appendLiteral(getDayOfMonthSuffix(date.getDayOfMonth()) + " ")
-                .appendMonthOfYearText()
+                .appendValue(ChronoField.MONTH_OF_YEAR)
                 .appendLiteral(" ")
                 .appendLiteral("\n")
-                .appendYear(4, 4)
+                .appendValue(ChronoField.YEAR)
                 .toFormatter()
                 .withLocale(Locale.getDefault());
 
-        return date.toString(fmt);
+        return date.format(fmt);
     }
 
     @Override

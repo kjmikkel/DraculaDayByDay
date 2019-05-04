@@ -4,15 +4,12 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
-import com.jensen.draculadaybyday.sql_lite.DateConstraint;
-import com.jensen.draculadaybyday.sql_lite.DateConstructorUtility;
-
-import org.joda.time.DateTime;
+import java.time.LocalDateTime;
 
 public class ExactDateConstraintArg extends DateConstraintArg {
 
-    public ExactDateConstraintArg(DateTime dateTime) {
-        this.dateTime = dateTime;
+    public ExactDateConstraintArg(LocalDateTime dateTime) {
+        this.localDateTime = dateTime;
     }
 
     public String getSQLText() {
@@ -41,14 +38,14 @@ public class ExactDateConstraintArg extends DateConstraintArg {
 
     public void writeToParcel(Parcel out, int flags) {
         try {
-            out.writeSerializable(this.dateTime);
+            out.writeSerializable(this.localDateTime);
         } catch (Exception e) {
             Log.d("DateConstraint", e.getMessage());
         }
     }
 
     private ExactDateConstraintArg(Parcel in) {
-        this.dateTime = (DateTime) in.readSerializable();
+        this.localDateTime = (LocalDateTime) in.readSerializable();
     }
     //endregion
 }

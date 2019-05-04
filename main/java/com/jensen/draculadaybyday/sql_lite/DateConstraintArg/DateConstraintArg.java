@@ -4,23 +4,23 @@ import android.os.Parcelable;
 
 import com.jensen.draculadaybyday.sql_lite.DateConstructorUtility;
 
-import org.joda.time.DateTime;
+import java.time.LocalDateTime;
 
 public abstract class DateConstraintArg implements Parcelable {
 
-    DateTime dateTime;
+    LocalDateTime localDateTime;
 
-    public DateTime getDate() {
-        return dateTime;
+    public LocalDateTime getDate() {
+        return localDateTime;
     }
 
-    public void setDate(DateTime dateTime) {
-        this.dateTime = dateTime;
+    public void setDate(LocalDateTime localDateTime) {
+        this.localDateTime = localDateTime;
     }
 
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean isValueDefault() {
-        return DateConstructorUtility.initialDate.equals(dateTime);
+        return DateConstructorUtility.initialDate.equals(localDateTime);
     }
 
     public abstract String getSQLText();

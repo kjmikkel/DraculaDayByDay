@@ -6,39 +6,41 @@ import android.preference.PreferenceManager;
 import android.support.annotation.IntRange;
 
 import com.jensen.draculadaybyday.R;
+import com.jensen.draculadaybyday.time.DateTimeConstants;
 
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeConstants;
-import org.joda.time.Period;
+import java.time.Duration;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 public class DateConstructorUtility {
 
-    public static final DateTime initialDate = new DateTime(1893, DateTimeConstants.MAY, 3, 0, 0, 0, 0);
+    public static final LocalDateTime initialDate = LocalDateTime.of(1893, DateTimeConstants.MAY, 3, 0, 0, 0, 0);
 
-    private static final DateTime firstDayOfJanuary = new DateTime(1893, DateTimeConstants.JANUARY, 1, 0, 0, 0, 0);
+    private static final LocalDateTime firstDayOfJanuary = LocalDateTime.of(1893, DateTimeConstants.JANUARY, 1, 0, 0, 0, 0);
 
-    public static DateTime getUnlockDate(Context context) {
+    public static LocalDateTime getUnlockDate(Context context) {
         SharedPreferences prefManager = PreferenceManager.getDefaultSharedPreferences(context);
         String unlockMethod = prefManager.getString(context.getString(R.string.pref_key_how_to_experience), context.getString(R.string.pref_experience_default_value));
 
-        DateTime dateTime;
+        LocalDateTime localDateTime;
         ExperienceMode mode = unlockMethod.equals(context.getString(R.string.pref_experience_default_value)) ? ExperienceMode.EXPERIENCE_ON_SAME_DAY : ExperienceMode.EXPERIENCE_IN_SAME_TEMPO;
         if (mode == ExperienceMode.EXPERIENCE_ON_SAME_DAY) {
-            dateTime = todayInThePast();
+            localDateTime = todayInThePast();
         } else {
-            dateTime = getInSameTempoDate(context);
+            localDateTime = getInSameTempoDate(context);
         }
 
-        return dateTime;
+        return localDateTime;
     }
 
-    public static DateTime todayInThePast() {
-        DateTime today = new DateTime();
-        return getDateTime(today.monthOfYear().get(), today.dayOfMonth().get());
+    public static LocalDateTime todayInThePast() {
+        LocalDateTime today = LocalDateTime.now(ZoneId.systemDefault());
+        return getDateTime(today.getMonth().ordinal(), today.getDayOfMonth());
     }
 
     public static boolean inRightYear() {
-        DateTime today = new DateTime();
+        LocalDateTime today = LocalDateTime.now();
         boolean returnValue = true;
         if (firstDayOfJanuary.isBefore(today) && initialDate.isAfter(today)) {
             // if we are not in the interval first of January to the third of May, then we need to mark it
@@ -47,30 +49,38 @@ public class DateConstructorUtility {
         return returnValue;
     }
 
-    private static DateTime getInSameTempoDate(Context context) {
+    private static LocalDateTime getInSameTempoDate(Context context) {
         SharedPreferences prefManager = PreferenceManager.getDefaultSharedPreferences(context);
         long timeInMilliseconds = prefManager.getLong(context.getString(R.string.pref_key_start_date_time), 0); //todayInThePast(ExperienceMode.EXPERIENCE_IN_SAME_TEMPO).getMillis());
 
-        DateTime startTime = new DateTime(timeInMilliseconds);
-        DateTime endTime = todayInThePast();
+        LocalDateTime startTime = getDateFromMilliseconds(timeInMilliseconds);
+        LocalDateTime endTime = todayInThePast();
 
-        DateTime returnDateTime;
+        LocalDateTime returnDateTime;
         if (startTime.isBefore(endTime) || startTime.isEqual(endTime)) {
-            Period diffPeriod = new Period(startTime, endTime);
+            Duration diffPeriod = Duration.between(startTime, endTime);
             returnDateTime = initialDate.plus(diffPeriod);
         } else {
             // Due to the way the date are handled it may effectively wrap around, and in that case we just unlock everything
-            returnDateTime = new DateTime(1894, DateTimeConstants.JANUARY, 1, 0, 0, 0, 0);
+            returnDateTime = getDateTime(1894, DateTimeConstants.JANUARY, 1);
         }
 
         return returnDateTime;
     }
 
-    public static DateTime getDateTime(@IntRange(from = 1, to = 12) int month, @IntRange(from = 1, to = 31) int day) {
-        return getDateTime(1893, month, day);
+    public static long getMilliseconds(LocalDateTime localDateTime) {
+        return localDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
     }
 
-    public static DateTime getDateTime(int year, @IntRange(from = 1, to = 12) int month, @IntRange(from = 1, to = 31) int day) {
-        return new DateTime(year, month, day, 0, 0, 0, 0);
+    public static LocalDateTime getDateFromMilliseconds(long milliseconds) {
+        return Instant.ofEpochMilli(milliseconds).atZone(ZoneId.systemDefault()).toLocalDateTime();
+    }
+
+    public static LocalDateTime getDateTime(int year, int month, int day) {
+        return getDateTime(year, month, day);
+    }
+
+    public static LocalDateTime getDateTime(@IntRange(from = 1, to = 12) int month, @IntRange(from = 1, to = 31) int day) {
+        return LocalDateTime.of(1893, month, day, 0, 0);
     }
 }

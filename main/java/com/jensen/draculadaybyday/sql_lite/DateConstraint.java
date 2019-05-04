@@ -11,9 +11,7 @@ import com.jensen.draculadaybyday.sql_lite.DateConstraintArg.DateConstraintArg;
 import com.jensen.draculadaybyday.sql_lite.DateConstraintArg.ExactDateConstraintArg;
 import com.jensen.draculadaybyday.sql_lite.DateConstraintArg.NoSpecificDateConstraintArg;
 
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
-
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -23,7 +21,7 @@ public class DateConstraint extends Constraint {
     private DateConstraintArg constraintArg;
 
     // Time format
-    private static final DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd").withLocale(Locale.getDefault());
+    private static final DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.getDefault());
 
     public DateConstraint() {
         super();
@@ -34,11 +32,11 @@ public class DateConstraint extends Constraint {
 
         if (!(this.constraintArg instanceof NoSpecificDateConstraintArg)) {
             setConstraintSqlText(String.format(Locale.getDefault(), this.constraintArg.getSQLText(), FragmentEntryDatabaseHandler.DATE));
-            addConstraintSqlValue(this.constraintArg.getDate().toString(fmt));
+            addConstraintSqlValue(this.constraintArg.getDate().format(fmt));
 
             if (this.constraintArg instanceof BetweenDateConstraintArg) {
                 BetweenDateConstraintArg betweenDateConstraintArg = (BetweenDateConstraintArg)this.constraintArg;
-                addConstraintSqlValue(betweenDateConstraintArg.getSecondDate().toString(fmt));
+                addConstraintSqlValue(betweenDateConstraintArg.getSecondDate().format(fmt));
             }
         }
     }
